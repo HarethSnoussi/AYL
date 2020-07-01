@@ -249,7 +249,7 @@ const SignupOwnerScreen = props =>{
         if(formState.formIsValid){
           try {
             setVerifyInProgress(true);
-            const result = await fetch(`http://192.168.1.39:3000/phone/${formState.inputValues.phone}`);
+            const result = await fetch(`http://192.168.1.37:3000/phone/${formState.inputValues.phone}`);
             const resData= await result.json();
             setVerifyInProgress(false);
 

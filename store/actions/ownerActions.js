@@ -13,7 +13,7 @@ export const createOwner=(id,phone,password,fullname,address)=>{
         const ownerData={id,phone,password,fullname,address};
 
         try{
-            const response= await fetch('http://192.168.1.39:3000/owner/addOwner',{
+            const response= await fetch('http://192.168.1.37:3000/owner/addOwner',{
                 method : "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ export const setOwners= ()=>{
     return async dispatch =>{
 
       try{
-           const response= await fetch('http://192.168.1.39:3000/owner');
+           const response= await fetch('http://192.168.1.37:3000/owner');
            if(!response.ok){
             throw new Error('Oups! Une erreur est survenue.');
             }
@@ -63,7 +63,7 @@ export const updateOwnerPassword= (id,password) => {
     return async dispatch => {
 
          try{
-           const response = await fetch(`http://192.168.1.39:3000/owner/updatePassword/${id}`,{
+           const response = await fetch(`http://192.168.1.37:3000/owner/updatePassword/${id}`,{
               method:'PATCH',
               headers: {
                 'Content-Type': 'application/json'
@@ -88,7 +88,7 @@ export const updateOwnerPhone= (id,phone,ownerid) => {
     return async dispatch => {
 
          try{
-           const response = await fetch(`http://192.168.1.39:3000/owner/updatePhone/${ownerid}`,{
+           const response = await fetch(`http://192.168.1.37:3000/owner/updatePhone/${ownerid}`,{
               method:'PATCH',
               headers: {
                 'Content-Type': 'application/json'
@@ -114,7 +114,7 @@ export const updateOwner= (id,fullname,email,address) => {
     return async dispatch => {
 
          try{
-           const response = await fetch(`http://192.168.1.39:3000/owner/updateOwner/${id}`,{
+           const response = await fetch(`http://192.168.1.37:3000/owner/updateOwner/${id}`,{
               method:'PATCH',
               headers: {
                 'Content-Type': 'application/json'
@@ -139,7 +139,7 @@ export const deleteOwner = id => {
     return async dispatch => {
     
         try{
-            const response = await fetch(`http://192.168.1.39:3000/owner/deleteOwner/${id}`,{
+            const response = await fetch(`http://192.168.1.37:3000/owner/deleteOwner/${id}`,{
                method:'DELETE'});
 
             if(!response.ok){
@@ -160,7 +160,7 @@ export const setOwnerProperty= id=>{
     return async (dispatch) =>{
       
       try{
-           const response= await fetch(`http://192.168.1.39:3000/owner/property/${id}`);
+           const response= await fetch(`http://192.168.1.37:3000/owner/property/${id}`);
            if(!response.ok){
             throw new Error('Oups! Une erreur est survenue.');
             }

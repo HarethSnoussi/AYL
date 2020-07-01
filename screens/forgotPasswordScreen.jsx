@@ -136,7 +136,7 @@ disaptchFormState({type:Form_Input_Update,value:inputValue,isValid:inputValidity
     try{
       
       setIsLogin(true);
-      const result = await fetch(`http://192.168.1.39:3000/phone/${formState.inputValues.phone}`);
+      const result = await fetch(`http://192.168.1.37:3000/phone/${formState.inputValues.phone}`);
       const resData= await result.json();
       setIsLogin(false);
       
@@ -178,7 +178,7 @@ disaptchFormState({type:Form_Input_Update,value:inputValue,isValid:inputValidity
           return;
         }
         setIsLogin(true);
-        const result = await fetch(`http://192.168.1.39:3000/phone/${formState.inputValues.phone}`);
+        const result = await fetch(`http://192.168.1.37:3000/phone/${formState.inputValues.phone}`);
         const resData= await result.json();
         setIsLogin(false);
   

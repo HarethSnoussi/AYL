@@ -165,7 +165,7 @@ const saveDataToStorage = (token,userID,expirationDate,gender,id) => {
         );
         
         setIsLogin(true);
-        const result = await fetch(`http://192.168.1.39:3000/phone/${formState.inputValues.phone}`);
+        const result = await fetch(`http://192.168.1.37:3000/phone/${formState.inputValues.phone}`);
         const resData= await result.json();
         setIsLogin(false);
         const currentPlayer= players.find(item=>item.phone===formState.inputValues.phone && 
