@@ -268,7 +268,7 @@ const saveDataToStorage = (token,userID,expirationDate,gender,id) => {
                        <Text style={registerNowTextStyle}>S'inscrire Maintenant</Text>
                      </TouchableOpacity>
                      <Text style={accountOrTextStyle}>Ou</Text>
-                     <TouchableOpacity  onPress={()=>props.navigation.navigate('Player')}>
+                     <TouchableOpacity  onPress={()=>props.navigation.navigate('Client')}>
                        <Text style={connectWidthTextStyle}>Suivez-nous sur</Text>
                      </TouchableOpacity>
                      <TouchableOpacity style={styles.facebookIconContainer}>

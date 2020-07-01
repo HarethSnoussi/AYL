@@ -23,7 +23,7 @@ import PlayerBookingsScreen from "../screens/player/playerBooking/playerBookings
 
 
 import {Ionicons,  MaterialIcons} from "@expo/vector-icons";
-import PlayerHomeScreen from '../screens/home/playerHomeScreen';
+import ClientHomeScreen from '../screens/home/clientHomeScreen';
 import OwnerHomeScreen from '../screens/home/ownerHomeScreen';
 import stadiumChoiceScreen from "../screens/player/playerBooking/stadiumChoiceScreen";
 import stadiumBookingScreen from "../screens/player/playerBooking/stadiumBookingScreen";
@@ -33,6 +33,7 @@ import ForgotPasswordScreen from "../screens/forgotPasswordScreen";
 import PlayerProfileChoiceScreen from '../screens/home/playerProfileChoiceScreen';
 import PlayerSettingsScreen from '../screens/player/playerProfile/playerSettingsScreen';
 import StartupScreen from "../screens/startupScreen";
+import StadiumChoiceScreen from '../screens/player/playerBooking/stadiumChoiceScreen';
 
 
 ///////////////////////////////////////////////////////////////////
@@ -88,6 +89,95 @@ labeled  : true
 } ) ;
 
 
+//Tab Navigator For Client Home
+const homeConfig = {
+  Accueil : {
+          screen : ClientHomeScreen ,
+          navigationOptions : {
+            tabBarLabel : "Accueil" ,
+            tabBarColor : Colors.secondary ,
+            tabBarIcon : () => {
+              return( <Ionicons name = "ios-home" 
+              size = {22} color ="white"/>);
+                },  
+        },
+       
+
+          
+  } ,
+  Profile : {
+          screen : PlayerProfileChoiceScreen,
+          navigationOptions : {
+            
+            tabBarLabel : "Profile" ,
+            tabBarColor : Colors.secondary ,
+            tabBarIcon : () => {
+              return( <MaterialIcons name = "face" 
+              size = {22} color ="white"/>);
+                }
+              }} ,
+
+   NearMe : {
+          screen : StadiumChoiceScreen,
+          navigationOptions : {
+            
+            tabBarLabel : "Expirées" ,
+            tabBarColor : Colors.secondary ,
+
+            tabBarIcon : () => {
+              return( <MaterialIcons name = "location-on" 
+              size = {22} color ="white"/>);
+                }
+        } ,
+
+  } ,
+
+  
+  Réservations : {
+    screen : PlayerBookingsTab,
+    navigationOptions : {
+      
+      tabBarLabel : "Expirées" ,
+      tabBarColor : Colors.secondary ,
+
+      tabBarIcon : () => {
+        return( <MaterialIcons name = "history" 
+        size = {22} color ="white"/>);
+          },
+       
+  } ,
+
+
+  
+  
+   
+  }
+};
+
+
+//Home page with Bottom Navigation Tab
+
+const clientHomeTabs = createMaterialBottomTabNavigator(homeConfig, 
+      
+{
+  navigationOptions : {
+    title :"",
+    headerBackTitle : " " ,
+    headerTintColor: Platform.OS === "android"? '#fff' : "rgba(53, 53, 53,1)" ,
+    headerStyle:{
+      backgroundColor: "transparent",
+  },
+  headerTransparent: true
+  } ,
+activeColor: '#f0edf6',
+shifting : true ,
+labeled  : true,
+
+
+} ) ;
+
+
+
 /*const gender=async()=>{
   const userData= await AsyncStorage.getItem('userData');
  
@@ -114,7 +204,9 @@ labeled  : true
 //Main Stack Navigator
 const FootNavigation = createStackNavigator({
    
-   Player : PlayerHomeScreen , 
+   Client : {
+     screen : clientHomeTabs
+   }, 
    Owner : OwnerHomeScreen,
    Stadiums :  stadiumChoiceScreen ,
    StadiumBooking : stadiumBookingScreen ,
