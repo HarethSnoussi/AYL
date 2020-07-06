@@ -95,10 +95,10 @@ const homeConfig = {
           screen : ClientHomeScreen ,
           navigationOptions : {
             tabBarLabel : "Accueil" ,
-            tabBarColor : Colors.secondary ,
-            tabBarIcon : () => {
+            tabBarColor : "#fff",
+            tabBarIcon : ({tintColor}) => {
               return( <Ionicons name = "ios-home" 
-              size = {22} color ="white"/>);
+              size = {22} color ={tintColor}/>);
                 },  
         },
        
@@ -111,22 +111,23 @@ const homeConfig = {
             
             tabBarLabel : "Profile" ,
             tabBarColor : Colors.secondary ,
-            tabBarIcon : () => {
+            tabBarIcon : ({tintColor}) => {
               return( <MaterialIcons name = "face" 
-              size = {22} color ="white"/>);
+              size = {22} color ={tintColor}/>);
                 }
               }} ,
 
    NearMe : {
           screen : StadiumChoiceScreen,
           navigationOptions : {
-            
-            tabBarLabel : "Expirées" ,
+            tabBarLabel : "Localisation" ,
             tabBarColor : Colors.secondary ,
+         
 
-            tabBarIcon : () => {
+            tabBarIcon : ({tintColor}) => {
+          
               return( <MaterialIcons name = "location-on" 
-              size = {22} color ="white"/>);
+              size = {22} color={tintColor}/>);
                 }
         } ,
 
@@ -136,21 +137,17 @@ const homeConfig = {
   Réservations : {
     screen : PlayerBookingsTab,
     navigationOptions : {
-      
+  
       tabBarLabel : "Expirées" ,
       tabBarColor : Colors.secondary ,
-
-      tabBarIcon : () => {
+     
+      tabBarIcon : ({tintColor}) => {
         return( <MaterialIcons name = "history" 
-        size = {22} color ="white"/>);
+        size = {22} color={tintColor} />);
           },
        
   } ,
 
-
-  
-  
-   
   }
 };
 
@@ -169,9 +166,16 @@ const clientHomeTabs = createMaterialBottomTabNavigator(homeConfig,
   },
   headerTransparent: true
   } ,
-activeColor: '#f0edf6',
-shifting : true ,
+activeColor: '#fd6c57',
+inactiveColor : "#9d9da1",
+shifting : false ,
 labeled  : true,
+barStyle : {
+ borderTopWidth : 0.5 ,
+ backgroundColor : '#fff'
+
+},
+
 
 
 } ) ;
