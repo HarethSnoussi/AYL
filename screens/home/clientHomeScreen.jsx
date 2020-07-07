@@ -2,12 +2,13 @@ import React ,{useEffect}  from 'react';
 import { StyleSheet, Text, View, ImageBackground , Image ,Dimensions , StatusBar } from 'react-native';
 import { Button } from 'react-native-elements';
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
-import { SearchBar } from 'react-native-elements';
+import { SearchBar ,Avatar,Rating, AirbnbRating } from 'react-native-elements';
 
-import SmallCard  from '../../components/SmallCard';
 import { useDispatch,useSelector } from 'react-redux';
 
 import Colors from "../../constants/Colors.js";
+import TopSalonsCard from '../../components/TopSalonsCard';
+import TopBarbersCard from '../../components/TopBarbersCard.jsx';
 
 const screen = Dimensions.get("window");
 const ClientHomeScreen = props =>{
@@ -36,139 +37,44 @@ const playerUID= props.navigation.getParam('playerUID');
             </ImageBackground>
 
         
-              <View style = {styles.textTopBarbers}>
-                <Text style = {{fontSize : 18,fontWeight : "bold"}}>
-                
-                Meilleurs Salons
-                
-                </Text>
-                <Text>Tout Afficher
-                
-                </Text>
-              </View>
-
-          <ScrollView style ={styles.topBarbers} horizontal showsHorizontalScrollIndicator  = {false}>
-
-              <View style = {styles.topBarbersCard} >
-                      <View style = {styles.cardImage}>
-                       <Image source = {require("../../assets/pictures/barber7.png")} style = {styles.image}  />
-                      </View>
-
-                      <View style= {styles.cardBody}> 
-                      <View style = {styles.cardBodyTitle}>
-                        <Text>Tahfifa Saloon</Text>
-                        <Text>4.9/5.0</Text>
-                      </View>
-
-                      <View style = {styles.cardBodyInfo}>
-                      <Text>27 Rue Didouche Rue d'alger Blida</Text>
-
-                      </View>
-
-                    
-                        <Button 
-                        buttonStyle ={styles.button}
-                        title = "Detail" 
-                        containerStyle = {styles.cardBodyButton}
-                        />
-                 
-
-                      </View>
-
-              </View>
-
-              <View style = {styles.topBarbersCard} >
-                      <View style = {styles.cardImage}>
-                       <Image source = {require("../../assets/pictures/barber.jpg")} style = {styles.image}  />
-                      </View>
-
-                      <View style= {styles.cardBody}> 
-                      <View style = {styles.cardBodyTitle}>
-                        <Text>Tahfifa Saloon</Text>
-                        <Text>4.9/5.0</Text>
-                      </View>
-
-                      <View style = {styles.cardBodyInfo}>
-                      <Text>27 Rue Didouche Rue d'alger Blida</Text>
-
-                      </View>
-                      <Button 
-                        buttonStyle ={styles.button}
-                        title = "Detail" 
-                        containerStyle = {styles.cardBodyButton}
-                        />
-
-                      </View>
-
-              </View>
-
-
-          </ScrollView>
 
 
           <View style = {styles.textTopBarbers}>
-                <Text style = {{fontSize : 18,fontWeight : "bold"}}>
+                <Text style = {styles.bestText}>
                 
                 Meilleurs Coiffeurs
                 
                 </Text>
-                <Text>Tout Afficher
+                <Text style = {styles.showAll}>Tout Afficher
                 
                 </Text>
               </View>
           <ScrollView style ={styles.topBarbers} horizontal showsHorizontalScrollIndicator  = {false}>
+          <TopBarbersCard />
+          <TopBarbersCard />
+          <TopBarbersCard />
+          <TopBarbersCard />
 
-              <View style = {styles.topBarbersCard} >
-                      <View style = {styles.cardImage}>
-                       <Image source = {require("../../assets/pictures/barber7.png")} style = {styles.image}  />
-                      </View>
+          </ScrollView>
 
-                      <View style= {styles.cardBody}> 
-                      <View style = {styles.cardBodyTitle}>
-                        <Text>Tahfifa Saloon</Text>
-                        <Text>4.9/5.0</Text>
-                      </View>
 
-                      <View style = {styles.cardBodyInfo}>
-                      <Text>27 Rue Didouche Rue d'alger Blida</Text>
 
-                      </View>
-
-                      <Button 
-                        buttonStyle ={styles.button}
-                        title = "Detail" 
-                        containerStyle = {styles.cardBodyButton}
-                        />
-
-                      </View>
-
+          <View style = {styles.textTopBarbers}>
+                <Text style = {styles.bestText}>
+                
+                Meilleurs Salons
+                
+                </Text>
+                <Text style = {styles.showAll}>Tout Afficher
+                
+                </Text>
               </View>
 
-              <View style = {styles.topBarbersCard} >
-                      <View style = {styles.cardImage}>
-                       <Image source = {require("../../assets/pictures/barber.jpg")} style = {styles.image}  />
-                      </View>
+          <ScrollView style ={styles.topSalons} horizontal showsHorizontalScrollIndicator  = {false}>
 
-                      <View style= {styles.cardBody}> 
-                      <View style = {styles.cardBodyTitle}>
-                        <Text>Tahfifa Saloon</Text>
-                        <Text>4.9/5.0</Text>
-                      </View>
+              <TopSalonsCard />
 
-                      <View style = {styles.cardBodyInfo}>
-                      <Text>27 Rue Didouche Rue d'alger Blida</Text>
-
-                      </View>
-
-                      <Button 
-                        buttonStyle ={styles.button}
-                        title = "Detail" 
-                        containerStyle = {styles.cardBodyButton}
-                        />
-
-                      </View>
-
-              </View>
+             <TopSalonsCard />
 
 
           </ScrollView>
@@ -216,59 +122,74 @@ const styles= StyleSheet.create({
   image : {
     height : "100%",
     width : "100%",
-   resizeMode : "stretch"
+   resizeMode : "cover"
 },
 ////////////////////////////////////////////////////////
  textTopBarbers : {
    flexDirection : "row",
    justifyContent : "space-between",
     marginTop : 25,
-    marginHorizontal : 20
+    marginHorizontal : 15,
+   
+    alignItems :"center"
  },
- topBarbers : {
+ topSalons : {
   width : "100%",
   height : screen.height * 0.4 ,
 
 },
- topBarbersCard : {
-   width : screen.width * 0.85 ,
-    height : "80%",
-    alignSelf : "center",
-    borderRadius : 30,
-    borderWidth : 0.3 ,
-    overflow : "hidden",
-    margin : 10,
-    backgroundColor : "white"
- },
- cardImage : {
+topBarbers : {
+ 
+  width : "100%",
+  height : screen.height * 0.5 ,
+
+},
+bestText :{
+  fontSize : 18,
+  fontFamily : "poppins-bold"
+
+},
+showAll : {
+  fontFamily : "poppins",
+  color : "#9d9da1"
+
+},
+///////////////////////////////////////////////////
+barberContainer : {
+  height : "90%",
+  width : screen.width * 0.6,
+  alignSelf : "center",
+  borderRadius : 25,
   overflow : "hidden",
-  height : "50%"
- },
- cardBody : {
-   flex : 1 ,
-  justifyContent : "space-between",
+  marginHorizontal : screen.width * 0.03,
+  borderWidth : 0.3 ,
 
- },
- cardBodyTitle : {
-    flexDirection : "row",
-    justifyContent : "space-between",
-    marginHorizontal : "5%",
-    marginTop :"2%"
+ 
+},
+barberPictureContainer : {
+      width : "100%",
+      height : "40%",
+      overflow : "hidden",
+      alignItems : "center",
+      justifyContent : "center",
+      marginBottom : "5%"
+},
+barberPicture : {
+borderWidth :1
 
- },
- cardBodyInfo : {
-  marginHorizontal : "5%"
- }, 
- cardBodyButton : {
-    alignItems :"flex-end",
-    overflow : "hidden",
-     
- },
- button : {
-     backgroundColor : "#fd6c57",
-     borderTopLeftRadius : 18,
-     width : "30%"
- },
+},
+
+barberInfos : {
+height : "50%",
+justifyContent : "space-between",
+alignItems : 'center',
+overflow : "hidden"
+
+},
+rating : {
+
+},
+ /////////////////////////////////////////////////
  searchBar :{
   width : "80%" , 
   alignSelf : "center",
