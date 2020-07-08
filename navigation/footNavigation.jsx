@@ -4,7 +4,6 @@ import {createAppContainer,createSwitchNavigator} from 'react-navigation';
 import {Platform,AsyncStorage} from 'react-native';
 import Colors from '../constants/Colors';
 import {createMaterialBottomTabNavigator} from "react-navigation-material-bottom-tabs"
-
 import LoginScreen from '../screens/loginScreen';
 import ProfileChoiceScreen from '../screens/profileChoiceScreen';
 import SignupScreen from '../screens/player/signupScreen';
@@ -25,7 +24,7 @@ import PlayerBookingsScreen from "../screens/player/playerBooking/playerBookings
 import {Ionicons,  MaterialIcons} from "@expo/vector-icons";
 import ClientHomeScreen from '../screens/home/clientHomeScreen';
 import OwnerHomeScreen from '../screens/home/ownerHomeScreen';
-import stadiumChoiceScreen from "../screens/player/playerBooking/stadiumChoiceScreen";
+
 import stadiumBookingScreen from "../screens/player/playerBooking/stadiumBookingScreen";
 import PlayerExpiredBookingsScreen from '../screens/player/playerBooking/playerExpiredBookingsScreen';
 import PlayerProfileScreen from "../screens/player/playerProfile/playerProfileScreen";
@@ -33,7 +32,7 @@ import ForgotPasswordScreen from "../screens/forgotPasswordScreen";
 import PlayerProfileChoiceScreen from '../screens/home/playerProfileChoiceScreen';
 import PlayerSettingsScreen from '../screens/player/playerProfile/playerSettingsScreen';
 import StartupScreen from "../screens/startupScreen";
-import StadiumChoiceScreen from '../screens/player/playerBooking/stadiumChoiceScreen';
+import AllBarbersScreen from '../screens/player/playerBooking/allBarbersScreen';
 
 
 ///////////////////////////////////////////////////////////////////
@@ -118,7 +117,7 @@ const homeConfig = {
               }} ,
 
    NearMe : {
-          screen : StadiumChoiceScreen,
+          screen : AllBarbersScreen,
           navigationOptions : {
             tabBarLabel : "Localisation" ,
             tabBarColor : Colors.secondary ,
@@ -212,7 +211,7 @@ const FootNavigation = createStackNavigator({
      screen : clientHomeTabs
    }, 
    Owner : OwnerHomeScreen,
-   Stadiums :  stadiumChoiceScreen ,
+   AllBarbers :  AllBarbersScreen ,
    StadiumBooking : stadiumBookingScreen ,
    OwnerService : OwnerServiceScreen,
    EditService: EditServiceScreen,

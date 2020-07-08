@@ -1,9 +1,10 @@
 import React ,{useEffect}  from 'react';
 import { StyleSheet, Text, View, ImageBackground , Image ,Dimensions , StatusBar } from 'react-native';
 import { Button } from 'react-native-elements';
-import { ScrollView, FlatList } from 'react-native-gesture-handler';
+import { ScrollView, FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 import { SearchBar ,Avatar,Rating, AirbnbRating } from 'react-native-elements';
 
+import { SwitchActions } from 'react-navigation';
 import { useDispatch,useSelector } from 'react-redux';
 
 import Colors from "../../constants/Colors.js";
@@ -25,7 +26,7 @@ const playerUID= props.navigation.getParam('playerUID');
       <StatusBar hidden />
       
       <ScrollView >
-            <ImageBackground source = {require("../../assets/pictures/barber4.png")} style = {styles.firstImage}>
+            <ImageBackground source = {require("../../assets/pictures/barber4.png")} style = {styles.firstImage}  resizeMode ="stretch" imageStyle ={styles.image} >
            
            <SearchBar placeholder=" Recherche salon , coiffeur"
         containerStyle = {styles.searchBar}
@@ -36,26 +37,6 @@ const playerUID= props.navigation.getParam('playerUID');
         lightTheme = {true} />
             </ImageBackground>
 
-        
-
-
-          <View style = {styles.textTopBarbers}>
-                <Text style = {styles.bestText}>
-                
-                Meilleurs Coiffeurs
-                
-                </Text>
-                <Text style = {styles.showAll}>Tout Afficher
-                
-                </Text>
-              </View>
-          <ScrollView style ={styles.topBarbers} horizontal showsHorizontalScrollIndicator  = {false}>
-          <TopBarbersCard />
-          <TopBarbersCard />
-          <TopBarbersCard />
-          <TopBarbersCard />
-
-          </ScrollView>
 
 
 
@@ -65,9 +46,13 @@ const playerUID= props.navigation.getParam('playerUID');
                 Meilleurs Salons
                 
                 </Text>
-                <Text style = {styles.showAll}>Tout Afficher
+                <TouchableOpacity  
+                onPress={() =>props.navigation.navigate("AllBarbers")} >
+                <Text style = {styles.showAll}>
+                Tout Afficher
                 
                 </Text>
+                </TouchableOpacity>
               </View>
 
           <ScrollView style ={styles.topSalons} horizontal showsHorizontalScrollIndicator  = {false}>
@@ -75,7 +60,34 @@ const playerUID= props.navigation.getParam('playerUID');
               <TopSalonsCard />
 
              <TopSalonsCard />
+             <TopSalonsCard />
 
+
+          </ScrollView>
+
+          
+        
+
+
+          <View style = {styles.textTopBarbers}>
+                <Text style = {styles.bestText}>
+                
+                Meilleurs Coiffeurs
+                
+                </Text>
+                <TouchableOpacity  
+                onPress={() =>props.navigation.navigate("AllBarbers")} >
+                <Text style = {styles.showAll}>
+                Tout Afficher
+                
+                </Text>
+                </TouchableOpacity>
+              </View>
+          <ScrollView  style ={styles.topBarbers} horizontal showsHorizontalScrollIndicator  = {false}>
+          <TopBarbersCard />
+          <TopBarbersCard />
+          <TopBarbersCard />
+          <TopBarbersCard />
 
           </ScrollView>
          
@@ -114,21 +126,23 @@ const styles= StyleSheet.create({
   /////////////////////////////////////////////
   firstImage : {
     width : screen.width,
-    height : screen.height * 0.4 ,
-   overflow : "hidden",
+    height : screen.height * 0.35 ,
+    overflow : "hidden",
    
-
+    
+ 
   } ,
   image : {
     height : "100%",
     width : "100%",
-   resizeMode : "cover"
+   
+   
 },
 ////////////////////////////////////////////////////////
  textTopBarbers : {
    flexDirection : "row",
    justifyContent : "space-between",
-    marginTop : 25,
+    marginTop : 15,
     marginHorizontal : 15,
    
     alignItems :"center"
@@ -142,7 +156,7 @@ topBarbers : {
  
   width : "100%",
   height : screen.height * 0.5 ,
-
+ 
 },
 bestText :{
   fontSize : 18,
@@ -155,40 +169,7 @@ showAll : {
 
 },
 ///////////////////////////////////////////////////
-barberContainer : {
-  height : "90%",
-  width : screen.width * 0.6,
-  alignSelf : "center",
-  borderRadius : 25,
-  overflow : "hidden",
-  marginHorizontal : screen.width * 0.03,
-  borderWidth : 0.3 ,
 
- 
-},
-barberPictureContainer : {
-      width : "100%",
-      height : "40%",
-      overflow : "hidden",
-      alignItems : "center",
-      justifyContent : "center",
-      marginBottom : "5%"
-},
-barberPicture : {
-borderWidth :1
-
-},
-
-barberInfos : {
-height : "50%",
-justifyContent : "space-between",
-alignItems : 'center',
-overflow : "hidden"
-
-},
-rating : {
-
-},
  /////////////////////////////////////////////////
  searchBar :{
   width : "80%" , 

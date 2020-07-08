@@ -2,16 +2,74 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Dimensions,Image,ImageBackground} from 'react-native'; 
 import {Button , Rating, AirbnbRating,Avatar} from "react-native-elements";
 import {Ionicons} from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const screen = Dimensions.get("window");
 
-const TopBarbersCard = (props)=> {
+const FavoriteCard = (props)=> {
+const [heartColor,setHeartColor] = useState("#9d9da1");
+const [firstGrad,setFirstGrad] = useState("#fff");
+const [secondGrad,setSecondGrad] = useState("#fff");
 
 
+const heartColorHandler = ()=>{
+if(heartColor === "#9d9da1")
+  {setHeartColor("#fff");
+  setFirstGrad("#fd6d57");
+  setSecondGrad("#fd9054");
+  }
+  else{
+  setHeartColor("#9d9da1");
+  setFirstGrad("#fff");
+  setSecondGrad("#fff");
+
+}
+
+}
+
+
+//fd6d57 fd9054
     return(
 
         <View style = {styles.barberContainer}>
-        <View  style = {styles.barberPictureContainer}>
+        <LinearGradient colors={[firstGrad, secondGrad]} style={{flex : 1,justifyContent : "flex-end"}}>
+        <View style = {{height : "95%"}}>
+        <View style = {{flexDirection : "row",justifyContent : "space-between" , marginLeft : "5%"}}>
+        <Ionicons onPress = {()=>{heartColorHandler()}} name="ios-heart" size={24} color={heartColor} />
+       
+
+
+        </View>
+        <View style = {{justifyContent :"center",alignItems : "center"}}>
+        <Avatar source = {require("../assets/pictures/person1.jpg")}
+              containerStyle = {styles.barberPicture}
+              rounded
+              size= "large"
+              />
+
+<Text style = {styles.name}>Snoussi El Hareth</Text>
+            <Text style = {styles.info}>Blida - Bab Essebt</Text>
+            
+            <Rating imageSize={20} 
+                    readonly
+                   startingValue="3.6"
+                   style={styles.rating }
+                   ratingColor = "#FE9654"          
+                          type='custom'
+                       
+                        />
+                    
+            <Button 
+              buttonStyle ={styles.button}
+              title = "Profile" 
+             
+              titleStyle = {{color :"#fff",fontSize : 13}}
+              
+              />
+              </View>
+              </View>
+        </LinearGradient>
+        {/* <View  style = {styles.barberPictureContainer}>
 
          <ImageBackground resizeMode = "stretch" style = {{width : "100%" ,height : "100%" ,alignItems : "center" , justifyContent : "center"}} source = {require("../assets/pictures/test4.png")}>  
             <Avatar source = {require("../assets/pictures/person1.jpg")}
@@ -38,9 +96,10 @@ const TopBarbersCard = (props)=> {
               title = "Profile" 
              
               titleStyle = {{color :"#fff",fontSize : 13}}
+              
               />
 
-        </View>
+        </View> */}
     
   </View>
     )
@@ -56,14 +115,14 @@ const styles= StyleSheet.create({
 
   ///////////////////////////////////////////////////
   barberContainer : {
-    height : "90%",
-    width : screen.width * 0.6,
+    height :screen.width * 0.6,
+    width : screen.width * 0.5,
     alignSelf : "center",
     borderRadius : 25,
     overflow : "hidden",
     marginHorizontal : screen.width * 0.03,
     borderWidth : 0.3 ,
-   
+  
    
   },
   barberPictureContainer : {
@@ -110,4 +169,4 @@ const styles= StyleSheet.create({
   
   });
 
-export default TopBarbersCard;
+export default FavoriteCard;
