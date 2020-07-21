@@ -76,7 +76,7 @@ searchState === "" ? shownProperties =allProperties : shownProperties =searchedP
       </View>
             <ScrollView   showsVerticalScrollIndicator  = {false} style = {{borderWidth : 0.3}}>
           
-                  <BarberCard />
+                  <BarberCard navigate = {()=>props.navigation.navigate("BookStepOne")}/>
                   <BarberCard />
                   <BarberCard />
                   <BarberCard />

@@ -66,6 +66,7 @@ const BarberCard = props =>{
                 title ="Réserver" 
                 buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : 25,paddingHorizontal : "5%"}}
                 titleStyle = {{color :"#fff",fontSize : 13}}
+                onPress = {props.navigate}
                 />
               
               </View>
@@ -144,7 +145,7 @@ cardText : {
 name : {
     flexDirection : "row",
     justifyContent : "space-between",
-
+    
 
 },
 extra : {

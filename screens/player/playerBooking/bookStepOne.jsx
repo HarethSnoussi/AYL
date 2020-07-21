@@ -1,0 +1,309 @@
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { StyleSheet, Text, View , Picker,Image, Dimensions , StatusBar, Platform,ActionSheetIOS, ActivityIndicator} from 'react-native';
+import { Button ,ButtonGroup} from 'react-native-elements';
+import { LinearGradient } from 'expo-linear-gradient';
+import { ScrollView, FlatList, TouchableOpacity } from 'react-native-gesture-handler';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import moment from 'moment';
+import Colors from "../../../constants/Colors";
+import { FontAwesome } from '@expo/vector-icons'; 
+import 'moment/locale/fr';
+import { useDispatch, useSelector } from 'react-redux';
+import * as offersActions from "../../../store/actions/offers";
+
+import ConfirmBookingOverlay from "../../../components/ConfirmBookingOverlay";
+import ServicePicker from '../../../components/ServicePicker';
+
+
+const barberServices = [{type : "coupe classique" , price : 350 , time : 25},{type : "Barbe" , price : 150 , time : 10},{type : "Keartine" , price : 1500 , time : 55}];
+
+const screen = Dimensions.get("window");
+ 
+const BookStepOne = (props)=> {
+//Sum of Array elements
+const sumArray = (accumulator, currentValue) => accumulator + currentValue;
+
+const [isLoading , setLoading] = useState (false);
+
+//Array of ALL choosen Services by the customer
+const [pickedServices , setServices] = useState ([]);
+
+//ID OF the services
+const [addedID , setID] = useState([]);
+
+//number of Services 
+const [servicesNumber , setServicesNumber] = useState(0);
+
+//Type Added
+const [addedTypes , setTypes] = useState([]);
+
+//ALL prices Added
+const [addedPrices , setPrices] = useState ([]);
+
+//All Added Times
+const [addedTimes , setAddedTimes] = useState([]);
+
+//Total Amount State
+const [totalAmount,setAmount] = useState(0);
+
+//Total Time State
+const [totalTime , setTime] = useState(0);
+
+//ADD AND UPDATE SERVICES
+const setServicesHandler= (service,id)=>{
+   setServices(previous => {
+        return [...previous,  {...service }];
+      });
+    //   setServicesNumber(old=>old+1);
+    //   setID(previous=>{return([...previous,id])});
+      setTypes(previous=>[...previous,service.type]);
+      setPrices(previous=>[...previous,service.price]);
+      setAddedTimes(previous=>[...previous,service.time]);
+}
+
+const updateService =  (service,id) =>{
+    setServices(
+        prev =>{
+        prev[id].type = service.type;
+        prev[id].price = service.price;
+        prev[id].time = service.time;
+
+        return [...prev];
+    });
+    setTypes(prev =>{
+        prev[id] = service.type;
+        return [...prev];
+       
+    });
+
+    setPrices(prev =>{
+        prev[id] = service.price;
+        setAmount(addedPrices.reduce(sumArray));
+        return [...prev];
+    });
+
+    setAddedTimes(prev =>{
+        prev[id] = service.time;
+        setTime(addedTimes.reduce(sumArray));
+        return [...prev];
+    });
+
+}
+
+
+//DELETE SERVICES
+const deleteService = async (id)=>{
+    setLoading(true);
+const test = await (() => {
+ setServices(prev=>{
+        return prev.filter((service,index) => { return(index !== id)});
+})
+
+// setServicesNumber(old=>old-1);
+
+// setID(prev=>{
+//     return prev.filter(service =>{return (prev.indexOf(service) != id)})
+// })
+
+ setTypes(prev =>{
+    return prev.filter((service , index ) =>{return (index !== id)})
+});
+
+ setPrices(prev =>{
+    setAmount(prev => prev - addedPrices[id]);
+    return prev.filter((service ,index) =>{return (index !== id)})
+});
+
+ setAddedTimes(prev =>{
+    setTime(prev => prev - addedTimes[id]);
+    return prev.filter((service,index) =>{return (index !== id)})
+});
+})
+test();
+setLoading(false);
+ 
+}
+if (isLoading) {
+    return (
+      <View style= {styles.centered}>
+        <ActivityIndicator size="large" color="red" />
+      
+      </View>
+    );
+}
+
+return (
+            <View style= {styles.container}>
+                <View style = {styles.firstImage}>
+
+                <Image source = {require("../../../assets/pictures/barber2.jpg")} style = {{height : "100%",width : "100%"}}   />
+
+                </View>
+
+                <View style = {styles.bookingInfoContainer}>
+                <View style = {{height : "80%"}}>
+                    <View style = {styles.totalPrice}>
+                        <Text style = {styles.totalText}>Prix Total : </Text>
+                        <Text style = {styles.totalNumber} >{totalAmount} DZD</Text>
+                    </View>
+                    <View style = {styles.totalTime}>
+                        <Text style = {styles.totalText}>Temps Total : </Text>
+                        <Text style = {styles.totalNumber} >{totalTime} MIN </Text>
+                    </View>
+
+
+                    <View style = {styles.addService}>
+                    <View style= {{maxHeight : "100%"}}>
+               <ScrollView >
+                {
+                pickedServices.map((service,index)=>{
+                    return ( 
+                        <ServicePicker 
+                        key = {index}
+                        id = {index}
+                        updateService = {updateService} 
+                        barberServices = {barberServices} 
+                        addedTypes = {addedTypes}
+                        deleteService = {deleteService}
+                        service = {service}
+                        />   
+                            )
+
+                })
+                
+                }
+                </ScrollView>
+                  {
+                        pickedServices.length < barberServices.length &&
+
+                        <Button 
+                        onPress = {()=>setServicesHandler({type : " " , price : 0 , time : 0})} title = "Ajouter un Service"
+                        containerStyle = {{width : "40%",alignSelf : "center",marginVertical : "5%" , }}
+                        titleStyle  = {{fontSize : 14,fontFamily : "poppins",color : "#fff"}}
+                        type="outline" 
+                        buttonStyle = {{backgroundColor : "#fd6c57",borderColor :"#fd6c57"}}
+                        />
+                  }
+                </View>
+                  
+                  
+                    </View>
+
+                    
+                    </View>
+                   
+                    <Button 
+                   containerStyle = {{ height : "15%",width : "80%",alignSelf:"center" ,justifyContent : "center"  }} 
+                   title = "Continuer" 
+                   titleStyle = {{fontFamily : "poppins-bold"}}
+                   buttonStyle = {{borderRadius : 55}} 
+                   ViewComponent={LinearGradient} 
+                   linearGradientProps={{
+                        colors: ['#fd6d57', '#fd9054'],
+                        start: {x: 0, y: 0} ,
+                        end:{x: 1, y: 0}
+                    }}
+                onPress = {()=>props.navigation.navigate(
+                    "BookStepTwo", 
+                    { duration: totalTime,
+                      amount : totalAmount,
+                      services : pickedServices
+                     })
+                     }
+                   /> 
+                    
+
+                </View>
+                
+
+            </View>
+
+
+
+)
+
+
+}
+
+BookStepOne.navigationOptions = ()=> {
+    return {
+      headerTransparent : true,
+      title : "Réserver Un Service" ,
+      headerBackTitle : " ",
+      headerTintColor: "#fff" 
+    }
+
+}
+
+
+const styles= StyleSheet.create({
+   
+   container : {
+            flex : 1 ,
+   },
+   firstImage : {
+        height :"30%"
+   },
+//////////////////////////////////////////////////////////////////////////   
+   bookingInfoContainer : {
+       width : "100%",
+       height : "75%",
+       backgroundColor : "white",
+       borderTopLeftRadius : 25,
+       borderTopRightRadius : 25,
+        position : "absolute",
+        top : "25%",
+        overflow : "hidden",
+        justifyContent : "space-around"
+      
+   },
+////////////////////////////////////////////////////////////////////////////
+    totalPrice : {
+        flexDirection : "row",
+        justifyContent  : "space-between",
+        marginVertical : "5%",
+        width : "90%",
+        alignSelf : "center",
+        
+    },
+    totalTime : {
+        
+        flexDirection : "row",
+        justifyContent  : "space-between",
+       
+        width : "90%",
+        alignSelf : "center",
+     
+        
+    },
+    totalText : {
+    fontFamily : "poppins-bold",
+    fontSize : 16,
+    
+
+    },
+    totalNumber : {
+        fontFamily : "poppins-bold",
+        fontSize : 15,
+        color : "#fd6c57"
+    },
+    ////////////////////////////////////////////////////////////////////////////////
+    addService : {
+            height : "80%",
+            width: "90%",
+            alignSelf: "center",
+        
+    },
+    oneService : {
+            justifyContent :"space-between",
+            flexDirection :"row",
+    
+            alignItems : "center"
+    }
+ 
+    });
+  ///////////////////////////////////////////////////////////////////////////
+
+
+
+export default BookStepOne;

@@ -33,59 +33,60 @@ import PlayerProfileChoiceScreen from '../screens/home/playerProfileChoiceScreen
 import PlayerSettingsScreen from '../screens/player/playerProfile/playerSettingsScreen';
 import StartupScreen from "../screens/startupScreen";
 import AllBarbersScreen from '../screens/player/playerBooking/allBarbersScreen';
-
-
+import BookStepTwo from '../screens/player/playerBooking/bookStepTwo';
+import BookStepOne from '../screens/player/playerBooking/bookStepOne';
+import allBookingsScreen from '../screens/player/playerBooking/allBookingsScreen';
 ///////////////////////////////////////////////////////////////////
 //Tab Navigator For Player Bookings Screen
-const tabConfig = {
-  Réservations : {
-          screen : PlayerBookingsScreen ,
-          navigationOptions : {
-            tabBarLabel : "Mes Réservations" ,
-            tabBarColor : Colors.secondary ,
-            tabBarIcon : () => {
-              return( <Ionicons name = "ios-calendar" 
-              size = {22} color ="white"/>);
-                },
+// const tabConfig = {
+//   Réservations : {
+//           screen : PlayerBookingsScreen ,
+//           navigationOptions : {
+//             tabBarLabel : "Mes Réservations" ,
+//             tabBarColor : Colors.secondary ,
+//             tabBarIcon : () => {
+//               return( <Ionicons name = "ios-calendar" 
+//               size = {22} color ="white"/>);
+//                 },
         
-        }
+//         }
           
-  } ,
-  Expirés : {
-          screen : PlayerExpiredBookingsScreen,
-          navigationOptions : {
+//   } ,
+//   Expirés : {
+//           screen : PlayerExpiredBookingsScreen,
+//           navigationOptions : {
             
-            tabBarLabel : "Expirées" ,
-            tabBarColor : "rgba(198, 34, 37, 1)" ,
-            tabBarIcon : () => {
-              return( <MaterialIcons name = "history" 
-              size = {22} color ="white"/>);
-                }
-        } 
+//             tabBarLabel : "Expirées" ,
+//             tabBarColor : "rgba(198, 34, 37, 1)" ,
+//             tabBarIcon : () => {
+//               return( <MaterialIcons name = "history" 
+//               size = {22} color ="white"/>);
+//                 }
+//         } 
 
-  } 
-
-
-}
+//   } 
 
 
+// }
 
-const PlayerBookingsTab = createMaterialBottomTabNavigator(tabConfig, 
+
+
+// const PlayerBookingsTab = createMaterialBottomTabNavigator(tabConfig, 
       
-{
-  navigationOptions : {
-    title :"Mes Réservations",
-    headerBackTitle : " " ,
-    headerTintColor: Platform.OS === "android"? '#fff' : "rgba(53, 53, 53,1)" ,
-    headerStyle:{
-      backgroundColor:Platform.OS === "android" ?  "rgba(53, 53, 53,0.95)" : "white"
-  },
-  } ,
-activeColor: '#f0edf6',
-shifting : true ,
-labeled  : true
+// {
+//   navigationOptions : {
+//     title :"Mes Réservations",
+//     headerBackTitle : " " ,
+//     headerTintColor: Platform.OS === "android"? '#fff' : "rgba(53, 53, 53,1)" ,
+//     headerStyle:{
+//       backgroundColor:Platform.OS === "android" ?  "rgba(53, 53, 53,0.95)" : "white"
+//   },
+//   } ,
+// activeColor: '#f0edf6',
+// shifting : true ,
+// labeled  : true
 
-} ) ;
+// } ) ;
 
 
 //Tab Navigator For Client Home
@@ -134,17 +135,20 @@ const homeConfig = {
 
   
   Réservations : {
-    screen : PlayerBookingsTab,
+    screen : allBookingsScreen,
     navigationOptions : {
   
-      tabBarLabel : "Expirées" ,
+      tabBarLabel : "Réservations" ,
       tabBarColor : Colors.secondary ,
      
       tabBarIcon : ({tintColor}) => {
         return( <MaterialIcons name = "history" 
         size = {22} color={tintColor} />);
           },
-       
+          headerStyle:{
+            backgroundColor: "red",
+        },
+        headerTransparent: false
   } ,
 
   }
@@ -213,16 +217,18 @@ const FootNavigation = createStackNavigator({
    Owner : OwnerHomeScreen,
    AllBarbers :  AllBarbersScreen ,
    StadiumBooking : stadiumBookingScreen ,
+   BookStepTwo : BookStepTwo ,
+   BookStepOne : BookStepOne ,
    OwnerService : OwnerServiceScreen,
    EditService: EditServiceScreen,
    OwnerBookings: OwnerBookingsScreen,
    OwnerBookingsDetail: OwnerBookingsDetailScreen,
    OwnerSupport: OwnerSupportScreen,
    OwnerProfile: OwnerProfileScreen,
-   PlayerBookings :{ 
-     screen : PlayerBookingsTab 
+  //  PlayerBookings :{ 
+  //    screen : PlayerBookingsTab 
     
-    },
+  //   },
    OwnerSupport: OwnerSupportScreen,
    PlayerProfileScreen: PlayerProfileScreen,
    OwnerGalery: OwnerGaleryScreen,
@@ -235,6 +241,7 @@ const FootNavigation = createStackNavigator({
 
 
  const AuthNavigation = createStackNavigator({
+   
   Login: LoginScreen,
   Role : ProfileChoiceScreen,
   Signup: SignupScreen,

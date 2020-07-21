@@ -27,7 +27,7 @@ const TopBarbersCard = (props)=> {
             <Text style = {styles.info}>05525252</Text>
             <Rating imageSize={20} 
                     readonly
-                   startingValue="3.6"
+                   startingValue= {3.65}
                    style={styles.rating }
                    ratingColor = "#FE9654"          
                           type='custom'
@@ -36,8 +36,8 @@ const TopBarbersCard = (props)=> {
             <Button 
               buttonStyle ={styles.button}
               title = "Profile" 
-             
               titleStyle = {{color :"#fff",fontSize : 13}}
+             
               />
 
         </View>

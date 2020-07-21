@@ -44,7 +44,7 @@ const TopSalonsCard = (props)=> {
                         title = "Detail" 
                         containerStyle = {styles.cardBodyButton}
                         />
-                 
+                
 
                       </View>
 
@@ -73,8 +73,7 @@ const styles= StyleSheet.create({
    },
    topBarbers : {
     width : "100%",
-    height : screen.height * 0.4 ,
-  
+    height : screen.height * 0.4 
   },
    topBarbersCard : {
      width : screen.width * 0.75 ,
@@ -101,14 +100,12 @@ const styles= StyleSheet.create({
       marginHorizontal : "5%",
       marginTop :"2%",
       overflow : "hidden",
-      
-      height : "33%",
+      height : "30%",
       alignItems : "center"
-
-    
    },
    cardBodyInfo : {
-    marginHorizontal : "5%"
+    marginHorizontal : "5%",
+    height : "30%"
    }, 
    cardBodyButton : {
       alignItems :"flex-end",
@@ -134,7 +131,8 @@ const styles= StyleSheet.create({
    },
    address : {
       fontFamily : "poppins",
-    color : "#9d9da1"
+    color : "#9d9da1",
+    
 
    }
   

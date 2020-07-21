@@ -116,8 +116,7 @@ const LoginScreen = props =>{
 
   const players= useSelector(state=>state.players.players);
   const owners= useSelector(state=>state.owners.owners);
-  console.log(owners);
-  console.log(players);
+  
   ////Input management
   const [isLogin,setIsLogin]= useState(false);//ActivityIndicator handling
   
