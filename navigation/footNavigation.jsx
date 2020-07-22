@@ -35,7 +35,8 @@ import StartupScreen from "../screens/startupScreen";
 import AllBarbersScreen from '../screens/player/playerBooking/allBarbersScreen';
 import BookStepTwo from '../screens/player/playerBooking/bookStepTwo';
 import BookStepOne from '../screens/player/playerBooking/bookStepOne';
-import allBookingsScreen from '../screens/player/playerBooking/allBookingsScreen';
+import AllBookingsScreen from '../screens/player/playerBooking/allBookingsScreen';
+import BookingDetail from '../screens/player/playerBooking/bookingDetail';
 ///////////////////////////////////////////////////////////////////
 //Tab Navigator For Player Bookings Screen
 // const tabConfig = {
@@ -135,7 +136,7 @@ const homeConfig = {
 
   
   Réservations : {
-    screen : allBookingsScreen,
+    screen : AllBookingsScreen,
     navigationOptions : {
   
       tabBarLabel : "Réservations" ,
@@ -225,10 +226,7 @@ const FootNavigation = createStackNavigator({
    OwnerBookingsDetail: OwnerBookingsDetailScreen,
    OwnerSupport: OwnerSupportScreen,
    OwnerProfile: OwnerProfileScreen,
-  //  PlayerBookings :{ 
-  //    screen : PlayerBookingsTab 
-    
-  //   },
+   BookingDetail : BookingDetail,
    OwnerSupport: OwnerSupportScreen,
    PlayerProfileScreen: PlayerProfileScreen,
    OwnerGalery: OwnerGaleryScreen,

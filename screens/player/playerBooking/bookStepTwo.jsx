@@ -101,7 +101,6 @@ const [availableSlots , setAvailableSlots] = useState(hours);
 
 //Selected date
 const pickedDateHandler = (date) => {
-  
    setDatePickerVisibility(false);
     setPickedDateText(moment(date).format('LL'));
     setPickedDate(date);
