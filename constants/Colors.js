@@ -3,7 +3,7 @@ export default{
     secondary:"#006d6a",
     grey : "#ebebeb",
     orange : "#c62225",
-    background : "#1E1F28",
+    background : "#212327",
     colorF1 : "#5B3758",
     colorF2 : "#C65B7c",
     colorF3 : "#F9627D",
