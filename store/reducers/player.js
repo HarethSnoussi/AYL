@@ -7,7 +7,7 @@ const initialState={
 };
 
 const playersReducer=(state=initialState,action)=>{
-  console.log(action.type);
+
    switch(action.type){
        case CREATE_PLAYER:
          const newPlayer= new Player(action.playerData.id,action.playerData.phone,action.playerData.password,

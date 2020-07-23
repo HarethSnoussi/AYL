@@ -4,9 +4,7 @@ import {createAppContainer,createSwitchNavigator} from 'react-navigation';
 import {Platform,AsyncStorage} from 'react-native';
 import Colors from '../constants/Colors';
 import {createMaterialBottomTabNavigator} from "react-navigation-material-bottom-tabs"
-import LoginScreen from '../screens/loginScreen';
 
-import SignupScreen from '../screens/player/signupScreen';
 
 import {Ionicons,  MaterialIcons} from "@expo/vector-icons";
 import ClientHomeScreen from '../screens/home/clientHomeScreen';

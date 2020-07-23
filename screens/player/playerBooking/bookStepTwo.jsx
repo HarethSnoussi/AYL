@@ -70,6 +70,8 @@ const hours = [
 const hoursTime = hours.map(hour=>hour.time);
 const screen = Dimensions.get("window");
 moment.locale("fr");   
+
+/////////////////////////////////////////////////////////////////////////
 const BookStepTwo = (props)=> {
 const totalTime = props.navigation.getParam("duration");
 let duration = Math.ceil(totalTime/15)  ; 
@@ -78,10 +80,21 @@ if(duration === 1 ) {
 }
 
 const allBookings = [
-    {id:1 ,date_booking : new Date(), start : "09:00",end : "10:00",duration : 60 , status : "confirmée", clientId : "+213557115451",barberId : "+213550461010"},
+    // {id:1 ,date_booking : new Date(), start : "09:00",end : "10:00",duration : 60 , status : "confirmée", clientId : "+213557115451",barberId : "+213550461010"},
 
-    {id:2 , date_booking : new Date() , start : "11:00",end : "11:30",duration : 30 , status : "confirmée", clientId : "+213553633809",barberId : "+213550461010"}
+    // {id:2 , date_booking : new Date() , start : "11:00",end : "11:30",duration : 30 , status : "confirmée", clientId : "+213553633809",barberId : "+213550461010"}
 ];
+
+//overlay State
+const [overlayState , setOverlayState]=useState(false);
+
+    //Overlay Handelr
+    const overlayHandler = ()=>{
+     
+        setOverlayState((previous) => !previous);
+  
+      }
+  
 
 //Make the DatePcikerVisible
 const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -98,6 +111,8 @@ const [selectedButtonIndex , setButtonIndex] = useState(0);
 //Available slots State
 const [availableSlots , setAvailableSlots] = useState(hours);
 
+//picked Hour
+const [pickedSlot,setPickedSlot] = useState(hours[0].time);
 
 //Selected date
 const pickedDateHandler = (date) => {
@@ -109,9 +124,10 @@ const pickedDateHandler = (date) => {
 
   //Color Changing Button
  const buttonColorHandler = (a)=>{
+    
     setButtonIndex (a);
+    setPickedSlot(hours[a].time);
  }
-
  //Managing the Bookings (Removing the exsiting Bookings)
  useEffect(()=>{
 //Filter the selected Date Bookings
@@ -158,6 +174,22 @@ else{
 
 return (
             <View style= {styles.container}>
+{/* 
+{ overlayState && <ConfirmBookingOverlay
+        isVisible = {overlayState}
+        overlayHandler = {overlayHandler}
+
+        matchType = "5x5"
+        dateMatch = {selectedDateState.date}
+        start = {pickedSlot}
+        serviceId = {selectedId}
+        navigate = {()=>props.navigation.navigate("Client")}
+        ownerId = {props.navigation.getParam("owner")}
+        amount = {props.navigation.getParam("amount")}
+        duration = {totalTime}
+        services = {props.navigation.getParam("services")}
+       />   
+    } */}
                 <View style = {styles.firstImage}>
 
                 <Image source = {require("../../../assets/pictures/barber2.jpg")} style = {{height : "100%",width : "100%"}}   />

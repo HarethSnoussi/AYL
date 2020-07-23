@@ -10,21 +10,13 @@ import moment from 'moment';
 const ConfimBookingOverlay = (props)=>{
 
 const dispatch = useDispatch(); 
+// date,date_booking, start,end,status,client_id,barber_id
 
-let end  ;
+
+const end = moment.utc("2020-05-01T"+props.hourMatch).add(props.duration,"m").format("HH:mm");  
 
 
-if(props.matchTime === "1h"){
 
-end = moment.utc("2020-05-01T"+props.hourMatch).add(60,"m").format("HH:mm");  
-
-}else if (props.matchTime === "1h30"){
-end = moment.utc("2020-05-01T"+props.hourMatch).add(90,"m").format("HH:mm");  
-
-}else {
-end = moment.utc("2020-05-01T"+props.hourMatch).add(120,"m").format("HH:mm");  
-
-}
 
 
 
@@ -39,11 +31,11 @@ const date = new Date();
     ownerId : props.ownerId,
     playerId : "+213557115451",
     serviceId : props.serviceId,
-    start : props.hourMatch ,
+    start : props.start ,
     status : "confirmée",
-    tarif : props.tarif ,
+    amount : props.amount ,
     timeMatch : props.matchTime,
-    typeMatch : props.matchType,
+    services : props.services,
     
     
    

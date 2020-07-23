@@ -10,25 +10,24 @@ import BarberNavigation from './navigation/barberNavigation';
 import {AppLoading} from 'expo';
 import * as Font from 'expo-font';
 
-import offersReducer from "./store/reducers/offers";
 import bookingsReducer from "./store/reducers/bookings";
 import authReducer from './store/reducers/auth';
 import playersReducer from './store/reducers/player';
 
 import propertiesReducer from './store/reducers/property'; 
-import servicesReducer from './store/reducers/service'; 
+import servicesReducer from './store/reducers/servicesReducer';
+
 
 enableScreens();
 
 //Create the store and the combine reducers
 const rootReducer = combineReducers({
-offers : offersReducer,
+// offers : offersReducer,
 auth: authReducer,
 players:playersReducer,
-owners:ownersReducer,
 bookings : bookingsReducer,
 properties:propertiesReducer,
-services:servicesReducer
+services : servicesReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

@@ -9,7 +9,6 @@ const initialState={
 const offersReducer = (state = initialState,action)=>{
 switch(action.type){
    case SET_OFFERS :
-       
        return {
         ...state ,
         offers : action.offers 
@@ -19,8 +18,6 @@ switch(action.type){
 
 }
 
-
-    
 
 }
 

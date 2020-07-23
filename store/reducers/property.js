@@ -9,7 +9,7 @@ const initialState = {
 };
 
 const propertiesReducer=(state=initialState,action)=>{
-    console.log(action.type);
+  
     switch(action.type){
         case CREATE_PROPERTY:
           const newProperty= new Property(action.propertyData.id,action.propertyData.name,action.propertyData.address,
