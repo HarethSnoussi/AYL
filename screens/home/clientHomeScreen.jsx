@@ -27,14 +27,18 @@ const playerUID= props.navigation.getParam('playerUID');
       
       <ScrollView >
             <ImageBackground source = {require("../../assets/pictures/barber4.png")} style = {styles.firstImage}  resizeMode ="stretch" imageStyle ={styles.image} >
-           
+{/*            
            <SearchBar placeholder=" Recherche salon , coiffeur"
         containerStyle = {styles.searchBar}
         inputContainerStyle = {{
                 borderRadius : 25,
                 backgroundColor :"white"
         }}
-        lightTheme = {true} />
+        lightTheme = {true} /> */}
+            <View style = {styles.firstTitle}>  
+            <Text style = {styles.titleText}>Trouver Votre Coiffeur</Text>
+            </View>
+       
             </ImageBackground>
 
 
@@ -47,7 +51,7 @@ const playerUID= props.navigation.getParam('playerUID');
                 
                 </Text>
                 <TouchableOpacity  
-                onPress={() =>props.navigation.navigate("AllBarbers")} >
+                onPress={() =>props.navigation.navigate("AllBarbers",{type : "Tous les salons"})} >
                 <Text style = {styles.showAll}>
                 Tout Afficher
                 
@@ -76,7 +80,7 @@ const playerUID= props.navigation.getParam('playerUID');
                 
                 </Text>
                 <TouchableOpacity  
-                onPress={() =>props.navigation.navigate("AllBarbers")} >
+                onPress={() =>props.navigation.navigate("AllBarbers",{type : "Tous les coiffeurs "})} >
                 <Text style = {styles.showAll}>
                 Tout Afficher
                 
@@ -168,6 +172,12 @@ showAll : {
   color : "#9d9da1"
 
 },
+titleText : {
+    fontFamily :"poppins-bold",
+    fontSize : 20,
+    color : "#FFF"
+
+},
 ///////////////////////////////////////////////////
 
  /////////////////////////////////////////////////
@@ -179,6 +189,15 @@ showAll : {
   marginTop : 15,
   borderTopWidth : 0 , 
   borderBottomWidth : 0 
+  },
+
+  firstTitle : {
+    width : "80%" , 
+    alignSelf : "center",
+    alignItems : "center",
+  borderRadius : 15,
+  marginTop : 15,
+
   }
    
 

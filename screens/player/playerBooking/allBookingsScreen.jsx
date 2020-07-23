@@ -23,8 +23,8 @@ const AllBookingsScreen = (props) => {
 
 const allBookings = [
         {id:1 ,date_booking : '2020-07-24', start : "09:00",end: "10:00",duration : 60 , status : "confirmée", clientId : "+213557115451",barberId : "+213550461010" , price : 800 },
-        {id:2,date_booking : '2020-07-24', start : "07:00",end: "08:00",duration : 80 , status : "confirmée", clientId : "+213557115451",barberId : "+213550461010" , price : 500},
-        {id:2 , date_booking : '2020-07-25' , start : "11:00",end : "11:30",duration : 30 , status : "confirmée", clientId : "+213553633809",barberId : "+213550461010" , price : 1000}
+        {id:2,date_booking : '2020-07-24', start : "07:00",end: "08:00",duration : 80 , status : "annulée", clientId : "+213557115451",barberId : "+213550461010" , price : 500},
+        {id:3 , date_booking : '2020-07-25' , start : "11:00",end : "11:30",duration : 30 , status : "confirmée", clientId : "+213553633809",barberId : "+213550461010" , price : 1000}
     ];
 
 //Selected Date State

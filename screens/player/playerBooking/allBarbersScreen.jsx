@@ -69,7 +69,7 @@ searchState === "" ? shownProperties =allProperties : shownProperties =searchedP
       
          <View>
         
-          <Text style = {{fontFamily : "poppins-bold",fontSize : 18}}>Tous les Salons  </Text>
+          <Text style = {{fontFamily : "poppins-bold",fontSize : 18}}>{props.navigation.getParam("type")} </Text>
           <Text style = {{fontFamily : "poppins",color:"#9d9da1"}}>355 Résultats </Text>
           </View>
           <FontAwesome5 name="filter" size={24} color="#333" />

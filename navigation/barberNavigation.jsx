@@ -5,90 +5,26 @@ import {Platform,AsyncStorage} from 'react-native';
 import Colors from '../constants/Colors';
 import {createMaterialBottomTabNavigator} from "react-navigation-material-bottom-tabs"
 import LoginScreen from '../screens/loginScreen';
-import ProfileChoiceScreen from '../screens/profileChoiceScreen';
+
 import SignupScreen from '../screens/player/signupScreen';
-import SignupOwnerScreen from '../screens/owner/signupOwnerScreen';
-import OwnerServiceScreen from '../screens/owner/ownerBooking/ownerServiceScreen';
-import EditServiceScreen from '../screens/owner/ownerBooking/editServiceScreen';
-import OwnerBookingsScreen from '../screens/owner/ownerBooking/ownerBookingsScreen';
-import OwnerBookingsDetailScreen from '../screens/owner/ownerBooking/ownerBookingsDetailScreen';
-import OwnerSupportScreen from '../screens/owner/ownerProfile/ownerSupportScreen';
-import OwnerProfileScreen from '../screens/owner/ownerProfile/ownerProfileScreen';
-import OwnerGaleryScreen from '../screens/owner/ownerProfile/ownerGaleryScreen';
-import OwnerProfileChoiceScreen from '../screens/home/ownerProfileChoiceScreen';
-import OwnerSettingsScreen from '../screens/owner/ownerProfile/ownerSettingsScreen';
-
-import PlayerBookingsScreen from "../screens/player/playerBooking/playerBookingsScreen";
-
 
 import {Ionicons,  MaterialIcons} from "@expo/vector-icons";
 import ClientHomeScreen from '../screens/home/clientHomeScreen';
-import OwnerHomeScreen from '../screens/home/ownerHomeScreen';
 
 import stadiumBookingScreen from "../screens/player/playerBooking/stadiumBookingScreen";
-import PlayerExpiredBookingsScreen from '../screens/player/playerBooking/playerExpiredBookingsScreen';
-import PlayerProfileScreen from "../screens/player/playerProfile/playerProfileScreen";
-import ForgotPasswordScreen from "../screens/forgotPasswordScreen";
-import PlayerProfileChoiceScreen from '../screens/home/playerProfileChoiceScreen';
+
+// import PlayerProfileScreen from "../screens/player/playerProfile/playerProfileScreen";
+// import ForgotPasswordScreen from "../screens/forgotPasswordScreen";
+
+
 import PlayerSettingsScreen from '../screens/player/playerProfile/playerSettingsScreen';
-import StartupScreen from "../screens/startupScreen";
+// import StartupScreen from "../screens/startupScreen";
 import AllBarbersScreen from '../screens/player/playerBooking/allBarbersScreen';
 import BookStepTwo from '../screens/player/playerBooking/bookStepTwo';
 import BookStepOne from '../screens/player/playerBooking/bookStepOne';
 import AllBookingsScreen from '../screens/player/playerBooking/allBookingsScreen';
 import BookingDetail from '../screens/player/playerBooking/bookingDetail';
 ///////////////////////////////////////////////////////////////////
-//Tab Navigator For Player Bookings Screen
-// const tabConfig = {
-//   Réservations : {
-//           screen : PlayerBookingsScreen ,
-//           navigationOptions : {
-//             tabBarLabel : "Mes Réservations" ,
-//             tabBarColor : Colors.secondary ,
-//             tabBarIcon : () => {
-//               return( <Ionicons name = "ios-calendar" 
-//               size = {22} color ="white"/>);
-//                 },
-        
-//         }
-          
-//   } ,
-//   Expirés : {
-//           screen : PlayerExpiredBookingsScreen,
-//           navigationOptions : {
-            
-//             tabBarLabel : "Expirées" ,
-//             tabBarColor : "rgba(198, 34, 37, 1)" ,
-//             tabBarIcon : () => {
-//               return( <MaterialIcons name = "history" 
-//               size = {22} color ="white"/>);
-//                 }
-//         } 
-
-//   } 
-
-
-// }
-
-
-
-// const PlayerBookingsTab = createMaterialBottomTabNavigator(tabConfig, 
-      
-// {
-//   navigationOptions : {
-//     title :"Mes Réservations",
-//     headerBackTitle : " " ,
-//     headerTintColor: Platform.OS === "android"? '#fff' : "rgba(53, 53, 53,1)" ,
-//     headerStyle:{
-//       backgroundColor:Platform.OS === "android" ?  "rgba(53, 53, 53,0.95)" : "white"
-//   },
-//   } ,
-// activeColor: '#f0edf6',
-// shifting : true ,
-// labeled  : true
-
-// } ) ;
-
 
 //Tab Navigator For Client Home
 const homeConfig = {
@@ -107,7 +43,7 @@ const homeConfig = {
           
   } ,
   Profile : {
-          screen : PlayerProfileChoiceScreen,
+          screen : AllBarbersScreen,
           navigationOptions : {
             
             tabBarLabel : "Profile" ,
@@ -121,10 +57,8 @@ const homeConfig = {
    NearMe : {
           screen : AllBarbersScreen,
           navigationOptions : {
-            tabBarLabel : "Localisation" ,
+            tabBarLabel : "Coiffeurs" ,
             tabBarColor : Colors.secondary ,
-         
-
             tabBarIcon : ({tintColor}) => {
           
               return( <MaterialIcons name = "location-on" 
@@ -206,51 +140,42 @@ barStyle : {
    return OwnerHomeScreen;
   }
 };*/
-
 ///////////////////////////////////////////////////////////////////
 
 //Main Stack Navigator
-const FootNavigation = createStackNavigator({
+const BarberNavigation = createStackNavigator({
    
    Client : {
      screen : clientHomeTabs
    }, 
-   Owner : OwnerHomeScreen,
+
    AllBarbers :  AllBarbersScreen ,
    StadiumBooking : stadiumBookingScreen ,
    BookStepTwo : BookStepTwo ,
    BookStepOne : BookStepOne ,
-   OwnerService : OwnerServiceScreen,
-   EditService: EditServiceScreen,
-   OwnerBookings: OwnerBookingsScreen,
-   OwnerBookingsDetail: OwnerBookingsDetailScreen,
-   OwnerSupport: OwnerSupportScreen,
-   OwnerProfile: OwnerProfileScreen,
+
    BookingDetail : BookingDetail,
-   OwnerSupport: OwnerSupportScreen,
-   PlayerProfileScreen: PlayerProfileScreen,
-   OwnerGalery: OwnerGaleryScreen,
-   OwnerProfileChoice: OwnerProfileChoiceScreen,
-   PlayerProfileChoice: PlayerProfileChoiceScreen,
-   OwnerSettings:OwnerSettingsScreen,
+
+  //  PlayerProfileScreen: PlayerProfileScreen,
+  
    PlayerSettings:PlayerSettingsScreen
 },
 );
 
 
- const AuthNavigation = createStackNavigator({
+//  const AuthNavigation = createStackNavigator({
    
-  Login: LoginScreen,
-  Role : ProfileChoiceScreen,
-  Signup: SignupScreen,
-  SignupOwner:SignupOwnerScreen,
-  ForgotPassword:ForgotPasswordScreen
- });
+//   Login: LoginScreen,
+
+//   Signup: SignupScreen,
+ 
+//   ForgotPassword:ForgotPasswordScreen
+//  });
 
 const MainNavigation = createSwitchNavigator({
-  Startup:StartupScreen,
-  Auth: AuthNavigation,
-  Main: FootNavigation
+  // Startup:StartupScreen,
+  // Auth: AuthNavigation,
+  Main: BarberNavigation
 })
 
 

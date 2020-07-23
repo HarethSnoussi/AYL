@@ -29,19 +29,20 @@ const BarberCard = props =>{
         </View>
 
         <View style = {styles.cardText}>
+
         <View>
               <View style= {styles.name}>
                 <Text style = {{fontFamily : "poppins-bold"}} >Mohamed Mohamed</Text>
-                <View style = {{flexDirection : "row"}}>
+                {/* <View style = {{flexDirection : "row"}}>
              
                 <EvilIcons name="location" size={24} color="#9d9da1" />
                 <Text style = {{fontFamily : "poppins", color : "#9d9da1"}}>3.5 km</Text>
-                </View>
+                </View> */}
               </View>
-              <Text style = {{fontFamily : "poppins", color : "#9d9da1"}} >18 Rue Mohamed Orangerie
+              <Text style = {{fontFamily : "poppins", color : "#9d9da1"}} >Bab Essebt-Blida
               </Text>
        </View>
-           
+
               <View style= {styles.extra}>
               <View  style= {styles.extraHours}>
               <View style = {{flexDirection : "row"}}>
@@ -58,7 +59,7 @@ const BarberCard = props =>{
                   />
                     <Text>3.2</Text>
                   </View>
-              <Text style ={{color : "#fd6c57",fontFamily : "poppins",letterSpacing : 1}}>8:00 - 19:00 </Text>
+              <Text style ={{color : "#fd6c57",fontFamily : "poppins-bold",letterSpacing : 1}}>Voir le profil </Text>
                
                 </View>
                

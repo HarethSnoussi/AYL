@@ -13,26 +13,30 @@ const screen = Dimensions.get("window");
 
 const BookingCard = props =>{
 
+  const gradient1 = props.status === "confirmée" ? "#fd6d57" : "#b31217";
+  const gradient2 = props.status === "confirmée" ? "#fd9054" : "#e52d27";
 
 
     return(
-      
       <View style = {styles.card} >
-    
-    <LinearGradient colors = { ['#fd6d57', '#fd9054']} style = {styles.leftDate}>
+        <LinearGradient colors = { [gradient1, gradient2]} style = {styles.leftDate}>
               <Text style = {styles.dateText}>{props.day}</Text>
               <Text style = {styles.dateText} >{props.date}</Text>
           </LinearGradient>
           <View style = {styles.infos}>
 
              <Text style = {styles.status}>Status :
-              <Text style = {styles.statusType}> {props.status}</Text>
+              <Text style = {{...styles.statusType,...{color : gradient2}}}> {props.status}</Text>
                </Text>
               <Text style = {styles.slotText} >Horraires : {props.start} - {props.end} </Text>
          
            
 
-              <Text style = {styles.priceText}>Prix :{props.price} DA</Text>
+              <Text style = {{...styles.priceText ,...{color : gradient2,  textDecorationLine: props.status ==="annulée" ? 'line-through' : "none" ,
+              }
+              }}>
+              Prix :{props.price} DA
+              </Text>
               {/* <Text style = {styles.slotText}>Fin : </Text> */}
               
            
@@ -128,7 +132,8 @@ price :{
   width : "10%" , 
   borderTopRightRadius : 10,
   borderBottomRightRadius : 10,
-  alignItems : "center"
+  alignItems : "center",
+
 
 },
 detailButton : {
@@ -174,7 +179,7 @@ color:"#252525"
  
 },
 statusType : {
-  color : Colors.primary,
+  // color : Colors.primary,
   fontFamily : "poppins-bold",
 
 }

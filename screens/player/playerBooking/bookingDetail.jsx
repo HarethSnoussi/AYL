@@ -39,7 +39,7 @@ const BookingDetail = props =>{
           </View>
 
 
-        
+        { props.navigation.getParam("status") === "confirmée" &&
           <View style = {{alignItems : "center"}} >
           
           <Ionicons name="ios-close-circle-outline" 
@@ -49,7 +49,7 @@ const BookingDetail = props =>{
   
             <Text style = {styles.actionsText}>Annuler</Text>
 
-          </View>
+          </View>}
        
             </View>
 
