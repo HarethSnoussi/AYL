@@ -53,6 +53,49 @@ const [totalAmount,setAmount] = useState(0);
 //Total Time State
 const [totalTime , setTime] = useState(0);
 
+//Fetched DATA
+const [data,setData] = useState([]);
+
+//fetched Bookings 
+
+const [bookings,setBookings] = useState([]);
+
+useEffect(()=>{
+ const getData = async ()=>{
+    setLoading(true);
+    try {
+        const arr = await fetch(`http://192.168.1.5:3000/barber/hours/${props.navigation.getParam("barberId")}`);
+        const resData = await arr.json ();
+        setData([...resData]);
+
+    
+        }
+    
+    catch (error) {
+        console.log("There is an Error");
+    }
+
+    try {
+       
+
+        const arr = await fetch(`http://192.168.1.5:3000/bookings/barberBookings/${props.navigation.getParam("barberId")}`);
+         const resData = await arr.json ();
+     
+        setBookings([...resData]);
+        }
+    
+    catch (error) {
+        console.log("There is an Error");
+    }
+
+
+    setLoading(false);
+
+ };
+getData();
+
+
+},[props.navigation.getParam("barberId")]);
 //GET THE SERVICES
 useEffect(()=>{
     const loadProducts = async () =>{
@@ -81,6 +124,7 @@ const updateService =  (service,id) =>{
 
     setServices(
         prev =>{
+        prev[id].id = service.id;
         prev[id].name = service.name;
         prev[id].price = service.price;
         prev[id].duration = service.duration;
@@ -141,11 +185,12 @@ setLoading(false);
  
 }
 
+
 if (isLoading) {
     
     return (
       <View style= {styles.centered}>
-        <ActivityIndicator size="large" color="red" />
+        <ActivityIndicator size="large" color= {Colors.primary} />
       
       </View>
     );
@@ -197,7 +242,7 @@ return (
                         pickedServices.length < barberServices.length &&
                       
                         <Button 
-                        onPress = {()=>setServicesHandler({name : " " , price : 0 , duration : 0})} title = "Ajouter un Service"
+                        onPress = {()=>setServicesHandler({id : 0 ,name : " " , price : 0 , duration : 0})} title = "Ajouter un Service"
                         containerStyle = {{width : "40%",alignSelf : "center",marginVertical : "5%" , }}
                         titleStyle  = {{fontSize : 14,fontFamily : "poppins",color : "#fff"}}
                         type="outline" 
@@ -229,7 +274,9 @@ return (
                     { duration: totalTime,
                       amount : totalAmount,
                       services : pickedServices,
-                      owner : props.navigation.getParam("barberId")
+                      barber : props.navigation.getParam("barberId"),
+                      workingTime : data,
+                      bookings : bookings
                      })
                      }
                    /> 
@@ -321,8 +368,13 @@ const styles= StyleSheet.create({
             flexDirection :"row",
     
             alignItems : "center"
-    }
- 
+    },
+    //////////////////////////////////////////////////////
+    centered: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+      }
     });
   ///////////////////////////////////////////////////////////////////////////
 

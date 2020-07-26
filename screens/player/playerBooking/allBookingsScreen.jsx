@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View,ActivityIndicator, Dimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Avatar ,Badge } from 'react-native-elements';
@@ -7,6 +7,8 @@ import * as bookingsActions from "../../../store/actions/bookings";
 import {Calendar, CalendarList, Agenda,LocaleConfig} from 'react-native-calendars';
 import BookingCard from '../../../components/BookingCard';
 import moment from 'moment';
+import { useDispatch, useSelector } from 'react-redux';
+import { getClientBookings } from '../../../store/actions/bookingsActions';
 
 
 const screen = Dimensions.get("window");
@@ -19,13 +21,16 @@ LocaleConfig.locales['fr'] = {
     today: 'Aujourd\'hui'
   };
   LocaleConfig.defaultLocale = 'fr';
-const AllBookingsScreen = (props) => {
 
-const allBookings = [
-        {id:1 ,date_booking : '2020-07-24', start : "09:00",end: "10:00",duration : 60 , status : "confirmée", clientId : "+213557115451",barberId : "+213550461010" , price : 800 },
-        {id:2,date_booking : '2020-07-24', start : "07:00",end: "08:00",duration : 80 , status : "annulée", clientId : "+213557115451",barberId : "+213550461010" , price : 500},
-        {id:3 , date_booking : '2020-07-25' , start : "11:00",end : "11:30",duration : 30 , status : "confirmée", clientId : "+213553633809",barberId : "+213550461010" , price : 1000}
-    ];
+  ///////////////////////////////////////////////////////////////////////
+const AllBookingsScreen = (props) => {
+const allBookings = useSelector(state => state.bookings.bookings);
+// console.log(bookings);
+// const allBookings = [
+//         {id:1 ,bookingDate : '2020-07-24', start : "09:00",end: "10:00",duration : 60 , status : "confirmée", clientId : "+213557115451",barberId : "+213550461010" , amount : 800 },
+//         {id:2,bookingDate : '2020-07-24', start : "07:00",end: "08:00",duration : 80 , status : "annulée", clientId : "+213557115451",barberId : "+213550461010" , amount : 500},
+//         {id:3 , bookingDate : '2020-07-25' , start : "11:00",end : "11:30",duration : 30 , status : "confirmée", clientId : "+213553633809",barberId : "+213550461010" , amount : 1000}
+//     ];
 
 //Selected Date State
 const [selectedDate , setSelectedDate] = useState(new Date());
@@ -38,12 +43,16 @@ const [dayBookings , setDayBookings] = useState([]);
 //calendar selected Date object
  const [selectedDay , setSelectedDay] = useState(moment().format('ddd')) ;
 
-const days = allBookings.map(e=>e.date_booking);
+ const [isLoading , setLoading] = useState(false);
+
+const dispatch = useDispatch();
+
+const days = allBookings.map(e=>e.bookingDate);
 let mark = {};
 
 days.forEach(day => {
     
-    mark[day] = {
+    mark[day] = { 
         selected: true, 
         marked: true , 
         selectedColor:"#fff",
@@ -51,13 +60,28 @@ days.forEach(day => {
     };
 
 });
+//Dispatch and get the bookings 
+useEffect(()=>{
+     const getBookings = async ()=>{
+
+            setLoading(true);
+            await dispatch(getClientBookings("+213553633809"));
+            setLoading(false);
+
+     }
+
+     getBookings();
+
+
+},[dispatch])
+
 
 
 
 const selectedDateHandler = (date) => {
 
     // console.log(allBookings[days.indexOf(date.dateString)])
-const dayBooks = allBookings.filter(bookings => bookings.date_booking === date.dateString );
+const dayBooks = allBookings.filter(bookings => bookings.bookingDate === date.dateString );
 
 setSelectedDateText(moment(date.dateString).format('LL'));
 
@@ -66,6 +90,16 @@ setDayBookings ([...dayBooks]);
 setSelectedDay(moment(date.dateString).format('ddd'));
 
 };
+//IF IS LOADING
+if (isLoading) {
+    
+    return (
+      <View style= {styles.centered}>
+        <ActivityIndicator size="large" color= {Colors.primary} />
+      
+      </View>
+    );
+}
 
 
     return(
@@ -109,22 +143,22 @@ setSelectedDay(moment(date.dateString).format('ddd'));
                 <ScrollView style = {styles.cardsContainer}>
 
                 {
-                    dayBookings.map(booking=>{
-
+                    dayBookings.map((booking , index)=>{
                         
                         return(
                         <BookingCard
-                            key = {booking.id}
+                            key = {index}
                             start = {booking.start}
                             end = {booking.end}
-                            bookingDate = {booking.date_booking}
+                            bookingDate = {booking.bookingDate}
                             status = {booking.status}
-                            price = {booking.price}
+                            amount = {booking.amount}
                             day = {selectedDay}
-                            date = {moment(booking.date_booking).date()}
+                            date = {moment(booking.bookingDate).date()}
                             navigation = {props.navigation}
-                            status = {booking.status}
+                            services = {booking.services}
                             detail= {true}
+                            barberId = {booking.barberId}
                          /> 
 
                     )})
@@ -163,6 +197,12 @@ const styles= StyleSheet.create({
  
          
    },
+   //////////////////////////////////////////////////////
+   centered: {
+       flex: 1,
+       justifyContent: 'center',
+       alignItems: 'center'
+     }
    
   });
 

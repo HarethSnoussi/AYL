@@ -66,7 +66,7 @@ return(
             placeholder={{
                     label: 'Selectionner Un Service ... ',
                     color : "#7f7d7c",
-                    value : {name : " " , price : 0 , duration : 0}
+                    value : null
                 }}
           
         />

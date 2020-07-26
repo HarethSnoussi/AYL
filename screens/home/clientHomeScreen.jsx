@@ -17,7 +17,7 @@ const ClientHomeScreen = props =>{
     
 //   const dispatch = useDispatch();
 //   dispatch(getServices("+213557115451"));
-//  const allServices = useSelector(state => state.services.services);
+// const allServices = useSelector(state => state.bookings.bookings);
 
 
 

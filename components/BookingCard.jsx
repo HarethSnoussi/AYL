@@ -12,7 +12,6 @@ const screen = Dimensions.get("window");
 
 
 const BookingCard = props =>{
-
   const gradient1 = props.status === "confirmée" ? "#fd6d57" : "#b31217";
   const gradient2 = props.status === "confirmée" ? "#fd9054" : "#e52d27";
 
@@ -35,7 +34,7 @@ const BookingCard = props =>{
               <Text style = {{...styles.priceText ,...{color : gradient2,  textDecorationLine: props.status ==="annulée" ? 'line-through' : "none" ,
               }
               }}>
-              Prix :{props.price} DA
+              Prix :{props.amount} DA
               </Text>
               {/* <Text style = {styles.slotText}>Fin : </Text> */}
               
@@ -45,9 +44,9 @@ const BookingCard = props =>{
 
          
 {/* 
-          <View style = {styles.price}>
+          <View style = {styles.amount}>
           
-          <Text style = {styles.priceText}>{props.price}</Text>
+          <Text style = {styles.priceText}>{props.amount}</Text>
           <Text style = {styles.priceText}>DA </Text>
               
      
@@ -67,7 +66,9 @@ const BookingCard = props =>{
                       status : props.status,
                       start : props.start,
                       end : props.end,
-                      price : props.price
+                      amount : props.amount,
+                      services : props.services,
+                      barberId : props.barberId
                      })} />
           </View>
 
@@ -128,7 +129,7 @@ infos : {
 //     borderBottomRightRadius : 10,
 //     alignItems : "center",
 // },
-price :{
+amount :{
   width : "10%" , 
   borderTopRightRadius : 10,
   borderBottomRightRadius : 10,

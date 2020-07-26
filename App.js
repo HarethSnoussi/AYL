@@ -10,7 +10,7 @@ import BarberNavigation from './navigation/barberNavigation';
 import {AppLoading} from 'expo';
 import * as Font from 'expo-font';
 
-import bookingsReducer from "./store/reducers/bookings";
+import bookingsReducer from "./store/reducers/bookingsReducer" ;
 import authReducer from './store/reducers/auth';
 import playersReducer from './store/reducers/player';
 
@@ -27,7 +27,8 @@ auth: authReducer,
 players:playersReducer,
 bookings : bookingsReducer,
 properties:propertiesReducer,
-services : servicesReducer
+services : servicesReducer,
+bookings : bookingsReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
