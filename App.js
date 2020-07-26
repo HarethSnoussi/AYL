@@ -4,7 +4,7 @@ import ReduxThunk from "redux-thunk";
 
 import {Provider} from 'react-redux';
 import {enableScreens} from 'react-native-screens';
-import FootNavigation from './navigation/footNavigation';
+import BarberNavigation from './navigation/barberNavigation';
 
 
 import {AppLoading} from 'expo';
@@ -14,7 +14,7 @@ import offersReducer from "./store/reducers/offers";
 import bookingsReducer from "./store/reducers/bookings";
 import authReducer from './store/reducers/auth';
 import playersReducer from './store/reducers/player';
-import ownersReducer from './store/reducers/owner';
+
 import propertiesReducer from './store/reducers/property'; 
 import servicesReducer from './store/reducers/service'; 
 
@@ -57,7 +57,7 @@ export default function App() {
    }
 
   return (
-       <Provider store={store}><FootNavigation /></Provider>
+       <Provider store={store}><BarberNavigation /></Provider>
   );
 }
 

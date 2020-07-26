@@ -1,58 +1,103 @@
 import React ,{useEffect}  from 'react';
-import { StyleSheet, Text, View, ImageBackground , Image ,Dimensions} from 'react-native';
-import SmallCard  from '../../components/SmallCard';
+import { StyleSheet, Text, View, ImageBackground , Image ,Dimensions , StatusBar } from 'react-native';
+import { Button } from 'react-native-elements';
+import { ScrollView, FlatList, TouchableOpacity } from 'react-native-gesture-handler';
+import { SearchBar ,Avatar,Rating, AirbnbRating } from 'react-native-elements';
+
+import { SwitchActions } from 'react-navigation';
 import { useDispatch,useSelector } from 'react-redux';
-import * as offersActions from "../../store/actions/offers";
-import * as bookingsActions from "../../store/actions/bookings";
-import * as propertyActions from "../../store/actions/propertyActions";
+
 import Colors from "../../constants/Colors.js";
+import TopSalonsCard from '../../components/TopSalonsCard';
+import TopBarbersCard from '../../components/TopBarbersCard.jsx';
 
 const screen = Dimensions.get("window");
 const ClientHomeScreen = props =>{
-
+  console.disableYellowBox = true;
 const playerID= props.navigation.getParam('playerID');  //get Player ID
 const playerUID= props.navigation.getParam('playerUID'); 
 
-const dispatch = useDispatch();
-const allOffers = useSelector(state =>state.offers.offers);
-const allBookings = useSelector(state =>state.bookings.playerBookings);
-// console.log(allBookings);
 
-
-useEffect(()=>{
-
-//  dispatch(offersActions.fetchOffers());
-//  dispatch(bookingsActions.fetchPlayerBookings("+213557115451"));
-  dispatch(propertyActions.setPropertyStadiums());
-  }
-  ,[dispatch]);
-
-dispatch(bookingsActions.fetchOwnerBookings("hareth"));
-let welcomeTextStyle = styles.welcomeText;
-
-  if(screen.width < 350) {
-    welcomeTextStyle = styles.welcomeTextSmall;
-  }
-
-  if (screen.height > 800) {
-    welcomeTextStyle = styles.welcomeTextBig;
-    
-  }
 //***************************************************************************
 
     return(
+
       <View style ={styles.container}>
-
-            <View style = {styles.firstImage}>
-            <Image source = {require("../../assets/pictures/barber2.jpg")} style = {styles.image}  />
-                
-
+      <StatusBar hidden />
+      
+      <ScrollView >
+            <ImageBackground source = {require("../../assets/pictures/barber4.png")} style = {styles.firstImage}  resizeMode ="stretch" imageStyle ={styles.image} >
+{/*            
+           <SearchBar placeholder=" Recherche salon , coiffeur"
+        containerStyle = {styles.searchBar}
+        inputContainerStyle = {{
+                borderRadius : 25,
+                backgroundColor :"white"
+        }}
+        lightTheme = {true} /> */}
+            <View style = {styles.firstTitle}>  
+            <Text style = {styles.titleText}>Trouver Votre Coiffeur</Text>
             </View>
+       
+            </ImageBackground>
 
 
 
-      </View>
 
+          <View style = {styles.textTopBarbers}>
+                <Text style = {styles.bestText}>
+                
+                Meilleurs Salons
+                
+                </Text>
+                <TouchableOpacity  
+                onPress={() =>props.navigation.navigate("AllBarbers",{type : "Tous les salons"})} >
+                <Text style = {styles.showAll}>
+                Tout Afficher
+                
+                </Text>
+                </TouchableOpacity>
+              </View>
+
+          <ScrollView style ={styles.topSalons} horizontal showsHorizontalScrollIndicator  = {false}>
+
+              <TopSalonsCard />
+
+             <TopSalonsCard />
+             <TopSalonsCard />
+
+
+          </ScrollView>
+
+          
+        
+
+
+          <View style = {styles.textTopBarbers}>
+                <Text style = {styles.bestText}>
+                
+                Meilleurs Coiffeurs
+                
+                </Text>
+                <TouchableOpacity  
+                onPress={() =>props.navigation.navigate("AllBarbers",{type : "Tous les coiffeurs "})} >
+                <Text style = {styles.showAll}>
+                Tout Afficher
+                
+                </Text>
+                </TouchableOpacity>
+              </View>
+          <ScrollView  style ={styles.topBarbers} horizontal showsHorizontalScrollIndicator  = {false}>
+          <TopBarbersCard />
+          <TopBarbersCard />
+          <TopBarbersCard />
+          <TopBarbersCard />
+
+          </ScrollView>
+         
+</ScrollView>
+</View>
+   
      );    
 };
 
@@ -80,27 +125,80 @@ ClientHomeScreen.navigationOptions= ()=>{
 const styles= StyleSheet.create({
   container : {
       flex : 1,
-      backgroundColor : "#212327"
+      backgroundColor : "#ffffff"
   },
+  /////////////////////////////////////////////
   firstImage : {
     width : screen.width,
-    height :  screen.width / 1.7,
-   overflow : "hidden",
-   borderBottomLeftRadius: screen.width /4,
-   borderBottomRightRadius: screen.width /4,
-   position : "absolute",
+    height : screen.height * 0.35 ,
+    overflow : "hidden",
+   
+    
  
-  
   } ,
   image : {
     height : "100%",
     width : "100%",
-    resizeMode: 'stretch',
+   
    
 },
- 
-/////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+ textTopBarbers : {
+   flexDirection : "row",
+   justifyContent : "space-between",
+    marginTop : 15,
+    marginHorizontal : 15,
+   
+    alignItems :"center"
+ },
+ topSalons : {
+  width : "100%",
+  height : screen.height * 0.4 ,
 
+},
+topBarbers : {
+ 
+  width : "100%",
+  height : screen.height * 0.5 ,
+ 
+},
+bestText :{
+  fontSize : 18,
+  fontFamily : "poppins-bold"
+
+},
+showAll : {
+  fontFamily : "poppins",
+  color : "#9d9da1"
+
+},
+titleText : {
+    fontFamily :"poppins-bold",
+    fontSize : 20,
+    color : "#FFF"
+
+},
+///////////////////////////////////////////////////
+
+ /////////////////////////////////////////////////
+ searchBar :{
+  width : "80%" , 
+  alignSelf : "center",
+  borderRadius : 20 , 
+  backgroundColor : "rgba(52, 52, 52, 0)" ,
+  marginTop : 15,
+  borderTopWidth : 0 , 
+  borderBottomWidth : 0 
+  },
+
+  firstTitle : {
+    width : "80%" , 
+    alignSelf : "center",
+    alignItems : "center",
+  borderRadius : 15,
+  marginTop : 15,
+
+  }
    
 
 });

@@ -1,315 +1,188 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Dimensions} from 'react-native';
-import { Avatar ,Badge } from 'react-native-elements';
+
 import Colors from '../constants/Colors';
 import {Ionicons} from "@expo/vector-icons";
-import BookingDetail from './BookingDetail';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 const screen = Dimensions.get("window");
 
 
 
 const BookingCard = props =>{
-let avatarContainerStyle = styles.avatarContainer;
-let cardContainerStyle = styles.cardContainer;
-let smallTextStyle = styles.smallText;
-let bigTextStyle = styles.bigText;
-let stadiumNameStyle = styles.stadiumName;
-let avatarSize = "large" ;
-let badgeTailleStyle = styles.badgeTaille ;
-let badgeTextStyle = styles.badgeText;
-let badgeStyle = styles.badgeStyle;
 
-  if (screen.height > 800 || screen.width > 500) {
-      avatarContainerStyle = styles.avatarContainerBig;
-      cardContainerStyle = styles.cardContainerBig;
-      smallTextStyle =styles.smallTextBig;
-      bigTextStyle = styles.bigTextBig;
-      stadiumNameStyle = styles.stadiumNameBig;
-      avatarSize = 120 ;
-      badgeTailleStyle = styles.badgeTailleBig ;
-      badgeTextStyle = styles.badgeTextBig;
-  }
-  if(screen.width <= 360) {
-        avatarSize = 65;
-        avatarContainerStyle = styles.avatarContainerSmall;
-        badgeTextStyle = styles.badgeTextSmall;
-        badgeStyle = styles.badgeStyleSmall;
-        smallTextStyle =styles.smallTextSmall;
-  }
+  const gradient1 = props.status === "confirmée" ? "#fd6d57" : "#b31217";
+  const gradient2 = props.status === "confirmée" ? "#fd9054" : "#e52d27";
 
-/////////////////////////////////////////////////////////////
-const [visible , setVisible] = useState(false);
 
-const overlayHandler = ()=>{
-
-      setVisible(previous => !previous )
-
-}
     return(
-      
-<View>
-              <BookingDetail 
-                    isVisible = {visible}
-                    overlayHandler= {()=>overlayHandler()}
-                    time= {props.time}
-                    owner = {props.stade}
-                    stadium = {props.stadium}
-                    hours = {props.hours}
-                    date = {props.date}
-                    bookingDate = {props.day + "-" + props.month + "-" + props.year}
-                    playerId = {props.playerId}
-              />
+      <View style = {styles.card} >
+        <LinearGradient colors = { [gradient1, gradient2]} style = {styles.leftDate}>
+              <Text style = {styles.dateText}>{props.day}</Text>
+              <Text style = {styles.dateText} >{props.date}</Text>
+          </LinearGradient>
+          <View style = {styles.infos}>
 
-        <View style ={cardContainerStyle}>
+             <Text style = {styles.status}>Status :
+              <Text style = {{...styles.statusType,...{color : gradient2}}}> {props.status}</Text>
+               </Text>
+              <Text style = {styles.slotText} >Horraires : {props.start} - {props.end} </Text>
+         
+           
 
-    
-        <View style = {styles.left}>
-             <View style = {avatarContainerStyle}>
-                 <Avatar 
-                 size={avatarSize}
-                 rounded title="FF"
-                 overlayContainerStyle={{backgroundColor: Colors.background,marginTop : 2}}
-                 />
-                 <Badge
-                      
-                       status={props.status}
-                       value = {props.value}
-                       containerStyle={badgeStyle}
-                       textStyle = {badgeTextStyle}
-                       badgeStyle = {badgeTailleStyle}
-                     />
-                    
-             </View>
+              <Text style = {{...styles.priceText ,...{color : gradient2,  textDecorationLine: props.status ==="annulée" ? 'line-through' : "none" ,
+              }
+              }}>
+              Prix :{props.price} DA
+              </Text>
+              {/* <Text style = {styles.slotText}>Fin : </Text> */}
+              
+           
 
-             <View style = {styles.infosContainer}>
-                 <Text 
-                 style = {stadiumNameStyle}>
-                 {props.stade}
-                 </Text>
+          </View>
 
-                 <View style={styles.matchContainer}>
-                 <Text style = {smallTextStyle}>
-                 {props.time} /
-                 </Text>
-                 <Text style = {smallTextStyle}> 
-                 {props.stadium}
-                 </Text>
-                 </View>
+         
+{/* 
+          <View style = {styles.price}>
+          
+          <Text style = {styles.priceText}>{props.price}</Text>
+          <Text style = {styles.priceText}>DA </Text>
+              
+     
+          </View> */}
 
-                 <View style = {styles.timeContainer}>
-                 
-                 <Text style = {smallTextStyle}>
-                 {props.hours}
-                 </Text>
-                 </View>
+         { 
+           props.detail === true ?
+           <View style = {styles.detailButton}>
 
-             </View>
+          <Ionicons name="ios-arrow-forward" 
+          size={22} 
+          color="#252525" 
+          onPress = {()=>props.navigation.navigate("BookingDetail", 
+          { 
+                    day: props.day,
+                      date : props.date,
+                      status : props.status,
+                      start : props.start,
+                      end : props.end,
+                      price : props.price
+                     })} />
+          </View>
+
+
+          : 
+
+
+          <View style = {styles.detailButton2}>
+         
+
+          </View>
+}
+
       </View>
-
-   <View style={styles.right}>
-         <View style = {styles.date}>
-            <Text style = {smallTextStyle}>
-            {props.month}
-            </Text> 
-             <Text style = {bigTextStyle}>{props.day}</Text>
-             <Text style = {smallTextStyle} >
-             {props.year}
-             </Text>
-
-         </View>
-
-    {   props.detail && 
-      
-       <View style = {styles.bookingDetail}>
-                <View >
-
-                  <Ionicons 
-                  name = "ios-arrow-forward" 
-                  size = {28}
-                  onPress={()=>setVisible(true)}
-                  color = "white"
-                  />
-                </View> 
-
-         </View>}
-   </View>
-
-</View>
-</View>
      );    
 };
 
 
 const styles= StyleSheet.create({
 
-    cardContainer : {
-        width : " 97%" ,
-        height : 100,
-        alignSelf : "center",
-        flexDirection : "row",
-        justifyContent : "space-between",
-        backgroundColor : "rgba(80, 80, 80,0.7)",
-        borderRadius : 15,
-        marginVertical : 10
-    },
-
-    cardContainerBig : {
-      width : "90%" ,
-      height : 150,
-      alignSelf : "center",
-      flexDirection : "row",
-      justifyContent : "space-between",
-      backgroundColor : "rgba(80, 80, 80,0.7)",
-      borderRadius : 25,
-      marginVertical : 10
-  },
- ///////////////////////////////////////////////////////////////   
-    left : {
-      flexDirection :"row",
-      width : "50%",
-      justifyContent : "space-around",
-
-    
-    },
-/////////////////////////////////////////////////////////////////
-    avatarContainer : {
-      flexDirection : "row",
-      width : 85,
-      justifyContent : "center",
-      height : "90%",
-      overflow : "hidden",
-      alignSelf : "center"
-    },
-    avatarContainerBig : {
-      flexDirection : "row",
-      width : 180,
-      justifyContent : "center",
-      height : "90%",
-      overflow : "hidden",
-      alignSelf : "center"
-    },
-    avatarContainerSmall : {
-      flexDirection : "row",
-      width : 65,
-      justifyContent : "center",
-      height : "85%",
-      overflow : "hidden",
-      alignSelf : "center"
-    },
-/////////////////////////////////////////////////////////////////
-
-    badgeStyle : {
-      position : "absolute" , 
-      top : "80%", 
-      width : "100%",
-      overflow : "hidden"
-      },
-      
-    badgeStyleSmall : {
-      position : "absolute" , 
-      top : "60%", 
-      width : "100%"
-      },
-///////////////////////////////////////////////////////////////      
-      badgeText : {
-        fontSize : 12
-      },
-      badgeTextBig : {
-        fontSize : 20
-      },
-      badgeTextSmall : {
-        fontSize : 8
-      },
- ///////////////////////////////////////////////////     
-
-      badgeTaille : {
-    
-      },
-      badgeTailleBig : {
-        width : 120,
-        height : "80%",
-        borderRadius : 15,
-      
-
-      },
- ///////////////////////////////////////////////////     
-    infosContainer : {
-      justifyContent : "center"
-    },
-    matchContainer : {
-      flexDirection : "row"
-    },
-    
-    right : {
-      width : "25%",
-      justifyContent : "center",
-      flexDirection : "row",
-      overflow : "hidden",
-     
-   
-      
-    },
-    date : {
-        alignItems : "center",
-        justifyContent : "center",
-        width : "60%",
-       
-    },
-    bookingDetail:{
-    width : "50%",
-    borderLeftWidth : 1 ,
+  card : {
+    width : "90%",
+    height : screen.height * 0.15,
+    alignSelf : "center",
+    borderRadius : 10,
+    marginVertical : "2.5%",
+    overflow : "hidden",
+    flexDirection : "row",
     alignItems : "center",
-    justifyContent : "center",
+    justifyContent : "space-between",
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation : 2,
+    backgroundColor : "#fff",
     
-    borderColor : "white"
-  },
-////////////////////////////////////////////////////////////
-    bigText : {
-      
-        fontFamily : "poppins-bold",
-        fontSize : 15,
-        color : "white"
-        
-    },
-    bigTextBig : {
-      
-      fontFamily : "poppins-bold",
-      fontSize : 23,
-      color : "white"
-      
-  },
-/////////////////////////////////////////////////////////   
-    smallText : {
-      fontFamily : "poppins",
-      fontSize : 13,
-      color : "#e9e5dd"
-    
-    },
-    smallTextBig : {
-      fontFamily : "poppins",
-      fontSize : 22,
-      color : "#e9e5dd"
-    
-    },
-    smallTextSmall : {
-      fontFamily : "poppins",
-      fontSize : 11,
-      color : "#e9e5dd"
-    
-    },
+},
+leftDate : {
+      height : "90%",
+      width : "15%",
+      justifyContent : "space-around",
+      alignItems : "center",
+      borderRadius : 10,
+      marginLeft : 5
 
-    /////////////////////////////////////////////////////////   
-       stadiumName : {
-        fontFamily : "poppins-bold",
-        fontSize : 17,
-        color : "white"
-        },
-        stadiumNameBig : {
-          fontFamily : "poppins-bold",
-          fontSize : 24,
-          color : "white"
-          },
+},
+
+infos : {
+ 
+  justifyContent : "space-between",
+  alignItems : "flex-start",
+  height : "80%"
+},
+// infos :{
+//     width : "30%" , 
+//     borderTopRightRadius : 10,
+//     borderBottomRightRadius : 10,
+//     alignItems : "center",
+// },
+price :{
+  width : "10%" , 
+  borderTopRightRadius : 10,
+  borderBottomRightRadius : 10,
+  alignItems : "center",
+
+
+},
+detailButton : {
+width : "10%",
+height : "100%",
+borderLeftWidth : 0.5,
+justifyContent : "center",
+alignItems : "center",
+
+},
+
+detailButton2 : {
+  width : "10%",
+  height : "100%",
+
+
+  alignItems : "center",
+  
+  
+  },
+//TEXT STYLING //
+dateText :{
+  color : "#fff",
+  fontFamily : "poppins-bold"
+},
+priceText : {
+  fontFamily : "poppins-bold",
+  color :Colors.primary,
+  fontSize : 16
+},
+slotText : {
+fontFamily : "poppins",
+color:"#252525"
+},
+servicesText : {
+  fontFamily : "poppins",
+  color:"#252525"
+},
+status :{
+    
+fontFamily : "poppins",
+color:"#252525"
+ 
+},
+statusType : {
+  // color : Colors.primary,
+  fontFamily : "poppins-bold",
+
+}
 
 });
 
