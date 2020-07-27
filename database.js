@@ -120,7 +120,7 @@ app.get("/clientbookings/:clientId",(req,res)=>{
   app.post("/clientbookings/addbooking",(req,res)=>{
 
 const services = req.body.services.map(e=>e.id);
-
+bookingDate =  req.body.bookingDate.substring(0,11)+req.body.start+":00.000Z" ;
 let composition = [];
 
     con.query(
@@ -172,7 +172,7 @@ let composition = [];
 //cancel Booking
 
 app.patch("/bookings/cancelbooking",(req,res)=>{
-  let date = req.body.bookDate.replace("T"," ");
+  let date = req.body.bookDate.replace("T"," "); 
   
   date = date.replace("Z","")+"000"
 
@@ -186,10 +186,176 @@ app.patch("/bookings/cancelbooking",(req,res)=>{
   }
   
 });
+ 
+});
+
+//CANCEL EXPIRED BOOKINGS
+  
+app.patch("/bookings/expiredbookings",(req,res)=>{
+ console.log(req.body.clientId);
+
+  con.query("UPDATE booking SET status = 'expirée' WHERE SUBSTRING(date_booking,1,15) < NOW()  AND booking.client_id = ? AND status = 'confirmée' ",[req.body.clientId],
+  (err,result,fields)=>{ 
+
+  if (err) {
+    res.send(err);
+  } else {
+
+    res.send("Success");
+  }
+  
+});
 
 });
+
+
+app.get("/bookings/expired",(req,res)=>{
+  console.log(req.body.clientId);
+ 
+   con.query("SELECT CURRENT_TIMESTAMP,start,CAST(date AS char) as date,SUBSTRING(date_booking,1,15) as bookingDate FROM booking WHERE SUBSTRING(date_booking,1,15) > NOW() ",[],
+   (err,result,fields)=>{ 
+ 
+   if (err) {
+     res.send(err);
+   } else {
+ 
+     res.send(result);
+   }
+   
+ });
+ 
+ });
  
 
+
+/**
+   * ************************Client
+  */
+ /*
+    Add New Client
+ */ 
+app.post('/client/addClient',(req,res)=>{
+
+
+  con.query('INSERT INTO client (id,phone,password,sex,name,surname,wilaya,region,lang) VALUES(?,?,?,?,?,?,?,?,?)',
+  [
+    req.body.id,
+    req.body.phone,
+    req.body.password,
+    req.body.sex,
+    req.body.name,
+    req.body.surname,
+    req.body.wilaya,
+    req.body.region,
+    true,
+  ]
+  ,
+  (err,result,fields)=>{
+      if(err) console.log('Query error',err);
+      res.send("success");
+  });
+
+});
+
+/*
+  Fetch All Clients
+*/
+app.get('/client',(req,res)=>{
+   con.query('SELECT * FROM client',(err,result,fields)=>{
+     if(err) console.log('Query error',err);
+    res.send(result);
+   });
+});
+
+/*
+Fetch one client according to his id
+*/  
+app.get('/client/:id',(req,res)=>{
+con.query('SELECT * FROM client WHERE id= ?',
+[
+  req.params.id
+],
+(err,result,fields)=>{
+  if(err) console.log('Query error',err);
+  res.send(result);
+});
+});
+
+
+/*
+  Update client password
+*/ 
+app.patch('/client/updatePassword/:id',(req,res)=>{
+  
+  con.query('UPDATE client SET password = ? WHERE id= ?',
+  [
+    req.body.password,
+    req.params.id
+  ],
+  (err,result,fields)=>{
+    if(err) console.log('Query error',err);
+    res.send("success");
+  });
+});
+
+/*
+  Update Client phone
+*/
+
+app.patch('/client/updatePhone/:clientid',(req,res)=>{
+  
+con.query(`UPDATE client SET id=?,phone=? WHERE id= ?`,
+[
+  req.body.id,
+  req.body.phone,
+  req.params.clientid
+],
+(err,result,fields)=>{
+  if(err) console.log('Query error',err);
+  res.send("success");
+});
+});
+
+/*
+  Update client
+*/ 
+app.patch('/client/updateClient/:id',(req,res)=>{
+  
+con.query('UPDATE client SET name=?,surname=?,email=?,address=?,long=?,lat=?,image=?,wilaya=?,region=?,lang=? WHERE id= ?',
+[
+  req.body.name,
+  req.body.surname,
+  req.body.email,
+  req.body.address,
+  req.body.long,
+  req.body.lat,
+  req.body.image,
+  req.body.wilaya,
+  req.body.region,
+  req.body.lang,
+  req.params.id
+],
+(err,result,fields)=>{
+  if(err) console.log('Query error',err);
+  res.send("success");
+});
+});
+
+/*
+  Delete client
+*/
+app.delete('/client/deleteClient/:id',(req,res)=>{
+
+con.query('DELETE FROM client WHERE id=?',
+[
+  req.params.id
+],
+(err,result,fields)=>{
+  if(err) console.log('Query error',err);
+  res.send("success");
+});
+
+});
 
 
 

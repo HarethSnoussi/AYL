@@ -1,6 +1,6 @@
 import React, {useReducer,useEffect} from 'react';
 import { StyleSheet, Text, View,Dimensions } from 'react-native';
-import { TextInput } from 'react-native-paper';
+import { Input } from 'react-native-elements';
 import Colors from "../constants/Colors";
 
 //responsivity (Dimensions get method)
@@ -28,22 +28,8 @@ const inputReducer = (state,action)=>{
      }
 };
 
-const Input = props =>{
+const CustomInput = props =>{
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  /*Responsivity */
-    let textInputStyle = styles.textInput;
-
-    if(screen.height <= 800 && screen.height >=700){
-        inputsContainerStyle = styles.inputsContainerTall;
-        textInputStyle = styles.textInputTall;
-       }
-    
-       if(screen.height > 800){
-        inputsContainerStyle = styles.inputsContainerBig;   
-        textInputStyle = styles.textInputBig;
-       }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     const [inputState,dispatchInputState] = useReducer(inputReducer,
         {
@@ -62,7 +48,7 @@ const Input = props =>{
 
         const inputChangeHandler= text=>{
             const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            const phoneRegex = /(^(\+213)[5-7]{1}[0-9]{8}$)/;
+            const phoneRegex = /(^([5-7]){1}[0-9]{8}$)/;
             let isValid = true;
             if (props.required && text.trim().length === 0) {
             isValid = false;
@@ -95,39 +81,32 @@ const Input = props =>{
         }
 
     return(
-        <View>
-            <TextInput
+        <View style={{width:props.widthView,borderWidth:1, borderRadius:25,backgroundColor:props.backgroundColor,
+        borderColor:!inputState.isValid?Colors.primary:props.backgroundColor,marginVertical:3,
+        height:45,shadowColor:props.shadowColorView,shadowOpacity:props.shadowOpacityView,
+        shadowOffset:props.shadowOffsetView, shadowRadius:props.shadowRadiusView,elevation: props.elevationView,alignSelf:'center'}}>
+            <Input
                 {...props}
-                label={props.label}
                 value={inputState.value}
                 onChangeText={inputChangeHandler}
                 onBlur={lostFocusHandler}
-                theme={{colors: {primary:inputState.isValid ? Colors.secondary: Colors.primary,text:'white',placeholder:'white'}}}
-                style={textInputStyle}
-                underlineColor='white'
+                placeholder={props.placeholder}
+                inputContainerStyle={styles.input}
+                placeholderTextColor={props.placeholderTextColor}
+                inputStyle={{fontSize:15,color:props.textColor}}
+                errorMessage={props.errorMessage}
             />
-            {!inputState.isValid && <Text style={{color:Colors.primary}}>{props.errorText}</Text>}
         </View>
      );    
 };
 
 
 const styles= StyleSheet.create({
-
-    textInput:{
-        backgroundColor:'transparent'
-    },
-    textInputTall:{
-        backgroundColor:'transparent',
-        paddingVertical:18
-    },
-    textInputBig:{
-        backgroundColor:'transparent',
-        fontSize:20,
-        paddingVertical:20
-    },
-
-
+    
+    input:{
+        borderBottomWidth:0,
+        paddingHorizontal:10,
+      },
 });
 
-export default Input;
+export default CustomInput;

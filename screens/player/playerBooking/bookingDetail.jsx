@@ -76,7 +76,7 @@ useEffect(()=>{
   const getBarber = async ()=>{
     try {
   setLoading(true);
-     
+    
       const arr = await fetch(`http://192.168.1.5:3000/barber/${props.navigation.getParam("barberId")}`);
       const resData = await arr.json ();
       setBarberInfos(...resData);

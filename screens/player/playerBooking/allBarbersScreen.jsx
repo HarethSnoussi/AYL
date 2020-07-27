@@ -12,38 +12,22 @@ import { Button , Rating} from 'react-native-elements';
 const screen = Dimensions.get("window");
 const AllBarbersScreen = props =>{
 
-  const allProperties = useSelector(state => state.properties.propertyStadiums);
+  // const allProperties = useSelector(state => state.properties.propertyStadiums);
  
   const [overlayState , setOverlay] = useState (false);
   const [searchState,setSearchState] = useState("");
   const [stadiumIndex , setStadiumIndex] = useState(0);
   // const confirmedBookings = useSelector(state =>state.bookings.confirmedBookings);
 
-  // console.log(confirmedBookings);
-  const openOverlay = (index)=> {
-
-    setOverlay(true);
-    
-    setStadiumIndex(index);
-  }
-
-  const closeOverlay = (index)=> {
-
-    setOverlay(false);
-    
+ 
   
-  }
-  const updateSearch = (v) => {
-    setSearchState(v);
-
-  };
 
 
-const searchedProperty = allProperties.filter(e=>e.wilaya.toUpperCase() === searchState.toUpperCase());
+// const searchedProperty = allProperties.filter(e=>e.wilaya.toUpperCase() === searchState.toUpperCase());
 
-let shownProperties = null ;
+// let shownProperties = null ;
 
-searchState === "" ? shownProperties =allProperties : shownProperties =searchedProperty ; 
+// searchState === "" ? shownProperties =allProperties : shownProperties =searchedProperty ; 
 
 
 
@@ -62,7 +46,7 @@ searchState === "" ? shownProperties =allProperties : shownProperties =searchedP
         lightTheme = {true}
         searchIcon = {{color : "#fd6c57", size : 25}}
         value={searchState}
-        onChangeText={updateSearch}
+     
       />
      
       <View style = {{width :"90%" , alignSelf : "center",marginVertical : 5,flexDirection : "row",justifyContent : "space-between"}}>

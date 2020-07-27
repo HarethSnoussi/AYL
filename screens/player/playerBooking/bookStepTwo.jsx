@@ -141,8 +141,10 @@ const [pickedSlot,setPickedSlot] = useState(0);
 
 //Selected date
 const pickedDateHandler = (date) => {
+ 
    setDatePickerVisibility(false);
     setPickedDateText(moment(date).format('LL'));
+   
     setPickedDate(date);
    
   };
@@ -183,6 +185,9 @@ let todaysSlots = [];
 const days = workingTime.map(e=>e.day);
 const day = moment(pickedDate).format('dddd').substring(0, 3) ;
 const nowHour = (new Date().getHours()+2).toString()+":00" ;
+// const end = moment.utc("2020-05-01T"+nowHour).add(60,"m").format("HH:mm"); 
+//  console.log(end)
+ 
 
 if(days.indexOf(day) >= 0)
 {
@@ -190,10 +195,10 @@ if(days.indexOf(day) >= 0)
     todaysSlots = hours.slice(hoursTime.indexOf(workingTime[days.indexOf(day)].start) , hoursTime.indexOf(workingTime[days.indexOf(day)].end) );
     // setAvailableSlots([...todaysSlots]);
 
-    if(pickedDate.toDateString() === new Date().toDateString()){
-        todaysSlots = hours.slice(hoursTime.indexOf(nowHour), hoursTime.indexOf(workingTime[days.indexOf(day)].end) );  
+    // if(pickedDate.toDateString() === new Date().toDateString()){
+    //     todaysSlots = hours.slice(hoursTime.indexOf(nowHour), hoursTime.indexOf(workingTime[days.indexOf(day)].end) );  
 
-    }
+    // }
 
 
 
@@ -215,16 +220,28 @@ filteredBookings.map(booking=>{
 if(todaysSlotsTime.indexOf(booking.start) === 0)
 {
     bookingHours = todaysSlotsTime.slice(0,todaysSlotsTime.indexOf(booking.start)+duration+2);
+     if(pickedDate.toDateString() === new Date().toDateString()){
+        slots = hours.slice(hoursTime.indexOf(nowHour), hoursTime.indexOf(workingTime[days.indexOf(day)].end) );  
+
+    }
 } 
 
 else if (todaysSlotsTime.indexOf(booking.start) === 1) {
     bookingHours = todaysSlotsTime.slice(todaysSlotsTime.indexOf(booking.start)-1,todaysSlotsTime.indexOf(booking.start)+duration+2);
+    if(pickedDate.toDateString() === new Date().toDateString()){
+        slots = hours.slice(hoursTime.indexOf(nowHour), hoursTime.indexOf(workingTime[days.indexOf(day)].end) );  
+
+    }
 }
 else 
 {
 
     bookingHours = todaysSlotsTime.slice(Math.max(0,todaysSlotsTime.indexOf(booking.start)-(2+duration)),todaysSlotsTime.indexOf(booking.start)+(duration+2)) ;
-  
+    if(pickedDate.toDateString() === new Date().toDateString()){
+        slots = hours.slice(hoursTime.indexOf(nowHour), hoursTime.indexOf(workingTime[days.indexOf(day)].end) );  
+
+    }
+
 
 }
 
@@ -239,8 +256,13 @@ await setAvailableSlots([...slots]);
 
 }
 else{
+    if(pickedDate.toDateString() === new Date().toDateString()){
+        todaysSlots = hours.slice(hoursTime.indexOf(nowHour), hoursTime.indexOf(workingTime[days.indexOf(day)].end) );  
+
+    }
     setAvailableSlots([...todaysSlots]);
-    setPickedSlot(todaysSlots[0].time);
+    if(todaysSlots.length > 0 ){
+    setPickedSlot(todaysSlots[0].time);}
 
 // setLoading(false);
 

@@ -141,3 +141,34 @@ const bookDate = bookingDate.toString();
 
 
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+//Expired Bookings 
+
+export const expiredbookings = (clientId)=> {
+
+  return async (dispatch) =>{
+try {
+  const response = await fetch(
+      `http://192.168.1.5:3000/bookings/expiredbookings`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      body : JSON.stringify({clientId : clientId})
+      }
+      
+      
+    );
+    if (!response.ok) {
+      throw new Error('Something went wrong!');
+    }
+} catch (error) {
+        console.log("There is an Error");
+          
+}
+
+}
+
+}

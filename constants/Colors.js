@@ -14,6 +14,8 @@ export default{
     colorH3 : "#49516F",
     colorH4 : "#6279B8",
     colorH5: "#8EA4D2",
+    blue:"#323446",
+    lightGrey:"#d3d3d3"
 
     
 };

@@ -31,7 +31,7 @@ const BookingCard = props =>{
          
            
 
-              <Text style = {{...styles.priceText ,...{color : gradient2,  textDecorationLine: props.status ==="annulée" ? 'line-through' : "none" ,
+              <Text style = {{...styles.priceText ,...{color : gradient2,  textDecorationLine: props.status !="confirmée" ? 'line-through' : "none" ,
               }
               }}>
               Prix :{props.amount} DA

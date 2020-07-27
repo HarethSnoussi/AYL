@@ -12,9 +12,7 @@ import * as Font from 'expo-font';
 
 import bookingsReducer from "./store/reducers/bookingsReducer" ;
 import authReducer from './store/reducers/auth';
-import playersReducer from './store/reducers/player';
-
-import propertiesReducer from './store/reducers/property'; 
+import clientsReducer from './store/reducers/client';
 import servicesReducer from './store/reducers/servicesReducer';
 
 
@@ -24,9 +22,8 @@ enableScreens();
 const rootReducer = combineReducers({
 // offers : offersReducer,
 auth: authReducer,
-players:playersReducer,
+clients:clientsReducer,
 bookings : bookingsReducer,
-properties:propertiesReducer,
 services : servicesReducer,
 bookings : bookingsReducer
 });

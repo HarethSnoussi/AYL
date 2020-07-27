@@ -1,4 +1,4 @@
-import React ,{useEffect}  from 'react';
+import React ,{useEffect, useState}  from 'react';
 import { StyleSheet, Text, View, ImageBackground , Image ,Dimensions , StatusBar } from 'react-native';
 import { Button } from 'react-native-elements';
 import { ScrollView, FlatList, TouchableOpacity } from 'react-native-gesture-handler';
@@ -11,14 +11,44 @@ import Colors from "../../constants/Colors.js";
 import TopSalonsCard from '../../components/TopSalonsCard';
 import TopBarbersCard from '../../components/TopBarbersCard.jsx';
 import { getServices } from '../../store/actions/servicesActions.js';
+import { ActivityIndicator } from 'react-native-paper';
+import { expiredbookings } from '../../store/actions/bookingsActions.js';
 const screen = Dimensions.get("window");
 const ClientHomeScreen = props =>{
   console.disableYellowBox = true;
     
-//   const dispatch = useDispatch();
+
 //   dispatch(getServices("+213557115451"));
 // const allServices = useSelector(state => state.bookings.bookings);
+const [isLoading , setLoading] = useState (false);
 
+const dispatch = useDispatch ();
+
+
+
+// useEffect (()=>{
+
+// const expired= async () =>{
+
+// setLoading(true);
+// dispatch(expiredbookings("+213553633809"));
+// setLoading(false);
+
+// }
+
+// expired();
+
+// },[]);
+
+if (isLoading) {
+    
+  return (
+    <View style= {styles.centered}>
+      <ActivityIndicator size="large" color= {Colors.primary} />
+    
+    </View>
+  );
+}
 
 
 //***************************************************************************
