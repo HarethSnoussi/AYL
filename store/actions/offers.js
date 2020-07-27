@@ -37,18 +37,14 @@ return async dispatch =>{
           newData.map(item=>{
             
             const a = {
-              day : item.date ,
-              horraires : [  item.start.substring(0,5),item.end.substring(0,5) ] ,
-              
+            day : item.date ,
+            horraires : [  item.start.substring(0,5),item.end.substring(0,5) ] ,
             price : item.tarif,
             serviceId : service
-            
-            
+
             } 
             offer.offerDays.push(item.date);
             offer.horraires.push(a);
-             
-          
 
           })
       

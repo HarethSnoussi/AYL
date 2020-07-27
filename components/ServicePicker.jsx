@@ -17,12 +17,11 @@ const [pickedValue , setPickedValue] = useState(props.service);
 //////////////////////////////////////////////////
 
 
-
 const pickedValueHandler =  (itemValue)=>{
 
 if(itemValue != null )
 {
-    if(addedTypes.indexOf(itemValue.type) < 0)
+    if(addedTypes.indexOf(itemValue.name) < 0)
             {
                 setPickedValue(itemValue);
                 props.updateService(itemValue,pickerId);
@@ -38,36 +37,40 @@ props.deleteService(pickerId);
 }
 
 
+
 const dataList = barberServices.map((service , index) => 
 { 
 return ({
-    label: service.type+"/ "+ service.price + " dzd / " + service.time + " min ",
+    label: service.name+"/ "+ service.price + " dzd / " + service.duration + " min ",
     value: service,
-    key : index,
-   disabled : true
+    key : index
   })}
 
 
   )
+
+
+
+
 return(  
 
 <View style = {{flexDirection : "row",justifyContent : "space-between",alignItems : "center"}} >
     <View style = {styles.oneService}>
     <View style={{  width: "90%", backgroundColor : "#f0f0f0", borderRadius : 10}}>
-
-
-    <RNPickerSelect
+    {
+        
+        <RNPickerSelect
             onValueChange={(itemValue) => pickedValueHandler(itemValue)}
             items={dataList}
             value = {pickedValue}
             placeholder={{
                     label: 'Selectionner Un Service ... ',
                     color : "#7f7d7c",
-                    value : {type : " " , price : 0 , time : 0}
+                    value : null
                 }}
           
         />
-
+}
 
     {/* <Picker
     selectedValue = {pickedValue}

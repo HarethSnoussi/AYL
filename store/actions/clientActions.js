@@ -1,32 +1,31 @@
-export const CREATE_OWNER = "CREATE_OWNER";
-export const SET_OWNERS= "SET_OWNERS";
-export const UPDATE_OWNER_PASSWORD ="UPDATE_OWNER_PASSWORD";
-export const UPDATE_OWNER_PHONE = "UPDATE_OWNER_PHONE";
-export const UPDATE_OWNER = "UPDATE_OWNER";
-export const DELETE_OWNER = "DELETE_OWNER";
-export const SET_OWNER_PROPERTY = "SET_OWNER_PROPERTY";
+export const CREATE_CLIENT= "CREATE_CLIENT";
+export const SET_CLIENTS= "SET_CLIENTS";
+export const UPDATE_CLIENT_PASSWORD ="UPDATE_CLIENT_PASSWORD";
+export const UPDATE_CLIENT_PHONE = "UPDATE_CLIENT_PHONE";
+export const UPDATE_CLIENT = "UPDATE_CLIENT";
+export const DELETE_CLIENT = "DELETE_CLIENT";
 
 
-export const createOwner=(id,phone,password,fullname,address)=>{
+export const createClient=(id,phone,password,sex,name,surname,wilaya,region)=>{
   
     return async dispatch =>{
-        const ownerData={id,phone,password,fullname,address};
+        const clientData={id,phone,password,sex,name,surname,wilaya,region};
 
         try{
-            const response= await fetch('http://192.168.1.37:3000/owner/addOwner',{
+            const response= await fetch('http://192.168.1.34:3000/client/addClient',{
                 method : "POST",
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body : JSON.stringify(ownerData)
+                body : JSON.stringify(clientData)
             } 
             );
             if(!response.ok){
                 throw new Error('Oups! Une erreur est survenue haha.');
             }
-
-            dispatch({type:CREATE_OWNER,ownerData});
-
+            console.log('debutAction');
+            dispatch({type:CREATE_CLIENT,clientData});
+            console.log('endAction');
         }catch(err){
             console.log(err);
         } 
@@ -36,19 +35,19 @@ export const createOwner=(id,phone,password,fullname,address)=>{
 
 };
 
-export const setOwners= ()=>{
+export const setClients= ()=>{
 
     return async dispatch =>{
 
       try{
-           const response= await fetch('http://192.168.1.37:3000/owner');
+           const response= await fetch('http://192.168.1.34:3000/client');
            if(!response.ok){
             throw new Error('Oups! Une erreur est survenue.');
             }
 
            const resData= await response.json();
            
-           dispatch({type:SET_OWNERS,allOwners:resData});
+           dispatch({type:SET_CLIENTS,allClients:resData});
            
       }catch(err){
           console.log(err);
@@ -58,12 +57,12 @@ export const setOwners= ()=>{
 
 };
 
-export const updateOwnerPassword= (id,password) => {
+export const updateClientPassword= (id,password) => {
 
     return async dispatch => {
 
          try{
-           const response = await fetch(`http://192.168.1.37:3000/owner/updatePassword/${id}`,{
+           const response = await fetch(`http://192.168.1.34:3000/client/updatePassword/${id}`,{
               method:'PATCH',
               headers: {
                 'Content-Type': 'application/json'
@@ -74,7 +73,7 @@ export const updateOwnerPassword= (id,password) => {
                throw new Error('Oups! Une erreur est survenue in ur fetch.');
            }
            
-           dispatch({type:UPDATE_OWNER_PASSWORD,id,ownerData:{password}});
+           dispatch({type:UPDATE_CLIENT_PASSWORD,id,clientData:{password}});
           
          }catch(err){
              console.log(err);
@@ -83,12 +82,12 @@ export const updateOwnerPassword= (id,password) => {
 
 };
 
-export const updateOwnerPhone= (id,phone,ownerid) => {
+export const updateClientPhone= (id,phone,clientid) => {
 
     return async dispatch => {
 
          try{
-           const response = await fetch(`http://192.168.1.37:3000/owner/updatePhone/${ownerid}`,{
+           const response = await fetch(`http://192.168.1.34:3000/client/updatePhone/${clientid}`,{
               method:'PATCH',
               headers: {
                 'Content-Type': 'application/json'
@@ -99,7 +98,7 @@ export const updateOwnerPhone= (id,phone,ownerid) => {
                throw new Error('Oups! Une erreur est survenue.');
            }
            
-           dispatch({type:UPDATE_OWNER_PHONE,ownerid,ownerData:{id,phone}});
+           dispatch({type:UPDATE_CLIENT_PHONE,clientid,clientData:{id,phone}});
            
          }catch(err){
              console.log(err);
@@ -109,23 +108,23 @@ export const updateOwnerPhone= (id,phone,ownerid) => {
 };
 
 
-export const updateOwner= (id,fullname,email,address) => {
+export const updateClient= (id,name,surname,email,address,image,wilaya,region,lang) => {
 
     return async dispatch => {
 
          try{
-           const response = await fetch(`http://192.168.1.37:3000/owner/updateOwner/${id}`,{
+           const response = await fetch(`http://192.168.1.34:3000/client/updateClient/${id}`,{
               method:'PATCH',
               headers: {
                 'Content-Type': 'application/json'
             },
-            body : JSON.stringify({fullname,email,address})
+            body : JSON.stringify({name,surname,email,address,image,wilaya,region,lang})
            });
            if(!response.ok){
                throw new Error('Oups! Une erreur est survenue.');
            }
            
-           dispatch({type:UPDATE_OWNER,id,ownerData:{fullname,email,address}});
+           dispatch({type:UPDATE_CLIENT,id,clientData:{name,surname,email,address,image,wilaya,region,lang}});
            
          }catch(err){
              console.log(err);
@@ -134,45 +133,23 @@ export const updateOwner= (id,fullname,email,address) => {
 
 };
 
-export const deleteOwner = id => {
+export const deleteClient = id => {
 
     return async dispatch => {
     
         try{
-            const response = await fetch(`http://192.168.1.37:3000/owner/deleteOwner/${id}`,{
+            const response = await fetch(`http://192.168.1.34:3000/client/deleteClient/${id}`,{
                method:'DELETE'});
 
             if(!response.ok){
                 throw new Error('Oups! Une erreur est survenue.');
             }
             
-            dispatch({type:DELETE_OWNER,id});
+            dispatch({type:DELETE_CLIENT,id});
             
           }catch(err){
               console.log(err);
           }
  
     };
-};
-
-export const setOwnerProperty= id=>{
-
-    return async (dispatch) =>{
-      
-      try{
-           const response= await fetch(`http://192.168.1.37:3000/owner/property/${id}`);
-           if(!response.ok){
-            throw new Error('Oups! Une erreur est survenue.');
-            }
-
-           const resData= await response.json();
-           
-           dispatch({type:SET_OWNER_PROPERTY,ownerProperty:resData});
-           
-      }catch(err){
-          console.log(err);
-      }
-
-    };
-
 };

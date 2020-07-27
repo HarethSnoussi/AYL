@@ -1,58 +1,42 @@
 import React from 'react';
-import { Overlay } from 'react-native-elements';
+import { Overlay, colors } from 'react-native-elements';
 import { Text, View, Button,StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {Ionicons} from "@expo/vector-icons";
 import { useDispatch, useSelector } from 'react-redux';
-import {addBooking} from "../store/actions/bookings";
+import {addBooking} from "../store/actions/bookingsActions";
 import moment from 'moment';
-
+import Colors from '../constants/Colors';
 const ConfimBookingOverlay = (props)=>{
 
 const dispatch = useDispatch(); 
-
-let end  ;
-
-
-if(props.matchTime === "1h"){
-
-end = moment.utc("2020-05-01T"+props.hourMatch).add(60,"m").format("HH:mm");  
-
-}else if (props.matchTime === "1h30"){
-end = moment.utc("2020-05-01T"+props.hourMatch).add(90,"m").format("HH:mm");  
-
-}else {
-end = moment.utc("2020-05-01T"+props.hourMatch).add(120,"m").format("HH:mm");  
-
-}
+// amount , date,date_booking, start,end,status,client_id,barber_id
 
 
+const end = moment.utc("2020-05-01T"+props.start).add(props.duration,"m").format("HH:mm");  
+const servicesId = props.services.map(e=>e.id);
 
 const sendConfirmation = async ()=>{
- 
-
 const date = new Date();
   let booking = {
-    bookingDate : props.dateMatch ,
+    amount : props.amount ,
+    bookingDate : props.bookingDate ,
+    clientId : props.clientId,
     date : date,
+    duration : props.duration,
     end : end,
-    ownerId : props.ownerId,
-    playerId : "+213557115451",
-    serviceId : props.serviceId,
-    start : props.hourMatch ,
+    barberId : props.barberId,
+    services : props.services,
+    start : props.start ,
     status : "confirmée",
-    tarif : props.tarif ,
-    timeMatch : props.matchTime,
-    typeMatch : props.matchType,
-    
-    
-   
 }
  props.overlayHandler();
- dispatch( addBooking(booking));
+ dispatch(addBooking(booking));
  props.navigate();
 
 };
+
+const services = props.services.map(e=>e.name);
 
 
     return (
@@ -60,23 +44,37 @@ const date = new Date();
     isVisible={props.isVisible}
     overlayStyle = {styles.overlayStyle}
     >
-    <View >
+    <View style = {{flex : 1 , justifyContent : "space-around" }} >
 
 <View style = {styles.textsContainer}>
     <View style={styles.title}>
-    <Text style={{fontFamily : "poppins-bold"}}>Votre réservation :
+    <Text style={{fontFamily : "poppins-bold",color :Colors.primary}}>Votre réservation :
     </Text>
     </View>
-    <View>
+    <View style = {{justifyContent : "space-around" , height :"90%" }}> 
    
-        <Text style = {styles.text}>Temps: {props.matchTime}</Text>
-        <Text style = {styles.text} >Type: {props.matchType}</Text>
-        <Text style = {styles.text} >Date: {props.dateMatch}</Text>
-        <Text style = {styles.text} >Heure: {props.hourMatch}</Text>
-        <Text style = {styles.text} >Fin: {end}</Text>
+        <Text style = {styles.text}>Temps : {props.duration} Min </Text>
+
+
+        <Text style = {styles.text} >Services : {
+          services.map(service=>{
+            return service + "/" 
+          })
+          
+          } 
+          
+          
+          </Text>
+
+
+        <Text style = {styles.text} >Date : {moment(props.bookingDate).format('LL')}</Text>
+        <Text style = {styles.text} >Horraire  : { props.start + " - " + end }</Text>
+        <Text style = {styles.text} >Prix  : { props.amount} DA</Text>
+
 </View>
 
 </View>
+
 <View style = {styles.confirm}>
 
     <View><Text>Confirmer ? </Text></View>
@@ -87,19 +85,19 @@ const date = new Date();
             name = "md-checkbox" 
             size = {28}
             onPress={()=>sendConfirmation()}
-            color = "green"
+            color = {Colors.colorH1}
             />
       </View>
 
 
       <View >
-          <Ionicons 
-          name = "ios-close-circle" 
-          size = {28}
-          color ="red"
-         
-          onPress={props.overlayHandler}
-          />
+     
+      <Ionicons 
+      name="ios-close-circle-outline" 
+      size={28} 
+      color= {Colors.primary}     
+       onPress={props.overlayHandler} />
+
       </View>
 </View>
   </View>
@@ -117,35 +115,39 @@ const date = new Date();
 
 
 const styles= StyleSheet.create({
- textsContainer: {
-   height : "65%",
-   justifyContent : "space-around",
- 
-  },
+
   overlayStyle:{
     width : "80%",
-    height :"40%",
+    height :"60%",
     borderRadius : 20,
-    backgroundColor : "rgba(255, 255, 249,1)"
+    backgroundColor : "rgba(255, 255, 249,1)",
+
   },
   title : {
     alignSelf : "center"
   },
+
+  textsContainer: {
+    height : "65%",
+    justifyContent : "space-around",
+   overflow : "hidden",
+ 
+   },
   text :{
-    marginBottom : 3,
+    // marginBottom : 3,
     fontFamily : "poppins"
   },
   confirm:{
     alignItems :"center",
     justifyContent : "space-around",
    
-    height : "35%"
     },
     iconsContainer:{
     flexDirection : "row" ,
    
     width : "20%",
-    justifyContent : "space-between"
+    justifyContent : "space-between",
+    marginTop : 5
     }
 
 });

@@ -11,15 +11,19 @@ import 'moment/locale/fr';
 import { useDispatch, useSelector } from 'react-redux';
 import * as offersActions from "../../../store/actions/offers";
 
-import ConfirmBookingOverlay from "../../../components/ConfirmBookingOverlay";
 import ServicePicker from '../../../components/ServicePicker';
+import { getServices } from '../../../store/actions/servicesActions';
 
 
-const barberServices = [{type : "coupe classique" , price : 350 , time : 25},{type : "Barbe" , price : 150 , time : 10},{type : "Keartine" , price : 1500 , time : 55}];
+// const barberServices = [{name : "coupe classique" , price : 350 , duration : 25},{name : "Barbe" , price : 150 , duration : 10},{name : "Keartine" , price : 1500 , duration : 55}];
 
 const screen = Dimensions.get("window");
  
 const BookStepOne = (props)=> {
+const barberServices =  useSelector(state => state.services.services);
+
+const dispatch = useDispatch();
+
 //Sum of Array elements
 const sumArray = (accumulator, currentValue) => accumulator + currentValue;
 
@@ -49,6 +53,61 @@ const [totalAmount,setAmount] = useState(0);
 //Total Time State
 const [totalTime , setTime] = useState(0);
 
+//Fetched DATA
+const [data,setData] = useState([]);
+
+//fetched Bookings 
+
+const [bookings,setBookings] = useState([]);
+
+useEffect(()=>{
+ const getData = async ()=>{
+    setLoading(true);
+    try {
+        const arr = await fetch(`http://192.168.1.5:3000/barber/hours/${props.navigation.getParam("barberId")}`);
+        const resData = await arr.json ();
+        setData([...resData]);
+
+    
+        }
+    
+    catch (error) {
+        console.log("There is an Error");
+    }
+
+    try {
+       
+
+        const arr = await fetch(`http://192.168.1.5:3000/bookings/barberBookings/${props.navigation.getParam("barberId")}`);
+         const resData = await arr.json ();
+     
+        setBookings([...resData]);
+        }
+    
+    catch (error) {
+        console.log("There is an Error");
+    }
+
+
+    setLoading(false);
+
+ };
+getData();
+
+
+},[props.navigation.getParam("barberId")]);
+//GET THE SERVICES
+useEffect(()=>{
+    const loadProducts = async () =>{
+        setLoading(true);
+        await dispatch(getServices(props.navigation.getParam("barberId")));
+        setLoading(false);
+    }
+loadProducts();
+
+},[dispatch]);
+
+
 //ADD AND UPDATE SERVICES
 const setServicesHandler= (service,id)=>{
    setServices(previous => {
@@ -56,22 +115,24 @@ const setServicesHandler= (service,id)=>{
       });
     //   setServicesNumber(old=>old+1);
     //   setID(previous=>{return([...previous,id])});
-      setTypes(previous=>[...previous,service.type]);
+      setTypes(previous=>[...previous,service.name]);
       setPrices(previous=>[...previous,service.price]);
-      setAddedTimes(previous=>[...previous,service.time]);
+      setAddedTimes(previous=>[...previous,service.duration]);
 }
 
 const updateService =  (service,id) =>{
+
     setServices(
         prev =>{
-        prev[id].type = service.type;
+        prev[id].id = service.id;
+        prev[id].name = service.name;
         prev[id].price = service.price;
-        prev[id].time = service.time;
+        prev[id].duration = service.duration;
 
         return [...prev];
     });
     setTypes(prev =>{
-        prev[id] = service.type;
+        prev[id] = service.name;
         return [...prev];
        
     });
@@ -83,7 +144,7 @@ const updateService =  (service,id) =>{
     });
 
     setAddedTimes(prev =>{
-        prev[id] = service.time;
+        prev[id] = service.duration;
         setTime(addedTimes.reduce(sumArray));
         return [...prev];
     });
@@ -94,7 +155,7 @@ const updateService =  (service,id) =>{
 //DELETE SERVICES
 const deleteService = async (id)=>{
     setLoading(true);
-const test = await (() => {
+const removeService = await (() => {
  setServices(prev=>{
         return prev.filter((service,index) => { return(index !== id)});
 })
@@ -119,14 +180,17 @@ const test = await (() => {
     return prev.filter((service,index) =>{return (index !== id)})
 });
 })
-test();
+removeService();
 setLoading(false);
  
 }
+
+
 if (isLoading) {
+    
     return (
       <View style= {styles.centered}>
-        <ActivityIndicator size="large" color="red" />
+        <ActivityIndicator size="large" color= {Colors.primary} />
       
       </View>
     );
@@ -157,6 +221,7 @@ return (
                <ScrollView >
                 {
                 pickedServices.map((service,index)=>{
+                  
                     return ( 
                         <ServicePicker 
                         key = {index}
@@ -175,9 +240,9 @@ return (
                 </ScrollView>
                   {
                         pickedServices.length < barberServices.length &&
-
+                      
                         <Button 
-                        onPress = {()=>setServicesHandler({type : " " , price : 0 , time : 0})} title = "Ajouter un Service"
+                        onPress = {()=>setServicesHandler({id : 0 ,name : " " , price : 0 , duration : 0})} title = "Ajouter un Service"
                         containerStyle = {{width : "40%",alignSelf : "center",marginVertical : "5%" , }}
                         titleStyle  = {{fontSize : 14,fontFamily : "poppins",color : "#fff"}}
                         type="outline" 
@@ -192,7 +257,8 @@ return (
                     
                     </View>
                    
-                    <Button 
+               
+                      <Button 
                    containerStyle = {{ height : "15%",width : "80%",alignSelf:"center" ,justifyContent : "center"  }} 
                    title = "Continuer" 
                    titleStyle = {{fontFamily : "poppins-bold"}}
@@ -203,11 +269,14 @@ return (
                         start: {x: 0, y: 0} ,
                         end:{x: 1, y: 0}
                     }}
-                onPress = {()=>props.navigation.navigate(
+                onPress = { ()=> totalTime >0 && props.navigation.navigate(
                     "BookStepTwo", 
                     { duration: totalTime,
                       amount : totalAmount,
-                      services : pickedServices
+                      services : pickedServices,
+                      barber : props.navigation.getParam("barberId"),
+                      workingTime : data,
+                      bookings : bookings
                      })
                      }
                    /> 
@@ -299,8 +368,13 @@ const styles= StyleSheet.create({
             flexDirection :"row",
     
             alignItems : "center"
-    }
- 
+    },
+    //////////////////////////////////////////////////////
+    centered: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+      }
     });
   ///////////////////////////////////////////////////////////////////////////
 

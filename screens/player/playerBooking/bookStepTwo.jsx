@@ -70,18 +70,33 @@ const hours = [
 const hoursTime = hours.map(hour=>hour.time);
 const screen = Dimensions.get("window");
 moment.locale("fr");   
+
+/////////////////////////////////////////////////////////////////////////
 const BookStepTwo = (props)=> {
+
+const services = props.navigation.getParam("services").filter(service => service.id !== 0);
 const totalTime = props.navigation.getParam("duration");
+const workingTime = props.navigation.getParam("workingTime");
+const allBookings = props.navigation.getParam("bookings");
+
 let duration = Math.ceil(totalTime/15)  ; 
 if(duration === 1 ) {
     duration = 0;
 }
 
-const allBookings = [
-    {id:1 ,date_booking : new Date(), start : "09:00",end : "10:00",duration : 60 , status : "confirmée", clientId : "+213557115451",barberId : "+213550461010"},
+// const allBookings = [
+//     // {id:1 ,bookingDate :"2020-07-25", start : "09:00",end : "10:00",duration : 60 , status : "confirmée", clientId : "+213557115451",barberId : "+213550461010"},
 
-    {id:2 , date_booking : new Date() , start : "11:00",end : "11:30",duration : 30 , status : "confirmée", clientId : "+213553633809",barberId : "+213550461010"}
-];
+//     // {id:2 , bookingDate : new Date() , start : "11:00",end : "11:30",duration : 30 , status : "confirmée", clientId : "+213553633809",barberId : "+213550461010"}
+// ];
+
+//overlay State
+const [overlayState , setOverlayState]=useState(false);
+
+
+      const [isLoading , setLoading] = useState (false);
+
+
 
 //Make the DatePcikerVisible
 const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -93,11 +108,13 @@ const [pickedDateText,setPickedDateText] = useState (moment().format('LL'));
 const [pickedDate,setPickedDate] = useState (new Date());
 
 //Set Button Color to Selected Button
-const [selectedButtonIndex , setButtonIndex] = useState(0);
+const [selectedButtonIndex , setButtonIndex] = useState();
 
 //Available slots State
-const [availableSlots , setAvailableSlots] = useState(hours);
+const [availableSlots , setAvailableSlots] = useState([]);
 
+//picked Hour
+const [pickedSlot,setPickedSlot] = useState(0);
 
 //Selected date
 const pickedDateHandler = (date) => {
@@ -107,35 +124,76 @@ const pickedDateHandler = (date) => {
    
   };
 
+
+      //Overlay Handelr
+      const overlayHandler = ()=>{
+     
+        setOverlayState((previous) => !previous);
+  
+      }
+  
+
   //Color Changing Button
  const buttonColorHandler = (a)=>{
+    
     setButtonIndex (a);
+    setPickedSlot(availableSlots[a].time);
  }
+
+
+//fetch Worktime of the Barber
+
+
+
+
+
 
  //Managing the Bookings (Removing the exsiting Bookings)
  useEffect(()=>{
-//Filter the selected Date Bookings
+const manager = async ()=>{
+//  setLoading(true);
 
-const filteredBookings = allBookings.filter(booking=>booking.date_booking.toDateString() === pickedDate.toDateString());
+setPickedSlot(0);
+setButtonIndex(-1);
+//Display only Working Time
+let todaysSlots = [];
+const days = workingTime.map(e=>e.day);
+const day = moment(pickedDate).format('dddd').substring(0, 3) ;
+if(days.indexOf(day) >= 0)
+{
+    
+    todaysSlots = hours.slice(hoursTime.indexOf(workingTime[days.indexOf(day)].start) , hoursTime.indexOf(workingTime[days.indexOf(day)].end) );
+    // setAvailableSlots([...todaysSlots]);
+
+}  
+
+const todaysSlotsTime = todaysSlots.map(e=>e.time);
+
+    //Filter the selected Date Bookings
+const filteredBookings = allBookings.filter(booking=>moment(booking.bookingDate).format("ll") === moment(pickedDate).format("ll"));
 
 
 let bookingHours = [];
-let slots = hours ;
+let slots = todaysSlots ;
 //Map throught all the existing Bookings and remove them
 if(filteredBookings.length > 0)
 {
 filteredBookings.map(booking=>{
-if(hoursTime.indexOf(booking.start) === 0)
+
+if(todaysSlotsTime.indexOf(booking.start) === 0)
 {
-    bookingHours = hoursTime.slice(0,hoursTime.indexOf(booking.end)+2);
+    bookingHours = todaysSlotsTime.slice(0,todaysSlotsTime.indexOf(booking.start)+duration+2);
 } 
 
-else if (hoursTime.indexOf(booking.start) === 1) {
-    bookingHours = hoursTime.slice(hoursTime.indexOf(booking.start)-1,hoursTime.indexOf(booking.end)+2);
+else if (todaysSlotsTime.indexOf(booking.start) === 1) {
+    bookingHours = todaysSlotsTime.slice(todaysSlotsTime.indexOf(booking.start)-1,todaysSlotsTime.indexOf(booking.start)+duration+2);
 }
 else 
 {
-    bookingHours = hoursTime.slice(Math.max(0,hoursTime.indexOf(booking.start)-(2+duration)),hoursTime.indexOf(booking.end)+2) ;
+
+    bookingHours = todaysSlotsTime.slice(Math.max(0,todaysSlotsTime.indexOf(booking.start)-(2+duration)),todaysSlotsTime.indexOf(booking.start)+(duration+2)) ;
+  
+
 }
 
  slots = slots.filter(hour => {
@@ -144,20 +202,54 @@ else
 
 });
 
-
-setAvailableSlots([...slots]);
+await setAvailableSlots([...slots]);
+// setLoading(false);
 
 }
 else{
-    setAvailableSlots(hours);
+    setAvailableSlots([...todaysSlots]);
+    setPickedSlot(todaysSlots[0].time);
+
+// setLoading(false);
+
+}
 }
 
+manager();
 
  },[pickedDate]);
+
+// console.log(moment(new Date()).format('ll'));
+// console.log(moment("2020-07-25").format('ll'));
+
+// console.log(moment(pickedDate).format('dddd').substring(0, 3) );
+ if (isLoading) {
+    
+    return (
+      <View style= {styles.centered}>
+        <ActivityIndicator size="large" color= {Colors.primary} />
+      
+      </View>
+    );
+}
 
 
 return (
             <View style= {styles.container}>
+
+{ overlayState && <ConfirmBookingOverlay
+        isVisible = {overlayState}
+        overlayHandler = {overlayHandler}
+        bookingDate = {pickedDate}
+        start = {pickedSlot}
+        barberId = {props.navigation.getParam("barber")}
+        clientId = "+213553633809"
+        amount = {props.navigation.getParam("amount")}
+        duration = {totalTime}
+        services = {services}
+        navigate = {()=>props.navigation.navigate("Client")}
+       />   
+    }
                 <View style = {styles.firstImage}>
 
                 <Image source = {require("../../../assets/pictures/barber2.jpg")} style = {{height : "100%",width : "100%"}}   />
@@ -191,10 +283,13 @@ return (
 
 
                 </View>
+                { 
+                    availableSlots.length > 0 ?
 
                 <View style = {styles.selectSlot}>
                 <Text style = {{fontSize : 16,fontFamily : "poppins-bold"}}>Selectionner un créneau</Text>
-                  <FlatList
+                     
+                     <FlatList
                     data={availableSlots}
                     numColumns = {4}
                     renderItem={({item,index})=>{
@@ -212,8 +307,19 @@ return (
                                      }
                                      }
                    />
-                        </View>
-                   <Button 
+                    </View>
+                   :
+                   <View style ={{alignSelf : "center", height : "50%",justifyContent : "center"}}>
+                   <Text style ={{fontFamily : "poppins-bold",fontSize : 16,color : Colors.primary}}>
+                   Aucun creneau disponible ce jour la !
+                   </Text>
+                   </View>
+                   
+                    }
+                
+                   {
+                    availableSlots.length > 0 ?
+                     <Button 
                    containerStyle = {{ height : "15%",width : "80%",alignSelf:"center" ,justifyContent : "center"  }} 
                    title = "Réserver" 
                    titleStyle = {{fontFamily : "poppins-bold"}}
@@ -224,8 +330,19 @@ return (
                         start: {x: 0, y: 0} ,
                         end:{x: 1, y: 0}
                     }}
-                onPress = {()=>props.navigation.navigate("Client")}
-                   /> 
+                onPress = {()=> pickedSlot!== 0 && overlayHandler()}
+                   />
+                   :
+                   <View style = {{ height : "15%",width : "80%",alignSelf:"center" ,justifyContent : "center"  }}>
+
+
+                   </View>
+                   
+                   
+                    }
+                   
+                   
+                   
             </View>
             </View>
 
@@ -294,7 +411,13 @@ const styles= StyleSheet.create({
     justifyContent : "space-between",
 
  
-}
+},
+//////////////////////////////////////////////////////
+centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
  
     });
   ///////////////////////////////////////////////////////////////////////////

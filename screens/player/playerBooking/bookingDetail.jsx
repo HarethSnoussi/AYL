@@ -7,7 +7,48 @@ import BookingCard from '../../../components/BookingCard';
 import { Ionicons ,MaterialIcons } from '@expo/vector-icons';
 
 const BookingDetail = props =>{
+const services = props.navigation.getParam("services");
 
+//Loading State
+const [isLoading , setLoading] = useState (false);
+
+//Fetched Barber Infos
+const [barberInfos , setBarberInfos] = useState({});
+
+useEffect(()=>{
+
+  const getBarber = async ()=>{
+    try {
+  setLoading(true);
+     
+      const arr = await fetch(`http://192.168.1.5:3000/barber/${props.navigation.getParam("barberId")}`);
+      const resData = await arr.json ();
+      setBarberInfos(...resData);
+      setLoading(false);
+
+      }
+  
+  catch (error) {
+      console.log("There is an Error");
+  }
+  
+
+  }
+
+  getBarber();
+
+
+},[])
+
+
+if (isLoading) {
+  return (
+    <View style= {styles.centered}>
+      <ActivityIndicator size="large" color= {Colors.primary} />
+    
+    </View>
+  );
+}
 
   return(
     <View style = {styles.container}>
@@ -16,7 +57,7 @@ const BookingDetail = props =>{
                             end = {props.navigation.getParam("end")}
                             bookingDate = {props.navigation.getParam("date")}
                             status = {props.navigation.getParam("state")}
-                            price = {props.navigation.getParam("price")}
+                            amount = {props.navigation.getParam("amount")}
                             day = {props.navigation.getParam("day")}
                             date = {props.navigation.getParam("date")}
                             status = {props.navigation.getParam("status")}
@@ -55,18 +96,35 @@ const BookingDetail = props =>{
 
             <View style = {styles.barber}>
             <Text style = {styles.barberTitle}>Information Du Coiffeur </Text>
-                <Text style = {styles.barberText}>Nom : Snoussi</Text>
-                <Text style = {styles.barberText} >Prénom : El Hareth</Text>
-                <Text style = {styles.barberText} >Adresse : 25 rue d'alger Blida Algerie</Text>
-                <Text style = {styles.barberText} >Tel : 025252525</Text>
+                <Text style = {styles.barberText}>Nom : {barberInfos.surname}</Text>
+                <Text style = {styles.barberText} >Prénom : {barberInfos.name}</Text>
+                <Text style = {styles.barberText} >Adresse : {barberInfos.address}</Text>
+                <Text style = {styles.barberText} >Tel : {barberInfos.phone}</Text>
             </View>
 
             <View style = {styles.services}>
                 <ScrollView>
                 <Text style = {styles.servicesTitle}>Services </Text>
-                    <Text style={styles.serviceText}>Coupe de Cheveux  60 Min   350 DA</Text>
-                    <Text style={styles.serviceText} >Barbe 10 Min 200 DA </Text>
-                    <Text style={styles.serviceText} >Kératine  120 Min 3000 DA </Text>
+             
+          {      
+            services.map((service,index) => {
+
+                return(   
+               
+               
+                    <Text key = {index} style={styles.serviceText}>
+                    {service.name +" / "+ 
+                    service.serviceDuration +" Min / "+ 
+                    service.price + " DA "
+                    }
+                    </Text>
+                   
+                    )
+
+
+            })
+         
+         }
 
 
                 </ScrollView>
@@ -148,7 +206,13 @@ servicesTitle : {
     marginBottom : 10 ,
     color : Colors.primary
 
-}
+},
+//////////////////////////////////////////////////////
+centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });
 
 

@@ -10,25 +10,22 @@ import BarberNavigation from './navigation/barberNavigation';
 import {AppLoading} from 'expo';
 import * as Font from 'expo-font';
 
-import offersReducer from "./store/reducers/offers";
-import bookingsReducer from "./store/reducers/bookings";
+import bookingsReducer from "./store/reducers/bookingsReducer" ;
 import authReducer from './store/reducers/auth';
-import playersReducer from './store/reducers/player';
+import clientsReducer from './store/reducers/client';
+import servicesReducer from './store/reducers/servicesReducer';
 
-import propertiesReducer from './store/reducers/property'; 
-import servicesReducer from './store/reducers/service'; 
 
 enableScreens();
 
 //Create the store and the combine reducers
 const rootReducer = combineReducers({
-offers : offersReducer,
+// offers : offersReducer,
 auth: authReducer,
-players:playersReducer,
-owners:ownersReducer,
+clients:clientsReducer,
 bookings : bookingsReducer,
-properties:propertiesReducer,
-services:servicesReducer
+services : servicesReducer,
+bookings : bookingsReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

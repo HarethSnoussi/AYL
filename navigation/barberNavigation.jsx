@@ -4,9 +4,7 @@ import {createAppContainer,createSwitchNavigator} from 'react-navigation';
 import {Platform,AsyncStorage} from 'react-native';
 import Colors from '../constants/Colors';
 import {createMaterialBottomTabNavigator} from "react-navigation-material-bottom-tabs"
-import LoginScreen from '../screens/loginScreen';
 
-import SignupScreen from '../screens/player/signupScreen';
 
 import {Ionicons,  MaterialIcons} from "@expo/vector-icons";
 import ClientHomeScreen from '../screens/home/clientHomeScreen';
@@ -16,8 +14,10 @@ import stadiumBookingScreen from "../screens/player/playerBooking/stadiumBooking
 // import PlayerProfileScreen from "../screens/player/playerProfile/playerProfileScreen";
 // import ForgotPasswordScreen from "../screens/forgotPasswordScreen";
 
-
-import PlayerSettingsScreen from '../screens/player/playerProfile/playerSettingsScreen';
+import LoginScreen from '../screens/loginScreen';
+import SignupScreen from '../screens/player/signupScreen';
+import StartupScreen from '../screens/startupScreen';
+import PlayerProfileScreen from '../screens/player/playerProfile/playerProfileScreen';
 // import StartupScreen from "../screens/startupScreen";
 import AllBarbersScreen from '../screens/player/playerBooking/allBarbersScreen';
 import BookStepTwo from '../screens/player/playerBooking/bookStepTwo';
@@ -43,7 +43,7 @@ const homeConfig = {
           
   } ,
   Profile : {
-          screen : AllBarbersScreen,
+          screen : PlayerProfileScreen,
           navigationOptions : {
             
             tabBarLabel : "Profile" ,
@@ -156,25 +156,19 @@ const BarberNavigation = createStackNavigator({
 
    BookingDetail : BookingDetail,
 
-  //  PlayerProfileScreen: PlayerProfileScreen,
-  
-   PlayerSettings:PlayerSettingsScreen
+  PlayerProfileScreen: PlayerProfileScreen
 },
 );
 
 
-//  const AuthNavigation = createStackNavigator({
-   
-//   Login: LoginScreen,
-
-//   Signup: SignupScreen,
- 
-//   ForgotPassword:ForgotPasswordScreen
-//  });
+const AuthNavigation = createStackNavigator({
+Login: LoginScreen,
+Signup: SignupScreen,
+});
 
 const MainNavigation = createSwitchNavigator({
-  // Startup:StartupScreen,
-  // Auth: AuthNavigation,
+  Startup:StartupScreen,
+  Auth: AuthNavigation,
   Main: BarberNavigation
 })
 

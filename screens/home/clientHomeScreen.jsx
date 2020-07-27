@@ -10,12 +10,15 @@ import { useDispatch,useSelector } from 'react-redux';
 import Colors from "../../constants/Colors.js";
 import TopSalonsCard from '../../components/TopSalonsCard';
 import TopBarbersCard from '../../components/TopBarbersCard.jsx';
-
+import { getServices } from '../../store/actions/servicesActions.js';
 const screen = Dimensions.get("window");
 const ClientHomeScreen = props =>{
   console.disableYellowBox = true;
-const playerID= props.navigation.getParam('playerID');  //get Player ID
-const playerUID= props.navigation.getParam('playerUID'); 
+    
+//   const dispatch = useDispatch();
+//   dispatch(getServices("+213557115451"));
+// const allServices = useSelector(state => state.bookings.bookings);
+
 
 
 //***************************************************************************
