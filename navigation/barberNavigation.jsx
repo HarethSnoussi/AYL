@@ -142,11 +142,9 @@ barStyle : {
 
 //Main Stack Navigator
 const BarberNavigation = createStackNavigator({
-   
    Client : {
      screen : clientHomeTabs
    }, 
-
    AllBarbers :  AllBarbersScreen ,
    StadiumBooking : stadiumBookingScreen ,
    BookStepTwo : BookStepTwo ,

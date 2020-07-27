@@ -2,6 +2,7 @@ import moment from "moment";
 
 export const ADD_BOOKING = "ADD_BOOKING"; 
 export const GET_BOOKING = "GET_BOOKING"; 
+export const CANCEL_BOOKING = "CANCEL_BOOKING";
 
 
 export const addBooking = (booking) => {
@@ -67,7 +68,6 @@ let allBookings = [];
 bookingsIds.forEach( id => {
 
 let same = resData.filter(e=>e.id === id);
-
     let booking = {
             amount : same[0].amount,
             barberId : same[0].barberId,
@@ -79,7 +79,7 @@ let same = resData.filter(e=>e.id === id);
             services:[],
             start :same[0].start ,
             status : same[0].status,
-            totalDuration : same[0].totalDuration
+           
     }
     same.forEach(e=>{
           const service = {
@@ -103,3 +103,41 @@ let same = resData.filter(e=>e.id === id);
  
 
 } }
+
+
+
+export const cancelBooking = (bookingDate,clientId)=> {
+
+const bookDate = bookingDate.toString();
+  return async (dispatch) =>{
+      try {
+          
+          const response = await fetch(
+              `http://192.168.1.5:3000/bookings/cancelbooking`,
+              {
+                method: 'PATCH',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+              body : JSON.stringify({bookDate,clientId})
+              }
+              
+              
+            );
+         
+            if (!response.ok) {
+              throw new Error('Something went wrong!');
+            }
+
+  dispatch({type:CANCEL_BOOKING,bookingDate,clientId})
+  } catch (error) {
+          
+  
+  }
+ 
+
+}
+
+
+
+}

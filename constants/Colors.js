@@ -2,7 +2,7 @@ export default{
     primary: '#fd6c57',
     secondary:"#fd9054",
     grey : "#ebebeb",
-    orange : "#c62225",
+    orange : "#df4346",
     background : "#1E1F28",
     colorF1 : "#5B3758",
     colorF2 : "#C65B7c",

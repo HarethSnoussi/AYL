@@ -12,7 +12,7 @@ const screen = Dimensions.get("window");
 
 
 const BookingCard = props =>{
-  const gradient1 = props.status === "confirmée" ? "#fd6d57" : "#b31217";
+  const gradient1 = props.status === "confirmée" ? "#fd6d57" : "#f32f33";
   const gradient2 = props.status === "confirmée" ? "#fd9054" : "#e52d27";
 
 
@@ -68,7 +68,9 @@ const BookingCard = props =>{
                       end : props.end,
                       amount : props.amount,
                       services : props.services,
-                      barberId : props.barberId
+                      barberId : props.barberId,
+                      clientId : props.clientId,
+                      cancelDate : props.cancelDate
                      })} />
           </View>
 

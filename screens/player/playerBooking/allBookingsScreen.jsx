@@ -51,32 +51,61 @@ const days = allBookings.map(e=>e.bookingDate);
 let mark = {};
 
 days.forEach(day => {
-    
+
+ if ( moment().format("ll") <= moment(day).format("ll")) {
     mark[day] = { 
         selected: true, 
         marked: true , 
-        selectedColor:"#fff",
-        color: Colors.primary
+        selectedColor: Colors.colorF5,
+        textColor: Colors.primary,
+        color : Colors.colorH1 ,
     };
+
+ } else {
+
+    mark[day] = { 
+        selected: true, 
+        marked: false , 
+        selectedColor:Colors.orange,
+        text: {
+            color: 'black',
+            fontWeight: 'bold'
+          }
+    };
+
+ }
+   
 
 });
 //Dispatch and get the bookings 
 useEffect(()=>{
      const getBookings = async ()=>{
-
             setLoading(true);
             await dispatch(getClientBookings("+213553633809"));
             setLoading(false);
-
      }
 
-     getBookings();
+getBookings();
+
 
 
 },[dispatch])
 
 
 
+useEffect(()=>{
+
+    const todaysBookings= async ()=>{
+setLoading(true);
+        const dayBooks = allBookings.filter(bookings => moment(bookings.bookingDate).format("ll") === moment (new Date()).format("ll") );
+        setDayBookings([...dayBooks]);
+setLoading(false);
+           
+
+    }
+ 
+    todaysBookings();
+},[allBookings])
 
 const selectedDateHandler = (date) => {
 
@@ -84,15 +113,16 @@ const selectedDateHandler = (date) => {
 const dayBooks = allBookings.filter(bookings => bookings.bookingDate === date.dateString );
 
 setSelectedDateText(moment(date.dateString).format('LL'));
-
 setDayBookings ([...dayBooks]);
 
 setSelectedDay(moment(date.dateString).format('ddd'));
 
 };
+
+
 //IF IS LOADING
 if (isLoading) {
-    
+
     return (
       <View style= {styles.centered}>
         <ActivityIndicator size="large" color= {Colors.primary} />
@@ -112,11 +142,11 @@ if (isLoading) {
             <Calendar
             style = {{borderBottomLeftRadius : 25,borderBottomRightRadius : 25,overflow : "hidden",paddingVertical : "2%" , marginBottom : 15}}
            theme={{
-        
+            // selectedDayTextColor: Colors.primary,
+
             calendarBackground: Colors.secondary,
             textSectionTitleColor: '#fff',
             textSectionTitleDisabledColor: '#fff',
-            selectedDayTextColor: Colors.primary,
             todayTextColor: '#2d4150',
             dayTextColor: '#fff',
             textDisabledColor: '#252525',
@@ -141,9 +171,12 @@ if (isLoading) {
 
             </View>
                 <ScrollView style = {styles.cardsContainer}>
+{
 
+}
                 {
                     dayBookings.map((booking , index)=>{
+    
                         
                         return(
                         <BookingCard
@@ -159,6 +192,8 @@ if (isLoading) {
                             services = {booking.services}
                             detail= {true}
                             barberId = {booking.barberId}
+                            clientId = {booking.clientId}
+                            cancelDate = {booking.date}
                          /> 
 
                     )})

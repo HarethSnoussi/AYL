@@ -64,7 +64,30 @@ const hours = [
     {id : "47",time : "16:30"},
     {id : "48",time : "16:45"},
     {id : "49",time : "17:00"},
-
+    {id : "50",time : "17:15"},
+    {id : "51",time : "17:30"},
+    {id : "52",time : "17:45"},
+    {id : "53",time : "18:00"},
+    {id : "54",time : "18:15"},
+    {id : "55",time : "18:30"},
+    {id : "56",time : "18:45"},
+    {id : "57",time : "19:00"},
+    {id : "58",time : "19:15"},
+    {id : "59",time : "19:30"},
+    {id : "60",time : "19:45"},
+    {id : "61",time : "20:00"},
+    {id : "62",time : "20:15"},
+    {id : "63",time : "20:30"},
+    {id : "64",time : "20:45"},
+    {id : "65",time : "21:00"},
+    {id : "66",time : "21:15"},
+    {id : "67",time : "21:30"},
+    {id : "68",time : "21:45"},
+    {id : "69",time : "22:00"},
+    {id : "70",time : "22:15"},
+    {id : "71",time : "22:30"},
+    {id : "72",time : "22:45"},
+    {id : "73",time : "23:00"},
     ];
 
 const hoursTime = hours.map(hour=>hour.time);
@@ -159,17 +182,26 @@ setButtonIndex(-1);
 let todaysSlots = [];
 const days = workingTime.map(e=>e.day);
 const day = moment(pickedDate).format('dddd').substring(0, 3) ;
+const nowHour = (new Date().getHours()+2).toString()+":00" ;
+
 if(days.indexOf(day) >= 0)
 {
     
     todaysSlots = hours.slice(hoursTime.indexOf(workingTime[days.indexOf(day)].start) , hoursTime.indexOf(workingTime[days.indexOf(day)].end) );
     // setAvailableSlots([...todaysSlots]);
 
+    if(pickedDate.toDateString() === new Date().toDateString()){
+        todaysSlots = hours.slice(hoursTime.indexOf(nowHour), hoursTime.indexOf(workingTime[days.indexOf(day)].end) );  
+
+    }
+
+
+
 }  
 
 const todaysSlotsTime = todaysSlots.map(e=>e.time);
 
-    //Filter the selected Date Bookings
+//Filter the selected Date Bookings
 const filteredBookings = allBookings.filter(booking=>moment(booking.bookingDate).format("ll") === moment(pickedDate).format("ll"));
 
 
@@ -219,6 +251,8 @@ manager();
 
  },[pickedDate]);
 
+
+//  console.log((new Date().getHours()+1).toString()+":00");
 // console.log(moment(new Date()).format('ll'));
 // console.log(moment("2020-07-25").format('ll'));
 

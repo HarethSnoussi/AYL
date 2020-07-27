@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View,ActivityIndicator} from 'react-native';
+import { StyleSheet, Text, View,ActivityIndicator, Alert} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import Colors from "../../../constants/Colors";
 import BookingCard from '../../../components/BookingCard';
 import { Ionicons ,MaterialIcons } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
+import {cancelBooking} from "../../../store/actions/bookingsActions";
 
 const BookingDetail = props =>{
 const services = props.navigation.getParam("services");
@@ -13,7 +15,61 @@ const services = props.navigation.getParam("services");
 const [isLoading , setLoading] = useState (false);
 
 //Fetched Barber Infos
-const [barberInfos , setBarberInfos] = useState({});
+const [barberInfos , setBarberInfos] = useState({
+  "address": " ",
+  "name": " ",
+  "phone": " ",
+  "region": " ",
+  "surname": " ",
+  "wilaya": " ",
+});
+
+const dispatch = useDispatch();
+
+//cancel booking
+
+const cancelBookingHandler = () =>{
+
+//ALERT BEFORE CANCEL A BOOKING
+// Works on both Android and iOS
+Alert.alert(
+  'Annuler la réservation ! ',
+  'Etes vous sùr de vouloir annuler cette réservation ?',
+  [
+ 
+    {
+      text: 'Non',
+      onPress: () => {},
+      style: 'cancel'
+    },
+    { text: 'Oui', onPress: async () => {
+      setLoading(true);
+          await dispatch(cancelBooking(props.navigation.getParam("cancelDate"),props.navigation.getParam("clientId")))
+
+           props.navigation.navigate( "Client");
+      setLoading(false);
+
+
+
+    } }
+  ],
+  { cancelable: false },
+  { onDismiss: () => {} },
+  
+
+);
+
+
+
+
+//  dispatch(cancelBooking(props.navigation.getParam("cancelDate"),props.navigation.getParam("clientId")))
+
+//  props.navigation.navigate(
+//   "Client");
+}
+
+
+
 
 useEffect(()=>{
 
@@ -39,7 +95,6 @@ useEffect(()=>{
 
 
 },[])
-
 
 if (isLoading) {
   return (
@@ -86,6 +141,7 @@ if (isLoading) {
           <Ionicons name="ios-close-circle-outline" 
                       size={28} 
                       color={Colors.colorF3} 
+                      onPress = {cancelBookingHandler}
                /> 
   
             <Text style = {styles.actionsText}>Annuler</Text>
