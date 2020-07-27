@@ -3,7 +3,6 @@ import { StyleSheet,View,KeyboardAvoidingView,Text,Dimensions,ImageBackground,To
 import {Button} from 'react-native-paper';
 import Colors from '../../../constants/Colors';
 import {useDispatch,useSelector} from "react-redux";
-import * as playerActions from '../../../store/actions/playerActions';
 import * as authActions from '../../../store/actions/authActions';
 import Input from '../../../components/Input';
 import * as Crypto from 'expo-crypto';

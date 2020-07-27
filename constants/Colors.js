@@ -3,7 +3,7 @@ export default{
     secondary:"#fd9054",
     grey : "#ebebeb",
     orange : "#c62225",
-    background : "#1E1F28",
+    background : "#212327",
     colorF1 : "#5B3758",
     colorF2 : "#C65B7c",
     colorF3 : "#F9627D",
@@ -14,6 +14,8 @@ export default{
     colorH3 : "#49516F",
     colorH4 : "#6279B8",
     colorH5: "#8EA4D2",
+    blue:"#323446",
+    lightGrey:"#d3d3d3"
 
     
 };

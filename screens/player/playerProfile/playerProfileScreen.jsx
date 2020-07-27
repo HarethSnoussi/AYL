@@ -1,14 +1,14 @@
 import React,{useState,useEffect,useCallback,useReducer} from 'react';
-import { StyleSheet,View,ScrollView,ImageBackground,TouchableHighlight,Text,Image,Alert ,Dimensions,AsyncStorage,ActivityIndicator} from 'react-native';
-import {Button} from 'react-native-paper';
+import {StyleSheet,View,AsyncStorage,ScrollView,ImageBackground,TouchableOpacity,Text,Image,Alert,KeyboardAvoidingView,Dimensions,ActionSheetIOS,Picker} from 'react-native';
+import CustomInput from '../../../components/Input';
 import {HeaderButtons,Item} from "react-navigation-header-buttons";
 import HeaderButton from "../../../components/HeaderButton";
 import Colors from '../../../constants/Colors';
-import {Ionicons} from "@expo/vector-icons";
+import {Ionicons,MaterialIcons,MaterialCommunityIcons} from "@expo/vector-icons";
 import {useDispatch,useSelector} from "react-redux";
 import * as authActions from '../../../store/actions/authActions';
-import * as playerActions from '../../../store/actions/playerActions';
-import Input from '../../../components/Input'
+import * as clientActions from '../../../store/actions/clientActions';
+
 
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
@@ -45,67 +45,43 @@ const formReducer=(state,action) =>{
 
 const PlayerProfileScreen = props =>{
 
-  //get the player's data
-  const playerData= useSelector(state=>state.players.player);
-  
-  //use Dispatch to dispatch our action
-  const dispatch= useDispatch();
+ 
+  const [isInfo,setIsInfo]= useState(true);
+  const [isLocalisation,setIsLocalisation]= useState(false);
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Responsivity  
-let cardStyle = styles.card;
-let circleOneStyle = styles.circleOne ;
-let circlesContainerStyle = styles.circlesContainer;
-let circleTwoStyle = styles.circleTwo;
-let textInputStyle = styles.textInput;
-let card2Style = styles.card2;
-let labelBtnStyle = styles.labelBtn;
+  const info = ()=>{
+    setIsInfo(true);
+    setIsLocalisation(false);
+  };
+  const localisation = ()=>{
+    setIsInfo(false);
+    setIsLocalisation(true);
+  };
 
-  if (screen.height > 800) {
-    cardStyle = styles.cardBig;
-    circleOneStyle = styles.circleOneBig ;
-    circlesContainerStyle = styles.circlesContainerBig;
-    circleTwoStyle = styles.circleTwoBig;
-    textInputStyle = styles.textInputBig;
-    card2Style = styles.card2Big;
-    labelBtnStyle =styles.labelBtnBig;
-  }
-////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //States for complex information textInputs
+ const [wilaya,setWilaya] = useState('Wilaya');
+ const wilayas = ['Alger','Blida'];
 
-    //State for update loading 
-    const [isLoading,setIsLoading]=useState(false);
-
-    //state for image
-    const [pickedImage,setPickedImage]= useState(playerData[0]?playerData[0].image : '');
-
-    const verifyPermissions= async ()=>{
-        const result= await Permissions.askAsync(Permissions.CAMERA,Permissions.CAMERA_ROLL);
-        if(result.status !== 'granted'){
-            Alert.alert('Permissions insuffisantes!',
-            'Vous devez accorder les autorisations de la caméra pour utiliser cette application.',
-            [{text:"D'accord"}]);
-            return false;
-        }
-        return true;
-      };
-
-    const takeImageHandler = async ()=>{
-       const hasPermissions = await verifyPermissions();
-       if(!hasPermissions){
-           return;
-       }
-       const image = await ImagePicker.launchCameraAsync({
-           allowsEditing:true,
-           aspect:[60,60],
-           quality:0.7
-       });
-       console.log(image);
-       setPickedImage(image.uri);
-    };
-
-    useEffect(()=>{
-      console.log(pickedImage);
-    },[pickedImage])
+ const dispatch = useDispatch();
+ 
+ 
+ //picker only iOS function 
+ const onPress = () =>{
+   const wilayasIOS = ['Alger','Blida'];    
+   ActionSheetIOS.showActionSheetWithOptions(
+     {
+       options: wilayasIOS,
+       cancelButtonIndex: -1
+     },
+     buttonIndex => {
+       if (buttonIndex === -1) {
+         // cancel action
+       } else {
+        setHour(wilayasIOS[buttonIndex]);
+       } 
+     }
+   );  
+}
     
     
     // logout handler
@@ -119,16 +95,18 @@ let labelBtnStyle = styles.labelBtn;
 //////Input Management
   const[formState,disaptchFormState] = useReducer(formReducer,
     {inputValues:{
-      name:playerData[0]?playerData[0].name:'',
-      surname:playerData[0]?playerData[0].surname:'',
-      email:playerData[0]?playerData[0].email:'',
-      address:playerData[0]?playerData[0].address:''
+      name:'',
+      surname:'',
+      email:'',
+      address:'',
+      region:''
     },
     inputValidities:{
       name:true,
       surname:true,
       email:true,
       address:true,
+      region:true
     },
     formIsValid:true});
   
@@ -137,354 +115,460 @@ let labelBtnStyle = styles.labelBtn;
   
   },[disaptchFormState]);
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //Update player's data Management after pressing in Check icon
-  const saveHandler = useCallback(async()=>{
-    if(formState.formIsValid){
-    try{
-        setIsLoading(true);
-        dispatch(playerActions.updatePlayer(playerData[0].id,formState.inputValues.name,formState.inputValues.surname,
-                                          formState.inputValues.email,formState.inputValues.address,pickedImage));
-        setIsLoading(false);                        
-        Alert.alert('Félicitation!','Vos données ont été changées avec succès!',[{text:"OK"}]);
-  
-    }catch(err){
-      console.log(err);
-      Alert.alert('Oups!','Une erreur est survenue!',[{text:"OK"}]);
-    }
-    
-    }else{
-      Alert.alert('Erreur!','Veuillez remplir le(s) champ(s) manquants svp!',[{text:"OK"}]);
-    }
-  
-  },[dispatch,playerData[0].id,formState]);
 
-   useEffect(()=>{
-     props.navigation.setParams({load:isLoading});
-     props.navigation.setParams({save:saveHandler});
-     
-   },[saveHandler,isLoading]);
 
     return(
-    <View style={styles.container}>
-     <ImageBackground source = {require("../../../assets/images/android.jpg")}  
-     style={styles.backgroudnImage}
-    
-     >
-
-     <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.cardContainer}>
-            <View style={cardStyle}>
-                {!pickedImage ? (<Text style={styles.pickedImageText}>Votre Image !</Text>)
-                : (<Image style={styles.image} source={{uri:pickedImage}} />)}
-            </View>
+      <View style={styles.container}>
+      <View style={styles.firstCard}>
+        <ImageBackground source={require('../../../assets/images/man1-1.jpg')} style={styles.backgroundFirstCard} resizeMode='cover'/>
+     </View>
+     <View style={styles.secondCard}>
+          <View style={styles.secondCardContent}>
+              <View style={styles.imageContainer}>
+                  <Image source={require('../../../assets/images/man2.jpg')} style={styles.image} />
+              </View>
+              <View style={styles.detailsContainer}>
+                <View style={{width:'30%'}}>
+                  <TouchableOpacity style={styles.iconFormCircle1}>
+                    <MaterialIcons title = "camera" name ='camera-enhance' color='#323446' size={23} />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.iconFormCircle2}>
+                    <MaterialIcons title = "delete" name ='delete-forever' color='#FE457C' size={27} />
+                  </TouchableOpacity>
+                </View>  
+                <View style={{width:'70%'}}>
+                  <Text style={styles.bnameText}>Merouane.S</Text>
+                  <Text style={styles.age}>26 ans</Text>
+                </View>
+              </View>
+          </View>
+        </View>
+        <View style={styles.menuContainer}>
+             <TouchableOpacity onPress={info} style={{padding:5,width:'50%',backgroundColor:isInfo?'#fd6c57':'#fff',alignItems:'center',justifyContent:'center'}}>
+                <Text style={{color:isInfo?'#fff':'#fd6c57',fontFamily:'poppins'}}>Informations</Text>
+             </TouchableOpacity>
+             <TouchableOpacity onPress={localisation} style={{padding:5,width:'50%',backgroundColor:isLocalisation?'#fd6c57':'#fff',alignItems:'center',justifyContent:'center'}}>
+                 <Text style={{color:isLocalisation?'#fff':'#fd6c57',fontFamily:'poppins'}}>Mon Compte</Text>
+             </TouchableOpacity>
+        </View>
+     {isInfo?(<ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+        <KeyboardAvoidingView keyboardVerticalOffset={10}>
          
-            <View style={circlesContainerStyle}>
-                <TouchableHighlight style={circleOneStyle} onPress={takeImageHandler}>
-                  <Ionicons title = "add" 
-                   name = {Platform.OS === 'android' ? 'md-camera' : 'ios-camera'}
-                   color='white' size={24} />
-                </TouchableHighlight>
-                <TouchableHighlight 
-                style={circleTwoStyle}
-                onPress={()=>setPickedImage(null)}
-                >
-                <Ionicons title = "delete" 
-                   name = {Platform.OS === 'android' ? 'md-remove' : 'ios-remove'}
-                   color='white' size={24} />
-                </TouchableHighlight>
-            </View>
+            <CustomInput
+                id='name'
+                rightIcon={<MaterialIcons title = "firstName" name ='person' color='#323446' size={23} />}
+                placeholder='Nom'
+                keyboardType="default"
+                returnKeyType="next"
+                onInputChange={inputChangeHandler}
+                initialValue=''
+                initiallyValid={true}
+                required
+                placeholderTextColor='rgba(50,52,70,0.4)'
+                inputStyle={{fontSize:15}}
+                minLength={3}
+                autoCapitalize='sentences'
+                backgroundColor='#fff'
+                textColor={Colors.blue}
+                shadowColorView='black'
+                shadowOpacityView={0.96}
+                shadowOffsetView={{width: 0, height:2}}
+                shadowRadiusView={10}
+                elevationView={3}
+                widthView='90%'
+              />
            
-        </View> 
-       
-        <View style={styles.card2Container}>
-            <View style={card2Style}>
-                <View style={styles.textInputsContainer}>  
-                   <View style={styles.textInputContainer}>
-                        <Input
-                          id="name"
-                          mode='flat'
-                          label='Nom *'
-                          placeholder='Tapez votre nom'
-                          keyboardType="default"
-                          returnKeyType="next"
-                          autoCapitalize='sentences'
-                          onInputChange={inputChangeHandler}
-                          initialValue={playerData[0]?playerData[0].name:''}
-                          initiallyValid={true}
-                          required
-                          errorText='Veuillez entrer votre nom svp!'
-                          minLength={3}
-                        />
+            <CustomInput
+              id='surname'
+              rightIcon={<MaterialIcons title = "firstName" name ='person' color='#323446' size={23} />}
+              placeholder='Prénom'
+              keyboardType="default"
+              returnKeyType="next"
+              onInputChange={inputChangeHandler}
+              initialValue=''
+              initiallyValid={true}
+              required
+              placeholderTextColor='rgba(50,52,70,0.4)'
+              inputStyle={{fontSize:15}}
+              minLength={3}
+              autoCapitalize='sentences'
+              backgroundColor='#fff'
+              textColor={Colors.blue}
+              shadowColorView='black'
+              shadowOpacityView={0.96}
+              shadowOffsetView={{width: 0, height:2}}
+              shadowRadiusView={10}
+              elevationView={3}
+              widthView='90%'
+            />
+          
+            <CustomInput
+                id='email'
+                rightIcon={<MaterialIcons title = "email" name ='email' color='#323446' size={23} />}
+                placeholder='Email'
+                keyboardType="default"
+                returnKeyType="next"
+                onInputChange={inputChangeHandler}
+                initialValue=''
+                initiallyValid={true}
+                email
+                required
+                placeholderTextColor='rgba(50,52,70,0.4)'
+                inputStyle={{fontSize:15}}
+                minLength={6}
+                backgroundColor='#fff'
+                textColor={Colors.blue}
+                autoCapitalize='sentences'
+                shadowColorView='black'
+                shadowOpacityView={0.96}
+                shadowOffsetView={{width: 0, height:2}}
+                shadowRadiusView={10}
+                elevationView={3}
+                widthView='90%'
+              />
+            <CustomInput
+              id='address'
+              rightIcon={<MaterialIcons title = "address" name ='map' color='#323446' size={23} />}
+              placeholder='Adresse'
+              keyboardType="default"
+              returnKeyType="next"
+              onInputChange={inputChangeHandler}
+              initialValue=''
+              initiallyValid={true}
+              required
+              placeholderTextColor='rgba(50,52,70,0.4)'
+              inputStyle={{fontSize:15}}
+              minLength={12}
+              autoCapitalize='sentences'
+              shadowColorView='black'
+              shadowOpacityView={0.96}
+              shadowOffsetView={{width: 0, height:2}}
+              shadowRadiusView={10}
+              elevationView={3}
+              widthView='90%'
+              backgroundColor='#fff'
+              textColor={Colors.blue}
+            />
+          <View style={styles.pickerContainer}>
+            {Platform.OS === 'android' ? 
+                      <Picker
+                      selectedValue={wilaya}
+                      onValueChange={itemValue => setWilaya(itemValue)}
+                      style={{fontFamily:'poppins',fontSize:12,color:'#323446'}}
+                      >
+                      {wilayas.map(el=> <Picker.Item label={el} value={el} key={el} />)}
+                      </Picker> :
+                      <Text onPress={onPress} style={{fontFamily:'poppins',fontSize:12,color:'#323446'}}>
+                        {wilaya}
+                      </Text>} 
+          </View>
+          <CustomInput
+            id='region'
+            rightIcon={<MaterialIcons title="region" name ='home' color='#323446' size={23} />}
+            placeholder='Région'
+            keyboardType="default"
+            returnKeyType="next"
+            minLength={3}
+            autoCapitalize='sentences'
+            onInputChange={inputChangeHandler}
+            initialValue=''
+            initiallyValid={true}
+            required
+            placeholderTextColor='rgba(50,52,70,0.4)'
+            inputStyle={{fontSize:15}}
+            shadowColorView='black'
+            shadowOpacityView={0.96}
+            shadowOffsetView={{width: 0, height:2}}
+            shadowRadiusView={10}
+            elevationView={3}
+            widthView='90%'
+            backgroundColor='#fff'
+            textColor={Colors.blue}
+          />
+          
+          </KeyboardAvoidingView>
+     </ScrollView>):
+     (<ScrollView style={{width:'100%'}} showsVerticalScrollIndicator={false}>
+         <View style={styles.noticeContainer}>
+             <Text style={styles.noticeTitle}>Remarque</Text>
+             <Text style={styles.noticeContent}>Avertir notre équipe avant de supprimer votre compte!</Text>
+             <Text style={styles.tahfifaSignature}>Equipe Tahfifa.</Text>
+         </View>
+         <View style={styles.buttonContainer}>
+              <View style={styles.cartContainer}>
+                <TouchableOpacity style={styles.cart} onPress={logout}>
+                    <View style={{paddingBottom:5}}>
+                      <MaterialCommunityIcons title = "logout" name ='logout' color='#FD6C57' size={23} />
                     </View>
-                    <View style={styles.textInputContainer}>
-                       <Input
-                          id="surname"
-                          mode='flat'
-                          label='Prénom *'
-                          placeholder='Tapez votre prénom'
-                          keyboardType="default"
-                          returnKeyType="next"
-                          autoCapitalize='sentences'
-                          onInputChange={inputChangeHandler}
-                          initialValue={playerData[0]?playerData[0].surname:''}
-                          initiallyValid={true}
-                          required
-                          errorText='Veuillez entrer votre nom svp!'
-                          minLength={3}
-                        />
+                    <View>
+                      <Text style={styles.optionTitle}>Se déconnecter</Text>
                     </View>
-                    <View style={styles.textInputContainer}>
-                        <Input
-                          id='email'
-                          label='Email'
-                          mode='flat'
-                          placeholder='Exemple: player@gmail.com'
-                          keyboardType="default"
-                          returnKeyType="next"
-                          onInputChange={inputChangeHandler}
-                          initialValue={playerData[0]?playerData[0].email:''}
-                          initiallyValid={true}
-                          email
-                          errorText='Veuillez entrer un email valide svp!'
-                          minLength={6}
-                        />
-                    </View>
-                    <View style={styles.textInputContainer}>
-                        <Input
-                          id="address"
-                          mode='flat'
-                          label='Adresse'
-                          placeholder='Tapez votre propre adresse'
-                          keyboardType="default"
-                          returnKeyType="next"
-                          autoCapitalize='sentences'
-                          onInputChange={inputChangeHandler}
-                          initialValue={playerData[0]?playerData[0].address:''}
-                          initiallyValid={true}
-                          errorText='Veuillez entrer votre adresse exacte svp!'
-                          minLength={12}
-                        />
-                    </View>
-                   
-                </View> 
-            </View>
-        </View>
-     </ScrollView>
-     <View style={{width:'100%'}}>
-            <Button
-                theme={{colors: {primary:Colors.primary}}} 
-                mode="contained"
-                labelStyle={labelBtnStyle}
-                contentStyle={{width:'100%'}}
-                style={{borderColor:Colors.primary}}
-                icon='exit-to-app'
-                dark={true}
-                onPress={logout}
-                >Se déconnecter 
-            </Button>
-        </View>
-     </ImageBackground>
-    </View>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.cartContainer}>
+                <TouchableOpacity style={styles.cart}>
+                     <View style={{paddingBottom:5}}>
+                       <Ionicons title = "options" name ='ios-options' color='#56A7FF' size={23} />
+                     </View>
+                     <View>
+                       <Text style={styles.optionTitle}>Paramètres</Text>
+                     </View>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.cartContainer}>
+                <TouchableOpacity style={styles.cart}>
+                       <View style={{paddingBottom:5}}>
+                          <MaterialCommunityIcons title = "delete" name ='delete-forever' color='#FE457C' size={23} />
+                        </View>
+                        <View>
+                          <Text style={styles.optionTitle}>Mon compte</Text>
+                        </View>
+                </TouchableOpacity>
+              </View>
+         </View>
+       </ScrollView>)}
+  </View>
 
      );    
 };
 
-PlayerProfileScreen.navigationOptions= navData => {
-  const saveFunction=navData.navigation.getParam('save');
-  const load=navData.navigation.getParam('load');
-     return {
-       title : "Mon Profile" , 
-       headerTitleStyle:{
-           fontFamily:'poppins',
-           color:Platform.OS === 'android' ? 'white' : Colors.background
-      },
-      headerStyle:{
-          backgroundColor:Platform.OS === 'android' ? Colors.background : 'white'
-      },
-      headerBackTitle:" ",
-      headerTintColor:Platform.OS === 'android' ? 'white' :Colors.background,
-      headerRight : ()=> (load ? <ActivityIndicator color={Colors.secondary} />:
-      <HeaderButtons HeaderButtonComponent = {HeaderButton}> 
-        <Item title = "save" 
-          iconName = {Platform.OS === 'android' ? 'md-checkmark' : 'ios-checkmark'}
-          color={Platform.OS === 'android' ? 'white' : Colors.background}
-          onPress={saveFunction}
-        />
-      </HeaderButtons>)
-     
-     };
+PlayerProfileScreen.navigationOptions= navData => { 
+  
+  return {
+  headerTransparent : true ,
+  headerStyle:{
+      backgroundColor: 'white'
+  },
+  headerBackTitle : " ",
+  headerTitle: () => (
+    <Image 
+    resizeMode="cover"
+    style={{
+      width:150,
+      height:40,
+      resizeMode:'contain',
+      alignSelf: 'center'}}
+    
+    />
+  ),
+  headerTintColor: '#fff',
+  headerRight : () =>(
+    <HeaderButtons HeaderButtonComponent = {HeaderButton}> 
+      <Item title = "save" 
+        iconName ='md-checkmark'
+        color='#fff'
+        size={23} 
+        style={{paddingRight:10}}   
+      />
+    </HeaderButtons>)
+    };
  
   };
 
 const styles= StyleSheet.create({
-   container:{
+  container:{
     flex:1,
     backgroundColor:'white',
-    justifyContent:'flex-start'
-   },
-   backgroudnImage : {
-    flex : 1 
-  },
-   cardContainer:{
-       marginTop:"5%",
-       alignItems : "center",
-       justifyContent : "center",
-
-       
-   },
-////////////////////////////////////////////////////////////////
-   card:{
-    backgroundColor:'#263341',
-    shadowColor: 'black',
-    shadowOpacity: 0.86,
-    shadowOffset: {width:0, height:2},
-    shadowRadius:8,
-    elevation:5,
-    justifyContent:'center',
-    borderRadius : 65,
-    height : 130 ,
-    width : 130,
-    borderWidth : 3,
-    borderColor : Colors.grey,
-    marginBottom : 9,
-    overflow : "hidden"
-   },
-   cardBig : {
-    backgroundColor:'#263341',
-    shadowColor: 'black',
-    shadowOpacity: 0.86,
-    shadowOffset: {width:0, height:2},
-    shadowRadius:8,
-    elevation:5,
-    justifyContent:'center',
-    borderRadius : 250/2,
-    height :250 ,
-    width : 250,
-    borderWidth : 3,
-    borderColor : Colors.grey,
-    marginBottom : 9,
-    overflow : "hidden"
-
-   },
-////////////////////////////////////////////////////////////////
-   pickedImageText:{
-    fontFamily:'poppins',
-    color:'white',
-    alignSelf:'center',
-    fontSize : 13 
-   },
-   image:{
     width:'100%',
-    height:'100%'
-   },
-   //////////////////////////////////////////////////////
-   circlesContainer:{
-     justifyContent:'center',
-     flexDirection : "row",
-     width : 90,
-     justifyContent : "space-between",
-     marginBottom : 10
-    
-   },
-   circlesContainerBig:{
-    justifyContent:'center',
-    flexDirection : "row",
-    width : 200,
-    justifyContent : "space-around",
-   marginBottom : 10
-  },
-
-/////////////////////////////////////////////////////////
-   circleOne:{
-     height:40,
-     width:40,
-     borderRadius:50/2,
-     backgroundColor:'#171d23',
-     justifyContent:'center',
-     alignItems:'center'
-   },
-   circleOneBig:{
-    height:80,
-    width:80,
-    borderRadius :80/2,
-    backgroundColor:'#171d23',
-    justifyContent:'center',
     alignItems:'center'
-  },
-
-/////////////////////////////////////////////////////////
-
-   circleTwo:{
+   },
+   firstCard:{
+     width:'95%',
+     height:'40%',
+     borderTopLeftRadius:30,
+     borderTopRightRadius:30,
+     shadowColor: 'black',
+     shadowOpacity: 0.96,
+     shadowOffset: {width: 0, height:2},
+     shadowRadius: 10,
+     elevation: 5,
+     backgroundColor:'red'
+    },
+    backgroundFirstCard:{
+      width:'100%',
+      height:'100%',
+      alignItems:'center',
+      justifyContent:'space-between',
+      borderTopLeftRadius:30,
+      borderTopRightRadius:30, 
+      overflow:'visible'
+    },
+    secondCard:{
+      height:80,
+      width:'90%',
+      backgroundColor:'white',
+      borderRadius:10,
+      marginTop:-50, 
+      shadowColor: 'black',
+      shadowOpacity: 0.96,
+      shadowOffset: {width: 0, height:2},
+      shadowRadius: 10,
+      elevation: 5,
+    },
+    secondCardContent:{
+      justifyContent:'space-around',
+      flexDirection:'row'
+    },
+    imageContainer:{
+      width:80,
+      height:110
+    },
+    image:{
+      width:'100%',
+      height:'100%',
+      borderRadius:10,
+      marginTop:-60
+    },
+    detailsContainer:{
+      marginTop:5,
+      width:'60%',
+      flexDirection:'row',
+      justifyContent:'space-between',
+      marginLeft:-15
+    },
+    bnameText:{
+      fontFamily:'poppins-bold',
+      color:'#323446',
+      fontSize:18
+    },
+    secondFirstCard:{
+      width:'95%',
+      height:'20%',
+      flexDirection:'row',
+      justifyContent:'space-between',
+      alignItems:'flex-end'
+    },
+    iconFormCircle1:{
+      width:40,
+      height:30,
+      borderRadius:20,
+      justifyContent:'center',
+      alignItems:'center'
+    },
+    iconFormCircle2:{
+      width:40,
+      height:30,
+      borderRadius:20,
+      justifyContent:'center',
+      alignItems:'center',
+      
+    },
+    age:{
+      fontFamily:'poppins',
+      color:'grey',
+      fontSize:11,
+      marginTop:-5
+    },
+    menuContainer:{
+      marginTop:25,
+      width:'90%',
+      backgroundColor:'#f9f9f9',
+      borderRadius:5,
+      borderColor:'#fd6c57',
+      borderWidth:1,
+      flexDirection:'row',
+      alignSelf:'center',
+      overflow:'hidden'
+    },
+    scrollView:{
+      width:'100%',
+      marginVertical:20
+    },
+    bnameAgeContainer:{
+      flexDirection:'row',
+      width:'90%',
+      alignSelf:'center'
+    },
+  pickerContainer:{
+    width:'90%',
+    borderWidth:1,
+    borderRadius:20,
+    backgroundColor:'#fff',
+    borderColor:'#fff',
     height:40,
-    width:40,
-    borderRadius:50/2,
-    backgroundColor:'#456383',
     justifyContent:'center',
-    alignItems:'center'
+    paddingHorizontal:12,
+    shadowColor: 'black',
+    shadowOpacity: 0.96,
+    shadowOffset: {width: 0, height:2},
+    shadowRadius: 10,
+    elevation: 3,
+    overflow:'hidden',
+    marginVertical:5,
+    alignSelf:'center'
    },
-
-   circleTwoBig:{
-    height:80,
-    width:80,
-    borderRadius:80/2,
-    backgroundColor:'#456383',
+   pickerContainerRegion:{
+    width:'90%',
+    borderWidth:1,
+    borderRadius:20,
+    backgroundColor:'#fff',
+    borderColor:'#fff',
+    height:40,
     justifyContent:'center',
-    alignItems:'center'
+    paddingHorizontal:12,
+    shadowColor: 'black',
+    shadowOpacity: 0.96,
+    shadowOffset: {width: 0, height:2},
+    shadowRadius: 10,
+    elevation: 3,
+    overflow:'hidden',
+    marginTop:5,
+    marginBottom:20,
+    alignSelf:'center'
    },
-  /////////////////////////////////////////////////////////
-   card2Container:{
-     alignItems:'center',
-     marginBottom:50
-   },
- ////////////////////////////////////////////////////////////
-   card2:{
-    height:350,
-    width:'90%',
-    backgroundColor:'rgba(38, 51, 65,0.9)',
-    borderRadius:10,
-    paddingHorizontal:20,
-    paddingVertical:20
-   },
-   card2Big:{
-    height:400,
-    width:'90%',
-    backgroundColor:'rgba(38, 51, 65,0.9)',
-    borderRadius:10,
-    paddingHorizontal:20,
-    paddingVertical:20
-   },
- ////////////////////////////////////////////////////////////
-
-   textInputsContainer:{
-      height:'100%'
-   },
-   textInputContainer:{
-    paddingVertical:5,
-    
-   },
-/////////////////////////////////////////////////////////
-textInputBig : {
-  backgroundColor:'transparent',
-  fontSize : 25,
- height : 65
-
-}, 
-textInput : {
-  backgroundColor:'transparent'
-
-},
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-labelBtn:{
-  fontSize:15,
-  fontFamily:'poppins', 
-  color: 'white'
- },
- labelBtnBig:{
-  fontSize:20,
-  fontFamily:'poppins', 
-  color: 'white'
- },
+   noticeContainer:{
+     width:'90%',
+     alignSelf:'center',
+     marginBottom:15,
+     marginTop:30
+    },
+    noticeTitle:{
+      fontFamily:'poppins-bold',
+      fontSize:13,
+      color:'#323446'
+    },
+    optionTitle:{
+      fontFamily:'poppins-bold',
+      fontSize:11,
+      color:'#323446'
+    },
+    noticeContent:{
+      fontFamily:'poppins',
+      fontSize:12,
+      color:'#323446'
+    },
+    tahfifaSignature:{
+      fontFamily:'poppins',
+      fontSize:12,
+      color:'#fd6c57',
+      paddingTop:5
+    },
+    buttonContainer:{
+      width:'90%',
+      alignSelf:'center',
+      marginVertical:5,
+      flexDirection:'row'
+    },
+    cart:{
+      width:'90%',
+      height:'95%',
+      alignItems:'center',
+      justifyContent:'center',
+      shadowColor: 'black',
+      shadowOpacity: 0.96,
+      shadowOffset: {width: 0, height:2},
+      shadowRadius: 10,
+      elevation: 2,
+      overflow:'hidden',
+      borderRadius:10
+    },
+    cartContainer:{
+      width:'33%',
+      height:100,
+      alignItems:'center',
+      justifyContent:'center',
+      
+    }
 
 });
 
