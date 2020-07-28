@@ -1,12 +1,10 @@
-import React,{useReducer,useCallback,useState,useEffect} from 'react';
+import React,{useReducer,useCallback,useState} from 'react';
 import { StyleSheet,Alert,View,ScrollView,StatusBar,ImageBackground,KeyboardAvoidingView,Text,Platform,Image,Dimensions,TouchableOpacity,ActivityIndicator,AsyncStorage} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {MaterialIcons,MaterialCommunityIcons} from "@expo/vector-icons";
 import {Button } from 'react-native-elements';
 import CustomInput from '../components/Input';
 import Colors from '../constants/Colors';
-import {useSelector,useDispatch} from 'react-redux';
-import * as clientActions from '../store/actions/clientActions';
 import * as Crypto from 'expo-crypto'; 
 
 
@@ -43,27 +41,7 @@ const formReducer=(state,action) =>{
 
 const LoginScreen = props =>{
   
-  /*
-   *******Fetch All Clients
-  */
-  const dispatch =useDispatch();
-  useEffect(()=>{
-
- const getClients = async()=>{ 
-  try{
-     dispatch(clientActions.setClients());
-     }catch(err){
-       console.log(err);
-     }
- };
- 
- getClients();
-},[dispatch])
- 
-
-
-  const clients= useSelector(state=>state.clients.clients);
-
+  
   ////Input management
   const [isLogin,setIsLogin]= useState(false);//ActivityIndicator handling
   const prefix='+213';
@@ -111,12 +89,14 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
         );
         
         setIsLogin(true);
-        const result = await fetch(`http://192.168.1.5:3000/phone/${prefix+formState.inputValues.phone}`);
+        const result = await fetch(`http://192.168.1.34:3000/phone/${prefix+formState.inputValues.phone}`);
         const resData= await result.json();
+        const clientsData= await fetch('http://192.168.1.34:3000/client');
+        const clients= await clientsData.json();
         setIsLogin(false);
         const currentClient= clients.find(item=>item.phone===prefix+formState.inputValues.phone && 
                                                 item.password===hashedPassword);
-                                                
+                                               
         if(resData.userRecord.phoneNumber === prefix+formState.inputValues.phone && currentClient){
             props.navigation.navigate('Client',{clientID:currentClient.id,clientUID:resData.userRecord.uid});
             saveDataToStorage(resData.token,resData.userRecord.uid,new Date(resData.expirationDate),currentClient.id);

@@ -150,7 +150,7 @@ if(formState.formIsValid && wilaya!==wilayas[0] &&  sex!==sexTypes[0]){
   try {
 
     setVerifyInProgress(true);
-    const result = await fetch(`http://192.168.1.5:3000/phone/${prefix+formState.inputValues.phone}`);
+    const result = await fetch(`http://192.168.1.34:3000/phone/${prefix+formState.inputValues.phone}`);
     const resData= await result.json();
     console.log(resData);
     setVerifyInProgress(false);

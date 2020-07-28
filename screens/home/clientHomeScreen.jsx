@@ -1,12 +1,12 @@
-import React ,{useEffect, useState}  from 'react';
+import React ,{useEffect, useState,useCallback}  from 'react';
 import { StyleSheet, Text, View, ImageBackground , Image ,Dimensions , StatusBar } from 'react-native';
-import { Button } from 'react-native-elements';
 import { ScrollView, FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 import { SearchBar ,Avatar,Rating, AirbnbRating } from 'react-native-elements';
 
 import { SwitchActions } from 'react-navigation';
 import { useDispatch,useSelector } from 'react-redux';
 
+import * as clientActions from '../../store/actions/clientActions';
 import Colors from "../../constants/Colors.js";
 import TopSalonsCard from '../../components/TopSalonsCard';
 import TopBarbersCard from '../../components/TopBarbersCard.jsx';
@@ -14,17 +14,40 @@ import { getServices } from '../../store/actions/servicesActions.js';
 import { ActivityIndicator } from 'react-native-paper';
 import { expiredbookings } from '../../store/actions/bookingsActions.js';
 const screen = Dimensions.get("window");
+
+
 const ClientHomeScreen = props =>{
   console.disableYellowBox = true;
     
 
-//   dispatch(getServices("+213557115451"));
-// const allServices = useSelector(state => state.bookings.bookings);
+const clientID= props.navigation.dangerouslyGetParent().getParam('clientID');  //get Client ID
+console.log(clientID);
 const [isLoading , setLoading] = useState (false);
 
 const dispatch = useDispatch ();
 
 
+   /*
+   *******Fetch One barber DATA
+  */
+ const getClient=useCallback(async()=>{
+  try{
+    dispatch(clientActions.setClient(clientID));
+    }catch(err){
+      console.log(err);
+    }
+},[dispatch]);
+
+  useEffect(()=>{
+  getClient();
+  },[dispatch,getClient]);
+
+  useEffect(()=>{
+    const willFocusSub= props.navigation.addListener('willFocus',getClient);
+    return ()=>{
+      willFocusSub.remove();
+    };
+  },[getClient]);
 
 // useEffect (()=>{
 

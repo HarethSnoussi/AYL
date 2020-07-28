@@ -32,7 +32,7 @@ const clientsReducer=(state=initialState,action)=>{
 
      case UPDATE_CLIENT:
         
-       const clientindex= state.client.findIndex(cient => client.client_id === action.id);
+       const clientindex= state.client.findIndex(cient => client.id === action.id);
        
        const updatedClientData= new Client(
          action.id,
@@ -66,56 +66,56 @@ const clientsReducer=(state=initialState,action)=>{
 
      case UPDATE_CLIENT_PASSWORD:
         
-       const clientIndex = state.clients.findIndex(client => client.client_id === action.id);
+       const clientIndex = state.client.findIndex(client => client.id === action.id);
        const updatedClient = new Client(
          action.id,
-         state.clients[clientIndex].phone,
+         state.client[clientIndex].phone,
          action.clientData.password,
-         state.clients[clientIndex].sex,
-         state.clients[clientIndex].name,
-         state.clients[clientIndex].surname,
-         state.clients[clientIndex].email,
-         state.clients[clientIndex].address,
-         state.clients[clientIndex].long,
-         state.clients[clientIndex].lat,
-         state.clients[clientIndex].image,
-         state.clients[clientIndex].wilaya,
-         state.clients[clientIndex].region,
-         state.clients[clientIndex].lang,
+         state.client[clientIndex].sex,
+         state.client[clientIndex].name,
+         state.client[clientIndex].surname,
+         state.client[clientIndex].email,
+         state.client[clientIndex].address,
+         state.client[clientIndex].long,
+         state.client[clientIndex].lat,
+         state.client[clientIndex].image,
+         state.client[clientIndex].wilaya,
+         state.client[clientIndex].region,
+         state.client[clientIndex].lang,
        );   
 
-       const updatedClients=[...state.clients];
+       const updatedClients=[...state.client];
        updatedClients[clientIndex]=updatedClient;
        return{
          ...state,
-         clients:updatedClients
+         client:updatedClients
        };
 
        case UPDATE_CLIENT_PHONE:
-         const indexclient = state.clients.findIndex(client => client.client_id === action.clientid);
+         const indexclient = state.client.findIndex(client => client.id === action.clientid);
         
          const updatedClientPhone = new Client(
            action.clientData.id,
            action.clientData.phone,
-           state.clients[indexclient].password,
-           state.clients[indexclient].sex,
-           state.clients[indexclient].name,
-           state.clients[indexclient].surname,
-           state.clients[indexclient].email,
-           state.clients[indexclient].address,
-           state.clients[indexclient].long,
-           state.clients[indexclient].lat,
-           state.clients[indexclient].image,
-           state.clients[indexclient].wilaya,
-           state.clients[indexclient].region,
-           state.clients[indexclient].lang
+           state.client[indexclient].password,
+           state.client[indexclient].sex,
+           state.client[indexclient].name,
+           state.client[indexclient].surname,
+           state.client[indexclient].email,
+           state.client[indexclient].address,
+           state.client[indexclient].long,
+           state.client[indexclient].lat,
+           state.client[indexclient].image,
+           state.client[indexclient].wilaya,
+           state.client[indexclient].region,
+           state.client[indexclient].lang
          );   
 
-         const updatedAllClients=[...state.clients];
+         const updatedAllClients=[...state.client];
          updatedAllClients[indexclient]=updatedClientPhone;
          return{
            ...state,
-           clients:updatedAllClients
+           client:updatedAllClients
          };
        
       
