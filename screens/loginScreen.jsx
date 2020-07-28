@@ -182,9 +182,12 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
                         
                     }}
                   />:<ActivityIndicator color={Colors.primary} style={{marginTop:5}}/>}
+                  <TouchableOpacity onPress={()=>props.navigation.navigate('ForgotPassword')}>
+                  <Text style={styles.forgotPassword}>Mot de passe oublié?</Text>
+                </TouchableOpacity>
               <View style={styles.loginContainer}>
                 <Text style={styles.doYouHaveAnAccount}>Vous n'avez pas un compte? </Text>
-                <TouchableOpacity onPress={()=>props.navigation.navigate('Client')}>
+                <TouchableOpacity onPress={()=>props.navigation.navigate('Signup')}>
                   <Text style={styles.loginText}>S'inscrire</Text>
                 </TouchableOpacity>
               </View>
@@ -275,6 +278,13 @@ const styles= StyleSheet.create({
     fontSize:14,
     fontFamily:'poppins-bold',
     color:'#fd6c57'
+  },
+  forgotPassword:{
+    fontSize:14,
+    fontFamily:'poppins',
+    color:'#fff',
+    alignSelf:'center',
+    paddingTop:10
   }
   
 });
