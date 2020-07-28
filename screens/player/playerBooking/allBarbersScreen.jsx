@@ -1,25 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View,Image, ImageBackground, Dimensions} from 'react-native';
+import { StyleSheet, Text, View,Image, ImageBackground, Dimensions,ActivityIndicator} from 'react-native';
 import BarberCard from '../../../components/BarberCard';
 import { SearchBar } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { FontAwesome5 } from '@expo/vector-icons';
 import Colors from "../../../constants/Colors";
 import InfoOverlay from '../../../components/InfoOverlay';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Button , Rating} from 'react-native-elements';
+import { getBarbers } from '../../../store/actions/listActions';
 
 const screen = Dimensions.get("window");
 const AllBarbersScreen = props =>{
 
-  // const allProperties = useSelector(state => state.properties.propertyStadiums);
  
+const allBarbers =  useSelector(state => state.lists.barbers);
+ 
+  const [isLoading,setLoading] = useState(false);
   const [overlayState , setOverlay] = useState (false);
   const [searchState,setSearchState] = useState("");
   const [stadiumIndex , setStadiumIndex] = useState(0);
   // const confirmedBookings = useSelector(state =>state.bookings.confirmedBookings);
 
- 
+  
+  const dispatch = useDispatch();
   
 
 
@@ -29,8 +33,32 @@ const AllBarbersScreen = props =>{
 
 // searchState === "" ? shownProperties =allProperties : shownProperties =searchedProperty ; 
 
+//GEt ALL BARBERS 
+
+useEffect(()=>{
+
+const fetchBarbers = async ()=>{
+setLoading(true);
+await dispatch(getBarbers());
+setLoading(false);
+
+}
+ fetchBarbers();
 
 
+},[dispatch]);
+
+
+
+if (isLoading) {
+    
+  return (
+    <View style= {styles.centered}>
+      <ActivityIndicator size="large" color= {Colors.primary} />
+    
+    </View>
+  );
+}
 
     return(
      
@@ -60,12 +88,30 @@ const AllBarbersScreen = props =>{
       </View>
             <ScrollView   showsVerticalScrollIndicator  = {false} style = {{borderWidth : 0.3}}>
           
-                  <BarberCard navigate = {()=>props.navigation.navigate("BookStepOne",{barberId : "+213557115451"})}/>
-                  <BarberCard />
-                  <BarberCard />
-                  <BarberCard />
-                  <BarberCard />
-             
+
+          {
+            allBarbers.map((barber,index)=> {
+
+              return (
+              <BarberCard 
+              key = {index}
+              navigate = {()=>props.navigation.navigate("BookStepOne",{barberId : barber.id})}
+              name = {barber.name}
+              surname = {barber.surname}
+              region = {barber.region}
+              mark = {barber.mark}
+              wilaya = {barber.wilaya}
+              
+              />
+              
+              )
+                 
+
+            })
+
+
+                 
+                 }
                 
                 </ScrollView>
 

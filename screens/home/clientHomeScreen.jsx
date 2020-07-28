@@ -1,5 +1,5 @@
 import React ,{useEffect, useState}  from 'react';
-import { StyleSheet, Text, View, ImageBackground , Image ,Dimensions , StatusBar } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground , Image ,Dimensions , StatusBar,ActivityIndicator } from 'react-native';
 import { Button } from 'react-native-elements';
 import { ScrollView, FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 import { SearchBar ,Avatar,Rating, AirbnbRating } from 'react-native-elements';
@@ -11,7 +11,7 @@ import Colors from "../../constants/Colors.js";
 import TopSalonsCard from '../../components/TopSalonsCard';
 import TopBarbersCard from '../../components/TopBarbersCard.jsx';
 import { getServices } from '../../store/actions/servicesActions.js';
-import { ActivityIndicator } from 'react-native-paper';
+
 import { expiredbookings } from '../../store/actions/bookingsActions.js';
 const screen = Dimensions.get("window");
 const ClientHomeScreen = props =>{
@@ -26,19 +26,19 @@ const dispatch = useDispatch ();
 
 
 
-// useEffect (()=>{
+useEffect (()=>{
 
-// const expired= async () =>{
+const expired= async () =>{
 
-// setLoading(true);
-// dispatch(expiredbookings("+213553633809"));
-// setLoading(false);
+setLoading(true);
+dispatch(expiredbookings("+213553633809"));
+setLoading(false);
 
-// }
+}
 
-// expired();
+expired();
 
-// },[]);
+},[]);
 
 if (isLoading) {
     
