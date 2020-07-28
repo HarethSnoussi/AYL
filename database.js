@@ -113,6 +113,17 @@ app.get("/clientbookings/:clientId",(req,res)=>{
   });
 
 
+//GET THE BARBERS 
+
+app.get('/barbers/allbarbers',(req,res)=>{
+
+  con.query('SELECT id, phone , sex,name,surname,b_name as barberName ,age,address,image,mark,wilaya,region  FROM barber ',(err,result,fields)=>{
+    if(err) console.log('Query error',err);
+   res.send(result);
+  });
+});
+
+
 
 //POST REQUESTS 
 
@@ -192,39 +203,38 @@ app.patch("/bookings/cancelbooking",(req,res)=>{
 //CANCEL EXPIRED BOOKINGS
   
 app.patch("/bookings/expiredbookings",(req,res)=>{
- console.log(req.body.clientId);
-
-  con.query("UPDATE booking SET status = 'expirée' WHERE SUBSTRING(date_booking,1,15) < NOW()  AND booking.client_id = ? AND status = 'confirmée' ",[req.body.clientId],
-  (err,result,fields)=>{ 
-
-  if (err) {
-    res.send(err);
-  } else {
-
-    res.send("Success");
-  }
-  
-});
-
-});
-
-
-app.get("/bookings/expired",(req,res)=>{
-  console.log(req.body.clientId);
  
-   con.query("SELECT CURRENT_TIMESTAMP,start,CAST(date AS char) as date,SUBSTRING(date_booking,1,15) as bookingDate FROM booking WHERE SUBSTRING(date_booking,1,15) > NOW() ",[],
+   con.query("UPDATE booking SET status = 'expirée' WHERE SUBSTRING(date_booking,1,15) <= NOW()  AND booking.client_id = ? AND status = 'confirmée'  AND CURRENT_TIMESTAMP > start ",[req.body.clientId],
    (err,result,fields)=>{ 
  
    if (err) {
      res.send(err);
    } else {
  
-     res.send(result);
+     res.send("Success");
    }
    
  });
  
  });
+
+
+// app.get("/bookings/expired",(req,res)=>{
+//   console.log(req.body.clientId);
+ 
+//    con.query("SELECT CURRENT_TIMESTAMP,start,CAST(date AS char) as date,SUBSTRING(date_booking,1,15) as bookingDate FROM booking WHERE SUBSTRING(date_booking,1,15) > NOW() AND CURRENT_TIMESTAMP > start ",[],
+//    (err,result,fields)=>{ 
+ 
+//    if (err) {
+//      res.send(err);
+//    } else {
+ 
+//      res.send(result);
+//    }
+   
+//  });
+ 
+//  });
  
 
 

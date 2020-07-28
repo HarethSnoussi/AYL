@@ -386,7 +386,10 @@ return (
                         start: {x: 0, y: 0} ,
                         end:{x: 1, y: 0}
                     }}
-                onPress = {()=> pickedSlot!== 0 && overlayHandler()}
+                // onPress = {()=> pickedSlot!== 0 && overlayHandler()}
+                // onPress = {()=> pickedSlot!== 0 && props.navigation.navigate(
+                //     "BookStepThree")}
+         
                    />
                    :
                    <View style = {{ height : "15%",width : "80%",alignSelf:"center" ,justifyContent : "center"  }}>

@@ -32,14 +32,15 @@ const BarberCard = props =>{
 
         <View>
               <View style= {styles.name}>
-                <Text style = {{fontFamily : "poppins-bold"}} >Mohamed Mohamed</Text>
+                <Text style = {{fontFamily : "poppins-bold"}} >{props.name + " " + props.surname}</Text>
                 {/* <View style = {{flexDirection : "row"}}>
              
                 <EvilIcons name="location" size={24} color="#9d9da1" />
                 <Text style = {{fontFamily : "poppins", color : "#9d9da1"}}>3.5 km</Text>
                 </View> */}
               </View>
-              <Text style = {{fontFamily : "poppins", color : "#9d9da1"}} >Bab Essebt-Blida
+              <Text style = {{fontFamily : "poppins", color : "#9d9da1"}} >
+              {props.region + "-" + props.wilaya}
               </Text>
        </View>
 
