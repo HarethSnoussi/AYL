@@ -32,7 +32,7 @@ const clientsReducer=(state=initialState,action)=>{
 
      case UPDATE_CLIENT:
         
-       const clientindex= state.client.findIndex(cient => client.id === action.id);
+       const clientindex= state.client.findIndex(client => client.id === action.id);
        
        const updatedClientData= new Client(
          action.id,
