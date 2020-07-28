@@ -14,6 +14,8 @@ const dispatch = useDispatch();
 
 
 const end = moment.utc("2020-05-01T"+props.start).add(props.duration,"m").format("HH:mm");  
+
+const address = props.address + "-" + props.region+"-"+props.wilaya
 const servicesId = props.services.map(e=>e.id);
 
 const sendConfirmation = async ()=>{
@@ -52,13 +54,15 @@ const services = props.services.map(e=>e.name);
     </Text>
     </View>
     <View style = {{justifyContent : "space-around" , height :"90%" }}> 
+    
    
         <Text style = {styles.text}>Temps : {props.duration} Min </Text>
 
 
+
         <Text style = {styles.text} >Services : {
           services.map(service=>{
-            return service + "/" 
+            return service + " " 
           })
           
           } 
@@ -70,6 +74,9 @@ const services = props.services.map(e=>e.name);
         <Text style = {styles.text} >Date : {moment(props.bookingDate).format('LL')}</Text>
         <Text style = {styles.text} >Horraire  : { props.start + " - " + end }</Text>
         <Text style = {styles.text} >Prix  : { props.amount} DA</Text>
+        <Text style = {styles.text}>Adresse : {props.address}  </Text>
+        <Text style = {styles.text}>Wilaya : {props.wilaya+"-"+props.region}  </Text>
+
 
 </View>
 
@@ -145,7 +152,7 @@ const styles= StyleSheet.create({
     iconsContainer:{
     flexDirection : "row" ,
    
-    width : "20%",
+    width : "40%",
     justifyContent : "space-between",
     marginTop : 5
     }

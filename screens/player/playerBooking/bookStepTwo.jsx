@@ -388,7 +388,22 @@ return (
                     }}
                 // onPress = {()=> pickedSlot!== 0 && overlayHandler()}
                 onPress = {()=> pickedSlot!== 0 && props.navigation.navigate(
-                    "BookStepThree")}
+                    "BookStepThree",
+                    {
+                            bookingDate : pickedDate,
+                            start : pickedSlot,
+                            barberId : props.navigation.getParam("barber"),
+                            clientId : "+213553633809",
+                            amount : props.navigation.getParam("amount"),
+                            duration : totalTime,
+                            services : services,
+                            
+                    }
+                    
+                    )
+                   
+                    
+                    }
          
                    />
                    :
