@@ -23,6 +23,8 @@ import PlayerSettingsScreen from '../screens/player/playerProfile/playerSettings
 import AllBarbersScreen from '../screens/player/playerBooking/allBarbersScreen';
 import BookStepTwo from '../screens/player/playerBooking/bookStepTwo';
 import BookStepOne from '../screens/player/playerBooking/bookStepOne';
+import BookStepThree from '../screens/player/playerBooking/bookStepThree';
+
 import AllBookingsScreen from '../screens/player/playerBooking/allBookingsScreen';
 import BookingDetail from '../screens/player/playerBooking/bookingDetail';
 ///////////////////////////////////////////////////////////////////
@@ -152,7 +154,7 @@ const BarberNavigation = createStackNavigator({
    StadiumBooking : stadiumBookingScreen ,
    BookStepTwo : BookStepTwo ,
    BookStepOne : BookStepOne ,
-
+   BookStepThree : BookStepThree ,
    BookingDetail : BookingDetail,
 
   PlayerProfile: PlayerProfileScreen,

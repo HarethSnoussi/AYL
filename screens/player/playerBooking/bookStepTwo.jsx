@@ -387,8 +387,8 @@ return (
                         end:{x: 1, y: 0}
                     }}
                 // onPress = {()=> pickedSlot!== 0 && overlayHandler()}
-                // onPress = {()=> pickedSlot!== 0 && props.navigation.navigate(
-                //     "BookStepThree")}
+                onPress = {()=> pickedSlot!== 0 && props.navigation.navigate(
+                    "BookStepThree")}
          
                    />
                    :

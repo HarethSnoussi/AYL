@@ -3,25 +3,30 @@ import { StyleSheet, Text, View , Picker,Image, Dimensions , StatusBar, Platform
 import { Button ,ButtonGroup} from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ScrollView, FlatList, TouchableOpacity } from 'react-native-gesture-handler';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from 'moment';
 import Colors from "../../../constants/Colors";
 import { FontAwesome } from '@expo/vector-icons'; 
 import 'moment/locale/fr';
 import { useDispatch, useSelector } from 'react-redux';
-import * as offersActions from "../../../store/actions/offers";
+import RNPickerSelect from 'react-native-picker-select';
 
 import ConfirmBookingOverlay from "../../../components/ConfirmBookingOverlay";
 
  
-
-const hoursTime = hours.map(hour=>hour.time);
 const screen = Dimensions.get("window");
 moment.locale("fr");   
 
 /////////////////////////////////////////////////////////////////////////
 const BookStepThree = (props)=> {
 
+const [pickedWilaya , setPickedWilaya] = useState();
+
+const pickedWilayaHandler =  (itemValue)=>{
+
+setPickedWilaya(itemValue);
+
+   
+    };
 
 
 
@@ -48,20 +53,53 @@ return (
                 </View>
 
                 <View style = {styles.bookingInfoContainer}>
-                   
+                    <View style = {styles.title}>
+                        <Text>Adresse de la réservation</Text>
 
-                   
-                     </View>
+                    </View>
 
+                <View style = {{height : "70%",backgroundColor : "blue",width : "95%" ,alignSelf : 'center'}}>
+                    <View style = {styles.wilaya}>
+                
+    
+        
+        <RNPickerSelect
+            onValueChange={(itemValue) => pickedValueHandler(itemValue)}
+            items={[
+                { label: 'Alger', value: 'alger' },
+                { label: 'Blida', value: 'blida' },
+                { label: 'Oran', value: 'oran' },
+            ]}
+            value = {pickedWilaya}
+            placeholder={{
+                    label: 'Wilaya ',
+                    color : "#7f7d7c",
+                    value : null
+                }}
+          
+        />
 
             </View>
 
-)
+                    </View>
+                    <View style = {styles.region}>
 
+
+                    </View>
+                    <View style = {styles.address}>
+
+
+                    </View>
+                    </View>
+
+
+                     </View>
+
+)
 
 }
 
-BookStepTwo.navigationOptions = ()=> {
+BookStepThree.navigationOptions = ()=> {
     return {
       headerTransparent : true,
       title : "Réserver Un Service" ,
@@ -80,57 +118,40 @@ const styles= StyleSheet.create({
    firstImage : {
         height :"30%"
    },
-//////////////////////////////////////////////////////////////////////////   
+  /********************************************************************** */ 
+ 
    bookingInfoContainer : {
        width : "100%",
        height : "75%",
-       backgroundColor : "white",
+       backgroundColor : "red",
        borderTopLeftRadius : 25,
        borderTopRightRadius : 25,
         position : "absolute",
         top : "25%",
         overflow : "hidden",
-        
-        justifyContent : "space-around"
    },
- //////////////////////////////////////////////////////////////////////////
- selectDate : {
-    alignSelf : "center",
-    width : "90%",
-    height  :"20%",
-    marginTop : "5%",
-    justifyContent : "space-between",
- 
- },
- datePicker : {
-    width : "100%",
-    backgroundColor :"#f0f0f0",
-    height : "70%",
-    borderRadius : screen.width *0.8 /2,
-    alignItems : "center",
-    justifyContent : "space-between",
-    flexDirection : "row",
-    paddingHorizontal : "5%",
-    
- },
- selectSlot : {
-    height : "50%",
-    width : "90%",
-    alignSelf : "center",
-    overflow : "hidden",
-    justifyContent : "space-between",
+  /********************************************************************** */ 
+   title : {
+        alignSelf : "center"
 
- 
+   },
+  /********************************************************************** */ 
+ wilaya : {  width: "70%", 
+ backgroundColor : "#f0f0f0", 
+ borderRadius : 10
 },
-//////////////////////////////////////////////////////
-centered: {
+
+
+  /********************************************************************** */ 
+  centered: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   }
  
     });
-  ///////////////////////////////////////////////////////////////////////////
+    /********************************************************************** */ 
+
 
 
 

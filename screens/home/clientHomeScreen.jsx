@@ -19,15 +19,15 @@ const screen = Dimensions.get("window");
 
 const ClientHomeScreen = props =>{
   console.disableYellowBox = true;
-    
-
-const clientID= props.navigation.dangerouslyGetParent().getParam('clientID');  //get Client ID
-console.log(clientID);
+  
+//get Client ID
+const clientID= props.navigation.dangerouslyGetParent().getParam('clientID');  
+// console.log(clientID);
 const [isLoading , setLoading] = useState (false);
 
 const dispatch = useDispatch ();
 
-
+/********************************************************************** */
    /*
    *******Fetch One barber DATA
   */
@@ -49,7 +49,7 @@ const dispatch = useDispatch ();
       willFocusSub.remove();
     };
   },[getClient]);
-
+/********************************************************************** */
 useEffect (()=>{
 
 const expired= async () =>{

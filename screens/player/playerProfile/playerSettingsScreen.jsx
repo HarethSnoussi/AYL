@@ -47,11 +47,11 @@ const PlayerSettingsScreen = props =>{
 
   //get the client's data
   const client= useSelector(state=>state.clients.client);
-  console.log(client);
+ 
   //use Dispatch to dispatch our action
   const dispatch= useDispatch();
   const clientUID= props.navigation.getParam('clientUID');
-  console.log(clientUID);
+
   const [isPhone,setIsPhone]= useState(true);
   const [isPassword,setIsPassword]= useState(false);
   const [isLang,setIsLang]= useState(false);
