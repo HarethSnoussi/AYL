@@ -45,7 +45,10 @@ const formReducer=(state,action) =>{
 
 const PlayerProfileScreen = props =>{
 
- 
+  
+  const clientUID= props.navigation.dangerouslyGetParent().getParam('clientUID');
+  //get the barber's data
+  const client= useSelector(state=>state.clients.client);
   const [isInfo,setIsInfo]= useState(true);
   const [isLocalisation,setIsLocalisation]= useState(false);
 
@@ -115,7 +118,28 @@ const PlayerProfileScreen = props =>{
   
   },[disaptchFormState]);
 
+  const deleteAccount= async()=>{
+    try{
 
+       dispatch(clientActions.deleteClient(client[0].id));
+       dispatch(authActions.deleteUser(clientUID)); 
+       dispatch(authActions.logout());
+       AsyncStorage.clear();
+       props.navigation.navigate('Auth');
+    }catch(err){
+     console.log(err);
+     Alert.alert('Oups!','Une erreur est survenue!',[{text:"OK"}]);
+    }
+ };
+
+ const alertDelete = ()=>{
+    Alert.alert(
+     'Attention!',
+     'Voulez-vous vraiment supprimer votre compte?',
+     [{text:'Oui', style:'destructive', onPress:deleteAccount},
+      {text:'Non', style:'cancel'}]);
+      return;
+ };
 
     return(
       <View style={styles.container}>
@@ -306,7 +330,7 @@ const PlayerProfileScreen = props =>{
                 </TouchableOpacity>
               </View>
               <View style={styles.cartContainer}>
-                <TouchableOpacity style={styles.cart}>
+                <TouchableOpacity style={styles.cart} onPress={()=>props.navigation.navigate('PlayerSettings',{clientUID:clientUID})}>
                      <View style={{paddingBottom:5}}>
                        <Ionicons title = "options" name ='ios-options' color='#56A7FF' size={23} />
                      </View>
@@ -316,7 +340,7 @@ const PlayerProfileScreen = props =>{
                 </TouchableOpacity>
               </View>
               <View style={styles.cartContainer}>
-                <TouchableOpacity style={styles.cart}>
+                <TouchableOpacity style={styles.cart} onPress={alertDelete}>
                        <View style={{paddingBottom:5}}>
                           <MaterialCommunityIcons title = "delete" name ='delete-forever' color='#FE457C' size={23} />
                         </View>

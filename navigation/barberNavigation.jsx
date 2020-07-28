@@ -18,6 +18,7 @@ import LoginScreen from '../screens/loginScreen';
 import SignupScreen from '../screens/player/signupScreen';
 import StartupScreen from '../screens/startupScreen';
 import PlayerProfileScreen from '../screens/player/playerProfile/playerProfileScreen';
+import PlayerSettingsScreen from '../screens/player/playerProfile/playerSettingsScreen';
 // import StartupScreen from "../screens/startupScreen";
 import AllBarbersScreen from '../screens/player/playerBooking/allBarbersScreen';
 import BookStepTwo from '../screens/player/playerBooking/bookStepTwo';
@@ -154,7 +155,8 @@ const BarberNavigation = createStackNavigator({
 
    BookingDetail : BookingDetail,
 
-  PlayerProfileScreen: PlayerProfileScreen
+  PlayerProfile: PlayerProfileScreen,
+  PlayerSettings:PlayerSettingsScreen
 },
 );
 
