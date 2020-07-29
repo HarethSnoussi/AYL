@@ -97,6 +97,7 @@ let same = resData.filter(e=>e.id === id);
 
  dispatch({type:GET_BOOKING,bookings:allBookings})
   } catch (error) {
+    throw error ;
           
   
   }
@@ -131,6 +132,7 @@ const bookDate = bookingDate.toString();
 
   dispatch({type:CANCEL_BOOKING,bookingDate,clientId})
   } catch (error) {
+    throw error ;
           
   
   }
@@ -161,6 +163,7 @@ try {
       
       
     );
+    
     if (!response.ok) {
       throw new Error('Something went wrong!');
     }
@@ -168,7 +171,8 @@ try {
     
 
 } catch (error) {
-        console.log("There is an Error");
+  throw error ;
+
           
 }
 

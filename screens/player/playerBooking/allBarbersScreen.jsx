@@ -35,18 +35,18 @@ const allBarbers =  useSelector(state => state.lists.barbers);
 
 //GEt ALL BARBERS 
 
-useEffect(()=>{
+// useEffect(()=>{
 
-const fetchBarbers = async ()=>{
-setLoading(true);
-await dispatch(getBarbers());
-setLoading(false);
+// const fetchBarbers = async ()=>{
+// setLoading(true);
+// await dispatch(getBarbers());
+// setLoading(false);
 
-}
- fetchBarbers();
+// }
+//  fetchBarbers();
 
 
-},[dispatch]);
+// },[dispatch]);
 
 
 

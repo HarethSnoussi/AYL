@@ -217,40 +217,43 @@ if(filteredBookings.length > 0)
 {
 filteredBookings.map(booking=>{
 
+
 if(todaysSlotsTime.indexOf(booking.start) === 0)
 {
     bookingHours = todaysSlotsTime.slice(0,todaysSlotsTime.indexOf(booking.start)+duration+2);
-     if(pickedDate.toDateString() === new Date().toDateString()){
-        slots = hours.slice(hoursTime.indexOf(nowHour), hoursTime.indexOf(workingTime[days.indexOf(day)].end) );  
-
-    }
+   
 } 
 
 else if (todaysSlotsTime.indexOf(booking.start) === 1) {
     bookingHours = todaysSlotsTime.slice(todaysSlotsTime.indexOf(booking.start)-1,todaysSlotsTime.indexOf(booking.start)+duration+2);
-    if(pickedDate.toDateString() === new Date().toDateString()){
-        slots = hours.slice(hoursTime.indexOf(nowHour), hoursTime.indexOf(workingTime[days.indexOf(day)].end) );  
-
-    }
+ 
 }
 else 
 {
 
     bookingHours = todaysSlotsTime.slice(Math.max(0,todaysSlotsTime.indexOf(booking.start)-(2+duration)),todaysSlotsTime.indexOf(booking.start)+(duration+2)) ;
-    if(pickedDate.toDateString() === new Date().toDateString()){
-        slots = hours.slice(hoursTime.indexOf(nowHour), hoursTime.indexOf(workingTime[days.indexOf(day)].end) );  
-
-    }
-
-
+   
 }
+
+
 
  slots = slots.filter(hour => {
      return (bookingHours.indexOf(hour.time) < 0)}
      )
 
+
+
 });
 
+if(pickedDate.toDateString() === new Date().toDateString()){
+let unAvailableHours = [];
+
+unAvailableHours = todaysSlotsTime.slice(0, todaysSlotsTime.indexOf(nowHour) );  
+    slots = slots.filter(hour => {
+        return (unAvailableHours.indexOf(hour.time) < 0)}
+        )
+
+}
 await setAvailableSlots([...slots]);
 // setLoading(false);
 
@@ -272,7 +275,6 @@ else{
 manager();
 
  },[pickedDate]);
-
 
 //  console.log((new Date().getHours()+1).toString()+":00");
 // console.log(moment(new Date()).format('ll'));

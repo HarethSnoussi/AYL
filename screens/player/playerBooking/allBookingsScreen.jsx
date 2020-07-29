@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, Text, View,ActivityIndicator, Dimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Avatar ,Badge } from 'react-native-elements';
@@ -8,7 +8,7 @@ import {Calendar, CalendarList, Agenda,LocaleConfig} from 'react-native-calendar
 import BookingCard from '../../../components/BookingCard';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { getClientBookings } from '../../../store/actions/bookingsActions';
+import { getClientBookings, expiredbookings } from '../../../store/actions/bookingsActions';
 
 
 const screen = Dimensions.get("window");
@@ -52,7 +52,7 @@ let mark = {};
 
 days.forEach(day => {
 
- if ( moment().format("ll") <= moment(day).format("ll")) {
+ if ( moment().format("ll") === moment(day).format("ll") || moment() <= moment(day)) {
     mark[day] = { 
         selected: true, 
         marked: true , 
@@ -77,35 +77,47 @@ days.forEach(day => {
    
 
 });
+
+/**************************************************************************************** */
+//get ALL CLIENT BOOKINGS
+const getAllClientBookings = useCallback(async ()=>{
+
+    try{
+        await dispatch(getClientBookings("+213553633809"));
+      }catch(err){
+          console.log(err);
+        throw err ;
+      }
+  
+  
+  },[dispatch]);
+  
+
+
 //Dispatch and get the bookings 
 useEffect(()=>{
-     const getBookings = async ()=>{
             setLoading(true);
-            await dispatch(getClientBookings("+213553633809"));
+            getAllClientBookings();
             setLoading(false);
-     }
-
-getBookings();
-
+ 
+},[dispatch,getAllClientBookings])
 
 
-},[dispatch])
-
-
+/**************************************************************************************** */
+//TODAYS BOOKINGs
 
 useEffect(()=>{
-
     const todaysBookings= async ()=>{
-setLoading(true);
-        const dayBooks = allBookings.filter(bookings => moment(bookings.bookingDate).format("ll") === moment (new Date()).format("ll") );
-        setDayBookings([...dayBooks]);
-setLoading(false);
-           
-
+        setLoading(true);
+        const dayBooks = await allBookings.filter(bookings => moment(bookings.bookingDate).format("ll") === moment (new Date()).format("ll") );
+        await setDayBookings([...dayBooks]);
+         await dispatch(expiredbookings("+213553633809"));
+        setLoading(false);
     }
  
     todaysBookings();
-},[allBookings])
+},[allBookings,dispatch])
+/**************************************************************************************** */
 
 const selectedDateHandler = (date) => {
 

@@ -12,6 +12,7 @@ import Colors from "../../constants/Colors.js";
 import TopSalonsCard from '../../components/TopSalonsCard';
 import TopBarbersCard from '../../components/TopBarbersCard.jsx';
 import { getServices } from '../../store/actions/servicesActions.js';
+import { getBarbers } from '../../store/actions/listActions';
 
 import { expiredbookings } from '../../store/actions/bookingsActions.js';
 const screen = Dimensions.get("window");
@@ -23,7 +24,7 @@ const ClientHomeScreen = props =>{
 //get Client ID
 const clientID= props.navigation.dangerouslyGetParent().getParam('clientID');  
 // console.log(clientID);
-const [isLoading , setLoading] = useState (false);
+const [isLoading , setLoading] = useState(false);
 
 const dispatch = useDispatch ();
 
@@ -33,15 +34,20 @@ const dispatch = useDispatch ();
   */
  const getClient=useCallback(async()=>{
   try{
-    dispatch(clientActions.setClient(clientID));
+    await dispatch(clientActions.setClient(clientID));
     }catch(err){
       console.log(err);
     }
 },[dispatch]);
 
   useEffect(()=>{
+  setLoading(true);
+
   getClient();
-  },[dispatch,getClient]);
+
+  setLoading(false);
+  },[getClient]);
+
 
   useEffect(()=>{
     const willFocusSub= props.navigation.addListener('willFocus',getClient);
@@ -49,31 +55,38 @@ const dispatch = useDispatch ();
       willFocusSub.remove();
     };
   },[getClient]);
+
 /********************************************************************** */
+const getAllBarbers = useCallback(async ()=>{
+  try{
+    await  dispatch(getBarbers());
+    }
+    catch(err){
+      throw err ;
+    }
+},[dispatch]);
+
+
 useEffect (()=>{
-
-const expired= async () =>{
-
 setLoading(true);
-dispatch(expiredbookings("+213553633809"));
+getAllBarbers();
 setLoading(false);
 
-}
-
-expired();
-
-},[dispatch]);
+},[dispatch,getAllBarbers]);
+/********************************************************************** */
 
 if (isLoading) {
     
   return (
+
     <View style= {styles.centered}>
+
       <ActivityIndicator size="large" color= {Colors.primary} />
-    
+
     </View>
+
   );
 }
-
 
 //***************************************************************************
 

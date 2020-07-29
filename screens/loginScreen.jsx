@@ -187,7 +187,7 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
                 </TouchableOpacity>
               <View style={styles.loginContainer}>
                 <Text style={styles.doYouHaveAnAccount}>Vous n'avez pas un compte? </Text>
-                <TouchableOpacity onPress={()=>props.navigation.navigate('Signup')}>
+                <TouchableOpacity onPress={()=>props.navigation.navigate('Client')}>
                   <Text style={styles.loginText}>S'inscrire</Text>
                 </TouchableOpacity>
               </View>

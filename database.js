@@ -99,7 +99,7 @@ app.get("/clientbookings/:clientId",(req,res)=>{
 
   const clientId = req.params.clientId;
 
-  const query = "SELECT booking.amount , booking.id ,CAST(booking.date AS char) as date,CAST(booking.date_booking AS char) as bookingDate,SUBSTRING(booking.start,1,5) as start,SUBSTRING(booking.end,1,5)as end,booking.client_id as clientId,booking.barber_id as barberId , booking.status, booking.duration as bookingDuration , service.name , service.price , service.duration  as serviceDuration from booking INNER JOIN composition on composition.booking_id = booking.id  INNER JOIN service on  service.id = composition.service_id   WHERE client_id = ? "
+  const query = "SELECT booking.amount , booking.id ,CAST(booking.date AS char) as date,CAST(booking.date_booking AS char) as bookingDate,SUBSTRING(booking.start,1,5) as start,SUBSTRING(booking.end,1,5)as end,booking.client_id as clientId,booking.barber_id as barberId , booking.status, booking.duration as bookingDuration , booking.address,booking.region,booking.wilaya,service.name , service.price , service.duration  as serviceDuration from booking INNER JOIN composition on composition.booking_id = booking.id  INNER JOIN service on  service.id = composition.service_id   WHERE client_id = ? "
   
   con.query(query,[clientId],(err,result,fields)=>{
       if(err) res.send(err);
@@ -135,7 +135,7 @@ bookingDate =  req.body.bookingDate.substring(0,11)+req.body.start+":00.000Z" ;
 let composition = [];
 
     con.query(
-      "INSERT INTO booking (amount ,date,date_booking,duration,start,end,status,client_id,barber_id) VALUES (?,?, ?, ?, ?, ?, ?,?,?)"
+      "INSERT INTO booking (amount ,date,date_booking,duration,start,end,status,address,region,wilaya,client_id,barber_id) VALUES (?,?, ?, ?, ?, ?, ?,?,?,?,?,?)"
       
     ,[
      req.body.amount,
@@ -145,6 +145,9 @@ let composition = [];
      req.body.start,
      req.body.end,
      req.body.status,
+     req.body.address,
+     req.body.region,
+     req.body.wilaya,
      req.body.clientId,
      req.body.barberId,
    ],

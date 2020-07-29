@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { StyleSheet, Text, View , Picker,Image, Dimensions , StatusBar, Platform,ActionSheetIOS, ActivityIndicator} from 'react-native';
 import { Button ,ButtonGroup} from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -77,7 +77,6 @@ useEffect(()=>{
 
     try {
        
-
         const arr = await fetch(`http://192.168.1.5:3000/bookings/barberBookings/${props.navigation.getParam("barberId")}`);
          const resData = await arr.json ();
      
@@ -88,24 +87,36 @@ useEffect(()=>{
         console.log("There is an Error");
     }
 
-
     setLoading(false);
 
  };
 getData();
-
-
 },[props.navigation.getParam("barberId")]);
+
+/************************************************************************* */
+
+const loadProducts = useCallback(async()=>{
+    try{
+        await dispatch(getServices(props.navigation.getParam("barberId")));
+      }catch(err){
+          console.log(err);
+        throw err ;
+      }
+
+},[dispatch])
+
 //GET THE SERVICES
 useEffect(()=>{
-    const loadProducts = async () =>{
-        setLoading(true);
-        await dispatch(getServices(props.navigation.getParam("barberId")));
-        setLoading(false);
-    }
-loadProducts();
+    
+    setLoading(true);
+    loadProducts();
+    setLoading(false);
 
-},[dispatch]);
+},[dispatch,loadProducts]);
+
+
+/************************************************************************* */
+
 
 
 //ADD AND UPDATE SERVICES

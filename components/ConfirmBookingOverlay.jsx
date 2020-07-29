@@ -22,18 +22,21 @@ const sendConfirmation = async ()=>{
 const date = new Date();
   let booking = {
     amount : props.amount ,
+    address : props.address,
+    barberId : props.barberId,
     bookingDate : props.bookingDate ,
     clientId : props.clientId,
     date : date,
     duration : props.duration,
     end : end,
-    barberId : props.barberId,
+    region : props.region,
     services : props.services,
     start : props.start ,
     status : "confirmée",
+    wilaya : props.wilaya
 }
  props.overlayHandler();
- dispatch(addBooking(booking));
+ await dispatch(addBooking(booking));
  props.navigate();
 
 };
