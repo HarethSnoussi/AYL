@@ -43,12 +43,12 @@ const clientsReducer=(state=initialState,action)=>{
          action.clientData.surname,
          action.clientData.email,
          action.clientData.address,
-         action.client[clientindex].long,
-         action.client[clientindex].lat,
+         state.client[clientindex].long,
+         state.client[clientindex].lat,
          action.clientData.image,
          action.clientData.wilaya,
          action.clientData.region,
-         action.clientData.lang,
+         state.client[clientindex].lang,
        );
        const updatedClientsData=[...state.client];
        updatedClientsData[clientindex]= updatedClientData;

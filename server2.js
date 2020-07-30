@@ -189,18 +189,15 @@ con.query(`UPDATE client SET id=?,phone=? WHERE id= ?`,
 */ 
 app.patch('/client/updateClient/:id',(req,res)=>{
   
-con.query('UPDATE client SET name=?,surname=?,email=?,address=?,long=?,lat=?,image=?,wilaya=?,region=?,lang=? WHERE id= ?',
+con.query('UPDATE client SET name=?,surname=?,email=?,address=?,image=?,wilaya=?,region=? WHERE id= ?',
 [
   req.body.name,
   req.body.surname,
   req.body.email,
   req.body.address,
-  req.body.long,
-  req.body.lat,
   req.body.image,
   req.body.wilaya,
   req.body.region,
-  req.body.lang,
   req.params.id
 ],
 (err,result,fields)=>{

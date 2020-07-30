@@ -1,7 +1,7 @@
 import React,{useReducer,useCallback,useState} from 'react';
 import { StyleSheet,Alert,View,ScrollView,StatusBar,ImageBackground,KeyboardAvoidingView,Text,Platform,Image,Dimensions,TouchableOpacity,ActivityIndicator,AsyncStorage} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import {MaterialIcons,MaterialCommunityIcons} from "@expo/vector-icons";
+import {MaterialIcons} from "@expo/vector-icons";
 import {Button } from 'react-native-elements';
 import CustomInput from '../components/Input';
 import Colors from '../constants/Colors';
@@ -187,7 +187,7 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
                 </TouchableOpacity>
               <View style={styles.loginContainer}>
                 <Text style={styles.doYouHaveAnAccount}>Vous n'avez pas un compte? </Text>
-                <TouchableOpacity onPress={()=>props.navigation.navigate('Client')}>
+                <TouchableOpacity onPress={()=>props.navigation.navigate('Signup')}>
                   <Text style={styles.loginText}>S'inscrire</Text>
                 </TouchableOpacity>
               </View>

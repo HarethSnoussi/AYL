@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useCallback,useReducer} from 'react';
-import {StyleSheet,View,AsyncStorage,ScrollView,ImageBackground,TouchableOpacity,Text,Image,Alert,KeyboardAvoidingView,Dimensions,ActionSheetIOS,Picker} from 'react-native';
+import {StyleSheet,View,AsyncStorage,ScrollView,ImageBackground,TouchableOpacity,Text,Image,Alert,KeyboardAvoidingView,Dimensions,ActionSheetIOS,Picker,ActivityIndicator} from 'react-native';
 import CustomInput from '../../../components/Input';
 import {HeaderButtons,Item} from "react-navigation-header-buttons";
 import HeaderButton from "../../../components/HeaderButton";
@@ -47,7 +47,7 @@ const PlayerProfileScreen = props =>{
 
   
   const clientUID= props.navigation.dangerouslyGetParent().getParam('clientUID');
-  //get the barber's data
+  //get the client's data
   const client= useSelector(state=>state.clients.client);
   const [isInfo,setIsInfo]= useState(true);
   const [isLocalisation,setIsLocalisation]= useState(false);
@@ -62,15 +62,15 @@ const PlayerProfileScreen = props =>{
   };
 
   //States for complex information textInputs
- const [wilaya,setWilaya] = useState('Wilaya');
- const wilayas = ['Alger','Blida'];
-
+ const [wilaya,setWilaya] = useState(client[0]?client[0].wilaya:undefined);
+ const wilayas = ['Wilaya','Alger','Blida'];
+ const [isLoading,setIsLoading]=useState(false);
  const dispatch = useDispatch();
  
  
  //picker only iOS function 
  const onPress = () =>{
-   const wilayasIOS = ['Alger','Blida'];    
+   const wilayasIOS = ['Wilaya','Alger','Blida'];    
    ActionSheetIOS.showActionSheetWithOptions(
      {
        options: wilayasIOS,
@@ -80,11 +80,69 @@ const PlayerProfileScreen = props =>{
        if (buttonIndex === -1) {
          // cancel action
        } else {
-        setHour(wilayasIOS[buttonIndex]);
+        setWilaya(wilayasIOS[buttonIndex]);
        } 
      }
    );  
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///ImagePicker
+
+//state for image
+const [pickedImage,setPickedImage]= useState(client[0]?client[0].image : undefined);
+
+
+const verifyPermissions= async ()=>{
+  const result= await Permissions.askAsync(Permissions.CAMERA,Permissions.CAMERA_ROLL);
+  if(result.status !== 'granted'){
+      Alert.alert('Permissions insuffisantes!',
+      'Vous devez accorder les autorisations de la caméra pour utiliser cette application.',
+      [{text:"D'accord"}]);
+      return false;
+  }
+  return true;
+};
+
+const takeImageHandler = async ()=>{
+ const hasPermissions = await verifyPermissions();
+ if(!hasPermissions){
+     return;
+ }
+ const image = await ImagePicker.launchCameraAsync({
+  mediaTypes: ImagePicker.MediaTypeOptions.All,
+     allowsEditing:true,
+     aspect:[60,60],
+     quality:0.7
+ });
+  
+  setPickedImage(image.uri);
+  
+};
+
+
+
+const takeLibraryHandler = async ()=>{
+  const hasPermissions = await verifyPermissions();
+  if(!hasPermissions){
+      return;
+  }
+ 
+  const library = await ImagePicker.launchImageLibraryAsync({
+   mediaTypes: ImagePicker.MediaTypeOptions.All,
+   allowsEditing:true,
+   aspect:[60,60],
+   quality:0.7
+ });
+  
+  
+  if(library){
+   setPickedImage(library.uri);
+  }
+  
+  
+ };
+
     
     
     // logout handler
@@ -98,11 +156,11 @@ const PlayerProfileScreen = props =>{
 //////Input Management
   const[formState,disaptchFormState] = useReducer(formReducer,
     {inputValues:{
-      name:'',
-      surname:'',
-      email:'',
-      address:'',
-      region:''
+      name:client[0]?client[0].name:'',
+      surname:client[0]?client[0].surname:'',
+      email:client[0]?client[0].email:'',
+      address:client[0]?client[0].address:'',
+      region:client[0]?client[0].region:''
     },
     inputValidities:{
       name:true,
@@ -141,28 +199,65 @@ const PlayerProfileScreen = props =>{
       return;
  };
 
+ //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //Update client's data Management after pressing in Check icon
+  const saveHandler = useCallback(async()=>{
+    if(formState.formIsValid && wilaya!=='Wilaya'){
+      
+    try{
+        setIsLoading(true);
+         await dispatch(clientActions.updateClient(client[0].id,formState.inputValues.name,formState.inputValues.surname,
+                                          formState.inputValues.email,formState.inputValues.address,
+                                          pickedImage,wilaya,formState.inputValues.region));
+        setIsLoading(false);                        
+        Alert.alert('Félicitation!','Vos données ont été changées avec succès!',[{text:"OK"}]);
+  
+    }catch(err){
+      console.log(err);
+      Alert.alert('Oups!','Une erreur est survenue!',[{text:"OK"}]);
+    }
+    
+    }else{
+      Alert.alert('Erreur!','Veuillez remplir le(s) champ(s) manquants svp!',[{text:"OK"}]);
+    }
+  
+  },[dispatch,client[0].id,formState,pickedImage,wilaya]);
+
+   
+
     return(
       <View style={styles.container}>
       <View style={styles.firstCard}>
-        <ImageBackground source={require('../../../assets/images/man1-1.jpg')} style={styles.backgroundFirstCard} resizeMode='cover'/>
+        <ImageBackground source={require('../../../assets/images/man1-1.jpg')} style={styles.backgroundFirstCard} resizeMode='cover'>
+          <View style={{width:'100%',flexDirection:'row',justifyContent:'space-between',height:'20%',alignItems:'center'}}>
+            <TouchableOpacity style={styles.iconFormCircle1} onPress={()=>props.navigation.navigate('Accueil')}>
+                <Ionicons title = "back" name ='md-arrow-back' color='#fff' size={26} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.iconFormCircle2} onPress={saveHandler}>
+                {!isLoading?<Ionicons title = "check" name ='md-checkmark' color='#fff' size={26} />:
+                 <ActivityIndicator color={Colors.primary}/>}
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
      </View>
      <View style={styles.secondCard}>
           <View style={styles.secondCardContent}>
               <View style={styles.imageContainer}>
-                  <Image source={require('../../../assets/images/man2.jpg')} style={styles.image} />
+              {!pickedImage ? <Image source={require('../../../assets/images/man2.jpg')} style={styles.image} />
+                : (<Image style={styles.image} source={{uri:pickedImage}} />)}
               </View>
               <View style={styles.detailsContainer}>
                 <View style={{width:'30%'}}>
-                  <TouchableOpacity style={styles.iconFormCircle1}>
+                  <TouchableOpacity style={styles.iconFormCircle1} onPress={takeImageHandler}>
                     <MaterialIcons title = "camera" name ='camera-enhance' color='#323446' size={23} />
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.iconFormCircle2}>
-                    <MaterialIcons title = "delete" name ='delete-forever' color='#FE457C' size={27} />
+                  <TouchableOpacity style={styles.iconFormCircle2} onPress={takeLibraryHandler}>
+                    <MaterialIcons title = "library" name ='photo-library' color='#FE457C' size={23} />
                   </TouchableOpacity>
                 </View>  
                 <View style={{width:'70%'}}>
-                  <Text style={styles.bnameText}>Merouane.S</Text>
-                  <Text style={styles.age}>26 ans</Text>
+                  <Text style={styles.bnameText}>{client[0].surname!==null?client[0].surname: 'Votre prénom'}</Text>
+                  <Text style={styles.age}>{client[0].wilaya!==null?client[0].wilaya: 'Votre wilaya'}</Text>
                 </View>
               </View>
           </View>
@@ -185,7 +280,7 @@ const PlayerProfileScreen = props =>{
                 keyboardType="default"
                 returnKeyType="next"
                 onInputChange={inputChangeHandler}
-                initialValue=''
+                initialValue={client[0]?client[0].name:''}
                 initiallyValid={true}
                 required
                 placeholderTextColor='rgba(50,52,70,0.4)'
@@ -209,7 +304,7 @@ const PlayerProfileScreen = props =>{
               keyboardType="default"
               returnKeyType="next"
               onInputChange={inputChangeHandler}
-              initialValue=''
+              initialValue={client[0]?client[0].surname:''}
               initiallyValid={true}
               required
               placeholderTextColor='rgba(50,52,70,0.4)'
@@ -233,7 +328,7 @@ const PlayerProfileScreen = props =>{
                 keyboardType="default"
                 returnKeyType="next"
                 onInputChange={inputChangeHandler}
-                initialValue=''
+                initialValue={client[0]?client[0].email:''}
                 initiallyValid={true}
                 email
                 required
@@ -257,7 +352,7 @@ const PlayerProfileScreen = props =>{
               keyboardType="default"
               returnKeyType="next"
               onInputChange={inputChangeHandler}
-              initialValue=''
+              initialValue={client[0]?client[0].address:''}
               initiallyValid={true}
               required
               placeholderTextColor='rgba(50,52,70,0.4)'
@@ -273,7 +368,8 @@ const PlayerProfileScreen = props =>{
               backgroundColor='#fff'
               textColor={Colors.blue}
             />
-          <View style={styles.pickerContainer}>
+          <View style={{ width:'90%',borderWidth:1,paddingHorizontal:12,borderRadius:25,backgroundColor:'#fff',borderColor:wilaya!=='wilaya'?'#fff':Colors.primary,marginVertical:5,height:45,justifyContent:'center',shadowColor: 'black',shadowOpacity: 0.96,
+                          shadowOffset: {width: 0, height:2},shadowRadius: 10,elevation: 3,overflow:'hidden',alignSelf:'center'}}>
             {Platform.OS === 'android' ? 
                       <Picker
                       selectedValue={wilaya}
@@ -295,7 +391,7 @@ const PlayerProfileScreen = props =>{
             minLength={3}
             autoCapitalize='sentences'
             onInputChange={inputChangeHandler}
-            initialValue=''
+            initialValue={client[0]?client[0].region:''}
             initiallyValid={true}
             required
             placeholderTextColor='rgba(50,52,70,0.4)'
@@ -356,38 +452,7 @@ const PlayerProfileScreen = props =>{
      );    
 };
 
-PlayerProfileScreen.navigationOptions= navData => { 
-  
-  return {
-  headerTransparent : true ,
-  headerStyle:{
-      backgroundColor: 'white'
-  },
-  headerBackTitle : " ",
-  headerTitle: () => (
-    <Image 
-    resizeMode="cover"
-    style={{
-      width:150,
-      height:40,
-      resizeMode:'contain',
-      alignSelf: 'center'}}
-    
-    />
-  ),
-  headerTintColor: '#fff',
-  headerRight : () =>(
-    <HeaderButtons HeaderButtonComponent = {HeaderButton}> 
-      <Item title = "save" 
-        iconName ='md-checkmark'
-        color='#fff'
-        size={23} 
-        style={{paddingRight:10}}   
-      />
-    </HeaderButtons>)
-    };
- 
-  };
+
 
 const styles= StyleSheet.create({
   container:{
@@ -503,43 +568,6 @@ const styles= StyleSheet.create({
       width:'90%',
       alignSelf:'center'
     },
-  pickerContainer:{
-    width:'90%',
-    borderWidth:1,
-    borderRadius:20,
-    backgroundColor:'#fff',
-    borderColor:'#fff',
-    height:40,
-    justifyContent:'center',
-    paddingHorizontal:12,
-    shadowColor: 'black',
-    shadowOpacity: 0.96,
-    shadowOffset: {width: 0, height:2},
-    shadowRadius: 10,
-    elevation: 3,
-    overflow:'hidden',
-    marginVertical:5,
-    alignSelf:'center'
-   },
-   pickerContainerRegion:{
-    width:'90%',
-    borderWidth:1,
-    borderRadius:20,
-    backgroundColor:'#fff',
-    borderColor:'#fff',
-    height:40,
-    justifyContent:'center',
-    paddingHorizontal:12,
-    shadowColor: 'black',
-    shadowOpacity: 0.96,
-    shadowOffset: {width: 0, height:2},
-    shadowRadius: 10,
-    elevation: 3,
-    overflow:'hidden',
-    marginTop:5,
-    marginBottom:20,
-    alignSelf:'center'
-   },
    noticeContainer:{
      width:'90%',
      alignSelf:'center',
