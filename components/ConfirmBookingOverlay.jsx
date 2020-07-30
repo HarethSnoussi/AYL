@@ -1,7 +1,7 @@
 import React from 'react';
 import { Overlay, colors } from 'react-native-elements';
 import { Text, View, Button,StyleSheet } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
 import {Ionicons} from "@expo/vector-icons";
 import { useDispatch, useSelector } from 'react-redux';
 import {addBooking} from "../store/actions/bookingsActions";

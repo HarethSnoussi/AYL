@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Dimensions} from 'react-native';
 
 import Colors from '../constants/Colors';
 import {Ionicons} from "@expo/vector-icons";
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+
 import { LinearGradient } from 'expo-linear-gradient';
 
 
