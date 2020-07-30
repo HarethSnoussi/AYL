@@ -1,7 +1,6 @@
 import React ,{useEffect, useState,useCallback}  from 'react';
-import { StyleSheet, Text, View, ImageBackground , Image ,Dimensions , StatusBar,ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground , Image ,Dimensions , StatusBar,ActivityIndicator,ScrollView, FlatList, TouchableOpacity } from 'react-native';
 
-import { ScrollView, FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 import { SearchBar ,Avatar,Rating, AirbnbRating,Button } from 'react-native-elements';
 
 import { SwitchActions } from 'react-navigation';

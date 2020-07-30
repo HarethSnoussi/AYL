@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View,ActivityIndicator, Alert} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { StyleSheet, Text, View,ActivityIndicator, Alert,ScrollView} from 'react-native';
+
 
 import Colors from "../../../constants/Colors";
 import BookingCard from '../../../components/BookingCard';

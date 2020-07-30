@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View,Image, ImageBackground, Dimensions,ActivityIndicator} from 'react-native';
+import { StyleSheet, Text, View,Image, ImageBackground, Dimensions,ActivityIndicator,ScrollView} from 'react-native';
 import BarberCard from '../../../components/BarberCard';
 import { SearchBar } from 'react-native-elements';
-import { ScrollView } from 'react-native-gesture-handler';
+
 import { FontAwesome5 } from '@expo/vector-icons';
 import Colors from "../../../constants/Colors";
 import InfoOverlay from '../../../components/InfoOverlay';

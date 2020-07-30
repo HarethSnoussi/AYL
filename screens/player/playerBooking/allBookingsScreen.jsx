@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { StyleSheet, Text, View,ActivityIndicator, Dimensions } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { StyleSheet, Text, View,ActivityIndicator, Dimensions, ScrollView } from 'react-native';
+
 import { Avatar ,Badge } from 'react-native-elements';
 import Colors from "../../../constants/Colors";
 import * as bookingsActions from "../../../store/actions/bookings"; 

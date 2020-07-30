@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { StyleSheet, Text, View , Picker,Image, Dimensions , StatusBar, Platform,ActionSheetIOS, ActivityIndicator} from 'react-native';
+import { StyleSheet, Text, View , Picker,Image, Dimensions , StatusBar, Platform,ActionSheetIOS, ActivityIndicator , FlatList, TouchableOpacity} from 'react-native';
 import { Button ,ButtonGroup} from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
-import { ScrollView, FlatList, TouchableOpacity } from 'react-native-gesture-handler';
+
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from 'moment';
 import Colors from "../../../constants/Colors";

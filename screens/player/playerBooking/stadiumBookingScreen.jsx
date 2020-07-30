@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { StyleSheet, Text, View , Picker,ImageBackground, Dimensions , StatusBar, Platform,ActionSheetIOS, ActivityIndicator} from 'react-native';
+import { StyleSheet, Text, View , Picker,ImageBackground, Dimensions , StatusBar, Platform,ActionSheetIOS, ActivityIndicator,ScrollView, FlatList, TouchableOpacity } from 'react-native';
 import { RadioButton , Button} from 'react-native-paper';
-
-import { ScrollView, FlatList, TouchableOpacity } from 'react-native-gesture-handler';
-
 import moment from 'moment';
 import Colors from "../../../constants/Colors";
 import {Ionicons} from "@expo/vector-icons";
