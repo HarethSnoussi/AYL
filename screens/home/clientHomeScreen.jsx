@@ -129,7 +129,7 @@ if (isLoading) {
                 
                 </Text>
                 <TouchableOpacity  
-                onPress={() =>props.navigation.navigate("AllBarbers",{type : "Tous les salons"})} >
+                onPress={() =>props.navigation.navigate("AllBarbers",{type : "Tous les salons",clientID})} >
                 <Text style = {styles.showAll}>
                 Tout Afficher
                 
@@ -158,7 +158,7 @@ if (isLoading) {
                 
                 </Text>
                 <TouchableOpacity  
-                onPress={() =>props.navigation.navigate("AllBarbers",{type : "Tous les coiffeurs "})} >
+                onPress={() =>props.navigation.navigate("AllBarbers",{type : "Tous les coiffeurs ",clientID})} >
                 <Text style = {styles.showAll}>
                 Tout Afficher
                 

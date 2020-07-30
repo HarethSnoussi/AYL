@@ -53,7 +53,7 @@ return (
         bookingDate = {props.navigation.getParam("bookingDate")}
         start = {props.navigation.getParam("start")}
         barberId = {props.navigation.getParam("barberId")}
-        clientId = "+213553633809"
+        clientId = {props.navigation.getParam("clientID")}
         amount = {props.navigation.getParam("amount")}
         duration = {props.navigation.getParam("duration")}
         services = {props.navigation.getParam("services")}

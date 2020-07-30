@@ -11,6 +11,15 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.use(bodyParser.json());
 
+//COnnect to firebase
+const admin = require('firebase-admin');
+const serviceAccount = require("./helpers/serviceAccountKey.json");//Firebase NodeJs linking
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://footbooking-959a6.firebaseio.com"
+});
+
 //CONNECT THE DATABASE
 let con = mysql.createConnection({
     host: "localhost",
@@ -206,8 +215,7 @@ app.patch("/bookings/cancelbooking",(req,res)=>{
 //CANCEL EXPIRED BOOKINGS
   
 app.patch("/bookings/expiredbookings",(req,res)=>{
- console.log(req.body.clientId)
-   con.query("UPDATE booking SET status = 'expirée' WHERE SUBSTRING(date_booking,1,15) <= NOW()  AND booking.client_id = ? AND status = 'confirmée'  AND CURRENT_TIMESTAMP > start ",[req.body.clientId],
+   con.query("UPDATE booking SET status = 'expirée' WHERE SUBSTRING(date_booking,1,15) <= NOW()  AND booking.client_id = ? AND status = 'confirmée'  AND CURRENT_TIMESTAMP > end ",[req.body.clientId],
    (err,result,fields)=>{ 
  
    if (err) {
@@ -215,7 +223,6 @@ app.patch("/bookings/expiredbookings",(req,res)=>{
      res.send(err);
    } else {
 
-console.log(result);
      res.send("Success");
    }
    
@@ -372,6 +379,71 @@ con.query('DELETE FROM client WHERE id=?',
 
 });
 
+
+
+/////////////////////////////////////////Firebase functions begin/////////////////////////////////////
+//Check if the user exists in firebase and if exists we create a custom token
+app.get('/phone/:phoneID',(req,res)=>{
+
+  const phoneID = req.params.phoneID;
+  
+
+  admin.auth().getUserByPhoneNumber(phoneID)
+  .then(function(userRecord) {
+    const uid = userRecord.uid;
+    const expiresIn = 3600;
+    
+    if(uid){ 
+      admin.auth().createCustomToken(uid)
+        .then(function(customToken) {
+          // Send token back to client
+          const expirationDate= new Date(new Date().getTime() + expiresIn * 1000);
+          const token= customToken;
+          res.send({userRecord:userRecord.toJSON(),token:token,expirationDate:expirationDate});
+          console.log('Successfully fetched user data:', userRecord.toJSON());
+        })
+        .catch(function(error){
+          console.log('Error creating custom token:', error);
+        });
+    }
+
+    
+  })
+  .catch(function(error) {
+    console.log('Error fetching user data:', error);
+    res.send({userRecord:error});
+  });
+
+});
+
+//Update firebase phone of an existing user
+
+app.patch('/phoneUpdate/:uid',(req,res)=>{
+admin.auth().updateUser(req.params.uid, {
+  phoneNumber: req.body.phoneNumber,
+})
+  .then(function(userRecord) {
+    // See the UserRecord reference doc for the contents of userRecord.
+    console.log('Successfully updated user', userRecord.toJSON());
+  })
+  .catch(function(error) {
+    console.log('Error updating user:', error);
+  });
+
+});
+
+//Delete firebase user
+app.delete('/userDelete/:uid',(req,res)=>{
+
+  admin.auth().deleteUser(req.params.uid)
+  .then(function() {
+    console.log('Successfully deleted user');
+  })
+  .catch(function(error) {
+    console.log('Error deleting user:', error);
+  });
+});
+///////////////////////////////////////////////Firebase functions end//////////////////////////////
 
 
 

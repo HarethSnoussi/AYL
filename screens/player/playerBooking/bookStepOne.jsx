@@ -20,6 +20,7 @@ import { getServices } from '../../../store/actions/servicesActions';
 const screen = Dimensions.get("window");
  
 const BookStepOne = (props)=> {
+const clientID =   props.navigation.getParam("clientID");
 const barberServices =  useSelector(state => state.services.services);
 
 const dispatch = useDispatch();
@@ -287,7 +288,8 @@ return (
                       services : pickedServices,
                       barber : props.navigation.getParam("barberId"),
                       workingTime : data,
-                      bookings : bookings
+                      bookings : bookings,
+                      clientID
                      })
                      }
                    /> 

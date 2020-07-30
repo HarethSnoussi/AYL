@@ -13,7 +13,8 @@ import { getBarbers } from '../../../store/actions/listActions';
 const screen = Dimensions.get("window");
 const AllBarbersScreen = props =>{
 
- 
+
+const clientID =   props.navigation.getParam("clientID");
 const allBarbers =  useSelector(state => state.lists.barbers);
  
   const [isLoading,setLoading] = useState(false);
@@ -47,8 +48,6 @@ const allBarbers =  useSelector(state => state.lists.barbers);
 
 
 // },[dispatch]);
-
-
 
 if (isLoading) {
     
@@ -95,7 +94,7 @@ if (isLoading) {
               return (
               <BarberCard 
               key = {index}
-              navigate = {()=>props.navigation.navigate("BookStepOne",{barberId : barber.id})}
+              navigate = {()=>props.navigation.navigate("BookStepOne",{barberId : barber.id,clientID})}
               name = {barber.name}
               surname = {barber.surname}
               region = {barber.region}

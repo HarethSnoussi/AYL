@@ -89,9 +89,9 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
         );
         
         setIsLogin(true);
-        const result = await fetch(`http://192.168.1.34:3000/phone/${prefix+formState.inputValues.phone}`);
+        const result = await fetch(`http://192.168.1.5:3000/phone/${prefix+formState.inputValues.phone}`);
         const resData= await result.json();
-        const clientsData= await fetch('http://192.168.1.34:3000/client');
+        const clientsData= await fetch('http://192.168.1.5:3000/client');
         const clients= await clientsData.json();
         setIsLogin(false);
         const currentClient= clients.find(item=>item.phone===prefix+formState.inputValues.phone && 

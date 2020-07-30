@@ -96,6 +96,7 @@ moment.locale("fr");
 
 /////////////////////////////////////////////////////////////////////////
 const BookStepTwo = (props)=> {
+const clientID =   props.navigation.getParam("clientID");
 
 const services = props.navigation.getParam("services").filter(service => service.id !== 0);
 const totalTime = props.navigation.getParam("duration");
@@ -399,7 +400,7 @@ return (
                             amount : props.navigation.getParam("amount"),
                             duration : totalTime,
                             services : services,
-                            
+                            clientID
                     }
                     
                     )

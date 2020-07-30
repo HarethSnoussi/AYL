@@ -80,10 +80,15 @@ const styles= StyleSheet.create({
       height : "80%",
       alignSelf : "center",
       borderRadius : 30,
-      borderWidth : 0.3 ,
+      // borderWidth : 0.3 ,
       overflow : "hidden",
       margin : screen.width * 0.03,
-      backgroundColor : "white"
+      backgroundColor : "white",
+      shadowColor: '#000',
+   shadowOffset: { width: 0, height: 2 },
+   shadowOpacity: 0.5,
+   shadowRadius: 2,
+   elevation: 2,
    },
    cardImage : {
     overflow : "hidden",

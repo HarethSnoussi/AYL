@@ -62,8 +62,12 @@ const styles= StyleSheet.create({
     borderRadius : 25,
     overflow : "hidden",
     marginHorizontal : screen.width * 0.03,
-    borderWidth : 0.3 ,
-   
+    // borderWidth : 0.3 ,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 1,
    
   },
   barberPictureContainer : {

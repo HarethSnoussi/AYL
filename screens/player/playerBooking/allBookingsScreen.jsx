@@ -25,6 +25,8 @@ LocaleConfig.locales['fr'] = {
   ///////////////////////////////////////////////////////////////////////
 const AllBookingsScreen = (props) => {
 const allBookings = useSelector(state => state.bookings.bookings);
+//get Client ID
+const clientID= props.navigation.dangerouslyGetParent().getParam('clientID');  
 
 
 //Selected Date State
@@ -120,25 +122,28 @@ useEffect(()=>{
 const expired = useCallback(async ()=>{
 
   try{
-  
-
-      await dispatch(expiredbookings("+213553633809"));
-      await dispatch(getClientBookings("+213553633809"));
-
-
+      await dispatch(expiredbookings(clientID));
+      await dispatch(getClientBookings(clientID));
     }catch(err){
         console.log(err);
       throw err ;
     }
 
 
-},[dispatch]);
+},[dispatch,allBookings]);
 
 
 useEffect(()=>{
 
+  setLoading(true);
+  expired();
+  setLoading(false);
+},[])
+
+
+useEffect(()=>{
 const willFocusSub= props.navigation.addListener(
-  'didFocus',
+  'willFocus',
   () => {
    setLoading(true);
     expired();
@@ -149,7 +154,7 @@ const willFocusSub= props.navigation.addListener(
 return ()=>{
   willFocusSub.remove();
 };
-},[]);
+},[expired]);
 
 
 
