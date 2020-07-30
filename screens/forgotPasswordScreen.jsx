@@ -6,6 +6,9 @@ import Colors from '../constants/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import CustomInput from '../components/Input';
 import * as Crypto from 'expo-crypto';
+import * as clientActions from '../store/actions/clientActions';
+import {useDispatch} from 'react-redux';
+
 
 //responsivity (Dimensions get method)
 const screen = Dimensions.get('window');
@@ -48,6 +51,7 @@ const ForgotPasswordScreen = props =>{
 const [isVerified,setIsVerified]= useState(false);
 const [isLogin,setIsLogin]= useState(false);
 const prefix='+213';
+const dispatch= useDispatch();
 
 const[formState,disaptchFormState] = useReducer(formReducer,
     {inputValues:{
@@ -67,14 +71,13 @@ disaptchFormState({type:Form_Input_Update,value:inputValue,isValid:inputValidity
 },[disaptchFormState]);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const saveDataToStorage = (token,userID,expirationDate,gender,id) => {
+const saveDataToStorage = (token,userID,expirationDate,id) => {
 
   AsyncStorage.setItem('userData',
                         JSON.stringify({
                         token:token,
                         userID:userID,
                         expiryDate: expirationDate.toISOString(),
-                        gender:gender,
                         id:id
                        }) 
                        );
@@ -137,17 +140,10 @@ const currentClient= clientsData.find(item=>item.phone===prefix+formState.inputV
 
 if(currentClient){
     
-    
-    await fetch(`http://192.168.1.34:3000/client/updatePassword/${formState.inputValues.phone}`,{
-              method:'PATCH',
-              headers: {
-                'Content-Type': 'application/json'
-            },
-            body : JSON.stringify({hashedPassword})
-           });
+   await dispatch(clientActions.updateClientPassword(formState.inputValues.phone,hashedPassword));
     Alert.alert(`${currentClient.name} ${currentClient.surname}`,'Contents de vous revoir!',[{text:"Merci"}]);
     props.navigation.navigate('Client',{clientID:currentClient.id,clientUID:resData.userRecord.uid});
-    saveDataToStorage(resData.token,resData.userRecord.uid,new Date(resData.expirationDate),currentClient.type,currentClient.id);
+    saveDataToStorage(resData.token,resData.userRecord.uid,new Date(resData.expirationDate),currentClient.id);
 }
 
 }catch(error){

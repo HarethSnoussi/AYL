@@ -78,7 +78,7 @@ const SignupScreen = props =>{
          if (buttonIndex === -1) {
            // cancel action
          } else {
-          setHour(wilayasIOS[buttonIndex]);
+          setWilaya(wilayasIOS[buttonIndex]);
          } 
        }
      );  
