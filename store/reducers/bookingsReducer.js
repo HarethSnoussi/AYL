@@ -1,4 +1,4 @@
-import { ADD_BOOKING, GET_BOOKING ,CANCEL_BOOKING } from "../actions/bookingsActions";
+import { ADD_BOOKING, GET_BOOKING ,CANCEL_BOOKING,EXPIRED_BOOKING } from "../actions/bookingsActions";
 
 
 const initialState = {
@@ -10,6 +10,7 @@ const initialState = {
 const bookingReducer=(state=initialState,action)=>{
         switch(action.type) {
          case ADD_BOOKING : 
+         
          const temp = [];
          temp.push(action.booking);
          return {...state , bookings : [...state.bookings,...temp]};
@@ -40,7 +41,8 @@ const bookingReducer=(state=initialState,action)=>{
             return {
                 ...state ,
                 bookings : updatedBookings
-             }
+             };
+
 
             default : return state ;
         }

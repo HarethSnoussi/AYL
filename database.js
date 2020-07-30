@@ -206,14 +206,16 @@ app.patch("/bookings/cancelbooking",(req,res)=>{
 //CANCEL EXPIRED BOOKINGS
   
 app.patch("/bookings/expiredbookings",(req,res)=>{
- 
+ console.log(req.body.clientId)
    con.query("UPDATE booking SET status = 'expirée' WHERE SUBSTRING(date_booking,1,15) <= NOW()  AND booking.client_id = ? AND status = 'confirmée'  AND CURRENT_TIMESTAMP > start ",[req.body.clientId],
    (err,result,fields)=>{ 
  
    if (err) {
+     console.log(err)
      res.send(err);
    } else {
- 
+
+console.log(result);
      res.send("Success");
    }
    

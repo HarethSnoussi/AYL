@@ -25,12 +25,7 @@ LocaleConfig.locales['fr'] = {
   ///////////////////////////////////////////////////////////////////////
 const AllBookingsScreen = (props) => {
 const allBookings = useSelector(state => state.bookings.bookings);
-// console.log(bookings);
-// const allBookings = [
-//         {id:1 ,bookingDate : '2020-07-24', start : "09:00",end: "10:00",duration : 60 , status : "confirmée", clientId : "+213557115451",barberId : "+213550461010" , amount : 800 },
-//         {id:2,bookingDate : '2020-07-24', start : "07:00",end: "08:00",duration : 80 , status : "annulée", clientId : "+213557115451",barberId : "+213550461010" , amount : 500},
-//         {id:3 , bookingDate : '2020-07-25' , start : "11:00",end : "11:30",duration : 30 , status : "confirmée", clientId : "+213553633809",barberId : "+213550461010" , amount : 1000}
-//     ];
+
 
 //Selected Date State
 const [selectedDate , setSelectedDate] = useState(new Date());
@@ -80,27 +75,28 @@ days.forEach(day => {
 
 /**************************************************************************************** */
 //get ALL CLIENT BOOKINGS
-const getAllClientBookings = useCallback(async ()=>{
+// const getAllClientBookings = useCallback(async ()=>{
 
-    try{
-        await dispatch(getClientBookings("+213553633809"));
-      }catch(err){
-          console.log(err);
-        throw err ;
-      }
+//     try{
+//         await dispatch(getClientBookings("+213553633809"));
+
+//       }catch(err){
+//           console.log(err);
+//         throw err ;
+//       }
   
   
-  },[dispatch]);
+//   },[dispatch]);
   
 
 
-//Dispatch and get the bookings 
-useEffect(()=>{
-            setLoading(true);
-            getAllClientBookings();
-            setLoading(false);
+// //Dispatch and get the bookings 
+// useEffect(()=>{
+//             setLoading(true);
+//             getAllClientBookings();
+//             setLoading(false);
  
-},[dispatch,getAllClientBookings])
+// },[getAllClientBookings])
 
 
 /**************************************************************************************** */
@@ -111,17 +107,58 @@ useEffect(()=>{
         setLoading(true);
         const dayBooks = await allBookings.filter(bookings => moment(bookings.bookingDate).format("ll") === moment (new Date()).format("ll") );
         await setDayBookings([...dayBooks]);
-         await dispatch(expiredbookings("+213553633809"));
         setLoading(false);
     }
  
     todaysBookings();
-},[allBookings,dispatch])
+},[allBookings])
+
+/***************************************************************************************************************************************************************************** */
+
+/*************************************************************** */
+// //Cancel EXPIRED BOOKINGS
+const expired = useCallback(async ()=>{
+
+  try{
+  
+
+      await dispatch(expiredbookings("+213553633809"));
+      await dispatch(getClientBookings("+213553633809"));
+
+
+    }catch(err){
+        console.log(err);
+      throw err ;
+    }
+
+
+},[dispatch]);
+
+
+useEffect(()=>{
+
+const willFocusSub= props.navigation.addListener(
+  'didFocus',
+  () => {
+   setLoading(true);
+    expired();
+    setLoading(false);
+
+  }
+);
+return ()=>{
+  willFocusSub.remove();
+};
+},[]);
+
+
+
 /**************************************************************************************** */
+
 
 const selectedDateHandler = (date) => {
 
-    // console.log(allBookings[days.indexOf(date.dateString)])
+// console.log(allBookings[days.indexOf(date.dateString)])
 const dayBooks = allBookings.filter(bookings => bookings.bookingDate === date.dateString );
 
 setSelectedDateText(moment(date.dateString).format('LL'));

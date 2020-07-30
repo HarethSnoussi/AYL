@@ -3,6 +3,7 @@ import moment from "moment";
 export const ADD_BOOKING = "ADD_BOOKING"; 
 export const GET_BOOKING = "GET_BOOKING"; 
 export const CANCEL_BOOKING = "CANCEL_BOOKING";
+export const EXPIRED_BOOKING = "EXPIRED_BOOKING";
 
 
 export const addBooking = (booking) => {
@@ -112,7 +113,6 @@ export const cancelBooking = (bookingDate,clientId)=> {
 const bookDate = bookingDate.toString();
   return async (dispatch) =>{
       try {
-          
           const response = await fetch(
               `http://192.168.1.5:3000/bookings/cancelbooking`,
               {
@@ -151,6 +151,8 @@ export const expiredbookings = (clientId)=> {
 
   return async (dispatch) =>{
 try {
+ 
+
   const response = await fetch(
       `http://192.168.1.5:3000/bookings/expiredbookings`,
       {
@@ -163,12 +165,20 @@ try {
       
       
     );
-    
+
     if (!response.ok) {
       throw new Error('Something went wrong!');
     }
 
-    
+//     const resData = await response.json;
+
+//  if(expired.length > 0 )
+// {
+
+
+// dispatch({type:EXPIRED_BOOKING,expiredBookings:expired})
+// }
+   
 
 } catch (error) {
   throw error ;

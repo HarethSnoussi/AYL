@@ -13,6 +13,8 @@ import TopSalonsCard from '../../components/TopSalonsCard';
 import TopBarbersCard from '../../components/TopBarbersCard.jsx';
 import { getServices } from '../../store/actions/servicesActions.js';
 import { getBarbers } from '../../store/actions/listActions';
+import { getClientBookings } from '../../store/actions/bookingsActions.js';
+
 
 import { expiredbookings } from '../../store/actions/bookingsActions.js';
 const screen = Dimensions.get("window");
@@ -50,6 +52,7 @@ const dispatch = useDispatch ();
 
 
   useEffect(()=>{
+
     const willFocusSub= props.navigation.addListener('willFocus',getClient);
     return ()=>{
       willFocusSub.remove();
@@ -60,6 +63,7 @@ const dispatch = useDispatch ();
 const getAllBarbers = useCallback(async ()=>{
   try{
     await  dispatch(getBarbers());
+    // await dispatch(expiredbookings("+213553633809"));
     }
     catch(err){
       throw err ;
@@ -73,6 +77,10 @@ getAllBarbers();
 setLoading(false);
 
 },[dispatch,getAllBarbers]);
+
+
+
+
 /********************************************************************** */
 
 if (isLoading) {
@@ -93,8 +101,8 @@ if (isLoading) {
     return(
 
       <View style ={styles.container}>
+   
       <StatusBar hidden />
-      
       <ScrollView >
             <ImageBackground source = {require("../../assets/pictures/barber4.png")} style = {styles.firstImage}  resizeMode ="stretch" imageStyle ={styles.image} >
 {/*            
