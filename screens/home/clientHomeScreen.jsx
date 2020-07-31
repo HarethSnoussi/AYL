@@ -21,6 +21,10 @@ const screen = Dimensions.get("window");
 
 const ClientHomeScreen = props =>{
   console.disableYellowBox = true;
+
+  //Get ALL Barbers AND SAloons from the store to display three of them
+  const allBarbers = useSelector(state => state.lists.barbers) ;
+  const allSaloons = useSelector(state => state.lists.saloons) ;
   
 //get Client ID
 const clientID= props.navigation.dangerouslyGetParent().getParam('clientID');  
@@ -35,23 +39,24 @@ const dispatch = useDispatch ();
   */
  const getClient=useCallback(async()=>{
   try{
+    setLoading(true);
+
     await dispatch(clientActions.setClient(clientID));
+  setLoading(false);
+
     }catch(err){
       console.log(err);
     }
 },[dispatch]);
 
   useEffect(()=>{
-  setLoading(true);
 
   getClient();
 
-  setLoading(false);
   },[getClient]);
 
 
   useEffect(()=>{
-
     const willFocusSub= props.navigation.addListener('willFocus',getClient);
     return ()=>{
       willFocusSub.remove();
@@ -61,7 +66,10 @@ const dispatch = useDispatch ();
 /********************************************************************** */
 const getAllBarbers = useCallback(async ()=>{
   try{
+    setLoading(true);
     await  dispatch(getBarbers());
+    setLoading(false);
+
     // await dispatch(expiredbookings("+213553633809"));
     }
     catch(err){
@@ -71,18 +79,16 @@ const getAllBarbers = useCallback(async ()=>{
 
 
 useEffect (()=>{
-setLoading(true);
 getAllBarbers();
-setLoading(false);
 
 },[dispatch,getAllBarbers]);
-
 
 
 
 /********************************************************************** */
 
 if (isLoading) {
+
     
   return (
 
@@ -94,7 +100,6 @@ if (isLoading) {
 
   );
 }
-
 //***************************************************************************
 
     return(
@@ -128,7 +133,7 @@ if (isLoading) {
                 
                 </Text>
                 <TouchableOpacity  
-                onPress={() =>props.navigation.navigate("AllBarbers",{type : "Tous les salons",clientID})} >
+                onPress={() =>props.navigation.navigate("AllBarbers",{type : "salons",clientID })} >
                 <Text style = {styles.showAll}>
                 Tout Afficher
                 
@@ -136,16 +141,35 @@ if (isLoading) {
                 </TouchableOpacity>
               </View>
 
+              { 
+           allSaloons.length > 0 ?
           <ScrollView style ={styles.topSalons} horizontal showsHorizontalScrollIndicator  = {false}>
 
-              <TopSalonsCard />
+         {allSaloons.slice(0,3).map((barber , index)=>{return(
 
-             <TopSalonsCard />
-             <TopSalonsCard />
+            <TopBarbersCard 
+            key = {index} 
+              
+            />
 
+           )})
+            }
 
           </ScrollView>
+           
+           :
 
+           <View style = {styles.unAvailable}>  
+           
+           <Text style = {{fontFamily : "poppins"}}>
+              Aucun Salons Disponible  ! 
+
+           </Text>
+           
+           </View>
+          
+        
+        }
           
         
 
@@ -157,20 +181,47 @@ if (isLoading) {
                 
                 </Text>
                 <TouchableOpacity  
-                onPress={() =>props.navigation.navigate("AllBarbers",{type : "Tous les coiffeurs ",clientID})} >
+                onPress={() =>props.navigation.navigate("AllBarbers",{type : "coiffeurs",clientID})} >
                 <Text style = {styles.showAll}>
                 Tout Afficher
                 
                 </Text>
                 </TouchableOpacity>
               </View>
-          <ScrollView  style ={styles.topBarbers} horizontal showsHorizontalScrollIndicator  = {false}>
-          <TopBarbersCard />
-          <TopBarbersCard />
-          <TopBarbersCard />
-          <TopBarbersCard />
+              { 
+           allBarbers.length > 0 ?
+          <ScrollView style ={styles.topBarbers} horizontal showsHorizontalScrollIndicator  = {false}>
+
+
+         {allBarbers.slice(0,3).map((barber , index)=>{ return(
+            <TopBarbersCard 
+            key = {index} 
+             name = {barber.name}
+             surname = {barber.surname}
+             phone = {barber.phone}
+             region = {barber.region}
+             wilaya = {barber.wilaya}
+             
+            />
+
+           )})
+            }
 
           </ScrollView>
+           
+           :
+
+           <View style = {styles.unAvailable}>  
+           
+           <Text>
+              Aucun Coiffeur Disponible !
+
+           </Text>
+           
+           </View>
+          
+        
+        }
          
 </ScrollView>
 </View>
@@ -218,6 +269,14 @@ const styles= StyleSheet.create({
     width : "100%",
    
    
+},
+
+unAvailable : {
+  height : "5%",
+  width : "90%",
+  alignSelf : "center",
+  justifyContent : "center"
+
 },
 ////////////////////////////////////////////////////////
  textTopBarbers : {
@@ -275,7 +334,13 @@ titleText : {
   borderRadius : 15,
   marginTop : 15,
 
+  },
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
+
    
 
 });

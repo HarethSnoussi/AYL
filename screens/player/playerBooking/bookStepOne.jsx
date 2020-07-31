@@ -63,11 +63,13 @@ const [bookings,setBookings] = useState([]);
 
 useEffect(()=>{
  const getData = async ()=>{
-    setLoading(true);
     try {
+        setLoading(true);
+
         const arr = await fetch(`http://192.168.1.5:3000/barber/hours/${props.navigation.getParam("barberId")}`);
         const resData = await arr.json ();
         setData([...resData]);
+        setLoading(false);
 
     
         }
@@ -77,18 +79,20 @@ useEffect(()=>{
     }
 
     try {
+        setLoading(true);
        
         const arr = await fetch(`http://192.168.1.5:3000/bookings/barberBookings/${props.navigation.getParam("barberId")}`);
          const resData = await arr.json ();
      
         setBookings([...resData]);
+        setLoading(false);
+
         }
     
     catch (error) {
         console.log("There is an Error");
     }
 
-    setLoading(false);
 
  };
 getData();
@@ -98,7 +102,10 @@ getData();
 
 const loadProducts = useCallback(async()=>{
     try{
+        setLoading(true);
         await dispatch(getServices(props.navigation.getParam("barberId")));
+        setLoading(false);
+
       }catch(err){
           console.log(err);
         throw err ;
@@ -109,9 +116,7 @@ const loadProducts = useCallback(async()=>{
 //GET THE SERVICES
 useEffect(()=>{
     
-    setLoading(true);
     loadProducts();
-    setLoading(false);
 
 },[dispatch,loadProducts]);
 

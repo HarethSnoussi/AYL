@@ -44,7 +44,7 @@ Alert.alert(
     },
     { text: 'Oui', onPress: async () => {
       setLoading(true);
-          await dispatch(cancelBooking(props.navigation.getParam("cancelDate"),props.navigation.getParam("clientId")))
+          await dispatch(cancelBooking(props.navigation.getParam("id")));
 
            props.navigation.navigate( "Client");
       setLoading(false);

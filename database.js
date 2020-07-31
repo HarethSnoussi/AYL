@@ -68,7 +68,7 @@ app.get("/bookings/barberBookings/:barberId",(req,res)=>{
 
   const barberId = req.params.barberId;
   
-  const query = "SELECT CAST(date AS char) as date,SUBSTRING(date_booking,1,10) as bookingDate,SUBSTRING(start,1,5) as start,SUBSTRING(booking.end,1,5)as end,client_id as clientId,barber_id as barberId , status  from booking WHERE status = 'confirmée' AND barber_id = ? "
+  const query = "SELECT duration as bookingDuration , CAST(date AS char) as date,SUBSTRING(date_booking,1,10) as bookingDate,SUBSTRING(start,1,5) as start,SUBSTRING(booking.end,1,5)as end,client_id as clientId,barber_id as barberId , status  from booking WHERE status = 'confirmée' AND barber_id = ? "
   
   con.query(query,[barberId],(err,result,fields)=>{
       if(err) res.send(err);
@@ -102,13 +102,26 @@ app.get("/barber/:barberId",(req,res)=>{
 
 
 
+
+//GET THE BARBERS 
+
+app.get('/barbers/allbarbers',(req,res)=>{
+
+  con.query('SELECT id, phone ,sex,name,surname,b_name as barberName ,age,address,image,mark,wilaya,region , type  FROM barber ',(err,result,fields)=>{
+    if(err) console.log('Query error',err);
+   res.send(result);
+  });
+});
+
+
+
 //GET THE CLIENT'S BOOKINGS
 
 app.get("/clientbookings/:clientId",(req,res)=>{
 
   const clientId = req.params.clientId;
 
-  const query = "SELECT booking.amount , booking.id ,CAST(booking.date AS char) as date,CAST(booking.date_booking AS char) as bookingDate,SUBSTRING(booking.start,1,5) as start,SUBSTRING(booking.end,1,5)as end,booking.client_id as clientId,booking.barber_id as barberId , booking.status, booking.duration as bookingDuration , booking.address,booking.region,booking.wilaya,service.name , service.price , service.duration  as serviceDuration from booking INNER JOIN composition on composition.booking_id = booking.id  INNER JOIN service on  service.id = composition.service_id   WHERE client_id = ? "
+  const query = "SELECT booking.id,booking.amount , booking.id ,CAST(booking.date AS char) as date,CAST(booking.date_booking AS char) as bookingDate,SUBSTRING(booking.start,1,5) as start,SUBSTRING(booking.end,1,5)as end,booking.client_id as clientId,booking.barber_id as barberId , booking.status, booking.duration as bookingDuration , booking.address,booking.region,booking.wilaya,service.name , service.price , service.duration  as serviceDuration from booking INNER JOIN composition on composition.booking_id = booking.id  INNER JOIN service on  service.id = composition.service_id   WHERE client_id = ? "
   
   con.query(query,[clientId],(err,result,fields)=>{
       if(err) res.send(err);
@@ -121,16 +134,6 @@ app.get("/clientbookings/:clientId",(req,res)=>{
   
   });
 
-
-//GET THE BARBERS 
-
-app.get('/barbers/allbarbers',(req,res)=>{
-
-  con.query('SELECT id, phone , sex,name,surname,b_name as barberName ,age,address,image,mark,wilaya,region  FROM barber ',(err,result,fields)=>{
-    if(err) console.log('Query error',err);
-   res.send(result);
-  });
-});
 
 
 
@@ -194,12 +197,27 @@ let composition = [];
 
 //cancel Booking
 
-app.patch("/bookings/cancelbooking",(req,res)=>{
-  let date = req.body.bookDate.replace("T"," "); 
+// app.patch("/bookings/cancelbooking",(req,res)=>{
+//   let date = req.body.bookDate.replace("T"," "); 
   
-  date = date.replace("Z","")+"000"
+//   date = date.replace("Z","")+"000"
 
-  con.query("UPDATE booking SET status = 'annulée' WHERE   booking.client_id = ? AND booking.date = ?",[req.body.clientId,date],
+//   con.query("UPDATE booking SET status = 'annulée' WHERE   booking.client_id = ? AND booking.date = ?",[req.body.clientId,date],
+//   (err,result,fields)=>{ 
+
+//   if (err) {
+//     res.send(err);
+//   } else {
+//     res.send("Success");
+//   }
+  
+// });
+ 
+// });
+
+app.patch("/bookings/cancelbooking",(req,res)=>{
+ 
+  con.query("UPDATE booking SET status = 'annulée' WHERE   booking.id= ? ",[req.body.id],
   (err,result,fields)=>{ 
 
   if (err) {

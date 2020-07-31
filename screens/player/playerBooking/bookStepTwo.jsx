@@ -108,11 +108,6 @@ if(duration === 1 ) {
     duration = 0;
 }
 
-// const allBookings = [
-//     // {id:1 ,bookingDate :"2020-07-25", start : "09:00",end : "10:00",duration : 60 , status : "confirmée", clientId : "+213557115451",barberId : "+213550461010"},
-
-//     // {id:2 , bookingDate : new Date() , start : "11:00",end : "11:30",duration : 30 , status : "confirmée", clientId : "+213553633809",barberId : "+213550461010"}
-// ];
 
 //overlay State
 const [overlayState , setOverlayState]=useState(false);
@@ -185,7 +180,7 @@ setButtonIndex(-1);
 let todaysSlots = [];
 const days = workingTime.map(e=>e.day);
 const day = moment(pickedDate).format('dddd').substring(0, 3) ;
-const nowHour = (new Date().getHours()+2).toString()+":00" ;
+const nowHour = (new Date().getHours()+1).toString()+":00" ;
 // const end = moment.utc("2020-05-01T"+nowHour).add(60,"m").format("HH:mm"); 
 //  console.log(end)
  
@@ -217,23 +212,25 @@ let slots = todaysSlots ;
 if(filteredBookings.length > 0)
 {
 filteredBookings.map(booking=>{
-
+    let bookingDuration = Math.ceil(booking.bookingDuration/15)  ; 
+    if(bookingDuration === 1 ) {
+        bookingDuration = 0;
+    }
 
 if(todaysSlotsTime.indexOf(booking.start) === 0)
 {
-    bookingHours = todaysSlotsTime.slice(0,todaysSlotsTime.indexOf(booking.start)+duration+2);
+    bookingHours = todaysSlotsTime.slice(0,todaysSlotsTime.indexOf(booking.start)+bookingDuration+2);
    
 } 
 
 else if (todaysSlotsTime.indexOf(booking.start) === 1) {
-    bookingHours = todaysSlotsTime.slice(todaysSlotsTime.indexOf(booking.start)-1,todaysSlotsTime.indexOf(booking.start)+duration+2);
+    bookingHours = todaysSlotsTime.slice(todaysSlotsTime.indexOf(booking.start)-1,todaysSlotsTime.indexOf(booking.start)+bookingDuration+2);
  
 }
 else 
 {
-
-    bookingHours = todaysSlotsTime.slice(Math.max(0,todaysSlotsTime.indexOf(booking.start)-(2+duration)),todaysSlotsTime.indexOf(booking.start)+(duration+2)) ;
-   
+    bookingHours = todaysSlotsTime.slice(Math.max(0,todaysSlotsTime.indexOf(booking.start)-(2+duration)),todaysSlotsTime.indexOf(booking.start)+bookingDuration+2) ;
+  
 }
 
 

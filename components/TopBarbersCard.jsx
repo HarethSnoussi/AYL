@@ -22,9 +22,9 @@ const TopBarbersCard = (props)=> {
               </ImageBackground>
         </View>
         <View style = {styles.barberInfos}>
-            <Text style = {styles.name}>Snoussi El Hareth</Text>
-            <Text style = {styles.info}>Blida - Bab Essebt</Text>
-            <Text style = {styles.info}>05525252</Text>
+            <Text style = {styles.name}>{props.surname + " "+props.name}</Text>
+            <Text style = {styles.info}>{props.wilaya +" - "+props.region}</Text>
+            <Text style = {styles.info}>{props.phone}</Text>
             <Rating imageSize={20} 
                     readonly
                    startingValue= {3.65}

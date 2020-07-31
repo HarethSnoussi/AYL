@@ -2,7 +2,8 @@ import { GET_BARBERS } from "../actions/listActions";
 
 
 const initialState = {
-    barbers :[]
+    barbers :[],
+    saloons : []
 
 };
 
@@ -10,9 +11,13 @@ const initialState = {
 const listReducer = (state = initialState,action)=>{
     switch(action.type){
        case GET_BARBERS :
+           const barbers = action.barbers.filter(barber=>barber.type==="barber");
+           const saloons = action.barbers.filter(barber=>barber.type==="saloon");
+
            return {
             ...state ,
-            barbers : action.barbers 
+            barbers : barbers ,
+            saloons : saloons
            };
     
        default : return state ;

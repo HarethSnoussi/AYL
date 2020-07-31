@@ -28,7 +28,6 @@ const allBookings = useSelector(state => state.bookings.bookings);
 //get Client ID
 const clientID= props.navigation.dangerouslyGetParent().getParam('clientID');  
 
-
 //Selected Date State
 const [selectedDate , setSelectedDate] = useState(new Date());
 
@@ -106,7 +105,9 @@ days.forEach(day => {
 
 useEffect(()=>{
     const todaysBookings= async ()=>{
+      
         setLoading(true);
+
         const dayBooks = await allBookings.filter(bookings => moment(bookings.bookingDate).format("ll") === moment (new Date()).format("ll") );
         await setDayBookings([...dayBooks]);
         setLoading(false);
@@ -122,8 +123,12 @@ useEffect(()=>{
 const expired = useCallback(async ()=>{
 
   try{
+
+      setLoading(true);
       await dispatch(expiredbookings(clientID));
       await dispatch(getClientBookings(clientID));
+     setLoading(false);
+
     }catch(err){
         console.log(err);
       throw err ;
@@ -134,10 +139,7 @@ const expired = useCallback(async ()=>{
 
 
 useEffect(()=>{
-
-  setLoading(true);
   expired();
-  setLoading(false);
 },[])
 
 
@@ -145,10 +147,9 @@ useEffect(()=>{
 const willFocusSub= props.navigation.addListener(
   'willFocus',
   () => {
-   setLoading(true);
-    expired();
-    setLoading(false);
 
+    expired();
+   
   }
 );
 return ()=>{
@@ -176,14 +177,14 @@ setSelectedDay(moment(date.dateString).format('ddd'));
 
 //IF IS LOADING
 if (isLoading) {
-
     return (
       <View style= {styles.centered}>
         <ActivityIndicator size="large" color= {Colors.primary} />
-      
+
       </View>
     );
 }
+
 
 
     return(
@@ -248,6 +249,7 @@ if (isLoading) {
                             barberId = {booking.barberId}
                             clientId = {booking.clientId}
                             cancelDate = {booking.date}
+                            id = {booking.id}
                          /> 
 
                     )})

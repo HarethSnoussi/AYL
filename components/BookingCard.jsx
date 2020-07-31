@@ -70,7 +70,8 @@ const BookingCard = props =>{
                       services : props.services,
                       barberId : props.barberId,
                       clientId : props.clientId,
-                      cancelDate : props.cancelDate
+                      cancelDate : props.cancelDate,
+                      id  : props.id
                      })} />
           </View>
 

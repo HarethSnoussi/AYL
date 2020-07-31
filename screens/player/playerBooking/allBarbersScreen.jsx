@@ -15,7 +15,10 @@ const AllBarbersScreen = props =>{
 
 
 const clientID =   props.navigation.getParam("clientID");
-const allBarbers =  useSelector(state => state.lists.barbers);
+
+const allBarbers = props.navigation.getParam("type") === "coiffeurs" ? useSelector(state => state.lists.barbers) : useSelector(state => state.lists.saloons) ;
+
+
  
   const [isLoading,setLoading] = useState(false);
   const [overlayState , setOverlay] = useState (false);
@@ -80,8 +83,8 @@ if (isLoading) {
       
          <View>
         
-          <Text style = {{fontFamily : "poppins-bold",fontSize : 18}}>{props.navigation.getParam("type")} </Text>
-          <Text style = {{fontFamily : "poppins",color:"#9d9da1"}}>355 Résultats </Text>
+          <Text style = {{fontFamily : "poppins-bold",fontSize : 18}}>Tous les {props.navigation.getParam("type")} </Text>
+          <Text style = {{fontFamily : "poppins",color:"#9d9da1"}}>{allBarbers.length} Résultats </Text>
           </View>
           <FontAwesome5 name="filter" size={24} color="#333" />
       </View>

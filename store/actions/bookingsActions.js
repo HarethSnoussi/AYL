@@ -77,6 +77,7 @@ let same = resData.filter(e=>e.id === id);
             clientId : same[0].clientId,
             date : same[0].date,
             end : same[0].end,
+            id : same[0].id,
             services:[],
             start :same[0].start ,
             status : same[0].status,
@@ -108,41 +109,79 @@ let same = resData.filter(e=>e.id === id);
 
 
 
-export const cancelBooking = (bookingDate,clientId)=> {
+// export const cancelBooking = (bookingDate,clientId)=> {
 
-const bookDate = bookingDate.toString();
-  return async (dispatch) =>{
-      try {
-          const response = await fetch(
-              `http://192.168.1.5:3000/bookings/cancelbooking`,
-              {
-                method: 'PATCH',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-              body : JSON.stringify({bookDate,clientId})
-              }
+// const bookDate = bookingDate.toString();
+//   return async (dispatch) =>{
+//       try {
+//           const response = await fetch(
+//               `http://192.168.1.5:3000/bookings/cancelbooking`,
+//               {
+//                 method: 'PATCH',
+//                 headers: {
+//                   'Content-Type': 'application/json'
+//                 },
+//               body : JSON.stringify({bookDate,clientId})
+//               }
               
               
-            );
+//             );
          
-            if (!response.ok) {
-              throw new Error('Something went wrong!');
-            }
+//             if (!response.ok) {
+//               throw new Error('Something went wrong!');
+//             }
 
-  dispatch({type:CANCEL_BOOKING,bookingDate,clientId})
-  } catch (error) {
-    throw error ;
+//   dispatch({type:CANCEL_BOOKING,bookingDate,clientId})
+//   } catch (error) {
+//     throw error ;
           
   
-  }
+//   }
  
 
-}
+// }
 
 
 
-}
+// }
+
+
+
+export const cancelBooking = (id)=> {
+
+ 
+    return async (dispatch) =>{
+        try {
+            const response = await fetch(
+                `http://192.168.1.5:3000/bookings/cancelbooking`,
+                {
+                  method: 'PATCH',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                body : JSON.stringify({id})
+                }
+                
+                
+              );
+           
+              if (!response.ok) {
+                throw new Error('Something went wrong!');
+              }
+  
+
+    } catch (error) {
+      throw error ;
+            
+    
+    }
+   
+  
+  }
+  
+  
+  
+  }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //Expired Bookings 
