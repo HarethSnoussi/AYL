@@ -58,10 +58,7 @@ const clientbookings = [];
 resData.forEach(e => {
       if(bookingsIds.indexOf(e.id)<0) {
         bookingsIds.push(e.id);
-
       }
-
-
 });
 
 let allBookings = [];
@@ -69,6 +66,7 @@ let allBookings = [];
 bookingsIds.forEach( id => {
 
 let same = resData.filter(e=>e.id === id);
+
     let booking = {
             amount : same[0].amount,
             barberId : same[0].barberId,
@@ -87,7 +85,7 @@ let same = resData.filter(e=>e.id === id);
           const service = {
                 name : e.name,
                 price : e.price,
-                serviceDuration : 10
+                serviceDuration : e.serviceDuration
           }
 
         booking.services.push(service);

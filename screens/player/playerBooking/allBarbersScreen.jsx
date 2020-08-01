@@ -24,6 +24,7 @@ const allBarbers = props.navigation.getParam("type") === "coiffeurs" ? useSelect
   const [overlayState , setOverlay] = useState (false);
   const [searchState,setSearchState] = useState("");
   const [stadiumIndex , setStadiumIndex] = useState(0);
+  const [wilayas,setWilayas] = useState([]);
   // const confirmedBookings = useSelector(state =>state.bookings.confirmedBookings);
 
   
@@ -31,11 +32,17 @@ const allBarbers = props.navigation.getParam("type") === "coiffeurs" ? useSelect
   
 
 
-// const searchedProperty = allProperties.filter(e=>e.wilaya.toUpperCase() === searchState.toUpperCase());
+useEffect(()=>{
+ setWilayas(allBarbers.filter(e=>e.wilaya.toUpperCase() === searchState.toUpperCase()));
 
-// let shownProperties = null ;
+},[searchState]);
 
-// searchState === "" ? shownProperties =allProperties : shownProperties =searchedProperty ; 
+// const barbersByWilayas = allBarbers.filter(e=>e.wilaya.toUpperCase() === searchState.toUpperCase());
+
+
+//  = null ;
+
+const searchedResult = searchState === "" ? allBarbers :  wilayas ;
 
 //GEt ALL BARBERS 
 
@@ -57,7 +64,6 @@ if (isLoading) {
   return (
     <View style= {styles.centered}>
       <ActivityIndicator size="large" color= {Colors.primary} />
-    
     </View>
   );
 }
@@ -70,6 +76,7 @@ if (isLoading) {
         <SearchBar
         placeholder="Ville"
         containerStyle = {styles.searchBar}
+        onChangeText = {(text)=>setSearchState(text)}
         inputContainerStyle = {{
                 borderRadius : 25
         }}
@@ -92,7 +99,7 @@ if (isLoading) {
           
 
           {
-            allBarbers.map((barber,index)=> {
+            searchedResult.map((barber,index)=> {
 
               return (
               <BarberCard 

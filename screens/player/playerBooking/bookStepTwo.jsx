@@ -180,7 +180,7 @@ setButtonIndex(-1);
 let todaysSlots = [];
 const days = workingTime.map(e=>e.day);
 const day = moment(pickedDate).format('dddd').substring(0, 3) ;
-const nowHour = (new Date().getHours()+1).toString()+":00" ;
+const nowHour = (new Date().getHours()+2).toString()+":00" ;
 // const end = moment.utc("2020-05-01T"+nowHour).add(60,"m").format("HH:mm"); 
 //  console.log(end)
  
