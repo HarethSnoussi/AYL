@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View,Image, ImageBackground, Dimensions,ActivityIndicator,ScrollView} from 'react-native';
 import BarberCard from '../../../components/BarberCard';
 import { SearchBar } from 'react-native-elements';
-
+import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import Colors from "../../../constants/Colors";
 import InfoOverlay from '../../../components/InfoOverlay';
@@ -18,8 +18,6 @@ const clientID =   props.navigation.getParam("clientID");
 
 const allBarbers = props.navigation.getParam("type") === "coiffeurs" ? useSelector(state => state.lists.barbers) : useSelector(state => state.lists.saloons) ;
 
-
- 
   const [isLoading,setLoading] = useState(false);
   const [overlayState , setOverlay] = useState (false);
   const [searchState,setSearchState] = useState("");
@@ -28,19 +26,17 @@ const allBarbers = props.navigation.getParam("type") === "coiffeurs" ? useSelect
   // const confirmedBookings = useSelector(state =>state.bookings.confirmedBookings);
 
   
-  const dispatch = useDispatch();
+const dispatch = useDispatch();
   
 
 
 useEffect(()=>{
- setWilayas(allBarbers.filter(e=>e.wilaya.toUpperCase() === searchState.toUpperCase()));
+ setWilayas(allBarbers.filter(e=>e.region.toUpperCase() === searchState.toUpperCase()));
 
 },[searchState]);
 
 // const barbersByWilayas = allBarbers.filter(e=>e.wilaya.toUpperCase() === searchState.toUpperCase());
 
-
-//  = null ;
 
 const searchedResult = searchState === "" ? allBarbers :  wilayas ;
 
@@ -73,27 +69,30 @@ if (isLoading) {
       <View style = {styles.container}>
       
       
+  <View style = {{flexDirection :"row",alignItems : "center",width : "95%",justifyContent :"space-around",marginVertical : "2%",alignSelf : "center",}}>
+ 
+  <Ionicons name="md-arrow-back" size={24} color="black" onPress = {()=>{props.navigation.goBack()}} style={{alignSelf : "center"}} />
         <SearchBar
-        placeholder="Ville"
-        containerStyle = {styles.searchBar}
-        onChangeText = {(text)=>setSearchState(text)}
-        inputContainerStyle = {{
-                borderRadius : 25
-        }}
-        lightTheme = {true}
-        searchIcon = {{color : "#fd6c57", size : 25}}
-        value={searchState}
-     
-      />
-     
+                placeholder="Région"
+                containerStyle = {styles.searchBar}
+                onChangeText = {(text)=>setSearchState(text)}
+                inputContainerStyle = {{
+                        borderRadius : 25
+                }}
+                lightTheme = {true}
+                searchIcon = {{color : "#fd6c57", size : 25}}
+                value={searchState}
+                onClear={text => setSearchState('')}
+              />
+   </View>
       <View style = {{width :"90%" , alignSelf : "center",marginVertical : 5,flexDirection : "row",justifyContent : "space-between"}}>
       
          <View>
         
           <Text style = {{fontFamily : "poppins-bold",fontSize : 18}}>Tous les {props.navigation.getParam("type")} </Text>
-          <Text style = {{fontFamily : "poppins",color:"#9d9da1"}}>{allBarbers.length} Résultats </Text>
+          <Text style = {{fontFamily : "poppins",color:"#9d9da1"}}>{searchedResult.length} Résultats </Text>
           </View>
-          <FontAwesome5 name="filter" size={24} color="#333" />
+          <FontAwesome5  name="filter" size={24} color="#333"  />
       </View>
             <ScrollView   showsVerticalScrollIndicator  = {false} style = {{borderWidth : 0.3}}>
           
@@ -134,10 +133,11 @@ if (isLoading) {
 
 AllBarbersScreen.navigationOptions = (navData) => {
 return {
-  headerTransparent : true,
+  // headerTransparent : true,
   headerTintColor:'#111',
   headerBackTitle : " ",
-  title : ""
+  title : "",
+  headerShown: false,
 }
 
 };
@@ -149,14 +149,14 @@ const styles= StyleSheet.create({
     },
 
     searchBar :{
-      width : "80%" , 
+      width : "90%" , 
       alignSelf : "center",
       borderRadius : 20 , 
       backgroundColor : "rgba(52, 52, 52, 0)" ,
-      marginTop : "1%",
+      // marginTop : "2%",
       borderTopWidth : 0 , 
       borderBottomWidth : 0 ,
-      
+      alignSelf : "center"
       },
       firstImage : {
         width : screen.width,
