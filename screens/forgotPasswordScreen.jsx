@@ -1,6 +1,6 @@
 import React,{useState,useCallback,useReducer} from 'react';
 import { StyleSheet,View,KeyboardAvoidingView,Text,Image,Dimensions,StatusBar,Alert,ActivityIndicator,AsyncStorage} from 'react-native';
-import {MaterialIcons} from "@expo/vector-icons";
+import {MaterialIcons,MaterialCommunityIcons} from "@expo/vector-icons";
 import {Button } from 'react-native-elements';
 import Colors from '../constants/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -53,6 +53,10 @@ const [isLogin,setIsLogin]= useState(false);
 const prefix='+213';
 const dispatch= useDispatch();
 
+const eye=()=>{//eye icon for password
+  setIsEye(prevValue=>!prevValue);
+};
+
 const[formState,disaptchFormState] = useReducer(formReducer,
     {inputValues:{
       phone: '',
@@ -89,7 +93,7 @@ const verifyNumber = async ()=>{
         try{
         
         setIsLogin(true);
-        const result = await fetch(`http://192.168.1.34:3000/phone/${prefix+formState.inputValues.phone}`);
+        const result = await fetch(`http://192.168.1.36:3000/phone/${prefix+formState.inputValues.phone}`);
         const resData= await result.json();
         setIsLogin(false);
         
@@ -123,9 +127,9 @@ const login = async()=>{
 
 
     setIsLogin(true);
-    const result = await fetch(`http://192.168.1.34:3000/phone/${prefix+formState.inputValues.phone}`);
+    const result = await fetch(`http://192.168.1.36:3000/phone/${prefix+formState.inputValues.phone}`);
     const resData= await result.json();
-    const clients= await fetch('http://192.168.1.34:3000/client');
+    const clients= await fetch('http://192.168.1.36:3000/client');
     const clientsData= await clients.json();
     setIsLogin(false);
 
@@ -173,7 +177,7 @@ Alert.alert('Erreur!','Veuillez rentrer votre nouveau mot de passe s\'il vous pl
               <View style={styles.inputsContainer}>
                   <CustomInput
                     id={'phone'}
-                    rightIcon={<MaterialIcons title = "phone" name ='phone' color='#323446' size={23} />}
+                    rightIcon={<MaterialCommunityIcons title="lock" onPress={eye} name ={!isEye?'eye':'eye-off'} color='#323446' size={23} />}
                     leftIcon={<View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around',borderRightWidth:1,borderRightColor:Colors.blue,paddingRight:5,marginRight:5}}><Image source={require('../assets/images/algeriaFlag.png')} style={{width:24,height:28,marginRight:5}}></Image><Text style={styles.phoneNumber}>+213</Text></View>}
                     placeholder='555555555'
                     keyboardType="phone-pad"

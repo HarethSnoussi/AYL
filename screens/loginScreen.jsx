@@ -1,7 +1,7 @@
 import React,{useReducer,useCallback,useState} from 'react';
 import { StyleSheet,Alert,View,ScrollView,StatusBar,ImageBackground,KeyboardAvoidingView,Text,Platform,Image,Dimensions,TouchableOpacity,ActivityIndicator,AsyncStorage} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import {MaterialIcons} from "@expo/vector-icons";
+import {MaterialIcons,MaterialCommunityIcons} from "@expo/vector-icons";
 import {Button } from 'react-native-elements';
 import CustomInput from '../components/Input';
 import Colors from '../constants/Colors';
@@ -45,6 +45,10 @@ const LoginScreen = props =>{
   ////Input management
   const [isLogin,setIsLogin]= useState(false);//ActivityIndicator handling
   const prefix='+213';
+
+  const eye=()=>{//eye icon for password
+    setIsEye(prevValue=>!prevValue);
+  };
   
   const[formState,disaptchFormState] = useReducer(formReducer,
              {inputValues:{
@@ -89,9 +93,9 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
         );
         
         setIsLogin(true);
-        const result = await fetch(`http://192.168.1.5:3000/phone/${prefix+formState.inputValues.phone}`);
+        const result = await fetch(`http://192.168.1.36:3000/phone/${prefix+formState.inputValues.phone}`);
         const resData= await result.json();
-        const clientsData= await fetch('http://192.168.1.5:3000/client');
+        const clientsData= await fetch('http://192.168.1.36:3000/client');
         const clients= await clientsData.json();
         setIsLogin(false);
         const currentClient= clients.find(item=>item.phone===prefix+formState.inputValues.phone && 
@@ -151,7 +155,7 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
                   />
                   <CustomInput
                     id='password'
-                    rightIcon={<MaterialIcons title="lock" name ='remove-red-eye' color='#323446' size={23} />}
+                    rightIcon={<MaterialCommunityIcons title="lock" onPress={eye} name ={!isEye?'eye':'eye-off'} color='#323446' size={23} />}
                     placeholder='Mot de Passe'
                     keyboardType="default"
                     returnKeyType="next"

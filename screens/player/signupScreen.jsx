@@ -2,7 +2,7 @@ import React,{useState,useCallback,useRef,useReducer} from 'react';
 import { StyleSheet,View,ScrollView,KeyboardAvoidingView,Text,Image,ImageBackground,StatusBar,TextInput,TouchableOpacity,Picker,ActionSheetIOS,Alert,ActivityIndicator,AsyncStorage} from 'react-native';
 import {Button} from 'react-native-elements';
 import Colors from '../../constants/Colors';
-import {MaterialIcons} from "@expo/vector-icons";
+import {MaterialIcons,MaterialCommunityIcons} from "@expo/vector-icons";
 import { LinearGradient } from 'expo-linear-gradient';
 import * as FirebaseRecaptcha from "expo-firebase-recaptcha";
 import * as firebase from "firebase";
@@ -65,6 +65,10 @@ const SignupScreen = props =>{
    const wilayas = ['Wilaya','Alger','Blida'];
    const [sex,setSex] = useState();
    const sexTypes= ['Sexe','Homme','Femme'];
+
+   const eye=()=>{//eye icon for password
+    setIsEye(prevValue=>!prevValue);
+  };
    
    //picker only iOS function 
    const onPress = () =>{
@@ -150,7 +154,7 @@ if(formState.formIsValid && wilaya!==wilayas[0] &&  sex!==sexTypes[0]){
   try {
 
     setVerifyInProgress(true);
-    const result = await fetch(`http://192.168.1.34:3000/phone/${prefix+formState.inputValues.phone}`);
+    const result = await fetch(`http://192.168.1.36:3000/phone/${prefix+formState.inputValues.phone}`);
     const resData= await result.json();
 
     setVerifyInProgress(false);
@@ -300,7 +304,7 @@ try {
 
                    <CustomInput
                     id='password'
-                    rightIcon={<MaterialIcons title="lock" name ='remove-red-eye' color={Colors.lightGrey} size={23} />}
+                    rightIcon={<MaterialCommunityIcons title="lock" onPress={eye} name ={!isEye?'eye':'eye-off'} color={Colors.lightGrey} size={23} />}
                     placeholder='Mot de Passe'
                     keyboardType="default"
                     returnKeyType="next"

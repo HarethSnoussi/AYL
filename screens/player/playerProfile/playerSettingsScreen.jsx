@@ -132,6 +132,15 @@ const editPhone=async()=>{
 
 };
 
+const alertEditPhone = ()=>{
+  Alert.alert(
+   'Attention!',
+   'Voulez-vous vraiment changer votre numéro de téléphone?',
+   [{text:'Oui', style:'destructive', onPress:editPhone},
+    {text:'Non', style:'cancel'}]);
+    return;
+};
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Update client's password after pressing in edit text
 const editPassword=async()=>{
@@ -165,6 +174,14 @@ const editPassword=async()=>{
 
 };
   
+const alertEditPassword = ()=>{
+  Alert.alert(
+   'Attention!',
+   'Voulez-vous vraiment changer votre mot de passe?',
+   [{text:'Oui', style:'destructive', onPress:editPassword},
+    {text:'Non', style:'cancel'}]);
+    return;
+};
 
     return(
       <View style={styles.container}>
@@ -220,7 +237,7 @@ const editPassword=async()=>{
                     titleStyle={styles.labelButton}
                     buttonStyle={styles.buttonStyle}
                     ViewComponent={LinearGradient} 
-                    onPress={editPhone}
+                    onPress={alertEditPhone}
                     linearGradientProps={{
                         colors: ['#fd6d57', '#fd9054'],
                         start: {x: 0, y: 0} ,
@@ -265,7 +282,7 @@ const editPassword=async()=>{
                     titleStyle={styles.labelButton}
                     buttonStyle={styles.buttonStyle}
                     ViewComponent={LinearGradient} 
-                    onPress={editPassword}
+                    onPress={alertEditPassword}
                     linearGradientProps={{
                         colors: ['#fd6d57', '#fd9054'],
                         start: {x: 0, y: 0} ,

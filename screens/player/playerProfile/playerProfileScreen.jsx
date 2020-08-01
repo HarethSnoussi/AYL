@@ -151,6 +151,14 @@ const takeLibraryHandler = async ()=>{
       AsyncStorage.clear();
       props.navigation.navigate('Auth');
     };
+    const alertLogout = ()=>{
+      Alert.alert(
+       'Attention!',
+       'Voulez-vous vraiment vous déconnecter?',
+       [{text:'Oui', style:'destructive', onPress:logout},
+        {text:'Non', style:'cancel'}]);
+        return;
+   };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////Input Management
@@ -416,7 +424,7 @@ const takeLibraryHandler = async ()=>{
          </View>
          <View style={styles.buttonContainer}>
               <View style={styles.cartContainer}>
-                <TouchableOpacity style={styles.cart} onPress={logout}>
+                <TouchableOpacity style={styles.cart} onPress={alertLogout}>
                     <View style={{paddingBottom:5}}>
                       <MaterialCommunityIcons title = "logout" name ='logout' color='#FD6C57' size={23} />
                     </View>
