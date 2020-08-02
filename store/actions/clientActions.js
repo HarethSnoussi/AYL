@@ -13,7 +13,7 @@ export const createClient=(id,phone,password,sex,name,surname,wilaya,region)=>{
         const clientData={id,phone,password,sex,name,surname,wilaya,region};
 
         try{
-            const response= await fetch('http://192.168.1.36:3000/client/addClient',{
+            const response= await fetch('http://192.168.1.5:3000/client/addClient',{
                 method : "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ export const setClients= ()=>{
     return async dispatch =>{
 
       try{
-           const response= await fetch('http://192.168.1.36:3000/client');
+           const response= await fetch('http://192.168.1.5:3000/client');
            if(!response.ok){
             throw new Error('Oups! Une erreur est survenue.');
             }
@@ -60,7 +60,7 @@ export const setClients= ()=>{
 export const setClient= id => {
     return async dispatch=>{
         try{
-            const response= await fetch(`http://192.168.1.36:3000/client/${id}`);
+            const response= await fetch(`http://192.168.1.5:3000/client/${id}`);
             if(!response.ok){
              throw new Error('Oups! Une erreur est survenue.');
              }
@@ -82,7 +82,7 @@ export const updateClientPassword= (id,password) => {
     return async dispatch => {
 
          try{
-           const response = await fetch(`http://192.168.1.36:3000/client/updatePassword/${id}`,{
+           const response = await fetch(`http://192.168.1.5:3000/client/updatePassword/${id}`,{
               method:'PATCH',
               headers: {
                 'Content-Type': 'application/json'
@@ -107,7 +107,7 @@ export const updateClientPhone= (id,phone,clientid) => {
     return async dispatch => {
 
          try{
-           const response = await fetch(`http://192.168.1.36:3000/client/updatePhone/${clientid}`,{
+           const response = await fetch(`http://192.168.1.5:3000/client/updatePhone/${clientid}`,{
               method:'PATCH',
               headers: {
                 'Content-Type': 'application/json'
@@ -133,7 +133,7 @@ export const updateClient= (id,name,surname,email,address,image,wilaya,region) =
     return async dispatch => {
 
          try{
-           const response = await fetch(`http://192.168.1.36:3000/client/updateClient/${id}`,{
+           const response = await fetch(`http://192.168.1.5:3000/client/updateClient/${id}`,{
               method:'PATCH',
               headers: {
                 'Content-Type': 'application/json'
@@ -158,7 +158,7 @@ export const deleteClient = id => {
     return async dispatch => {
     
         try{
-            const response = await fetch(`http://192.168.1.36:3000/client/deleteClient/${id}`,{
+            const response = await fetch(`http://192.168.1.5:3000/client/deleteClient/${id}`,{
                method:'DELETE'});
 
             if(!response.ok){
