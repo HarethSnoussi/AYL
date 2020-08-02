@@ -56,6 +56,11 @@ const PlayerSettingsScreen = props =>{
   const [isPassword,setIsPassword]= useState(false);
   const [isLang,setIsLang]= useState(false);
   const [isArabic,setIsArabic]= useState(false);
+  const [isEye,setIsEye]=useState(false);
+
+const eye=()=>{//eye icon for password
+  setIsEye(prevValue=>!prevValue);
+};
   
 
   const phone = ()=>{
@@ -253,11 +258,11 @@ const alertEditPassword = ()=>{
           <KeyboardAvoidingView keyboardVerticalOffset={10}>
                 <CustomInput
                 id='password'
-                rightIcon={<MaterialIcons title="lock" name ='remove-red-eye' color='#323446' size={23} />}
+                rightIcon={<MaterialCommunityIcons title="lock" onPress={eye} name ={!isEye?'eye':'eye-off'} color='#323446' size={23} />}
                 placeholder={!isArabic?fr.NewPassword:ar.NewPassword}
                 keyboardType="default"
                 returnKeyType="next"
-                secureTextEntry
+                secureTextEntry={!isEye?true:false}
                 minLength={6}
                 autoCapitalize='none'
                 onInputChange={inputChangeHandler}
