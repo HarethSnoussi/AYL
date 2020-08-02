@@ -52,6 +52,7 @@ const [isVerified,setIsVerified]= useState(false);
 const [isLogin,setIsLogin]= useState(false);
 const prefix='+213';
 const dispatch= useDispatch();
+const [isEye,setIsEye]=useState(false);
 
 const eye=()=>{//eye icon for password
   setIsEye(prevValue=>!prevValue);
@@ -196,11 +197,11 @@ Alert.alert('Erreur!','Veuillez rentrer votre nouveau mot de passe s\'il vous pl
                   />
                   <CustomInput
                   id='password'
-                  rightIcon={<MaterialIcons title="lock" name ='remove-red-eye' color='#323446' size={23} />}
+                  rightIcon={<MaterialCommunityIcons title="lock" onPress={eye} name ={!isEye?'eye':'eye-off'} color='#323446' size={23} />}
                   placeholder='Nouveau Mot de Passe'
                   keyboardType="default"
                   returnKeyType="next"
-                  secureTextEntry
+                  secureTextEntry={!isEye?true:false}
                   minLength={6}
                   autoCapitalize='none'
                   onInputChange={inputChangeHandler}

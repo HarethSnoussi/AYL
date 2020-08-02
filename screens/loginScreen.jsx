@@ -45,6 +45,7 @@ const LoginScreen = props =>{
   ////Input management
   const [isLogin,setIsLogin]= useState(false);//ActivityIndicator handling
   const prefix='+213';
+  const [isEye,setIsEye]=useState(false);
 
   const eye=()=>{//eye icon for password
     setIsEye(prevValue=>!prevValue);
@@ -159,7 +160,7 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
                     placeholder='Mot de Passe'
                     keyboardType="default"
                     returnKeyType="next"
-                    secureTextEntry
+                    secureTextEntry={!isEye?true:false}
                     minLength={6}
                     autoCapitalize='none'
                     onInputChange={inputChangeHandler}
