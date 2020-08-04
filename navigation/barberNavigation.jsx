@@ -9,25 +9,27 @@ import {createMaterialBottomTabNavigator} from "react-navigation-material-bottom
 import {Ionicons,  MaterialIcons} from "@expo/vector-icons";
 import ClientHomeScreen from '../screens/home/clientHomeScreen';
 
-import stadiumBookingScreen from "../screens/player/playerBooking/stadiumBookingScreen";
+
 
 // import PlayerProfileScreen from "../screens/player/playerProfile/playerProfileScreen";
 // import ForgotPasswordScreen from "../screens/forgotPasswordScreen";
 
 import LoginScreen from '../screens/loginScreen';
-import SignupScreen from '../screens/player/signupScreen';
+import SignupScreen from '../screens/client/signupScreen';
 import StartupScreen from '../screens/startupScreen';
-import PlayerProfileScreen from '../screens/player/playerProfile/playerProfileScreen';
-import PlayerSettingsScreen from '../screens/player/playerProfile/playerSettingsScreen';
+import PlayerProfileScreen from '../screens/client/playerProfile/playerProfileScreen';
+import PlayerSettingsScreen from '../screens/client/playerProfile/playerSettingsScreen';
 import ForgotPasswordScreen from '../screens/forgotPasswordScreen';
 // import StartupScreen from "../screens/startupScreen";
-import AllBarbersScreen from '../screens/player/playerBooking/allBarbersScreen';
-import BookStepTwo from '../screens/player/playerBooking/bookStepTwo';
-import BookStepOne from '../screens/player/playerBooking/bookStepOne';
-import BookStepThree from '../screens/player/playerBooking/bookStepThree';
+import AllBarbersScreen from '../screens/client/clientBooking/allBarbersScreen';
+import BookStepTwo from '../screens/client/clientBooking/bookStepTwo';
+import BookStepOne from '../screens/client/clientBooking/bookStepOne';
+import BookStepThree from '../screens/client/clientBooking/bookStepThree';
 
-import AllBookingsScreen from '../screens/player/playerBooking/allBookingsScreen';
-import BookingDetail from '../screens/player/playerBooking/bookingDetail';
+import AllBookingsScreen from '../screens/client/clientBooking/allBookingsScreen';
+import BarberHistory from '../screens/client/history/barbersHistory';
+
+import BookingDetail from '../screens/client/clientBooking/bookingDetail';
 ///////////////////////////////////////////////////////////////////
 
 //Tab Navigator For Client Home
@@ -59,7 +61,7 @@ const homeConfig = {
               }} ,
 
    NearMe : {
-          screen : AllBarbersScreen,
+          screen : BarberHistory,
           navigationOptions : {
             tabBarLabel : "Coiffeurs" ,
             tabBarColor : Colors.secondary ,
@@ -152,7 +154,7 @@ const BarberNavigation = createStackNavigator({
      screen : clientHomeTabs
    }, 
    AllBarbers :  AllBarbersScreen ,
-   StadiumBooking : stadiumBookingScreen ,
+
    BookStepTwo : BookStepTwo ,
    BookStepOne : BookStepOne ,
    BookStepThree : BookStepThree ,

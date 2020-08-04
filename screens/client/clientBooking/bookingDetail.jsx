@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View,ActivityIndicator, Alert,ScrollView} from 'react-native';
+import { StyleSheet, Text, View,ActivityIndicator, Alert,ScrollView, Dimensions} from 'react-native';
 
-
+import moment from 'moment';
 import Colors from "../../../constants/Colors";
 import BookingCard from '../../../components/BookingCard';
 import { Ionicons ,MaterialIcons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 import {cancelBooking} from "../../../store/actions/bookingsActions";
+import { Rating, AirbnbRating } from 'react-native-elements';
+
+const screen = Dimensions.get("window");
 
 const BookingDetail = props =>{
 const services = props.navigation.getParam("services");
+const start= props.navigation.getParam("start");
+const bookingDate = props.navigation.getParam("bookingDate");
+const now  = moment().format().substring(11,16) ;
+const diffrence = parseInt(moment.duration(moment(start,"h:mm:ss a").diff(moment(now,"h:mm:ss a"))).asMinutes());
+const confirmCancel = ( (props.navigation.getParam("status") === "confirmée" && ((diffrence > 30 && moment(bookingDate).format("ll") === moment().format("ll")) || moment(bookingDate).format("ll") !== moment().format("ll"))) || props.navigation.getParam("status") === "en attente")  ;
+// console.log(diffrence);
+
+
+
 
 //Loading State
 const [isLoading , setLoading] = useState (false);
@@ -77,7 +89,7 @@ useEffect(()=>{
     try {
   setLoading(true);
     
-      const arr = await fetch(`http://192.168.1.5:3000/barber/${props.navigation.getParam("barberId")}`);
+      const arr = await fetch(`http://192.168.1.5:3000/barber/barberinfos/${props.navigation.getParam("barberId")}`);
       const resData = await arr.json ();
       setBarberInfos(...resData);
       setLoading(false);
@@ -96,6 +108,9 @@ useEffect(()=>{
 
 },[])
 
+
+
+
 if (isLoading) {
   return (
     <View style= {styles.centered}>
@@ -107,10 +122,11 @@ if (isLoading) {
 
   return(
     <View style = {styles.container}>
+
     <BookingCard
-                             start = {props.navigation.getParam("start")}
+                             start = {start}
                             end = {props.navigation.getParam("end")}
-                            bookingDate = {props.navigation.getParam("date")}
+                            bookingDate = {bookingDate}
                             status = {props.navigation.getParam("state")}
                             amount = {props.navigation.getParam("amount")}
                             day = {props.navigation.getParam("day")}
@@ -135,7 +151,7 @@ if (isLoading) {
           </View>
 
 
-        { props.navigation.getParam("status") === "confirmée" &&
+        {confirmCancel  &&
           <View style = {{alignItems : "center"}} >
           
           <Ionicons name="ios-close-circle-outline" 
@@ -159,8 +175,9 @@ if (isLoading) {
             </View>
 
             <View style = {styles.services}>
+
                 <ScrollView>
-                <Text style = {styles.servicesTitle}>Services </Text>
+            <Text style = {styles.servicesTitle}>Services </Text>
              
           {      
             services.map((service,index) => {
@@ -181,12 +198,17 @@ if (isLoading) {
             })
          
          }
-
+         
+         
+        
 
                 </ScrollView>
 
             </View>
 
+
+          
+         
 
             </View>
 
@@ -205,12 +227,11 @@ BookingDetail.navigationOptions = (navData) => {
 
 const styles= StyleSheet.create({
 container : {
-
   flex : 1 
 },
 actions : {
  width :"90%",
-height : "10%" ,
+ height : screen.height * 0.1 ,
  alignSelf : "center",
 borderRadius : 15,
 flexDirection : "row",
@@ -225,17 +246,29 @@ backgroundColor  : "#fff" ,
 alignSelf : "center" ,
 borderRadius : 15,
 marginVertical : "2%",
-height : "30%",
+height : screen.height * 0.3 ,
 justifyContent : "space-around"
 
 },
 services : {
-    height : "35%",
+  height : screen.height * 0.3 ,
     backgroundColor : "#fff",
     borderRadius :  15,
     width : "90%",
-    alignSelf : "center"
+    alignSelf : "center",
 },
+review :
+{ 
+  height : screen.height * 0.2 , 
+  backgroundColor :"#fff",
+  marginVertical : "2%",
+  width :"90%",
+  alignSelf : "center",
+  borderRadius : 15,
+
+},
+
+
 //TExt Styling //
 actionsText : {
     fontFamily : "poppins"

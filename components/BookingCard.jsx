@@ -5,6 +5,7 @@ import Colors from '../constants/Colors';
 import {Ionicons} from "@expo/vector-icons";
 
 import { LinearGradient } from 'expo-linear-gradient';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 const screen = Dimensions.get("window");
@@ -12,8 +13,8 @@ const screen = Dimensions.get("window");
 
 
 const BookingCard = props =>{
-  const gradient1 = props.status === "confirmée" ? "#fd6d57" : "#f32f33";
-  const gradient2 = props.status === "confirmée" ? "#fd9054" : "#e52d27";
+  const gradient1 = props.status === "en attente" ? "#fd6d57" : props.status === "confirmée" ? "#11998e" : "#f32f33";
+  const gradient2 = props.status === "en attente" ? "#fd9054" : props.status === "confirmée" ? Colors.colorH1 : "#e52d27";
 
 
     return(
@@ -31,7 +32,7 @@ const BookingCard = props =>{
          
            
 
-              <Text style = {{...styles.priceText ,...{color : gradient2,  textDecorationLine: props.status !="confirmée" ? 'line-through' : "none" ,
+              <Text style = {{...styles.priceText ,...{color : gradient2,  textDecorationLine:( props.status ==="confirmée" || props.status ==="en attente" )? 'none' : "line-through" ,
               }
               }}>
               Prix :{props.amount} DA
@@ -54,8 +55,26 @@ const BookingCard = props =>{
 
          { 
            props.detail === true ?
-           <View style = {styles.detailButton}>
-
+       
+           <TouchableOpacity 
+           style = {styles.detailButton}
+           onPress = {()=>props.navigation.navigate("BookingDetail", 
+          { 
+                    day: props.day,
+                      date : props.date,
+                      status : props.status,
+                      start : props.start,
+                      end : props.end,
+                      amount : props.amount,
+                      services : props.services,
+                      barberId : props.barberId,
+                      clientId : props.clientId,
+                      cancelDate : props.cancelDate,
+                      id  : props.id,
+                      bookingDate :props.bookingDate
+                     })} 
+           >
+          
           <Ionicons name="ios-arrow-forward" 
           size={22} 
           color="#252525" 
@@ -71,9 +90,11 @@ const BookingCard = props =>{
                       barberId : props.barberId,
                       clientId : props.clientId,
                       cancelDate : props.cancelDate,
-                      id  : props.id
+                      id  : props.id,
+                      bookingDate :props.bookingDate
                      })} />
-          </View>
+                     </TouchableOpacity>
+          
 
 
           : 
@@ -141,12 +162,13 @@ amount :{
 
 },
 detailButton : {
-width : "10%",
+// width : "10%",
 height : "100%",
 borderLeftWidth : 0.5,
 justifyContent : "center",
 alignItems : "center",
 
+width : screen.width * 0.1
 },
 
 detailButton2 : {

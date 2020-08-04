@@ -18,6 +18,7 @@ const end = moment.utc("2020-05-01T"+props.start).add(props.duration,"m").format
 const address = props.address + "-" + props.region+"-"+props.wilaya
 const servicesId = props.services.map(e=>e.id);
 
+
 const sendConfirmation = async ()=>{
 const date = new Date();
   let booking = {
@@ -32,7 +33,7 @@ const date = new Date();
     region : props.region,
     services : props.services,
     start : props.start ,
-    status : "confirmée",
+    status : "en attente",
     wilaya : props.wilaya
 }
  props.overlayHandler();

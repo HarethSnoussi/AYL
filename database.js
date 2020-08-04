@@ -68,9 +68,9 @@ app.get("/bookings/barberBookings/:barberId",(req,res)=>{
 
   const barberId = req.params.barberId;
   
-  const query = "SELECT duration as bookingDuration , CAST(date AS char) as date,SUBSTRING(date_booking,1,10) as bookingDate,SUBSTRING(start,1,5) as start,SUBSTRING(booking.end,1,5)as end,client_id as clientId,barber_id as barberId , status  from booking WHERE status = 'confirmée' AND barber_id = ? "
+  const query = "SELECT duration as bookingDuration , CAST(date AS char) as date,SUBSTRING(date_booking,1,10) as bookingDate,SUBSTRING(start,1,5) as start,SUBSTRING(booking.end,1,5)as end,client_id as clientId,barber_id as barberId , status  from booking WHERE status = 'en attente' AND barber_id = ? OR status = 'confirmée' AND barber_id = ? "
   
-  con.query(query,[barberId],(err,result,fields)=>{
+  con.query(query,[barberId,barberId],(err,result,fields)=>{
       if(err) res.send(err);
   
       res.send(result);
@@ -83,7 +83,7 @@ app.get("/bookings/barberBookings/:barberId",(req,res)=>{
 
 
   //GET THE BARBER'S Information
-app.get("/barber/:barberId",(req,res)=>{
+app.get("/barber/barberinfos/:barberId",(req,res)=>{
 
   const barberId = req.params.barberId;
   
@@ -233,7 +233,7 @@ app.patch("/bookings/cancelbooking",(req,res)=>{
 //CANCEL EXPIRED BOOKINGS
   
 app.patch("/bookings/expiredbookings",(req,res)=>{
-   con.query("UPDATE booking SET status = 'expirée' WHERE  SUBSTRING(date_booking,1,10)  = SUBSTRING(NOW(),1,10) AND booking.client_id = ? AND status = 'confirmée'  AND CURRENT_TIMESTAMP > end OR SUBSTRING(date_booking,1,10)  <  SUBSTRING(NOW(),1,10)  AND booking.client_id = ? AND status = 'confirmée' ",[req.body.clientId,req.body.clientId],
+   con.query("UPDATE booking SET status = 'expirée' WHERE  SUBSTRING(date_booking,1,10)  = SUBSTRING(NOW(),1,10) AND booking.client_id = ? AND status = 'en attente'  AND CURRENT_TIMESTAMP > start OR SUBSTRING(date_booking,1,10)  <  SUBSTRING(NOW(),1,10)  AND booking.client_id = ? AND status = 'en attente' ",[req.body.clientId,req.body.clientId],
    (err,result,fields)=>{ 
  
    if (err) {
