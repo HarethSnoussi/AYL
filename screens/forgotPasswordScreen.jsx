@@ -94,7 +94,7 @@ const verifyNumber = async ()=>{
         try{
         
         setIsLogin(true);
-        const result = await fetch(`http://192.168.1.36:3000/phone/${prefix+formState.inputValues.phone}`);
+        const result = await fetch(`http://173.212.234.137:3000/phone/${prefix+formState.inputValues.phone}`);
         const resData= await result.json();
         setIsLogin(false);
         
@@ -128,9 +128,9 @@ const login = async()=>{
 
 
     setIsLogin(true);
-    const result = await fetch(`http://192.168.1.36:3000/phone/${prefix+formState.inputValues.phone}`);
+    const result = await fetch(`http://173.212.234.137:3000/phone/${prefix+formState.inputValues.phone}`);
     const resData= await result.json();
-    const clients= await fetch('http://192.168.1.36:3000/client');
+    const clients= await fetch('http://173.212.234.137:3000/client');
     const clientsData= await clients.json();
     setIsLogin(false);
 

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, Text, View,Image, ImageBackground, Dimensions,ActivityIndicator,ScrollView} from 'react-native';
-import BarberCard from '../../../components/BarberCard';
+import ReviewCard from '../../../components/ReviewCard';
 import { SearchBar } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -14,21 +14,25 @@ const screen = Dimensions.get("window");
 const BarbersHistory = props =>{
 
 
-const clientID =   props.navigation.getParam("clientID");
+  const clientID= props.navigation.dangerouslyGetParent().getParam('clientID');  
 
-const allBarbers = props.navigation.getParam("type") === "coiffeurs" ? useSelector(state => state.lists.barbers) : useSelector(state => state.lists.saloons) ;
+
+const allBarbers = useSelector(state => state.lists.barbers) ;
+const allReviews = useSelector(state=>state.reviews.reviews);
+
 
   const [isLoading,setLoading] = useState(false);
   const [overlayState , setOverlay] = useState (false);
   const [searchState,setSearchState] = useState("");
   const [stadiumIndex , setStadiumIndex] = useState(0);
   const [wilayas,setWilayas] = useState([]);
+  const [barbersIds,setBarbersIds] = useState([]);
+  const [barbersList,setBarberList] = useState([]);
   // const confirmedBookings = useSelector(state =>state.bookings.confirmedBookings);
 
   
 const dispatch = useDispatch();
   
-
 
 useEffect(()=>{
  setWilayas(allBarbers.filter(e=>e.region.toUpperCase() === searchState.toUpperCase()));
@@ -40,20 +44,50 @@ useEffect(()=>{
 
 const searchedResult = searchState === "" ? allBarbers :  wilayas ;
 
-//GEt ALL BARBERS 
+useEffect(()=>{ 
+  const getHistory = async ()=>{
+  
+    try {
+        setLoading(true);
 
-// useEffect(()=>{
+        const arr = await fetch(`http://192.168.1.6:3000/client/barbers/${clientID}`);
+        const resData = await arr.json ();
+        setBarbersIds([...resData]);
+        setLoading(false);
+        }
+    
+    catch (error) {
+        console.log("There is an Error");
+    }
 
-// const fetchBarbers = async ()=>{
-// setLoading(true);
-// await dispatch(getBarbers());
-// setLoading(false);
+}; 
+  getHistory();
 
-// }
-//  fetchBarbers();
+},[]);
 
 
-// },[dispatch]);
+
+useEffect(()=>{
+
+  const barbers = [];
+  barbersIds.forEach(e=>{
+   
+    allBarbers.forEach(element => {
+  
+         if(element.id === e.barberId){
+            barbers.push(element);
+          
+         }
+  
+  
+    });
+  
+  });
+  
+  setBarberList([...barbers]);
+
+},[barbersIds])
+
 
 if (isLoading) {
     
@@ -63,7 +97,6 @@ if (isLoading) {
     </View>
   );
 }
-
     return(
      
       <View style = {styles.container}>
@@ -90,18 +123,18 @@ if (isLoading) {
          <View>
         
           <Text style = {{fontFamily : "poppins-bold",fontSize : 18}}>Historique des coiffeurs</Text>
-          <Text style = {{fontFamily : "poppins",color:"#9d9da1"}}>{searchedResult.length} Résultats </Text>
+          <Text style = {{fontFamily : "poppins",color:"#9d9da1"}}>{barbersList.length} Résultats </Text>
           </View>
         
       </View>
             <ScrollView   showsVerticalScrollIndicator  = {false} style = {{borderWidth : 0.3}}>
           
 
-          {/* {
-            searchedResult.map((barber,index)=> {
-
+          {
+            barbersList.map((barber,index)=> {
+              
               return (
-              <BarberCard 
+              <ReviewCard 
               key = {index}
               navigate = {()=>props.navigation.navigate("BookStepOne",{barberId : barber.id,clientID})}
               name = {barber.name}
@@ -109,7 +142,9 @@ if (isLoading) {
               region = {barber.region}
               mark = {barber.mark}
               wilaya = {barber.wilaya}
-              
+              barberId = {barber.id}
+              allReviews = {allReviews}
+              clientId = {clientID}
               />
               
               )
@@ -119,17 +154,9 @@ if (isLoading) {
 
 
                  
-                 } */}
+                 }
 
-                 <BarberCard 
-            
-              name = "Hareth"
-              surname = "Snoussi"
-              region = "Bab-essebt"
-              mark = "2"
-              wilaya = "Blida"
-              
-              />
+                 
                 
                 </ScrollView>
 
@@ -240,10 +267,14 @@ backgroundColor : "red",
 alignSelf : "flex-start",
 marginRight : 7
 
-}
+},
 
     
-   
+centered: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center'
+}
 
 });
 

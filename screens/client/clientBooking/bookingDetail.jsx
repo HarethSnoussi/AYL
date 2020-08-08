@@ -58,7 +58,7 @@ Alert.alert(
       setLoading(true);
           await dispatch(cancelBooking(props.navigation.getParam("id")));
 
-           props.navigation.navigate( "Client");
+           props.navigation.navigate("Client");
       setLoading(false);
 
 
@@ -89,7 +89,7 @@ useEffect(()=>{
     try {
   setLoading(true);
     
-      const arr = await fetch(`http://192.168.1.5:3000/barber/barberinfos/${props.navigation.getParam("barberId")}`);
+      const arr = await fetch(`http://192.168.1.6:3000/barber/barberinfos/${props.navigation.getParam("barberId")}`);
       const resData = await arr.json ();
       setBarberInfos(...resData);
       setLoading(false);

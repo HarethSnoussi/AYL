@@ -117,7 +117,7 @@ app.get('/barbers/allbarbers',(req,res)=>{
 
 //GET THE CLIENT'S BOOKINGS
 
-app.get("/clientbookings/:clientId",(req,res)=>{
+app.get("/client/bookings/:clientId",(req,res)=>{
 
   const clientId = req.params.clientId;
 
@@ -125,7 +125,6 @@ app.get("/clientbookings/:clientId",(req,res)=>{
   
   con.query(query,[clientId],(err,result,fields)=>{
       if(err) res.send(err);
-  
       res.send(result);
   
   });
@@ -134,7 +133,41 @@ app.get("/clientbookings/:clientId",(req,res)=>{
   
   });
 
+  //Get the barbers history
 
+  app.get("/client/barbers/:clientId",(req,res)=>{
+  const clientId = req.params.clientId;
+  const query = "SELECT barber_id as barberId from booking   WHERE client_id = ? AND status = 'confirmée' GROUP BY barber_id "
+  
+  con.query(query,[clientId],(err,result,fields)=>{
+      if(err) res.send(err);
+  
+      res.send(result);
+  
+  });
+
+
+
+  });
+
+
+  //Get the REviews Made by the client for all the barbers
+
+  app.get("/client/barbersfeedbacks/:clientId",(req,res)=>{
+    const clientId = req.params.clientId;
+    const query = "SELECT comment,mark,client_id as clientId , barber_id as barberId  from feedback WHERE client_id = ? "
+    
+    con.query(query,[clientId],(err,result,fields)=>{
+        if(err) res.send(err);
+    
+        res.send(result);
+    
+    });
+  
+  
+  
+    });
+/*************************************************************************************************************************** */
 
 
 //POST REQUESTS 
@@ -192,28 +225,65 @@ let composition = [];
  
   });
 
-      
+  //ADD A Feedback    
+app.post("/client/addreview",(req,res)=>{
+
+
+  con.query("INSERT INTO feedback (client_id,barber_id, comment,mark) VALUES (?,?, ?,?)"
+  ,[
+   req.body.clientId,
+   req.body.barberId, 
+   req.body.comment,
+   req.body.mark,
+
+ ],
+  
+  (err,result,fields)=>{
+    if (err){
+      console.log(err);
+       res.send(err);
+   
+   }else { 
+     console.log("success");
+     res.send("Success");
+
+    }
+
+});
+
+});
 ///////////////////////////////////////////////////////////////////////////
 
-//cancel Booking
 
-// app.patch("/bookings/cancelbooking",(req,res)=>{
-//   let date = req.body.bookDate.replace("T"," "); 
-  
-//   date = date.replace("Z","")+"000"
 
-//   con.query("UPDATE booking SET status = 'annulée' WHERE   booking.client_id = ? AND booking.date = ?",[req.body.clientId,date],
-//   (err,result,fields)=>{ 
+//update FeedBack
 
-//   if (err) {
-//     res.send(err);
-//   } else {
-//     res.send("Success");
-//   }
-  
-// });
+app.patch("/client/updatefeedback",(req,res)=>{
+
  
-// });
+  con.query("UPDATE feedback SET comment = ? , mark = ?  WHERE client_id= ? AND barber_id = ?",
+  [req.body.review.comment,
+   req.body.review.mark,
+   req.body.review.clientId,
+   req.body.review.barberId
+  
+  ],
+  (err,result,fields)=>{ 
+  if (err) {
+  console.log(err);
+
+    res.send(err);
+  } else {
+    console.log(result);
+
+    res.send("Success");
+  }
+  
+});
+ 
+});
+
+//cancel Booking
 
 app.patch("/bookings/cancelbooking",(req,res)=>{
  
@@ -252,7 +322,7 @@ app.patch("/bookings/expiredbookings",(req,res)=>{
 app.get("/bookings/expired",(req,res)=>{
   console.log(req.body.clientId);
  
-   con.query("SELECT CURRENT_TIMESTAMP , status, cast(now() as date),end,CAST(date AS char) as date,SUBSTRING(date_booking,1,10) as bookingDate, SUBSTRING(NOW(),1,10) FROM booking WHERE SUBSTRING(date_booking,1,10)  = SUBSTRING(NOW(),1,10)  AND CURRENT_TIMESTAMP < end  ",[],
+   con.query("SELECT CURRENT_TIMESTAMP , status, cast(now() as date),end,CAST(date AS char) as date,SUBSTRING(date_booking,1,10) as bookingDate, SUBSTRING(NOW(),1,10) FROM booking  ",[],
    (err,result,fields)=>{ 
  
    if (err) {

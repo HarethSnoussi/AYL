@@ -8,8 +8,7 @@ import moment from 'moment';
 import Colors from "../../../constants/Colors";
 import { FontAwesome } from '@expo/vector-icons'; 
 import 'moment/locale/fr';
-import { useDispatch, useSelector } from 'react-redux';
-import * as offersActions from "../../../store/actions/offers";
+
 
 import ConfirmBookingOverlay from "../../../components/ConfirmBookingOverlay";
 
@@ -163,8 +162,6 @@ const pickedDateHandler = (date) => {
 
 
 //fetch Worktime of the Barber
-
-
 
 
 

@@ -8,7 +8,7 @@ export const getServices = (barberId)=>{
     return async dispatch =>{
         try {
    
-            const arr = await fetch(`http://192.168.1.5:3000/barber/services/${barberId}`);
+            const arr = await fetch(`http://192.168.1.6:3000/barber/services/${barberId}`);
             const resData = await arr.json ();
 
             dispatch({type : GET_SERVICES , services : resData});
@@ -33,7 +33,7 @@ export const getServices = (barberId)=>{
 //     return async dispatch =>{
 //         try {
    
-//             const arr = await fetch(`http://192.168.1.5:3000/barber/hours/${barberId}`);
+//             const arr = await fetch(`http://192.168.1.6:3000/barber/hours/${barberId}`);
 //             const resData = await arr.json ();
 
 //             dispatch({type : GET_WORKTIME , worktime : resData});

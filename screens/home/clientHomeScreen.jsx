@@ -11,11 +11,12 @@ import Colors from "../../constants/Colors.js";
 import TopSalonsCard from '../../components/TopSalonsCard';
 import TopBarbersCard from '../../components/TopBarbersCard.jsx';
 import { getServices } from '../../store/actions/servicesActions.js';
-import { getBarbers } from '../../store/actions/listActions';
+import { getBarbers} from '../../store/actions/listActions';
 import { getClientBookings } from '../../store/actions/bookingsActions.js';
 
 
 import { expiredbookings } from '../../store/actions/bookingsActions.js';
+import { getReviews } from '../../store/actions/reviewsActions';
 const screen = Dimensions.get("window");
 
 
@@ -25,7 +26,6 @@ const ClientHomeScreen = props =>{
   //Get ALL Barbers AND SAloons from the store to display three of them
   const allBarbers = useSelector(state => state.lists.barbers) ;
   const allSaloons = useSelector(state => state.lists.saloons) ;
-  
 //get Client ID
 const clientID= props.navigation.dangerouslyGetParent().getParam('clientID');  
 // console.log(clientID);
@@ -68,6 +68,7 @@ const getAllBarbers = useCallback(async ()=>{
   try{
     setLoading(true);
     await  dispatch(getBarbers());
+    await dispatch(getReviews(clientID));
     setLoading(false);
 
     // await dispatch(expiredbookings("+213553633809"));
@@ -75,6 +76,9 @@ const getAllBarbers = useCallback(async ()=>{
     catch(err){
       throw err ;
     }
+
+  
+
 },[dispatch]);
 
 

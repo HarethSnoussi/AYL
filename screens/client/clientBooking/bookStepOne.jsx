@@ -3,13 +3,12 @@ import { StyleSheet, Text, View , Picker,Image, Dimensions , StatusBar, Platform
 import { Button ,ButtonGroup} from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from 'moment';
 import Colors from "../../../constants/Colors";
 import { FontAwesome } from '@expo/vector-icons'; 
 import 'moment/locale/fr';
 import { useDispatch, useSelector } from 'react-redux';
-import * as offersActions from "../../../store/actions/offers";
+
 
 import ServicePicker from '../../../components/ServicePicker';
 import { getServices } from '../../../store/actions/servicesActions';
@@ -66,7 +65,7 @@ useEffect(()=>{
     try {
         setLoading(true);
 
-        const arr = await fetch(`http://192.168.1.5:3000/barber/hours/${props.navigation.getParam("barberId")}`);
+        const arr = await fetch(`http://192.168.1.6:3000/barber/hours/${props.navigation.getParam("barberId")}`);
         const resData = await arr.json ();
         setData([...resData]);
         setLoading(false);
@@ -81,7 +80,7 @@ useEffect(()=>{
     try {
         setLoading(true);
        
-        const arr = await fetch(`http://192.168.1.5:3000/bookings/barberBookings/${props.navigation.getParam("barberId")}`);
+        const arr = await fetch(`http://192.168.1.6:3000/bookings/barberBookings/${props.navigation.getParam("barberId")}`);
          const resData = await arr.json ();
      
         setBookings([...resData]);

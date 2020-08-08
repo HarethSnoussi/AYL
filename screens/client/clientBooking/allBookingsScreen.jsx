@@ -3,7 +3,7 @@ import { StyleSheet, Text, View,ActivityIndicator, Dimensions, ScrollView } from
 
 import { Avatar ,Badge } from 'react-native-elements';
 import Colors from "../../../constants/Colors";
-import * as bookingsActions from "../../../store/actions/bookings"; 
+
 import {Calendar, CalendarList, Agenda,LocaleConfig} from 'react-native-calendars';
 import BookingCard from '../../../components/BookingCard';
 import moment from 'moment';
@@ -29,7 +29,7 @@ const allBookings = useSelector(state => state.bookings.bookings);
 const clientID= props.navigation.dangerouslyGetParent().getParam('clientID');  
 
 //Selected Date State
-const [selectedDate , setSelectedDate] = useState(new Date());
+const [selectedDate , setSelectedDate] = useState(moment(moment().format("YYYY-MM-DD")).format());
 
 //Selected Date French Text 
 const [selectedDateText , setSelectedDateText] = useState(moment().format('LL'));
@@ -100,36 +100,16 @@ days.forEach(day => {
 // },[getAllClientBookings])
 
 
-/**************************************************************************************** */
-//TODAYS BOOKINGs
 
-
-
-
-useEffect(()=>{
-    const todaysBookings= async ()=>{
-      
-        setLoading(true);
-
-        const dayBooks = await allBookings.filter(bookings => moment(bookings.bookingDate).format("ll") === moment (new Date()).format("ll") );
-        await setDayBookings([...dayBooks]);
-        setLoading(false);
-    }
- 
-    if((selectedDateText ===moment (new Date()).format("ll")  ))
-    todaysBookings();
-},[allBookings])
-
-
-/***************************************************************************************************************************************************************************** */
 
 /*************************************************************** */
 // //Cancel EXPIRED BOOKINGS
 const expired = useCallback(async ()=>{
 
   try{
-
       setLoading(true);
+
+ 
       await dispatch(expiredbookings(clientID));
       await dispatch(getClientBookings(clientID));
      setLoading(false);
@@ -168,7 +148,6 @@ return ()=>{
 
 
 const selectedDateHandler = (date) => {
-
 // console.log(allBookings[days.indexOf(date.dateString)])
 const dayBooks = allBookings.filter(bookings => bookings.bookingDate === date.dateString );
 
@@ -176,9 +155,33 @@ setSelectedDateText(moment(date.dateString).format('LL'));
 setDayBookings ([...dayBooks]);
 
 setSelectedDay(moment(date.dateString).format('ddd'));
+setSelectedDate(moment(date.dateString).format());
+ 
 
 };
 
+/**************************************************************************************** */
+//TODAYS BOOKINGs
+
+
+
+
+useEffect(()=>{
+ 
+  const todaysBookings= async ()=>{
+      setLoading(true);
+      const dayBooks = await allBookings.filter(bookings => moment(bookings.bookingDate).format() === selectedDate);
+      await setDayBookings([...dayBooks]);
+      setLoading(false);
+  }
+
+  // if((selectedDateText ===moment (new Date()).format("ll")  ))
+  todaysBookings();
+  
+},[allBookings,selectedDate])
+
+
+/***************************************************************************************************************************************************************************** */
 
 //IF IS LOADING
 if (isLoading) {
@@ -231,13 +234,12 @@ if (isLoading) {
 
             </View>
                 <ScrollView style = {styles.cardsContainer}>
-{
 
-}
                 {
+
                     dayBookings.map((booking , index)=>{
-    
-                        
+                      
+                      
                         return(
                         <BookingCard
                             key = {index}
