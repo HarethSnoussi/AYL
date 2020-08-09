@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { StyleSheet, Text, View , Picker,Image, Dimensions , StatusBar, Platform,ActionSheetIOS, ActivityIndicator,TextInput, KeyboardAvoidingView} from 'react-native';
+import { StyleSheet, Text, View , Picker,Image, Dimensions , ActivityIndicator,TextInput, KeyboardAvoidingView,TouchableWithoutFeedback,Keyboard} from 'react-native';
 import { Button ,ButtonGroup} from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -43,7 +43,7 @@ setPickedWilaya(itemValue);
 
 return (
   
-
+  <TouchableWithoutFeedback onPress = {()=>{Keyboard.dismiss()}}>
         <View style= {styles.container}>
                  
 
@@ -111,14 +111,15 @@ return (
                     <Text style = {styles.label} >Région *</Text>
                     <TextInput
                         style = {styles.regionInput}
-                        multiline = {true}
+                        multiline = {false}
                          numberOfLines={2}
                         onChangeText={text => setRegion(text)}
-
+                          
                         value={pickedRegion}
                         />
 
                     </View>
+                 
                     <View style = {styles.address}>
                     <Text style = {styles.label}>Adresse *</Text>
 
@@ -133,7 +134,7 @@ return (
                         />
                        
                     </View>
-          
+                   
                     
                     </View>
 
@@ -156,6 +157,7 @@ return (
             </View>
  
                      </View>
+                     </TouchableWithoutFeedback>
 
 )
 
@@ -219,7 +221,7 @@ const styles= StyleSheet.create({
         },
      
         region : {
-        // height : "30%",
+         height : "30%",
         // marginLeft : "2%",
         // overflow :"hidden",
         justifyContent : "space-around",
@@ -235,7 +237,7 @@ const styles= StyleSheet.create({
         //  marginLeft : "2%",
         // overflow :"hidden",
         justifyContent : "space-around",
-        paddingLeft : "2%",
+        
         },
   /********************************************************************** */
   regionInput :{ 
@@ -244,7 +246,7 @@ const styles= StyleSheet.create({
     paddingLeft : 5 ,
     backgroundColor :"white",
     borderRadius : 10,
-    // height :"70%",
+    height :"60%",
     backgroundColor : "#f0f0f0",
     width : "100%"
     

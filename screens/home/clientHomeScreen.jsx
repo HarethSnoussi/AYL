@@ -197,7 +197,9 @@ if (isLoading) {
           <ScrollView style ={styles.topBarbers} horizontal showsHorizontalScrollIndicator  = {false}>
 
 
-         {allBarbers.slice(0,3).map((barber , index)=>{ return(
+           
+         {allBarbers.slice(0,3).map((barber , index)=> {
+         return(
             <TopBarbersCard 
             key = {index} 
              name = {barber.name}

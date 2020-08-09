@@ -92,7 +92,7 @@ if (isLoading) {
           <Text style = {{fontFamily : "poppins-bold",fontSize : 18}}>Tous les {props.navigation.getParam("type")} </Text>
           <Text style = {{fontFamily : "poppins",color:"#9d9da1"}}>{searchedResult.length} Résultats </Text>
           </View>
-          <FontAwesome5  name="filter" size={24} color="#333"  />
+          {/* <FontAwesome5  name="filter" size={24} color="#333"  /> */}
       </View>
             <ScrollView   showsVerticalScrollIndicator  = {false} style = {{borderWidth : 0.3}}>
           

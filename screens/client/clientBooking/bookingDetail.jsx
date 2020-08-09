@@ -17,8 +17,10 @@ const start= props.navigation.getParam("start");
 const bookingDate = props.navigation.getParam("bookingDate");
 const now  = moment().format().substring(11,16) ;
 const diffrence = parseInt(moment.duration(moment(start,"h:mm:ss a").diff(moment(now,"h:mm:ss a"))).asMinutes());
-const confirmCancel = ( (props.navigation.getParam("status") === "confirmée" && ((diffrence > 30 && moment(bookingDate).format("ll") === moment().format("ll")) || moment(bookingDate).format("ll") !== moment().format("ll"))) || props.navigation.getParam("status") === "en attente")  ;
+// const conditionAnnuler = ( (props.navigation.getParam("status") === "confirmée" && ((diffrence > 30 && moment(bookingDate).format("ll") === moment().format("ll")) || moment(bookingDate).format("ll") !== moment().format("ll"))) || props.navigation.getParam("status") === "en attente")  ;
 // console.log(diffrence);
+
+const conditionAnnuler = ( (props.navigation.getParam("status") === "confirmée" && ((diffrence >= 30 && moment(bookingDate).format("ll") === moment().format("ll")) || moment(bookingDate).format("ll") > moment().format("ll"))) || props.navigation.getParam("status") === "en attente");
 
 
 
@@ -151,7 +153,7 @@ if (isLoading) {
           </View>
 
 
-        {confirmCancel  &&
+        {conditionAnnuler  &&
           <View style = {{alignItems : "center"}} >
           
           <Ionicons name="ios-close-circle-outline" 

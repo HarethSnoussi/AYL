@@ -99,7 +99,7 @@ if(barberReview.length ===0){
       ratingColor = "#FED500"          
       type='custom'
       imageSize = {screen.width * 0.08}
-      startingValue = {mark}
+      startingValue = {2.5}
       
       />
       </View>

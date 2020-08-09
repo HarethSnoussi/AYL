@@ -9,6 +9,7 @@ import InfoOverlay from '../../../components/InfoOverlay';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button , Rating} from 'react-native-elements';
 import { getBarbers } from '../../../store/actions/listActions';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const screen = Dimensions.get("window");
 const BarbersHistory = props =>{
@@ -35,14 +36,14 @@ const dispatch = useDispatch();
   
 
 useEffect(()=>{
- setWilayas(allBarbers.filter(e=>e.region.toUpperCase() === searchState.toUpperCase()));
+ setWilayas(barbersList.filter(e=>e.surname.toUpperCase() === searchState.toUpperCase()));
 
 },[searchState]);
 
 // const barbersByWilayas = allBarbers.filter(e=>e.wilaya.toUpperCase() === searchState.toUpperCase());
 
 
-const searchedResult = searchState === "" ? allBarbers :  wilayas ;
+const searchedResult = searchState === "" ? barbersList :  wilayas ;
 
 useEffect(()=>{ 
   const getHistory = async ()=>{
@@ -100,11 +101,11 @@ if (isLoading) {
     return(
      
       <View style = {styles.container}>
-      
+     
       
   <View style = {{flexDirection :"row",alignItems : "center",width : "95%",justifyContent :"space-around",marginVertical : "2%",alignSelf : "center",}}>
  
-  <Ionicons name="md-arrow-back" size={24} color="black" onPress = {()=>{props.navigation.goBack()}} style={{alignSelf : "center"}} />
+  {/* <Ionicons name="md-arrow-back" size={24} color="black" onPress = {()=>{props.navigation.goBack()}} style={{alignSelf : "center"}} /> */}
         <SearchBar
                 placeholder="Nom du coiffeur"
                 containerStyle = {styles.searchBar}
@@ -123,7 +124,7 @@ if (isLoading) {
          <View>
         
           <Text style = {{fontFamily : "poppins-bold",fontSize : 18}}>Historique des coiffeurs</Text>
-          <Text style = {{fontFamily : "poppins",color:"#9d9da1"}}>{barbersList.length} Résultats </Text>
+          <Text style = {{fontFamily : "poppins",color:"#9d9da1"}}>{searchedResult.length} Résultats </Text>
           </View>
         
       </View>
@@ -131,7 +132,7 @@ if (isLoading) {
           
 
           {
-            barbersList.map((barber,index)=> {
+            searchedResult.map((barber,index)=> {
               
               return (
               <ReviewCard 
@@ -193,7 +194,8 @@ const styles= StyleSheet.create({
       // marginTop : "2%",
       borderTopWidth : 0 , 
       borderBottomWidth : 0 ,
-      alignSelf : "center"
+      alignSelf : "center",
+      marginTop : "2%"
       },
       firstImage : {
         width : screen.width,

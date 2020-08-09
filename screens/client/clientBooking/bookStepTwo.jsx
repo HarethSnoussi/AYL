@@ -259,8 +259,9 @@ else{
 
     }
     setAvailableSlots([...todaysSlots]);
-    if(todaysSlots.length > 0 ){
-    setPickedSlot(todaysSlots[0].time);}
+//     if(todaysSlots.length > 0 ){
+//     setPickedSlot(todaysSlots[0].time);
+// }
 
 // setLoading(false);
 
