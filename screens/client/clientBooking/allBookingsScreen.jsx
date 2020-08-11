@@ -200,7 +200,7 @@ if (isLoading) {
 
       
 
-        <View  >
+        <View style={{}}  >
 
             <Calendar
             style = {{borderBottomLeftRadius : 25,borderBottomRightRadius : 25,overflow : "hidden",paddingVertical : "2%" , marginBottom : 15}}
@@ -222,6 +222,7 @@ if (isLoading) {
             textDayFontFamily: 'poppins',
             textMonthFontFamily: 'poppins',
             textDayHeaderFontFamily: 'poppins',
+            
             }}
            
              markedDates = {mark}
@@ -230,7 +231,7 @@ if (isLoading) {
 
         </View>
             <View style = {{width  : "90%",alignSelf : "center"}}>
-            <Text style = {{fontSize : 17 , fontFamily : "poppins-bold"}}>{selectedDateText}</Text>
+            <Text style = {{fontSize : screen.width/24 , fontFamily : "poppins-bold"}}>{selectedDateText}</Text>
 
             </View>
                 <ScrollView style = {styles.cardsContainer}>

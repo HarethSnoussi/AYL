@@ -22,7 +22,7 @@ const ReviewCard = props =>{
     adressStyle = styles.adressBig;
   }
   const [visible, setVisible] = useState(false);
-  const [mark , setMark] =useState(0);
+  const [mark , setMark] =useState(2.5);
   const [comment,setComment] = useState("");
 
 const dispatch = useDispatch();
@@ -50,7 +50,7 @@ const closeOverlay = () =>{
 
 setVisible(false);
 setComment("");
-setMark(0);
+setMark(2.5);
 
 }
 
@@ -74,7 +74,6 @@ if(barberReview.length ===0){
 
 
 };
-
     return(
        
         <View style = {styles.cardContainer}>
@@ -86,7 +85,7 @@ if(barberReview.length ===0){
       <View style = {{flex : 1}}>
    
      <View style = {styles.overlayText}>
-            <Text style ={{fontFamily : "poppins-bold",fontSize :16,color : "#525252"}}> Ecrire un commentaire</Text>
+            <Text style ={{fontFamily : "poppins-bold",fontSize : screen.width/26,color : "#525252"}}> Ecrire un commentaire</Text>
 
      </View>
      <KeyboardAvoidingView behavior = "padding" style = {{height : "65%"}}   keyboardVerticalOffset={5}>
@@ -99,12 +98,12 @@ if(barberReview.length ===0){
       ratingColor = "#FED500"          
       type='custom'
       imageSize = {screen.width * 0.08}
-      startingValue = {2.5}
+      startingValue = {mark}
       
       />
       </View>
     <View style = {{paddingTop : 5}}>
-     <Text style = {{fontFamily : "poppins-bold",fontSize:18,color : "#FED500"}}>{mark}/5</Text>
+     <Text style = {{fontFamily : "poppins-bold",fontSize : screen.width/24,color : "#FED500"}}>{mark}/5</Text>
      </View>
 
      </View>
@@ -129,8 +128,8 @@ if(barberReview.length ===0){
      </KeyboardAvoidingView>
      <Button 
                    containerStyle = {{ height : "15%",width : "80%",alignSelf:"center" ,justifyContent : "center" }} 
-                   title = "Confirmer" 
-                   titleStyle = {{fontFamily : "poppins-bold"}}
+                   title = "Envoyer" 
+                   titleStyle = {{fontFamily : "poppins-bold",fontSize : screen.width/26}}
                    buttonStyle = {{borderRadius : 55}} 
                    ViewComponent={LinearGradient} 
                    linearGradientProps={{
@@ -155,14 +154,14 @@ if(barberReview.length ===0){
 
         <View>
               <View style= {styles.name}>
-                <Text style = {{fontFamily : "poppins-bold"}} >{props.name + " " + props.surname}</Text>
+                <Text style = {{fontFamily : "poppins-bold", fontSize : screen.width/26}} >{props.name + " " + props.surname}</Text>
                 <View style = {{flexDirection : "row"}}>
              
                 <EvilIcons name="pencil" size={24} color="#9d9da1" onPress = {toggleOverlay} />
-                <Text style = {{fontFamily : "poppins", color : "#9d9da1"}}>Avis</Text>
+                <Text style = {{fontFamily : "poppins", color : "#9d9da1",fontSize : screen.width/30}}>Avis</Text>
                 </View>
               </View>
-              <Text style = {{fontFamily : "poppins", color : "#9d9da1"}} >
+              <Text style = {{fontFamily : "poppins", color : "#9d9da1",fontSize : screen.width/30}} >
               {props.region + "-" + props.wilaya}
               </Text>
        </View>
@@ -184,14 +183,14 @@ if(barberReview.length ===0){
                   />
                     <Text>3.2</Text>
                   </View>
-              <Text style ={{color : "#fd6c57",fontFamily : "poppins-bold",letterSpacing : 1}}>Voir le profil </Text>
+              <Text style ={{color : "#fd6c57",fontFamily : "poppins-bold",letterSpacing : 1,fontSize : screen.width/30}}>Voir le profil </Text>
                
                 </View>
                
                 <Button  
                 title ="Réserver" 
                 buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : 25,paddingHorizontal : "5%"}}
-                titleStyle = {{color :"#fff",fontSize : 13}}
+                titleStyle = {{color :"#fff",fontSize : screen.width/30}}
                 onPress = {props.navigate}
                 />
               

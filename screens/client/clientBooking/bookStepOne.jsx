@@ -65,12 +65,11 @@ useEffect(()=>{
     try {
         setLoading(true);
 
-        const arr = await fetch(`http://192.168.1.6:3000/barber/hours/${props.navigation.getParam("barberId")}`);
+        const arr = await fetch(`http://173.212.234.137:3000/barber/hours/${props.navigation.getParam("barberId")}`);
         const resData = await arr.json ();
+        console.log(resData);
         setData([...resData]);
         setLoading(false);
-
-    
         }
     
     catch (error) {
@@ -80,7 +79,7 @@ useEffect(()=>{
     try {
         setLoading(true);
        
-        const arr = await fetch(`http://192.168.1.6:3000/bookings/barberBookings/${props.navigation.getParam("barberId")}`);
+        const arr = await fetch(`http://173.212.234.137:3000/bookings/barberBookings/${props.navigation.getParam("barberId")}`);
          const resData = await arr.json ();
      
         setBookings([...resData]);
@@ -90,6 +89,8 @@ useEffect(()=>{
     
     catch (error) {
         console.log("There is an Error");
+        throw error;
+
     }
 
 
@@ -260,7 +261,7 @@ return (
                         <Button 
                         onPress = {()=>setServicesHandler({id : 0 ,name : " " , price : 0 , duration : 0})} title = "Ajouter un Service"
                         containerStyle = {{width : "40%",alignSelf : "center",marginVertical : "5%" , }}
-                        titleStyle  = {{fontSize : 14,fontFamily : "poppins",color : "#fff"}}
+                        titleStyle  = {{fontSize : screen.width/30,fontFamily : "poppins",color : "#fff"}}
                         type="outline" 
                         buttonStyle = {{backgroundColor : "#fd6c57",borderColor :"#fd6c57"}}
                         />
@@ -277,7 +278,7 @@ return (
                       <Button 
                    containerStyle = {{ height : "15%",width : "80%",alignSelf:"center" ,justifyContent : "center"  }} 
                    title = "Continuer" 
-                   titleStyle = {{fontFamily : "poppins-bold"}}
+                   titleStyle = {{fontFamily : "poppins-bold",fontSize : screen.width/28}}
                    buttonStyle = {{borderRadius : 55}} 
                    ViewComponent={LinearGradient} 
                    linearGradientProps={{
@@ -364,13 +365,13 @@ const styles= StyleSheet.create({
     },
     totalText : {
     fontFamily : "poppins-bold",
-    fontSize : 16,
+    fontSize : screen.width/26,
     
 
     },
     totalNumber : {
         fontFamily : "poppins-bold",
-        fontSize : 15,
+        fontSize : screen.width/26,
         color : "#fd6c57"
     },
     ////////////////////////////////////////////////////////////////////////////////

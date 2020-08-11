@@ -183,31 +183,35 @@ detailButton2 : {
 //TEXT STYLING //
 dateText :{
   color : "#fff",
-  fontFamily : "poppins-bold"
+  fontFamily : "poppins-bold",
+  fontSize : screen.width/28
 },
 priceText : {
   fontFamily : "poppins-bold",
   color :Colors.primary,
-  fontSize : 16
+  fontSize : screen.width/28
 },
 slotText : {
 fontFamily : "poppins",
-color:"#252525"
+color:"#252525",
+fontSize : screen.width/28
 },
 servicesText : {
   fontFamily : "poppins",
-  color:"#252525"
+  color:"#252525",
+  fontSize : screen.width/28
 },
 status :{
     
 fontFamily : "poppins",
-color:"#252525"
+color:"#252525",
+fontSize : screen.width/28
  
 },
 statusType : {
   // color : Colors.primary,
   fontFamily : "poppins-bold",
-
+  fontSize : screen.width/28
 }
 
 });

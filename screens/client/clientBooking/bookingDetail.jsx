@@ -91,7 +91,7 @@ useEffect(()=>{
     try {
   setLoading(true);
     
-      const arr = await fetch(`http://192.168.1.6:3000/barber/barberinfos/${props.navigation.getParam("barberId")}`);
+      const arr = await fetch(`http://173.212.234.137:3000/barber/barberinfos/${props.navigation.getParam("barberId")}`);
       const resData = await arr.json ();
       setBarberInfos(...resData);
       setLoading(false);
@@ -273,29 +273,34 @@ review :
 
 //TExt Styling //
 actionsText : {
-    fontFamily : "poppins"
+    fontFamily : "poppins",
+    fontSize : screen.width /30
 },
 barberText : {
     fontFamily : "poppins",
-    marginLeft : 5
+    marginLeft : 5,
+    fontSize : screen.width /28
 
 },
 barberTitle : {
     alignSelf : "center",
     fontFamily : "poppins-bold",
-    color : Colors.primary
+    color : Colors.primary,
+    fontSize : screen.width /28
 },
 serviceText :{
     fontFamily : "poppins",
     marginLeft : 5,
-    marginBottom : 5
+    marginBottom : 5,
+    fontSize : screen.width /28
 
 },
 servicesTitle : {
     alignSelf : "center",
     fontFamily : "poppins-bold",
     marginBottom : 10 ,
-    color : Colors.primary
+    color : Colors.primary,
+    fontSize : screen.width /28
 
 },
 //////////////////////////////////////////////////////

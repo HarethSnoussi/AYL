@@ -13,11 +13,11 @@ const BarberCard = props =>{
   let titleStyle = styles.title;
   let adressStyle = styles.adress;
 
-  if(screen.width > 500 ) {
-    cardContainerStyle = styles.cardContainerBig;
-    titleStyle = styles.titleBig;
-    adressStyle = styles.adressBig;
-  }
+  // if(screen.width > 500 ) {
+  //   cardContainerStyle = styles.cardContainerBig;
+  //   titleStyle = styles.titleBig;
+  //   adressStyle = styles.adressBig;
+  // }
   
 
     return(
@@ -32,14 +32,14 @@ const BarberCard = props =>{
 
         <View>
               <View style= {styles.name}>
-                <Text style = {{fontFamily : "poppins-bold"}} >{props.name + " " + props.surname}</Text>
+                <Text style = {{fontFamily : "poppins-bold",fontSize : screen.width/26}} >{props.name + " " + props.surname}</Text>
                 {/* <View style = {{flexDirection : "row"}}>
              
                 <EvilIcons name="location" size={24} color="#9d9da1" />
                 <Text style = {{fontFamily : "poppins", color : "#9d9da1"}}>3.5 km</Text>
                 </View> */}
               </View>
-              <Text style = {{fontFamily : "poppins", color : "#9d9da1"}} >
+              <Text style = {{fontFamily : "poppins", color : "#9d9da1",fontSize : screen.width/28}} >
               {props.region + "-" + props.wilaya}
               </Text>
        </View>
@@ -58,16 +58,16 @@ const BarberCard = props =>{
                 type='custom'
                 readonly = {true}
                   />
-                    <Text>3.2</Text>
+                    <Text style={{fontFamily : "poppins",fontSize : screen.width/30}}>3.2</Text>
                   </View>
-              <Text style ={{color : "#fd6c57",fontFamily : "poppins-bold",letterSpacing : 1}}>Voir le profil </Text>
+              <Text style ={{color : "#fd6c57",fontFamily : "poppins-bold",letterSpacing : 1,fontSize : screen.width/30}}>Voir le profil </Text>
                
                 </View>
                
                 <Button  
                 title ="Réserver" 
                 buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : 25,paddingHorizontal : "5%"}}
-                titleStyle = {{color :"#fff",fontSize : 13}}
+                titleStyle = {{color :"#fff",fontSize :screen.width/30}}
                 onPress = {props.navigate}
                 />
               
@@ -113,7 +113,7 @@ cardContainer : {
   height : screen.height * 0.18,
   flexDirection : "row",
   justifyContent : "space-around",
-  borderBottomWidth : 0.3,
+  borderBottomWidth : 0.4,
   overflow : "hidden",
   alignSelf : "flex-end",
     

@@ -9,7 +9,7 @@ export const EXPIRED_BOOKING = "EXPIRED_BOOKING";
 export const addBooking = (booking) => {
   
     return async dispatch => {
-        const response =  await fetch('http://192.168.1.6:3000/clientbookings/addbooking',
+        const response =  await fetch('http://173.212.234.137:3000/clientbookings/addbooking',
         {
          method : "POST",
          headers: {
@@ -47,7 +47,7 @@ export const getClientBookings = (clienId)=>{
   return async (dispatch) =>{
       try {
      
-      const arr = await fetch(`http://192.168.1.6:3000/client/bookings/${clienId}`);
+      const arr = await fetch(`http://173.212.234.137:3000/client/bookings/${clienId}`);
       const resData = await arr.json ();
       
 const bookingsIds = [];
@@ -112,7 +112,7 @@ let same = resData.filter(e=>e.id === id);
 //   return async (dispatch) =>{
 //       try {
 //           const response = await fetch(
-//               `http://192.168.1.6:3000/bookings/cancelbooking`,
+//               `http://173.212.234.137:3000/bookings/cancelbooking`,
 //               {
 //                 method: 'PATCH',
 //                 headers: {
@@ -150,7 +150,7 @@ export const cancelBooking = (id)=> {
     return async (dispatch) =>{
         try {
             const response = await fetch(
-                `http://192.168.1.6:3000/bookings/cancelbooking`,
+                `http://173.212.234.137:3000/bookings/cancelbooking`,
                 {
                   method: 'PATCH',
                   headers: {
@@ -190,7 +190,7 @@ try {
  
 
   const response = await fetch(
-      `http://192.168.1.6:3000/bookings/expiredbookings`,
+      `http://173.212.234.137:3000/bookings/expiredbookings`,
       {
         method: 'PATCH',
         headers: {

@@ -101,7 +101,6 @@ const services = props.navigation.getParam("services").filter(service => service
 const totalTime = props.navigation.getParam("duration");
 const workingTime = props.navigation.getParam("workingTime");
 const allBookings = props.navigation.getParam("bookings");
-
 let duration = Math.ceil(totalTime/15)  ; 
 if(duration === 1 ) {
     duration = 0;
@@ -175,9 +174,13 @@ setPickedSlot(0);
 setButtonIndex(-1);
 //Display only Working Time
 let todaysSlots = [];
-const days = workingTime.map(e=>e.day);
-const day = moment(pickedDate).format('dddd').substring(0, 3) ;
+const days = workingTime.map(e=>e.day.toUpperCase
+    ());
+const day = moment(pickedDate).format('ddd').substring(0,3).toUpperCase
+();
 const nowHour = (new Date().getHours()+2).toString()+":00" ;
+
+
 // const end = moment.utc("2020-05-01T"+nowHour).add(60,"m").format("HH:mm"); 
 //  console.log(end)
  
@@ -312,12 +315,12 @@ return (
 
                 <View style = {styles.bookingInfoContainer}>
                     <View style = {styles.selectDate}>
-                       <Text style = {{fontSize : 16,fontFamily : "poppins-bold"}}>Selectionner une date</Text>
+                       <Text style = {{fontSize : screen.width/26,fontFamily : "poppins-bold"}}>Selectionner une date</Text>
                        <TouchableOpacity style = {styles.datePicker}
                        onPress = {()=>setDatePickerVisibility(true)}
                        >
                         <Text 
-                        style = {{fontSize : 16,fontFamily : "poppins"}} >{pickedDateText}
+                        style = {{fontSize : screen.width/26,fontFamily : "poppins"}} >{pickedDateText}
                         </Text>
 
                         <FontAwesome  name="calendar" size={24} color="black" />
@@ -341,7 +344,7 @@ return (
                     availableSlots.length > 0 ?
 
                 <View style = {styles.selectSlot}>
-                <Text style = {{fontSize : 16,fontFamily : "poppins-bold"}}>Selectionner un créneau</Text>
+                <Text style = {{fontSize : screen.width/26,fontFamily : "poppins-bold"}}>Selectionner un créneau</Text>
                      
                      <FlatList
                     data={availableSlots}
@@ -364,7 +367,7 @@ return (
                     </View>
                    :
                    <View style ={{alignSelf : "center", height : "50%",justifyContent : "center"}}>
-                   <Text style ={{fontFamily : "poppins-bold",fontSize : 16,color : Colors.primary}}>
+                   <Text style ={{fontFamily : "poppins-bold",fontSize : screen.width/26,color : Colors.primary}}>
                    Aucun creneau disponible ce jour la !
                    </Text>
                    </View>

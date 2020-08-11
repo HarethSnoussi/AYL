@@ -51,14 +51,16 @@ useEffect(()=>{
     try {
         setLoading(true);
 
-        const arr = await fetch(`http://192.168.1.6:3000/client/barbers/${clientID}`);
+        const arr = await fetch(`http://173.212.234.137:3000/client/barbers/${clientID}`);
         const resData = await arr.json ();
+      
         setBarbersIds([...resData]);
         setLoading(false);
         }
     
     catch (error) {
         console.log("There is an Error");
+        throw error;
     }
 
 }; 
@@ -123,8 +125,8 @@ if (isLoading) {
       
          <View>
         
-          <Text style = {{fontFamily : "poppins-bold",fontSize : 18}}>Historique des coiffeurs</Text>
-          <Text style = {{fontFamily : "poppins",color:"#9d9da1"}}>{searchedResult.length} Résultats </Text>
+          <Text style = {{fontFamily : "poppins-bold",fontSize : screen.width/24}}>Historique des coiffeurs</Text>
+          <Text style = {{fontFamily : "poppins",color:"#9d9da1",fontSize : screen.width/30}}>{searchedResult.length} Résultats </Text>
           </View>
         
       </View>

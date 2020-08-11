@@ -164,8 +164,8 @@ if (isLoading) {
            :
 
            <View style = {styles.unAvailable}>  
-           
-           <Text style = {{fontFamily : "poppins"}}>
+ 
+           <Text style = {{fontFamily : "poppins",fontSize :screen.width/28 }}>
               Aucun Salons Disponible  ! 
 
            </Text>
@@ -305,18 +305,19 @@ topBarbers : {
  
 },
 bestText :{
-  fontSize : 18,
+  fontSize : screen.width/24,
   fontFamily : "poppins-bold"
 
 },
 showAll : {
   fontFamily : "poppins",
-  color : "#9d9da1"
+  color : "#9d9da1",
+  fontSize :screen.width/30
 
 },
 titleText : {
     fontFamily :"poppins-bold",
-    fontSize : 20,
+    fontSize :screen.width/24,
     color : "#FFF"
 
 },

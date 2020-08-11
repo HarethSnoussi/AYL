@@ -12,7 +12,7 @@ import { getBarbers } from '../../../store/actions/listActions';
 
 const screen = Dimensions.get("window");
 const AllBarbersScreen = props =>{
-
+const width = screen.width ;
 
 const clientID =   props.navigation.getParam("clientID");
 
@@ -71,7 +71,7 @@ if (isLoading) {
       
   <View style = {{flexDirection :"row",alignItems : "center",width : "95%",justifyContent :"space-around",marginVertical : "2%",alignSelf : "center",}}>
  
-  <Ionicons name="md-arrow-back" size={24} color="black" onPress = {()=>{props.navigation.goBack()}} style={{alignSelf : "center"}} />
+  <Ionicons name="md-arrow-back" size={20} color="black" onPress = {()=>{props.navigation.goBack()}} style={{alignSelf : "center"}} />
         <SearchBar
                 placeholder="Région"
                 containerStyle = {styles.searchBar}
@@ -89,8 +89,8 @@ if (isLoading) {
       
          <View>
         
-          <Text style = {{fontFamily : "poppins-bold",fontSize : 18}}>Tous les {props.navigation.getParam("type")} </Text>
-          <Text style = {{fontFamily : "poppins",color:"#9d9da1"}}>{searchedResult.length} Résultats </Text>
+          <Text style = {{fontFamily : "poppins-bold",fontSize : width/24}}>Tous les {props.navigation.getParam("type")} </Text>
+          <Text style = {{fontFamily : "poppins",color:"#9d9da1",fontSize : width/30}}>{searchedResult.length} Résultats </Text>
           </View>
           {/* <FontAwesome5  name="filter" size={24} color="#333"  /> */}
       </View>

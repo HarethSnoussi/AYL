@@ -1,12 +1,15 @@
 import React from 'react';
 import { Overlay, colors } from 'react-native-elements';
-import { Text, View, Button,StyleSheet } from 'react-native';
+import { Text, View, Button,StyleSheet, Dimensions } from 'react-native';
 
 import {Ionicons} from "@expo/vector-icons";
 import { useDispatch, useSelector } from 'react-redux';
 import {addBooking} from "../store/actions/bookingsActions";
 import moment from 'moment';
 import Colors from '../constants/Colors';
+
+const screen = Dimensions.get("window");
+
 const ConfimBookingOverlay = (props)=>{
 
 const dispatch = useDispatch(); 
@@ -54,7 +57,7 @@ const services = props.services.map(e=>e.name);
 
 <View style = {styles.textsContainer}>
     <View style={styles.title}>
-    <Text style={{fontFamily : "poppins-bold",color :Colors.primary}}>Votre réservation :
+    <Text style={{fontFamily : "poppins-bold",color :Colors.primary,fontSize : screen.width /28}}>Votre réservation :
     </Text>
     </View>
     <View style = {{justifyContent : "space-around" , height :"90%" }}> 
@@ -146,7 +149,9 @@ const styles= StyleSheet.create({
    },
   text :{
     // marginBottom : 3,
-    fontFamily : "poppins"
+    fontFamily : "poppins",
+ fontSize : screen.width / 30
+
   },
   confirm:{
     alignItems :"center",

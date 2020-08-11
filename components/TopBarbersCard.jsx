@@ -36,7 +36,7 @@ const TopBarbersCard = (props)=> {
             <Button 
               buttonStyle ={styles.button}
               title = "Profile" 
-              titleStyle = {{color :"#fff",fontSize : 13}}
+              titleStyle = {{color :"#fff",fontSize : screen.width/30}}
              
               />
 
@@ -98,13 +98,16 @@ const styles= StyleSheet.create({
  info : {
         fontFamily : "poppins",
         color : "#9d9da1",
-    alignSelf : "center"
+    alignSelf : "center",
+    fontSize : screen.width/30
+
 
  },
  name : {
     fontFamily : "poppins-bold",
     color : "#000",
-    alignSelf : "center"
+    alignSelf : "center",
+    fontSize : screen.width/24
  },
  button : {
    backgroundColor : "#fd6c57",

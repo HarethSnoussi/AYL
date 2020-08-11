@@ -10,7 +10,7 @@ export const getReviews = (clientId)=>{
     return async (dispatch) =>{
         try {
 
-            const arr = await fetch(`http://192.168.1.6:3000/client/barbersfeedbacks/${clientId}`);
+            const arr = await fetch(`http://173.212.234.137:3000/client/barbersfeedbacks/${clientId}`);
             const resData = await arr.json ();
 
             dispatch({type : GET_REVIEWS , reviews : resData});
@@ -36,7 +36,7 @@ export const getReviews = (clientId)=>{
             return async (dispatch) =>{
                 try {
         
-                    const response = await fetch(`http://192.168.1.6:3000/client/updatefeedback`,
+                    const response = await fetch(`http://173.212.234.137:3000/client/updatefeedback`,
                     {
                         method: 'PATCH',
                         headers: {
@@ -75,7 +75,7 @@ export const getReviews = (clientId)=>{
                 try {
                    
 
-                    const response = await fetch(`http://192.168.1.6:3000/client/addreview`,
+                    const response = await fetch(`http://173.212.234.137:3000/client/addreview`,
                      {
                         method : "POST",
                         headers: {

@@ -9,7 +9,7 @@ export const getBarbers = ()=>{
     return async (dispatch) =>{
         try {
 
-            const arr = await fetch(`http://192.168.1.6:3000/barbers/allbarbers`);
+            const arr = await fetch(`http://173.212.234.137:3000/barbers/allbarbers`);
             const resData = await arr.json ();
 
 

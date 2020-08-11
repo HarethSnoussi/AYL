@@ -75,7 +75,7 @@ return (
                 <KeyboardAvoidingView keyboardVerticalOffset={10}>
                
                     <View style = {styles.title}>
-                        <Text style = {{fontFamily : "poppins-bold",fontSize : 16}}>
+                        <Text style = {{fontFamily : "poppins-bold",fontSize : screen.width/26}}>
                         Adresse de la réservation
                         </Text>
 
@@ -141,7 +141,7 @@ return (
                     <Button 
                    containerStyle = {{ height : "15%",width : "80%",alignSelf:"center" ,justifyContent : "center" }} 
                    title = "Réserver" 
-                   titleStyle = {{fontFamily : "poppins-bold"}}
+                   titleStyle = {{fontFamily : "poppins-bold",fontSize : screen.width/26}}
                    buttonStyle = {{borderRadius : 55}} 
                    ViewComponent={LinearGradient} 
                    linearGradientProps={{
@@ -198,7 +198,7 @@ const styles= StyleSheet.create({
   /********************************************************************** */ 
    title : {
     alignSelf : "center",
-    marginTop : "2%"
+    marginTop : "3%"
    },
    inputsContainer:{
    height : "60%",
@@ -271,9 +271,8 @@ const styles= StyleSheet.create({
 },
 
 label : {
-fontFamily : "poppins"
-
-
+fontFamily : "poppins",
+fontSize : screen.width /30
 },
   centered: {
     flex: 1,
