@@ -67,13 +67,14 @@ useEffect(()=>{
 
         const arr = await fetch(`http://173.212.234.137:3000/barber/hours/${props.navigation.getParam("barberId")}`);
         const resData = await arr.json ();
-        console.log(resData);
+       
         setData([...resData]);
         setLoading(false);
         }
     
     catch (error) {
         console.log("There is an Error");
+        throw error;
     }
 
     try {

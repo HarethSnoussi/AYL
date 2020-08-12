@@ -18,6 +18,7 @@ export const getServices = (barberId)=>{
         
         catch (error) {
             console.log("There is an Error");
+            throw error;
         }
 
                 

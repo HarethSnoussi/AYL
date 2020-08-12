@@ -1,4 +1,6 @@
 import moment from "moment";
+import React, { useState } from "react";
+import { View, StyleSheet, Button, Alert } from "react-native";
 
 export const ADD_BOOKING = "ADD_BOOKING"; 
 export const GET_BOOKING = "GET_BOOKING"; 
@@ -33,7 +35,8 @@ export const addBooking = (booking) => {
           start : booking.start,
           status : booking.status
       }
-        dispatch( {type : ADD_BOOKING , booking : myBooking});
+       dispatch( {type : ADD_BOOKING , booking : myBooking});
+   
     };
 
 
@@ -166,6 +169,10 @@ export const cancelBooking = (id)=> {
                 throw new Error('Something went wrong!');
               }
   
+             
+           
+
+     
 
     } catch (error) {
       throw error ;

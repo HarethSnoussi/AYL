@@ -1,6 +1,6 @@
 import React from 'react';
 import { Overlay, colors } from 'react-native-elements';
-import { Text, View, Button,StyleSheet, Dimensions } from 'react-native';
+import { Text, View, Button,StyleSheet, Dimensions,Alert } from 'react-native';
 
 import {Ionicons} from "@expo/vector-icons";
 import { useDispatch, useSelector } from 'react-redux';
@@ -41,7 +41,15 @@ const date = new Date();
 }
  props.overlayHandler();
  await dispatch(addBooking(booking));
- props.navigate();
+ await props.navigate();
+ Alert.alert(
+  "Réservation envoyée",
+  "Réservation envoyée avec succés",
+  [
+    { text: "OK", onPress: () =>{} }
+  ],
+  { cancelable: false }
+);
 
 };
 

@@ -60,7 +60,15 @@ Alert.alert(
       setLoading(true);
           await dispatch(cancelBooking(props.navigation.getParam("id")));
 
-           props.navigation.navigate("Client");
+          await props.navigation.navigate("Client");
+          Alert.alert(
+            "Réservation annulée",
+            "Réservation annulée avec succés",
+            [
+              { text: "OK", onPress: () =>{} }
+            ],
+            { cancelable: false }
+          );
       setLoading(false);
 
 
@@ -100,6 +108,7 @@ useEffect(()=>{
   
   catch (error) {
       console.log("There is an Error");
+      throw error;
   }
   
 

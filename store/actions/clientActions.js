@@ -28,6 +28,7 @@ export const createClient=(id,phone,password,sex,name,surname,wilaya,region)=>{
             dispatch({type:CREATE_CLIENT,clientData});
         }catch(err){
             console.log(err);
+            throw err;
         } 
 
     }
@@ -51,6 +52,7 @@ export const setClients= ()=>{
            
       }catch(err){
           console.log(err);
+          throw err;
       }
 
     };
@@ -71,6 +73,7 @@ export const setClient= id => {
       
        }catch(err){
            console.log(err);
+           throw err;
        }
 
     };
@@ -97,6 +100,7 @@ export const updateClientPassword= (id,password) => {
           
          }catch(err){
              console.log(err);
+             throw err;
          }
     };
 
@@ -122,6 +126,7 @@ export const updateClientPhone= (id,phone,clientid) => {
            
          }catch(err){
              console.log(err);
+             throw err;
          }
     };
 
@@ -148,6 +153,7 @@ export const updateClient= (id,name,surname,email,address,image,wilaya,region) =
            
          }catch(err){
              console.log(err);
+             throw err;
          }
     };
 
@@ -169,6 +175,7 @@ export const deleteClient = id => {
             
           }catch(err){
               console.log(err);
+              throw err;
           }
  
     };

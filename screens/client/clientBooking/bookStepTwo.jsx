@@ -187,10 +187,10 @@ const nowHour = (new Date().getHours()+2).toString()+":00" ;
 
 if(days.indexOf(day) >= 0)
 {
-    
+   
     todaysSlots = hours.slice(hoursTime.indexOf(workingTime[days.indexOf(day)].start) , hoursTime.indexOf(workingTime[days.indexOf(day)].end) );
     // setAvailableSlots([...todaysSlots]);
-
+  
     // if(pickedDate.toDateString() === new Date().toDateString()){
     //     todaysSlots = hours.slice(hoursTime.indexOf(nowHour), hoursTime.indexOf(workingTime[days.indexOf(day)].end) );  
 
@@ -216,7 +216,6 @@ filteredBookings.map(booking=>{
     if(bookingDuration === 1 ) {
         bookingDuration = 0;
     }
-
 if(todaysSlotsTime.indexOf(booking.start) === 0)
 {
     bookingHours = todaysSlotsTime.slice(0,todaysSlotsTime.indexOf(booking.start)+bookingDuration+2);
@@ -229,10 +228,11 @@ else if (todaysSlotsTime.indexOf(booking.start) === 1) {
 }
 else 
 {
-    bookingHours = todaysSlotsTime.slice(Math.max(0,todaysSlotsTime.indexOf(booking.start)-(2+duration)),todaysSlotsTime.indexOf(booking.start)+bookingDuration+2) ;
-  
-}
+    bookingHours = todaysSlotsTime.slice(Math.max(0,todaysSlotsTime.indexOf(booking.start)-(1+duration)),todaysSlotsTime.indexOf(booking.start)+bookingDuration+2) ;
 
+
+
+}
 
 
  slots = slots.filter(hour => {
