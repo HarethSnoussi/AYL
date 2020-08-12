@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View,ActivityIndicator, Alert,ScrollView, Dimensions} from 'react-native';
+import { StyleSheet, Text, View,ActivityIndicator, Alert,ScrollView, Dimensions,ImageBackground} from 'react-native';
 
 import moment from 'moment';
 import Colors from "../../../constants/Colors";
@@ -124,10 +124,10 @@ useEffect(()=>{
 
 if (isLoading) {
   return (
-    <View style= {styles.centered}>
+    <ImageBackground style= {styles.centered} source={require('../../../assets/images/support.png')}>
       <ActivityIndicator size="large" color= {Colors.primary} />
     
-    </View>
+    </ImageBackground>
   );
 }
 
@@ -314,9 +314,12 @@ servicesTitle : {
 },
 //////////////////////////////////////////////////////
 centered: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+  flex:1,
+  alignItems:'center',
+  justifyContent:'center',
+  width:'100%',
+  height:'100%',
+  resizeMode:'cover'
   }
 });
 

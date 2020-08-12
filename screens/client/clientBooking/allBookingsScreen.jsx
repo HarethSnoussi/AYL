@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { StyleSheet, Text, View,ActivityIndicator, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, Text, View,ActivityIndicator, Dimensions, ScrollView,ImageBackground } from 'react-native';
 
 import { Avatar ,Badge } from 'react-native-elements';
 import Colors from "../../../constants/Colors";
@@ -186,10 +186,10 @@ useEffect(()=>{
 //IF IS LOADING
 if (isLoading) {
     return (
-      <View style= {styles.centered}>
+      <ImageBackground style= {styles.centered} source={require('../../../assets/images/support.png')}>
         <ActivityIndicator size="large" color= {Colors.primary} />
 
-      </View>
+      </ImageBackground>
     );
 }
 
@@ -298,9 +298,12 @@ const styles= StyleSheet.create({
    },
    //////////////////////////////////////////////////////
    centered: {
-       flex: 1,
-       justifyContent: 'center',
-       alignItems: 'center'
+    flex:1,
+    alignItems:'center',
+    justifyContent:'center',
+    width:'100%',
+    height:'100%',
+    resizeMode:'cover'
      }
    
   });
