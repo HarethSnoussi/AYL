@@ -58,9 +58,9 @@ const searchedResult = searchState === "" ? allBarbers :  wilayas ;
 if (isLoading) {
     
   return (
-    <View style= {styles.centered}>
+    <ImageBackground style= {styles.centered} source={require('../../../assets/images/support.png')}>
       <ActivityIndicator size="large" color= {Colors.primary} />
-    </View>
+    </ImageBackground>
   );
 }
 
@@ -230,6 +230,14 @@ backgroundColor : "red",
 alignSelf : "flex-start",
 marginRight : 7
 
+},
+centered: {
+  flex:1,
+   alignItems:'center',
+   justifyContent:'center',
+   width:'100%',
+   height:'100%',
+   resizeMode:'cover'
 }
 
     

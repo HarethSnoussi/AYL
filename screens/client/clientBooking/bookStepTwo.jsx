@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { StyleSheet, Text, View , Picker,Image, Dimensions , StatusBar, Platform,ActionSheetIOS, ActivityIndicator , FlatList, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View , ImageBackground,Image, Dimensions , StatusBar, Platform,ActionSheetIOS, ActivityIndicator , FlatList, TouchableOpacity} from 'react-native';
 import { Button ,ButtonGroup} from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -283,10 +283,10 @@ manager();
  if (isLoading) {
     
     return (
-      <View style= {styles.centered}>
+      <ImageBackground style= {styles.centered} source={require('../../../assets/images/support.png')}>
         <ActivityIndicator size="large" color= {Colors.primary} />
       
-      </View>
+      </ImageBackground>
     );
 }
 
@@ -489,9 +489,12 @@ const styles= StyleSheet.create({
 },
 //////////////////////////////////////////////////////
 centered: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    flex:1,
+    alignItems:'center',
+    justifyContent:'center',
+    width:'100%',
+    height:'100%',
+    resizeMode:'cover'
   }
  
     });

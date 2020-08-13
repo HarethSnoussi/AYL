@@ -96,11 +96,11 @@ if (isLoading) {
     
   return (
 
-    <View style= {styles.centered}>
+    <ImageBackground style= {styles.centered} source={require('../../assets/images/support.png')}>
 
       <ActivityIndicator size="large" color= {Colors.primary} />
 
-    </View>
+    </ImageBackground>
 
   );
 }
@@ -122,7 +122,7 @@ if (isLoading) {
         }}
         lightTheme = {true} /> */}
             <View style = {styles.firstTitle}>  
-            <Text style = {styles.titleText}>Trouver Votre Coiffeur</Text>
+            <Text style = {styles.titleText}>Cherchez Votre Coiffeur</Text>
             </View>
        
             </ImageBackground>
@@ -165,8 +165,8 @@ if (isLoading) {
 
            <View style = {styles.unAvailable}>  
  
-           <Text style = {{fontFamily : "poppins",fontSize :screen.width/28 }}>
-              Aucun Salons Disponible  ! 
+           <Text style = {{fontFamily : "poppins",fontSize :screen.width/28,color:Colors.blue }}>
+              Aucun Salon Disponible! 
 
            </Text>
            
@@ -306,8 +306,8 @@ topBarbers : {
 },
 bestText :{
   fontSize : screen.width/24,
-  fontFamily : "poppins-bold"
-
+  fontFamily : "poppins-bold",
+  color:Colors.blue
 },
 showAll : {
   fontFamily : "poppins",
@@ -343,9 +343,12 @@ titleText : {
 
   },
   centered: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    flex:1,
+   alignItems:'center',
+   justifyContent:'center',
+   width:'100%',
+   height:'100%',
+   resizeMode:'cover'
   }
 
    
