@@ -322,7 +322,7 @@ app.patch("/bookings/expiredbookings",(req,res)=>{
 app.get("/bookings/expired",(req,res)=>{
   console.log(req.body.clientId);
  
-   con.query("SELECT CURRENT_TIMESTAMP , status, cast(now() as date),end,CAST(date AS char) as date,SUBSTRING(date_booking,1,10) as bookingDate, SUBSTRING(NOW(),1,10) FROM booking  ",[],
+   con.query("SELECT DATE_ADD(NOW(), INTERVAL 1 HOUR) ,CURRENT_TIMESTAMP , status, cast(now() as date),end,date  as date,SUBSTRING(date_booking,1,10) as bookingDate, NOW() FROM booking WHERE  SUBSTRING(date_booking,1,10)  = SUBSTRING(NOW(),1,10) AND booking.client_id = '557115451' AND status = 'en attente'  AND CURRENT_TIMESTAMP > start OR SUBSTRING(date_booking,1,10) < SUBSTRING(NOW(),1,10)  AND booking.client_id = '557115451' ",[],
    (err,result,fields)=>{ 
  
    if (err) {

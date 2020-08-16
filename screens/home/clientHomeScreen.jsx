@@ -69,6 +69,7 @@ const getAllBarbers = useCallback(async ()=>{
     setLoading(true);
     await  dispatch(getBarbers());
     await dispatch(getReviews(clientID));
+    await dispatch(getClientBookings(clientID));
     setLoading(false);
 
     // await dispatch(expiredbookings("+213553633809"));
@@ -91,9 +92,8 @@ getAllBarbers();
 
 /********************************************************************** */
 
-if (isLoading) {
+if (isLoading || allBarbers.length < 0 ) {
 
-    
   return (
 
     <ImageBackground style= {styles.centered} source={require('../../assets/images/support.png')}>
@@ -126,56 +126,6 @@ if (isLoading) {
             </View>
        
             </ImageBackground>
-
-
-
-
-          <View style = {styles.textTopBarbers}>
-                <Text style = {styles.bestText}>
-                
-                Meilleurs Salons
-                
-                </Text>
-                <TouchableOpacity  
-                onPress={() =>props.navigation.navigate("AllBarbers",{type : "salons",clientID })} >
-                <Text style = {styles.showAll}>
-                Tout Afficher
-                
-                </Text>
-                </TouchableOpacity>
-              </View>
-
-              { 
-           allSaloons.length > 0 ?
-          <ScrollView style ={styles.topSalons} horizontal showsHorizontalScrollIndicator  = {false}>
-
-         {allSaloons.slice(0,3).map((barber , index)=>{return(
-
-            <TopBarbersCard 
-            key = {index} 
-              
-            />
-
-           )})
-            }
-
-          </ScrollView>
-           
-           :
-
-           <View style = {styles.unAvailable}>  
- 
-           <Text style = {{fontFamily : "poppins",fontSize :screen.width/28,color:Colors.blue }}>
-              Aucun Salon Disponible! 
-
-           </Text>
-           
-           </View>
-          
-        
-        }
-          
-        
 
 
           <View style = {styles.textTopBarbers}>
@@ -267,8 +217,6 @@ const styles= StyleSheet.create({
     height : screen.height * 0.35 ,
     overflow : "hidden",
    
-    
- 
   } ,
   image : {
     height : "100%",
@@ -339,7 +287,9 @@ titleText : {
     alignSelf : "center",
     alignItems : "center",
   borderRadius : 15,
-  marginTop : 15,
+  marginTop : 35,
+  justifyContent : "center",
+ 
 
   },
   centered: {

@@ -36,7 +36,14 @@ const dispatch = useDispatch();
   
 
 useEffect(()=>{
- setWilayas(barbersList.filter(e=>e.surname.toUpperCase() === searchState.toUpperCase()));
+  const a= allBarbers.filter((e)=>{
+
+    const itemData = e.surname ? e.surname.toUpperCase() : ''.toUpperCase();
+    const textData = searchState.toUpperCase();
+    return itemData.startsWith(textData);
+
+})
+ setWilayas(a);
 
 },[searchState]);
 
@@ -53,7 +60,6 @@ useEffect(()=>{
 
         const arr = await fetch(`http://173.212.234.137:3000/client/barbers/${clientID}`);
         const resData = await arr.json ();
-      
         setBarbersIds([...resData]);
         setLoading(false);
         }

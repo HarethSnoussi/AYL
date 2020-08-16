@@ -57,6 +57,7 @@ const BarberCard = props =>{
                 ratingColor = "#FE9654"          
                 type='custom'
                 readonly = {true}
+                tintColor='#fff'
                   />
                     <Text style={{fontFamily : "poppins",fontSize : screen.width/30}}>3.2</Text>
                   </View>

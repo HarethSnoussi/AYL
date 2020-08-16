@@ -27,10 +27,14 @@ const TopBarbersCard = (props)=> {
             <Text style = {styles.info}>{props.phone}</Text>
             <Rating imageSize={20} 
                     readonly
-                   startingValue= {3.65}
+                  //  startingValue= {3.65}
+                   value = {props.mark === null ? 2.5 : props.mark}
                    style={styles.rating }
                    ratingColor = "#FE9654"          
-                          type='custom'
+                   type='custom'
+                  ratingBackgroundColor={'#323446'}
+                  tintColor='#fff'
+
                         />
                     
             <Button 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View,ActivityIndicator, Alert,ScrollView, Dimensions,ImageBackground} from 'react-native';
+import { StyleSheet, Text, View,ActivityIndicator, Alert,ScrollView, Dimensions,ImageBackground,Linking} from 'react-native';
 
 import moment from 'moment';
 import Colors from "../../../constants/Colors";
@@ -8,6 +8,7 @@ import { Ionicons ,MaterialIcons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 import {cancelBooking} from "../../../store/actions/bookingsActions";
 import { Rating, AirbnbRating } from 'react-native-elements';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const screen = Dimensions.get("window");
 
@@ -150,16 +151,16 @@ if (isLoading) {
 
 
 
-            <View style = {{alignItems : "center"}}>
+            <TouchableOpacity style = {{alignItems : "center"}}  onPress = {()=>Linking.openURL(`tel:${barberInfos.phone}`)} >
             
                <MaterialIcons name="call" 
                             size={28} 
                             color={Colors.colorH1} 
-
+                           
                     />
             <Text style = {styles.actionsText} >Appeler</Text>
 
-          </View>
+          </TouchableOpacity>
 
 
         {conditionAnnuler  &&

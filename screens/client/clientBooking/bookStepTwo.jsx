@@ -102,6 +102,7 @@ const totalTime = props.navigation.getParam("duration");
 const workingTime = props.navigation.getParam("workingTime");
 const allBookings = props.navigation.getParam("bookings");
 let duration = Math.ceil(totalTime/15)  ; 
+
 if(duration === 1 ) {
     duration = 0;
 }
@@ -229,16 +230,13 @@ else if (todaysSlotsTime.indexOf(booking.start) === 1) {
 else 
 {
     bookingHours = todaysSlotsTime.slice(Math.max(0,todaysSlotsTime.indexOf(booking.start)-(1+duration)),todaysSlotsTime.indexOf(booking.start)+bookingDuration+2) ;
-
-
-
 }
-
 
  slots = slots.filter(hour => {
      return (bookingHours.indexOf(hour.time) < 0)}
      )
 
+   
 
 
 });
@@ -250,7 +248,7 @@ unAvailableHours = todaysSlotsTime.slice(0, todaysSlotsTime.indexOf(nowHour) );
     slots = slots.filter(hour => {
         return (unAvailableHours.indexOf(hour.time) < 0)}
         )
-
+     
 }
 await setAvailableSlots([...slots]);
 // setLoading(false);

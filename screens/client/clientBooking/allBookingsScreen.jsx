@@ -47,8 +47,8 @@ const days = allBookings.map(e=>e.bookingDate);
 let mark = {};
 
 days.forEach(day => {
-
  if ( moment().format("ll") === moment(day).format("ll") || moment() <= moment(day)) {
+
     mark[day] = { 
         selected: true, 
         marked: true , 
@@ -56,8 +56,14 @@ days.forEach(day => {
         textColor: Colors.primary,
         color : Colors.colorH1 ,
     };
+  }
 
- } else {
+//  }else if (moment().format("ll") === moment(day).format("ll")){
+
+
+//  }
+ 
+ else {
 
     mark[day] = { 
         selected: true, 
@@ -70,9 +76,19 @@ days.forEach(day => {
     };
 
  }
-   
+ 
 
 });
+
+mark[selectedDate.substring(0,10)] = { 
+  selected: true, 
+  marked: false , 
+  selectedColor:Colors.colorH5,
+  text: {
+      color: 'black',
+      fontWeight: 'bold'
+    }
+};
 
 /**************************************************************************************** */
 //get ALL CLIENT BOOKINGS
@@ -108,8 +124,6 @@ const expired = useCallback(async ()=>{
 
   try{
       setLoading(true);
-
- 
       await dispatch(expiredbookings(clientID));
       await dispatch(getClientBookings(clientID));
      setLoading(false);
@@ -222,6 +236,8 @@ if (isLoading) {
             textDayFontFamily: 'poppins',
             textMonthFontFamily: 'poppins',
             textDayHeaderFontFamily: 'poppins',
+           
+            
             
             }}
            

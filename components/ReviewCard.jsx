@@ -99,7 +99,7 @@ if(barberReview.length ===0){
       type='custom'
       imageSize = {screen.width * 0.08}
       startingValue = {mark}
-      
+      minValue = {0.5}
       />
       </View>
     <View style = {{paddingTop : 5}}>
@@ -179,6 +179,7 @@ if(barberReview.length ===0){
                 ratingColor = "#FE9654"          
                 type='custom'
                 readonly = {true}
+                tintColor='#fff'
                
                   />
                     <Text>3.2</Text>

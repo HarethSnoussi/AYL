@@ -6,7 +6,7 @@ import Colors from '../constants/Colors';
 import {createMaterialBottomTabNavigator} from "react-navigation-material-bottom-tabs"
 
 
-import {Ionicons,  MaterialIcons} from "@expo/vector-icons";
+import {Ionicons,  MaterialIcons,Foundation} from "@expo/vector-icons";
 import ClientHomeScreen from '../screens/home/clientHomeScreen';
 
 
@@ -63,11 +63,11 @@ const homeConfig = {
    NearMe : {
           screen : BarberHistory,
           navigationOptions : {
-            tabBarLabel : "Coiffeurs" ,
+            tabBarLabel : "Historique" ,
             tabBarColor : Colors.secondary ,
             tabBarIcon : ({tintColor}) => {
           
-              return( <MaterialIcons name = "location-on" 
+              return( <MaterialIcons name = "history" 
               size = {22} color={tintColor}/>);
                 }
         } ,
@@ -83,7 +83,8 @@ const homeConfig = {
       tabBarColor : Colors.secondary ,
      
       tabBarIcon : ({tintColor}) => {
-        return( <MaterialIcons name = "history" 
+    
+        return( <Foundation name = "calendar" 
         size = {22} color={tintColor} />);
           },
           headerStyle:{

@@ -9,6 +9,7 @@ import InfoOverlay from '../../../components/InfoOverlay';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button , Rating} from 'react-native-elements';
 import { getBarbers } from '../../../store/actions/listActions';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const screen = Dimensions.get("window");
 const AllBarbersScreen = props =>{
@@ -25,13 +26,34 @@ const allBarbers = props.navigation.getParam("type") === "coiffeurs" ? useSelect
   const [wilayas,setWilayas] = useState([]);
   // const confirmedBookings = useSelector(state =>state.bookings.confirmedBookings);
 
-  
+ 
 const dispatch = useDispatch();
   
 
+const SearchFilterFunction = (text)=> {
+  setSearchState(text);
+ 
+ 
+  //passing the inserted text in textinput
+  // const newData = this.arrayholder.filter(function(item) {
+  //   //applying filter for the inserted text in search bar
+  //   const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
+  //   const textData = text.toUpperCase();
+  //   return itemData.indexOf(textData) > -1; }
+  };
+
 
 useEffect(()=>{
- setWilayas(allBarbers.filter(e=>e.region.toUpperCase() === searchState.toUpperCase()));
+const a= allBarbers.filter((e)=>{
+
+    const itemData = e.region ? e.region.toUpperCase() : ''.toUpperCase();
+    const textData = searchState.toUpperCase();
+    return itemData.startsWith(textData);
+
+})
+
+
+ setWilayas(a);
 
 },[searchState]);
 
@@ -69,9 +91,20 @@ if (isLoading) {
       <View style = {styles.container}>
       
       
-  <View style = {{flexDirection :"row",alignItems : "center",width : "95%",justifyContent :"space-around",marginVertical : "2%",alignSelf : "center",}}>
- 
-  <Ionicons name="md-arrow-back" size={20} color="black" onPress = {()=>{props.navigation.goBack()}} style={{alignSelf : "center"}} />
+  <View style = {{flexDirection :"row",alignItems : "center",width : "95%",justifyContent :"space-around",marginVertical : "2%",alignSelf : "center",height:"10%"}}>
+
+
+  <TouchableOpacity onPress = {()=>{props.navigation.goBack()}}  style={{height : "100%",alignSelf : "center",justifyContent : "center"}}>
+  <Ionicons name="md-arrow-back" 
+            size={20} color="black" 
+            onPress = {()=>{props.navigation.goBack()}} 
+            style={{alignSelf : "center"}}
+  
+   />
+  
+  </TouchableOpacity>
+
+
         <SearchBar
                 placeholder="Région"
                 containerStyle = {styles.searchBar}

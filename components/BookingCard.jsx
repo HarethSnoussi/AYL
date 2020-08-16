@@ -18,7 +18,21 @@ const BookingCard = props =>{
 
 
     return(
-      <View style = {styles.card} >
+      <TouchableOpacity style = {styles.card}  onPress = {()=>props.navigation.navigate("BookingDetail", 
+      { 
+                day: props.day,
+                  date : props.date,
+                  status : props.status,
+                  start : props.start,
+                  end : props.end,
+                  amount : props.amount,
+                  services : props.services,
+                  barberId : props.barberId,
+                  clientId : props.clientId,
+                  cancelDate : props.cancelDate,
+                  id  : props.id,
+                  bookingDate :props.bookingDate
+                 })}  >
         <LinearGradient colors = { [gradient1, gradient2]} style = {styles.leftDate}>
               <Text style = {styles.dateText}>{props.day}</Text>
               <Text style = {styles.dateText} >{props.date}</Text>
@@ -106,7 +120,7 @@ const BookingCard = props =>{
           </View>
 }
 
-      </View>
+      </TouchableOpacity>
      );    
 };
 

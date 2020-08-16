@@ -59,7 +59,7 @@ return (
         services = {props.navigation.getParam("services")}
         navigate = {()=>props.navigation.navigate("Client")}
         wilaya = {pickedWilaya}
-        address = {pickedAddress}
+        address = {pickedAddress.replace(/(\r\n|\n|\r)/gm, "")}
         region = {pickedRegion}
 
        />   
