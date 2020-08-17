@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View,Image, ImageBackground,Dimensions,TextInput, KeyboardAvoidingView,ActivityIndicator} from 'react-native';
+import { StyleSheet, Text, View,Image, ImageBackground,Dimensions,TextInput, KeyboardAvoidingView,ActivityIndicator, Alert} from 'react-native';
 import { Button , Rating, Overlay, AirbnbRating,Input } from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
 import {Ionicons} from "@expo/vector-icons";
@@ -30,20 +30,19 @@ const dispatch = useDispatch();
 const toggleOverlay = async ()=>{
 
 const barberReview = await props.allReviews.filter(review=>review.clientId === props.clientId && review.barberId === props.barberId) ;
+
+
+
 if(barberReview.length > 0){
   setComment(barberReview[0].comment);
   setMark(barberReview[0].mark);
 }
-
 setVisible (previous => !previous);
-
 }
 
 
 const ratingMark  = (mark)=>{
-
 setMark(mark);
-
 } ;
 
 const closeOverlay = () =>{
@@ -57,19 +56,38 @@ setMark(2.5);
 
 
 const submitReview = async ()=>{
-const barberReview = await props.allReviews.filter(review=>review.clientId === props.clientId && review.barberId === props.barberId) ;
 
-if(barberReview.length ===0){
+
+const barberReview = await props.allReviews.filter(review=>{ return ( review.clientId === props.clientId && review.barberId === props.barberId)}) ;
+
+
+
+if(barberReview.length === 0){
+  
   await dispatch (addreview({clientId : props.clientId,barberId : props.barberId , comment :comment,mark : mark }))
   setVisible (previous => !previous);
-  
+  Alert.alert(
+    "Avis envoyé",
+    "Avis envoyé avec succés",
+    [
+      { text: "OK", onPress: () =>{} }
+    ],
+    { cancelable: false }
+  );
+}
 
-
-}else {
+else {
 
   await dispatch (updateReview({clientId : props.clientId,barberId : props.barberId , comment :comment,mark : mark }))
   setVisible (previous => !previous);
-
+  Alert.alert(
+    "Avis envoyé",
+    "Avis envoyé avec succés",
+    [
+      { text: "OK", onPress: () =>{} }
+    ],
+    { cancelable: false }
+  );
 }
 
 

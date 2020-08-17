@@ -21,11 +21,13 @@ const BarbersHistory = props =>{
 const allBarbers = useSelector(state => state.lists.barbers) ;
 const allReviews = useSelector(state=>state.reviews.reviews);
 
-
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  //Error Handler
+  const [error, setError] = useState();
   const [isLoading,setLoading] = useState(false);
   const [overlayState , setOverlay] = useState (false);
   const [searchState,setSearchState] = useState("");
-  const [stadiumIndex , setStadiumIndex] = useState(0);
+  
   const [wilayas,setWilayas] = useState([]);
   const [barbersIds,setBarbersIds] = useState([]);
   const [barbersList,setBarberList] = useState([]);
@@ -56,15 +58,18 @@ useEffect(()=>{
   const getHistory = async ()=>{
   
     try {
+        setError(null);
+        setIsRefreshing(true);
         setLoading(true);
-
         const arr = await fetch(`http://173.212.234.137:3000/client/barbers/${clientID}`);
         const resData = await arr.json ();
         setBarbersIds([...resData]);
+        setIsRefreshing(false);
         setLoading(false);
         }
     
     catch (error) {
+        setError(error);
         console.log("There is an Error");
         throw error;
     }
@@ -72,7 +77,7 @@ useEffect(()=>{
 }; 
   getHistory();
 
-},[]);
+},[setError]);
 
 
 
@@ -97,6 +102,18 @@ useEffect(()=>{
 
 },[barbersIds])
 
+if (error) {
+  return (
+    <View style={styles.centered}>
+      <Text>Une erreur est survenue !</Text>
+      <Button
+        title="Try again"
+         onPress = {getAllBarbers}
+        color={Colors.primary}
+      />
+    </View>
+  );
+}
 
 if (isLoading) {
     
@@ -130,15 +147,19 @@ if (isLoading) {
       <View style = {{width :"90%" , alignSelf : "center",marginVertical : 5,flexDirection : "row",justifyContent : "space-between"}}>
       
          <View>
-        
-          <Text style = {{fontFamily : "poppins-bold",fontSize : screen.width/24}}>Historique des coiffeurs</Text>
-          <Text style = {{fontFamily : "poppins",color:"#9d9da1",fontSize : screen.width/30}}>{searchedResult.length} Résultats </Text>
+          <Text style = {{fontFamily : "poppins-bold",fontSize : screen.width/24}}>
+          Historique des coiffeurs
+          </Text>
+          <Text style = {{fontFamily : "poppins",color:"#9d9da1",fontSize : screen.width/30}}>
+          {searchedResult.length} Résultats 
+          </Text>
           </View>
         
       </View>
-            <ScrollView   showsVerticalScrollIndicator  = {false} style = {{borderWidth : 0.3}}>
-          
-
+            <ScrollView refreshing={isRefreshing} 
+            showsVerticalScrollIndicator  = {false}
+             style = {{borderWidth : 0.3}}
+             >
           {
             searchedResult.map((barber,index)=> {
               

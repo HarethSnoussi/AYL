@@ -30,8 +30,8 @@ const reviewReducer = (state = initialState,action)=>{
                         review => review.clientId === action.review.clientId && review.barberId === action.review.barberId
                       );
                     const review = {
-                            barberId : action.review.clientId,
-                            clientId : action.review.barberId,
+                            barberId : action.review.barberId,
+                            clientId : action.review.clientId,
                             comment : action.review.comment,
                             mark : action.review.mark
                     }

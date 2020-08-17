@@ -3,7 +3,7 @@ import { StyleSheet, Text, View,ActivityIndicator, Dimensions, ScrollView,ImageB
 
 import { Avatar ,Badge } from 'react-native-elements';
 import Colors from "../../../constants/Colors";
-
+import {Button } from 'react-native-elements';
 import {Calendar, CalendarList, Agenda,LocaleConfig} from 'react-native-calendars';
 import BookingCard from '../../../components/BookingCard';
 import moment from 'moment';
@@ -40,6 +40,10 @@ const [dayBookings , setDayBookings] = useState([]);
  const [selectedDay , setSelectedDay] = useState(moment().format('ddd')) ;
 
  const [isLoading , setLoading] = useState(false);
+ const [isRefreshing, setIsRefreshing] = useState(false);
+ //Error Handler
+ const [error, setError] = useState();
+
 
 const dispatch = useDispatch();
 
@@ -123,13 +127,18 @@ mark[selectedDate.substring(0,10)] = {
 const expired = useCallback(async ()=>{
 
   try{
+    setError(null);
+    setIsRefreshing(true);
       setLoading(true);
       await dispatch(expiredbookings(clientID));
       await dispatch(getClientBookings(clientID));
+      setIsRefreshing(false);
      setLoading(false);
 
     }catch(err){
-        console.log(err);
+      
+      setError(err.message);
+
       throw err ;
     }
 
@@ -197,6 +206,21 @@ useEffect(()=>{
 
 /***************************************************************************************************************************************************************************** */
 
+if (error) {
+  return (
+    <View style={styles.centered}>
+      <Text>Une erreur est survenue !</Text>
+      <Button
+        title="Try again"
+         onPress = {expired}
+        color={Colors.primary}
+      />
+    </View>
+  );
+}
+
+
+
 //IF IS LOADING
 if (isLoading) {
     return (
@@ -250,7 +274,7 @@ if (isLoading) {
             <Text style = {{fontSize : screen.width/24 , fontFamily : "poppins-bold"}}>{selectedDateText}</Text>
 
             </View>
-                <ScrollView style = {styles.cardsContainer}>
+                <ScrollView refreshing={isRefreshing} style = {styles.cardsContainer}>
 
                 {
 

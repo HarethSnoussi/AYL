@@ -19,6 +19,9 @@ const clientID =   props.navigation.getParam("clientID");
 
 const allBarbers = props.navigation.getParam("type") === "coiffeurs" ? useSelector(state => state.lists.barbers) : useSelector(state => state.lists.saloons) ;
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  //Error Handler
+  const [error, setError] = useState();
   const [isLoading,setLoading] = useState(false);
   const [overlayState , setOverlay] = useState (false);
   const [searchState,setSearchState] = useState("");
@@ -76,6 +79,22 @@ const searchedResult = searchState === "" ? allBarbers :  wilayas ;
 
 
 // },[dispatch]);
+
+
+
+if (error) {
+  return (
+    <View style={styles.centered}>
+      <Text>Une erreur est survenue !</Text>
+      <Button
+        title="Try again"
+         onPress = {getAllBarbers}
+        color={Colors.primary}
+      />
+    </View>
+  );
+}
+
 
 if (isLoading) {
     

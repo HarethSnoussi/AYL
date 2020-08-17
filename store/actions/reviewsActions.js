@@ -13,9 +13,10 @@ export const getReviews = (clientId)=>{
             const arr = await fetch(`http://173.212.234.137:3000/client/barbersfeedbacks/${clientId}`);
             const resData = await arr.json ();
 
+
             dispatch({type : GET_REVIEWS , reviews : resData});
-           
-         
+            
+          
         }
         
         catch (error) {

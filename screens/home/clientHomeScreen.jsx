@@ -1,7 +1,7 @@
 import React ,{useEffect, useState,useCallback}  from 'react';
 import { StyleSheet, Text, View, ImageBackground , Image ,Dimensions , StatusBar,ActivityIndicator,ScrollView, FlatList, TouchableOpacity } from 'react-native';
 
-import { SearchBar ,Avatar,Rating, AirbnbRating,Button } from 'react-native-elements';
+import {Button } from 'react-native-elements';
 
 import { SwitchActions } from 'react-navigation';
 import { useDispatch,useSelector } from 'react-redux';
@@ -23,14 +23,19 @@ const screen = Dimensions.get("window");
 const ClientHomeScreen = props =>{
   console.disableYellowBox = true;
 
+
   //Get ALL Barbers AND SAloons from the store to display three of them
   const allBarbers = useSelector(state => state.lists.barbers) ;
   const allSaloons = useSelector(state => state.lists.saloons) ;
 //get Client ID
 const clientID= props.navigation.dangerouslyGetParent().getParam('clientID');  
-// console.log(clientID);
-const [isLoading , setLoading] = useState(false);
 
+
+
+const [isLoading , setLoading] = useState(false);
+const [isRefreshing, setIsRefreshing] = useState(false);
+  //Error Handler
+  const [error, setError] = useState();
 const dispatch = useDispatch ();
 
 /********************************************************************** */
@@ -66,21 +71,26 @@ const dispatch = useDispatch ();
 /********************************************************************** */
 const getAllBarbers = useCallback(async ()=>{
   try{
+    setError(null);
+    setIsRefreshing(true);
     setLoading(true);
     await  dispatch(getBarbers());
     await dispatch(getReviews(clientID));
     await dispatch(getClientBookings(clientID));
+    setIsRefreshing(false);
     setLoading(false);
-
+  
     // await dispatch(expiredbookings("+213553633809"));
     }
     catch(err){
+      setError(err.message);
+
       throw err ;
     }
 
   
 
-},[dispatch]);
+},[dispatch,setError]);
 
 
 useEffect (()=>{
@@ -91,6 +101,21 @@ getAllBarbers();
 
 
 /********************************************************************** */
+
+if (error) {
+  return (
+    <View style={styles.centered}>
+      <Text>Une erreur est survenue !</Text>
+      <Button
+        title="Try again"
+         onPress = {getAllBarbers}
+        color={Colors.primary}
+      />
+    </View>
+  );
+}
+
+
 
 if (isLoading || allBarbers.length < 0 ) {
 
@@ -111,7 +136,7 @@ if (isLoading || allBarbers.length < 0 ) {
       <View style ={styles.container}>
    
       <StatusBar hidden />
-      <ScrollView >
+      <ScrollView  refreshing={isRefreshing}>
             <ImageBackground source = {require("../../assets/pictures/barber4.png")} style = {styles.firstImage}  resizeMode ="stretch" imageStyle ={styles.image} >
 {/*            
            <SearchBar placeholder=" Recherche salon , coiffeur"

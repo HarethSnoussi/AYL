@@ -11,11 +11,7 @@ export const getBarbers = ()=>{
 
             const arr = await fetch(`http://173.212.234.137:3000/barbers/allbarbers`);
             const resData = await arr.json ();
-
-
             dispatch({type : GET_BARBERS , barbers : resData});
-           
-        
         }
         
         catch (error) {

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Overlay, colors } from 'react-native-elements';
-import { Text, View, Button,StyleSheet, Dimensions,Alert } from 'react-native';
+import { Text, View, Button,StyleSheet, Dimensions,Alert ,ActivityIndicator} from 'react-native';
 
 import {Ionicons} from "@expo/vector-icons";
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,6 +18,7 @@ const dispatch = useDispatch();
 
 const end = moment.utc("2020-05-01T"+props.start).add(props.duration,"m").format("HH:mm");  
 
+const [isLoading,setLoading]=useState(false);
 const address = props.address + "-" + props.region+"-"+props.wilaya
 const servicesId = props.services.map(e=>e.id);
 
@@ -39,9 +40,11 @@ const date = new Date();
     status : "en attente",
     wilaya : props.wilaya
 }
+setLoading(true);
  props.overlayHandler();
  await dispatch(addBooking(booking));
  await props.navigate();
+ setLoading(false);
  Alert.alert(
   "Réservation envoyée",
   "Réservation envoyée avec succés",
@@ -54,6 +57,17 @@ const date = new Date();
 };
 
 const services = props.services.map(e=>e.name);
+
+
+if (isLoading) {
+    
+  return (
+    <View style= {styles.centered} >
+      <ActivityIndicator size="large" color= {Colors.primary} />
+    
+    </View>
+  );
+}
 
 
     return (
