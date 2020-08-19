@@ -35,7 +35,7 @@ const clientID= props.navigation.dangerouslyGetParent().getParam('clientID');
 const [isLoading , setLoading] = useState(false);
 const [isRefreshing, setIsRefreshing] = useState(false);
   //Error Handler
-  const [error, setError] = useState();
+const [error, setError] = useState();
 const dispatch = useDispatch ();
 
 /********************************************************************** */
@@ -71,7 +71,7 @@ const dispatch = useDispatch ();
 /********************************************************************** */
 const getAllBarbers = useCallback(async ()=>{
   try{
-    setError(null);
+    setError(false);
     setIsRefreshing(true);
     setLoading(true);
     await  dispatch(getBarbers());
@@ -83,7 +83,7 @@ const getAllBarbers = useCallback(async ()=>{
     // await dispatch(expiredbookings("+213553633809"));
     }
     catch(err){
-      setError(err.message);
+      setError(true);
 
       throw err ;
     }
@@ -98,7 +98,19 @@ getAllBarbers();
 
 },[dispatch,getAllBarbers]);
 
-
+useEffect(()=>{
+  const willFocusSub= props.navigation.addListener(
+    'willFocus',
+    () => {
+  
+      getAllBarbers();
+     
+    }
+  );
+  return ()=>{
+    willFocusSub.remove();
+  };
+  },[getAllBarbers]);
 
 /********************************************************************** */
 
@@ -107,9 +119,9 @@ if (error) {
     <View style={styles.centered}>
       <Text>Une erreur est survenue !</Text>
       <Button
-        title="Try again"
+        title="Rafraîchir"
          onPress = {getAllBarbers}
-        color={Colors.primary}
+         buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : 25,paddingHorizontal : "5%",marginVertical : "5%"}}
       />
     </View>
   );
@@ -174,6 +186,7 @@ if (isLoading || allBarbers.length < 0 ) {
 
            
          {allBarbers.slice(0,3).map((barber , index)=> {
+         
          return(
             <TopBarbersCard 
             key = {index} 
@@ -182,9 +195,8 @@ if (isLoading || allBarbers.length < 0 ) {
              phone = {barber.phone}
              region = {barber.region}
              wilaya = {barber.wilaya}
-             
+             mark = {barber.mark}
             />
-
            )})
             }
 

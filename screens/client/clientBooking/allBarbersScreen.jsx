@@ -87,7 +87,7 @@ if (error) {
     <View style={styles.centered}>
       <Text>Une erreur est survenue !</Text>
       <Button
-        title="Try again"
+        title="Rafraîchir"
          onPress = {getAllBarbers}
         color={Colors.primary}
       />

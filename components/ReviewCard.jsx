@@ -63,21 +63,33 @@ const barberReview = await props.allReviews.filter(review=>{ return ( review.cli
 
 
 if(barberReview.length === 0){
-  
-  await dispatch (addreview({clientId : props.clientId,barberId : props.barberId , comment :comment,mark : mark }))
-  setVisible (previous => !previous);
-  Alert.alert(
-    "Avis envoyé",
-    "Avis envoyé avec succés",
-    [
-      { text: "OK", onPress: () =>{} }
-    ],
-    { cancelable: false }
-  );
+  try {
+    await dispatch (addreview({clientId : props.clientId,barberId : props.barberId , comment :comment,mark : mark }))
+    setVisible (previous => !previous);
+    Alert.alert(
+      "Avis envoyé",
+      "Avis envoyé avec succés",
+      [
+        { text: "OK", onPress: () =>{} }
+      ],
+      { cancelable: false }
+    );
+    
+  } catch (error) {
+    Alert.alert(
+      "Avis non envoyé",
+      "Echec d'envoie",
+      [
+        { text: "OK", onPress: () =>{} }
+      ],
+      { cancelable: false }
+    );
+  }
+ 
 }
 
 else {
-
+try {
   await dispatch (updateReview({clientId : props.clientId,barberId : props.barberId , comment :comment,mark : mark }))
   setVisible (previous => !previous);
   Alert.alert(
@@ -88,6 +100,20 @@ else {
     ],
     { cancelable: false }
   );
+} catch (error) {
+  Alert.alert(
+    "Avis non envoyé",
+    "Echec d'envoie",
+    [
+      { text: "OK", onPress: () =>{} }
+    ],
+    { cancelable: false }
+  );
+}
+ 
+
+
+
 }
 
 
@@ -200,7 +226,7 @@ else {
                 tintColor='#fff'
                
                   />
-                    <Text>3.2</Text>
+                    <Text>{props.mark === null ? 0.5 : props.mark}</Text>
                   </View>
               <Text style ={{color : "#fd6c57",fontFamily : "poppins-bold",letterSpacing : 1,fontSize : screen.width/30}}>Voir le profil </Text>
                

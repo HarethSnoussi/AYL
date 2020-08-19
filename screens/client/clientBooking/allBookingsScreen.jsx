@@ -127,7 +127,7 @@ mark[selectedDate.substring(0,10)] = {
 const expired = useCallback(async ()=>{
 
   try{
-    setError(null);
+    setError(false);
     setIsRefreshing(true);
       setLoading(true);
       await dispatch(expiredbookings(clientID));
@@ -137,7 +137,7 @@ const expired = useCallback(async ()=>{
 
     }catch(err){
       
-      setError(err.message);
+      setError(true);
 
       throw err ;
     }
@@ -213,7 +213,7 @@ if (error) {
       <Button
         title="Try again"
          onPress = {expired}
-        color={Colors.primary}
+         buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : 25,paddingHorizontal : "5%",marginVertical : "5%"}}
       />
     </View>
   );

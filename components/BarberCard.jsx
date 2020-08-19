@@ -59,7 +59,7 @@ const BarberCard = props =>{
                 readonly = {true}
                 tintColor='#fff'
                   />
-                    <Text style={{fontFamily : "poppins",fontSize : screen.width/30}}>3.2</Text>
+                    <Text style={{fontFamily : "poppins",fontSize : screen.width/30}}>{props.mark === null ? 0.5 : props.mark}</Text>
                   </View>
               <Text style ={{color : "#fd6c57",fontFamily : "poppins-bold",letterSpacing : 1,fontSize : screen.width/30}}>Voir le profil </Text>
                

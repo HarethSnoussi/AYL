@@ -27,6 +27,11 @@ const dispatch = useDispatch();
 //Sum of Array elements
 const sumArray = (accumulator, currentValue) => accumulator + currentValue;
 
+
+const [isRefreshing, setIsRefreshing] = useState(false);
+  //Error Handler
+const [error, setError] = useState();
+
 const [isLoading , setLoading] = useState (false);
 
 //Array of ALL choosen Services by the customer
@@ -63,33 +68,41 @@ const [bookings,setBookings] = useState([]);
 useEffect(()=>{
  const getData = async ()=>{
     try {
+        setError(false);
+        setIsRefreshing(true);
         setLoading(true);
 
         const arr = await fetch(`http://173.212.234.137:3000/barber/hours/${props.navigation.getParam("barberId")}`);
         const resData = await arr.json ();
        
         setData([...resData]);
+        setIsRefreshing(false);
         setLoading(false);
         }
     
     catch (error) {
         console.log("There is an Error");
+        setError(true);
         throw error;
     }
 
     try {
+        setError(false);
+        setIsRefreshing(true);
         setLoading(true);
        
         const arr = await fetch(`http://173.212.234.137:3000/bookings/barberBookings/${props.navigation.getParam("barberId")}`);
          const resData = await arr.json ();
      
         setBookings([...resData]);
+        setIsRefreshing(false);
         setLoading(false);
 
         }
     
     catch (error) {
         console.log("There is an Error");
+        setError(true);
         throw error;
 
     }
@@ -101,25 +114,29 @@ getData();
 
 /************************************************************************* */
 
-const loadProducts = useCallback(async()=>{
+const loadServices = useCallback(async()=>{
     try{
+        setError(false);
+        setIsRefreshing(true);
         setLoading(true);
         await dispatch(getServices(props.navigation.getParam("barberId")));
+        setIsRefreshing(false);
         setLoading(false);
 
       }catch(err){
-          console.log(err);
+        console.log(err);
+        setError(true);
         throw err ;
       }
 
-},[dispatch])
+},[dispatch,setError])
 
 //GET THE SERVICES
 useEffect(()=>{
     
-    loadProducts();
+    loadServices();
 
-},[dispatch,loadProducts]);
+},[dispatch,loadServices,setError]);
 
 
 /************************************************************************* */
@@ -204,6 +221,22 @@ setLoading(false);
 }
 
 
+if (error) {
+    
+    return (
+      <View style={styles.centered}>
+        <Text>Une erreur est survenue !</Text>
+        <Button
+          title="Rafraîchir"
+           onPress = {loadServices}
+           buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : 25,paddingHorizontal : "5%",marginVertical : "5%"}}
+        />
+      </View>
+    );
+  }
+  
+
+
 if (isLoading) {
     
     return (
@@ -236,7 +269,7 @@ return (
 
                     <View style = {styles.addService}>
                     <View style= {{maxHeight : "100%"}}>
-               <ScrollView >
+               <ScrollView  refreshing={isRefreshing} >
                 {
                 pickedServices.map((service,index)=>{
                   

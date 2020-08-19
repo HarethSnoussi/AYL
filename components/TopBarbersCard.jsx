@@ -27,7 +27,7 @@ const TopBarbersCard = (props)=> {
             <Text style = {styles.info}>{props.phone}</Text>
             <Rating imageSize={20} 
                     readonly
-                  //  startingValue= {3.65}
+                   startingValue= {props.mark === null ? 0.5 : props.mark}
                    value = {props.mark === null ? 2.5 : props.mark}
                    style={styles.rating }
                    ratingColor = "#FE9654"          

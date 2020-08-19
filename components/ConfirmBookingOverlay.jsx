@@ -40,7 +40,8 @@ const date = new Date();
     status : "en attente",
     wilaya : props.wilaya
 }
-setLoading(true);
+try {
+  setLoading(true);
  props.overlayHandler();
  await dispatch(addBooking(booking));
  await props.navigate();
@@ -53,6 +54,20 @@ setLoading(true);
   ],
   { cancelable: false }
 );
+  
+} catch (error) {
+  Alert.alert(
+    "Réservation non envoyée",
+    "Echec lors de l'envoie de la réservation",
+    [
+      { text: "OK", onPress: () =>{} }
+    ],
+    { cancelable: false }
+  );
+ 
+  throw error;
+}
+
 
 };
 

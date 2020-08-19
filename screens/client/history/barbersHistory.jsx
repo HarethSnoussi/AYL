@@ -58,7 +58,7 @@ useEffect(()=>{
   const getHistory = async ()=>{
   
     try {
-        setError(null);
+        setError(false);
         setIsRefreshing(true);
         setLoading(true);
         const arr = await fetch(`http://173.212.234.137:3000/client/barbers/${clientID}`);
@@ -69,7 +69,7 @@ useEffect(()=>{
         }
     
     catch (error) {
-        setError(error);
+        setError(true);
         console.log("There is an Error");
         throw error;
     }
@@ -109,7 +109,7 @@ if (error) {
       <Button
         title="Try again"
          onPress = {getAllBarbers}
-        color={Colors.primary}
+         buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : 25,paddingHorizontal : "5%",marginVertical : "5%"}}
       />
     </View>
   );

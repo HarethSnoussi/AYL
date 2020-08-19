@@ -58,19 +58,36 @@ Alert.alert(
       style: 'cancel'
     },
     { text: 'Oui', onPress: async () => {
-      setLoading(true);
-          await dispatch(cancelBooking(props.navigation.getParam("id")));
+      try {
+        setLoading(true);
+        await dispatch(cancelBooking(props.navigation.getParam("id")));
 
-          await props.navigation.navigate("Client");
-          Alert.alert(
-            "Réservation annulée",
-            "Réservation annulée avec succés",
-            [
-              { text: "OK", onPress: () =>{} }
-            ],
-            { cancelable: false }
-          );
-      setLoading(false);
+        await props.navigation.navigate("Client");
+        Alert.alert(
+          "Réservation annulée",
+          "Réservation annulée avec succés",
+          [
+            { text: "OK", onPress: () =>{} }
+          ],
+          { cancelable: false }
+        );
+    setLoading(false);
+        
+      } catch (error) {
+        setLoading(true);
+        Alert.alert(
+          "Réservation non annulée",
+          "Echec à l'annulation de la réservation ",
+          [
+            { text: "OK", onPress: () =>{} }
+          ],
+          { cancelable: false }
+        );
+ setLoading(false);
+        throw error;
+        
+      }
+  
 
 
 
