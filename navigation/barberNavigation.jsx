@@ -25,9 +25,10 @@ import AllBarbersScreen from '../screens/client/clientBooking/allBarbersScreen';
 import BookStepTwo from '../screens/client/clientBooking/bookStepTwo';
 import BookStepOne from '../screens/client/clientBooking/bookStepOne';
 import BookStepThree from '../screens/client/clientBooking/bookStepThree';
-
+import BarberHomeScreen from '../screens/barber/barberHomeScreen';
 import AllBookingsScreen from '../screens/client/clientBooking/allBookingsScreen';
 import BarberHistory from '../screens/client/history/barbersHistory';
+import BarberServiceScreen from '../screens/barber/barberServiceScreen';
 
 import BookingDetail from '../screens/client/clientBooking/bookingDetail';
 ///////////////////////////////////////////////////////////////////
@@ -127,26 +128,6 @@ barStyle : {
 
 
 
-/*const gender=async()=>{
-  const userData= await AsyncStorage.getItem('userData');
- 
-  if(!userData){
-      return;
-  }
-  const transformedData = JSON.parse(userData); // transform string to Javascript Object or Array
-  const {token,userID,expiryDate,gender} = transformedData;
-  const expirationDate = new Date(expiryDate);
-  
-  if(!token || !userID || expirationDate <= new Date()){
-   return;
-  }
-   
-  if(gender==="Player"){
-   return PlayerHomeScreen;
-  }else if(gender==="Owner"){
-   return OwnerHomeScreen;
-  }
-};*/
 ///////////////////////////////////////////////////////////////////
 
 //Main Stack Navigator
@@ -160,9 +141,10 @@ const BarberNavigation = createStackNavigator({
    BookStepOne : BookStepOne ,
    BookStepThree : BookStepThree ,
    BookingDetail : BookingDetail,
-
-  PlayerProfile: PlayerProfileScreen,
-  PlayerSettings:PlayerSettingsScreen
+   PlayerProfile: PlayerProfileScreen,
+   PlayerSettings:PlayerSettingsScreen,
+   Barber:BarberHomeScreen,
+   BarberService:BarberServiceScreen
 },
 );
 

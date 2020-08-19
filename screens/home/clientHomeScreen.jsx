@@ -175,7 +175,6 @@ if (isLoading || allBarbers.length < 0 ) {
                 onPress={() =>props.navigation.navigate("AllBarbers",{type : "coiffeurs",clientID})} >
                 <Text style = {styles.showAll}>
                 Tout Afficher
-                
                 </Text>
                 </TouchableOpacity>
               </View>
@@ -196,6 +195,7 @@ if (isLoading || allBarbers.length < 0 ) {
              region = {barber.region}
              wilaya = {barber.wilaya}
              mark = {barber.mark}
+             navigateToBarberProfil={()=>props.navigation.navigate("Barber",{barberID : barber.id})}
             />
            )})
             }

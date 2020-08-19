@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View,Image, ImageBackground,Dimensions} from 'react-native';
+import { StyleSheet, Text, View,Image, ImageBackground,Dimensions,TouchableOpacity} from 'react-native';
 import { Button , Rating} from 'react-native-elements';
 
 import {Ionicons} from "@expo/vector-icons";
@@ -61,7 +61,10 @@ const BarberCard = props =>{
                   />
                     <Text style={{fontFamily : "poppins",fontSize : screen.width/30}}>{props.mark === null ? 0.5 : props.mark}</Text>
                   </View>
-              <Text style ={{color : "#fd6c57",fontFamily : "poppins-bold",letterSpacing : 1,fontSize : screen.width/30}}>Voir le profil </Text>
+                <TouchableOpacity onPress={props.navigateToBarberProfil}>
+                  <Text style ={{color : "#fd6c57",fontFamily : "poppins-bold",letterSpacing : 1,fontSize : screen.width/30}}>Voir le profil </Text>
+                </TouchableOpacity>
+              
                
                 </View>
                

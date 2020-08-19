@@ -1,14 +1,15 @@
 export const AUTHENTICATE = "AUTHENTICATE";
 export const LOGOUT ="LOGOUT";
-export const UPDATE_USER_PHONE_FRB="UPDATE_OWNER_PHONE_FRB";
-export const DELETE_USER_FRB="DELETE_USER_FRB";
+import Firebase from "../../helpers/Firebaseconfig";
+import {AsyncStorage} from 'react-native';
 
 export const authenticate = (token,userID,expiryTime)=>{
 
     return{
         type:AUTHENTICATE,
         token:token,
-        userID:userID
+        userID:userID,
+        expiryTime
     };
 
 };
@@ -43,6 +44,41 @@ export const updateUserPhoneFRB= (phoneNumber,uid) => {
          }
     };
 
+};
+
+const saveDataToStorage = (expiresIn,refreshToken) => {
+
+    AsyncStorage.setItem('userTokenData',
+                          JSON.stringify({
+                            expiresIn:expiresIn	,
+                          refreshToken:refreshToken
+                         }) 
+                         );
+          };
+
+export const refreshTokenStepOne = (token)=>{
+
+    return async ()=>{
+        try{
+            const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=${Firebase.apiKey}`,{
+
+
+              method:'POST',
+              headers: {
+                'Content-Type': 'application/json'
+            },
+            body : JSON.stringify({token,returnSecureToken:true})
+           });
+           if(!response.ok){
+               throw new Error('Oups! Une erreur est survenue Firebase.');
+           }
+           const resData = await response.json();
+          
+           saveDataToStorage(resData.expiresIn,resData.refreshToken);
+        }catch(err){
+
+        }
+    }
 };
 
 export const deleteUser = uid => {
