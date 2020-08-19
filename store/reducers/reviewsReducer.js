@@ -1,9 +1,10 @@
-import { GET_REVIEWS, ADD_REVIEW, UPDATE_REVIEW, updateReview } from "../actions/reviewsActions";
+import { GET_REVIEWS, ADD_REVIEW, UPDATE_REVIEW, SET_FEEDBACKS } from "../actions/reviewsActions";
 
 
 const initialState = {
  
-    reviews : []
+    reviews : [],
+    feedbacks:[]
 
 };
 
@@ -42,6 +43,16 @@ const reviewReducer = (state = initialState,action)=>{
                         ...state ,
                         reviews : updatedReviews
                      };
+
+
+        
+        
+        case SET_FEEDBACKS:
+        return{
+            ...state,
+            feedbacks:action.feedbackData
+        }; 
+    
     
 
        default : return state ;

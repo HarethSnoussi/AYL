@@ -182,7 +182,7 @@ if (isLoading || allBarbers.length < 0 ) {
              phone = {barber.phone}
              region = {barber.region}
              wilaya = {barber.wilaya}
-             
+             navigateToBarberProfil={()=>props.navigation.navigate("Barber",{barberID : barber.id})}
             />
 
            )})

@@ -156,6 +156,7 @@ if (isLoading) {
               <BarberCard 
               key = {index}
               navigate = {()=>props.navigation.navigate("BookStepOne",{barberId : barber.id,clientID})}
+              navigateToBarberProfil={()=>props.navigation.navigate("Barber",{barberID : barber.id})}
               name = {barber.name}
               surname = {barber.surname}
               region = {barber.region}

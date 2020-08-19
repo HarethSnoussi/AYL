@@ -16,7 +16,7 @@ import clientsReducer from './store/reducers/client';
 import servicesReducer from './store/reducers/servicesReducer';
 import listReducer from './store/reducers/listReducer';
 import reviewReducer from './store/reducers/reviewsReducer';
-
+import barbersReducer from './store/reducers/barber';
 
 enableScreens();
 
@@ -29,7 +29,8 @@ bookings : bookingsReducer,
 services : servicesReducer,
 bookings : bookingsReducer,
 lists : listReducer,
-reviews : reviewReducer
+reviews : reviewReducer,
+barber:barbersReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
