@@ -41,7 +41,7 @@ const TopBarbersCard = (props)=> {
               buttonStyle ={styles.button}
               title = "Profile" 
               titleStyle = {{color :"#fff",fontSize : screen.width/30}}
-             
+              onPress={props.navigateToBarberProfil}
               />
 
         </View>

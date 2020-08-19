@@ -22,15 +22,24 @@ const StartupScreen = props =>{
            const expirationDate = new Date(expiryDate);
            //AsyncStorage.clear();
            
-           if(!token || !userID || !id || expirationDate <= new Date()){
+
+           await dispatch(authActions.refreshTokenStepOne(token));
+           //AsyncStorage.clear();
+           const userTokenData= await AsyncStorage.getItem('userTokenData');
+           if(!userTokenData){
             props.navigation.navigate('Auth');
             return;
            }
+   
+           const transformedTokenData= JSON.parse(userTokenData);
+           const {refreshToken,expiresIn}= transformedTokenData;
+           
 
            const expirationTime = expirationDate.getTime() - new Date().getTime();
+           const newExpirationTime= expirationTime + parseInt(expiresIn);
             
             props.navigation.navigate('Client',{clientID:id,clientUID:userID});
-            dispatch(authActions.authenticate(token,userID,expirationTime));
+            dispatch(authActions.authenticate(refreshToken,userID,newExpirationTime));
        }
        tryLogin();
     },[dispatch]);
@@ -38,13 +47,10 @@ const StartupScreen = props =>{
     return(
       <View style = {styles.container}>
         <ImageBackground 
-        source={require('../assets/images/barber2.jpg')} 
+        source={require('../assets/images/support.png')} 
         style={styles.bigBackgroundImage}
         >
-            <View style={styles.overlayBackground}>
-                <ActivityIndicator size='large' color={Colors.primary} />
-            
-            </View>
+            <ActivityIndicator size='large' color={Colors.primary} />
          </ImageBackground>
 
       </View>
@@ -61,10 +67,6 @@ container : {
 bigBackgroundImage:{
 flex:1,
 resizeMode:'cover',
-}, 
-overlayBackground:{
-backgroundColor:"rgba(0, 0, 0, 0.4)", 
-flex:1,
 justifyContent:'center',
 alignItems:'center'
 }
