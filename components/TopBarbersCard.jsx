@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Dimensions,Image,ImageBackground} from 'react-native'; 
+import { StyleSheet, Text, View, Dimensions,Image,ImageBackground,TouchableOpacity
+} from 'react-native'; 
 import {Button , Rating, AirbnbRating,Avatar} from "react-native-elements";
 import {Ionicons} from '@expo/vector-icons';
+import Colors from '../constants/Colors';
 
 const screen = Dimensions.get("window");
 
@@ -24,7 +26,6 @@ const TopBarbersCard = (props)=> {
         <View style = {styles.barberInfos}>
             <Text style = {styles.name}>{props.surname + " "+props.name}</Text>
             <Text style = {styles.info}>{props.wilaya +" - "+props.region}</Text>
-            <Text style = {styles.info}>{props.phone}</Text>
             <Rating imageSize={20} 
                     readonly
                    startingValue= {props.mark === null ? 0.5 : props.mark}
@@ -32,16 +33,21 @@ const TopBarbersCard = (props)=> {
                    style={styles.rating }
                    ratingColor = "#FE9654"          
                    type='custom'
-                  ratingBackgroundColor={'#323446'}
-                  tintColor='#fff'
+                    ratingBackgroundColor={'#323446'}
+                    tintColor='#fff'
 
                         />
+
+            <TouchableOpacity style={{alignItems : "center"}} onPress={props.navigateToBarberProfil}>
+                  <Text style ={{color : "#fd6c57",fontFamily : "poppins-bold",letterSpacing : 1,fontSize : screen.width/30}}>Voir le profil </Text>
+                </TouchableOpacity>
+          
                     
             <Button 
               buttonStyle ={styles.button}
-              title = "Profile" 
+              title = "Réserver" 
               titleStyle = {{color :"#fff",fontSize : screen.width/30}}
-              onPress={props.navigateToBarberProfil}
+              onPress = {props.navigate}
               />
 
         </View>
@@ -109,7 +115,7 @@ const styles= StyleSheet.create({
  },
  name : {
     fontFamily : "poppins-bold",
-    color : "#000",
+    color:Colors.blue,
     alignSelf : "center",
     fontSize : screen.width/24
  },

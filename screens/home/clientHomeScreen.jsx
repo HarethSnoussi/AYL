@@ -114,7 +114,7 @@ useEffect(()=>{
 
 /********************************************************************** */
 
-if (error) {
+if (error || allBarbers.length < 0) {
   return (
     <View style={styles.centered}>
       <Text>Une erreur est survenue !</Text>
@@ -129,7 +129,7 @@ if (error) {
 
 
 
-if (isLoading || allBarbers.length < 0 ) {
+if (isLoading  ) {
 
   return (
 
@@ -196,6 +196,7 @@ if (isLoading || allBarbers.length < 0 ) {
              wilaya = {barber.wilaya}
              mark = {barber.mark}
              navigateToBarberProfil={()=>props.navigation.navigate("Barber",{barberID : barber.id})}
+             navigate = {()=>props.navigation.navigate("BookStepOne",{barberId : barber.id,clientID,name:barber.name,surname:barber.surname,mark:barber.mark,region:barber.region,wilaya:barber.wilaya})}
             />
            )})
             }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { StyleSheet, Text, View , ImageBackground,Image, Dimensions , StatusBar, Platform,ActionSheetIOS, ActivityIndicator , FlatList, TouchableOpacity} from 'react-native';
-import { Button ,ButtonGroup} from 'react-native-elements';
+import { Button ,Avatar,Rating} from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -11,6 +11,7 @@ import 'moment/locale/fr';
 
 
 import ConfirmBookingOverlay from "../../../components/ConfirmBookingOverlay";
+import BarberInfos from '../../../components/BarberInfos';
 
  
 const hours = [
@@ -307,7 +308,15 @@ return (
     }
                 <View style = {styles.firstImage}>
 
-                <Image source = {require("../../../assets/pictures/barber2.jpg")} style = {{height : "100%",width : "100%"}}   />
+                {/* <Image source = {require("../../../assets/pictures/barber2.jpg")} style = {{height : "100%",width : "100%"}}   /> */}
+                <BarberInfos 
+                  name = {props.navigation.getParam("name")}
+                  surname = {props.navigation.getParam("surname")}
+                  wilaya = {props.navigation.getParam("wilaya")}
+                  region = {props.navigation.getParam("region")}
+                  mark = {props.navigation.getParam("mark")}
+               />
+                
 
                 </View>
 
@@ -396,8 +405,13 @@ return (
                             amount : props.navigation.getParam("amount"),
                             duration : totalTime,
                             services : services,
-                            clientID
-                    }
+                            clientID,
+                            name:props.navigation.getParam("name"),
+                            surname:props.navigation.getParam("surname"),
+                            mark:props.navigation.getParam("mark"),
+                            region:props.navigation.getParam("region"),
+                            wilaya:props.navigation.getParam("wilaya")
+                            }
                     
                     )
                    
@@ -427,7 +441,7 @@ return (
 BookStepTwo.navigationOptions = ()=> {
     return {
       headerTransparent : true,
-      title : "Réserver Un Service" ,
+      title : "" ,
       headerBackTitle : " ",
       headerTintColor: "#fff" 
     }
@@ -485,6 +499,18 @@ const styles= StyleSheet.create({
 
  
 },
+barberName :{
+    fontFamily : "poppins-bold",
+    fontSize : screen.width/24,
+    color :"#fff"
+  },
+  barberAdress : {
+    fontFamily : "poppins",
+     color : "#fff",
+  
+    fontSize : screen.width/30,
+  
+  },
 //////////////////////////////////////////////////////
 centered: {
     flex:1,

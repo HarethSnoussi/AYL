@@ -32,7 +32,7 @@ const BarberCard = props =>{
 
         <View>
               <View style= {styles.name}>
-                <Text style = {{fontFamily : "poppins-bold",fontSize : screen.width/26}} >{props.name + " " + props.surname}</Text>
+                <Text style = {{fontFamily : "poppins-bold",fontSize : screen.width/26,color:Colors.blue}} >{props.name + " " + props.surname}</Text>
                 {/* <View style = {{flexDirection : "row"}}>
              
                 <EvilIcons name="location" size={24} color="#9d9da1" />

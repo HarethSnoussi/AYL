@@ -72,7 +72,7 @@ days.forEach(day => {
     mark[day] = { 
         selected: true, 
         marked: false , 
-        selectedColor:Colors.orange,
+        selectedColor:"#F4686A",
         text: {
             color: 'black',
             fontWeight: 'bold'
@@ -87,7 +87,7 @@ days.forEach(day => {
 mark[selectedDate.substring(0,10)] = { 
   selected: true, 
   marked: false , 
-  selectedColor:Colors.colorH5,
+  selectedColor:Colors.primary,
   text: {
       color: 'black',
       fontWeight: 'bold'
@@ -245,20 +245,20 @@ if (isLoading) {
            theme={{
             // selectedDayTextColor: Colors.primary,
 
-            calendarBackground: Colors.secondary,
-            textSectionTitleColor: '#fff',
-            textSectionTitleDisabledColor: '#fff',
+            calendarBackground: "#fff",
+            textSectionTitleColor: Colors.blue,
+            textSectionTitleDisabledColor: Colors.blue,
             todayTextColor: '#2d4150',
-            dayTextColor: '#fff',
-            textDisabledColor: '#252525',
-            dotColor: '#fff',
-            selectedDotColor: '#ffffff',
-            arrowColor: '#fff',
+            dayTextColor: Colors.blue,
+            textDisabledColor: '#d9d9d9',
+            dotColor: Colors.blue,
+            selectedDotColor: Colors.primary,
+            arrowColor: Colors.blue,
             disabledArrowColor: '#d9e1e8',
-            monthTextColor: '#fff',
-            indicatorColor: '#fff',
+            monthTextColor: Colors.blue,
+            indicatorColor: Colors.primary,
             textDayFontFamily: 'poppins',
-            textMonthFontFamily: 'poppins',
+            textMonthFontFamily: 'poppins-bold',
             textDayHeaderFontFamily: 'poppins',
            
             
@@ -271,7 +271,7 @@ if (isLoading) {
 
         </View>
             <View style = {{width  : "90%",alignSelf : "center"}}>
-            <Text style = {{fontSize : screen.width/24 , fontFamily : "poppins-bold"}}>{selectedDateText}</Text>
+            <Text style = {{fontSize : screen.width/24 , fontFamily : "poppins-bold",color:Colors.blue}}>{selectedDateText}</Text>
 
             </View>
                 <ScrollView refreshing={isRefreshing} style = {styles.cardsContainer}>
@@ -327,7 +327,7 @@ if (isLoading) {
 const styles= StyleSheet.create({
     container : {
       flex : 1 , 
-      backgroundColor : "#f2f2f2",
+      backgroundColor : "#F5f0EB",
       overflow : "hidden",
 
     },

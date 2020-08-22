@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Overlay, colors } from 'react-native-elements';
-import { Text, View, Button,StyleSheet, Dimensions,Alert ,ActivityIndicator} from 'react-native';
+import { Overlay,  Button, } from 'react-native-elements';
+import { Text, View,StyleSheet, Dimensions,Alert ,ActivityIndicator} from 'react-native';
 
 import {Ionicons} from "@expo/vector-icons";
 import { useDispatch, useSelector } from 'react-redux';
 import {addBooking} from "../store/actions/bookingsActions";
 import moment from 'moment';
 import Colors from '../constants/Colors';
+
 
 const screen = Dimensions.get("window");
 
@@ -41,9 +42,12 @@ const date = new Date();
     wilaya : props.wilaya
 }
 try {
-  setLoading(true);
- props.overlayHandler();
+
+setLoading(true);
+
+
  await dispatch(addBooking(booking));
+ props.overlayHandler();
  await props.navigate();
  setLoading(false);
  Alert.alert(
@@ -56,6 +60,7 @@ try {
 );
   
 } catch (error) {
+  setLoading(true);
   Alert.alert(
     "Réservation non envoyée",
     "Echec lors de l'envoie de la réservation",
@@ -64,7 +69,7 @@ try {
     ],
     { cancelable: false }
   );
- 
+  setLoading(false);
   throw error;
 }
 
@@ -73,20 +78,25 @@ try {
 
 const services = props.services.map(e=>e.name);
 
-
 if (isLoading) {
     
   return (
+    <Overlay 
+    isVisible={props.isVisible}
+    overlayStyle = {styles.overlayStyle}
+    >
     <View style= {styles.centered} >
       <ActivityIndicator size="large" color= {Colors.primary} />
     
     </View>
+    </Overlay>
   );
 }
 
 
     return (
     <Overlay 
+    onBackdropPress = {props.overlayHandler}
     isVisible={props.isVisible}
     overlayStyle = {styles.overlayStyle}
     >
@@ -126,32 +136,46 @@ if (isLoading) {
 
 </View>
 
-<View style = {styles.confirm}>
+{/* <View style = {styles.confirm}> */}
 
-    <View><Text>Confirmer ? </Text></View>
-    <View style={styles.iconsContainer} >
-        <View >
+    {/* <View><Text>Confirmer ? </Text></View> */}
+    {/* <View style={styles.iconsContainer} > */}
+        <View style={{width:"80%",alignSelf : "center"}} >
 
-            <Ionicons 
-            name = "md-checkbox" 
-            size = {28}
-            onPress={()=>sendConfirmation()}
-            color = {Colors.colorH1}
-            />
-      </View>
+            <Button
+              onPress={()=>sendConfirmation()}
+             buttonStyle = {{backgroundColor:Colors.colorF2,borderRadius :5,}}
+                    // icon={
+                    //   <Ionicons 
+                    //           name = "md-checkmark" 
+                    //           size = {28}
+                    //           onPress={()=>sendConfirmation()}
+                    //           color = "#fff"
+                    //           />
+                    // }
+                    title="Confirmer"
+/>
+      {/* </View> */}
 
 
-      <View >
-     
-      <Ionicons 
-      name="ios-close-circle-outline" 
+      {/* <View >
+      <Button
+      containerStyle = {{}}
+      buttonStyle = {{backgroundColor:Colors.colorF5,borderRadius :5}}
+  icon={
+    <Ionicons 
+      name="md-close-circle-outline" 
       size={28} 
-      color= {Colors.primary}     
+      color = "#fff"    
        onPress={props.overlayHandler} />
+  }
+  title=""
+/>
+      
 
-      </View>
+      </View> */}
 </View>
-  </View>
+  {/* </View> */}
 
 
     
@@ -171,7 +195,8 @@ const styles= StyleSheet.create({
     width : "80%",
     height :"60%",
     borderRadius : 20,
-    backgroundColor : "rgba(255, 255, 249,1)",
+    // backgroundColor : "rgba(255, 255, 249,1)",
+    
 
   },
   title : {
@@ -201,6 +226,15 @@ const styles= StyleSheet.create({
     width : "40%",
     justifyContent : "space-between",
     marginTop : 5
+    },
+
+    centered: {
+      flex:1,
+      alignItems:'center',
+      justifyContent:'center',
+      width:'100%',
+      height:'100%',
+      resizeMode:'cover'
     }
 
 });

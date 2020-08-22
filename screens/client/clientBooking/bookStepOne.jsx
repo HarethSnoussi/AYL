@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { StyleSheet, Text, View , Picker,Image, Dimensions , StatusBar, Platform,ActionSheetIOS, ActivityIndicator ,ScrollView, FlatList, ImageBackground} from 'react-native';
-import { Button ,ButtonGroup} from 'react-native-elements';
+import { StyleSheet, Text, View , Image, Dimensions , StatusBar, Platform,ActionSheetIOS, ActivityIndicator ,ScrollView, FlatList, ImageBackground} from 'react-native';
+import { Button ,ButtonGroup,CheckBox,Divider, Avatar,Rating} from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import moment from 'moment';
@@ -12,6 +12,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import ServicePicker from '../../../components/ServicePicker';
 import { getServices } from '../../../store/actions/servicesActions';
+import { color } from 'react-native-reanimated';
+import MyCheckBox from '../../../components/MyCheckBox';
+import BarberInfos from '../../../components/BarberInfos';
 
 
 // const barberServices = [{name : "coupe classique" , price : 350 , duration : 25},{name : "Barbe" , price : 150 , duration : 10},{name : "Keartine" , price : 1500 , duration : 55}];
@@ -47,10 +50,10 @@ const [servicesNumber , setServicesNumber] = useState(0);
 const [addedTypes , setTypes] = useState([]);
 
 //ALL prices Added
-const [addedPrices , setPrices] = useState ([]);
+const [addedPrices , setPrices] = useState ([0]);
 
 //All Added Times
-const [addedTimes , setAddedTimes] = useState([]);
+const [addedTimes , setAddedTimes] = useState([0]);
 
 //Total Amount State
 const [totalAmount,setAmount] = useState(0);
@@ -64,6 +67,13 @@ const [data,setData] = useState([]);
 //fetched Bookings 
 
 const [bookings,setBookings] = useState([]);
+
+
+const checkHandler = ()=>{
+
+  setCheck(previous=>!previous)
+}
+
 
 useEffect(()=>{
  const getData = async ()=>{
@@ -142,84 +152,29 @@ useEffect(()=>{
 /************************************************************************* */
 
 
-
-//ADD AND UPDATE SERVICES
-const setServicesHandler= (service,id)=>{
-   setServices(previous => {
+const servicesHandler = (service,bool)=>{
+  if(!bool)
+   {
+     setServices(previous => {
         return [...previous,  {...service }];
       });
-    //   setServicesNumber(old=>old+1);
-    //   setID(previous=>{return([...previous,id])});
-      setTypes(previous=>[...previous,service.name]);
-      setPrices(previous=>[...previous,service.price]);
       setAddedTimes(previous=>[...previous,service.duration]);
+      setPrices(previous=>[...previous,service.price]);
+      // setAmount(addedPrices.reduce(sumArray));
+      // setTime(addedTimes.reduce(sumArray));
+      setAmount(previous=>previous+service.price);
+      setTime(previous=>previous+service.duration);
+    
+    }
+    else {
+      
+      setServices(prev=>{
+        return prev.filter((e) => {return(e.name !== service.name)});
+      })
+      setAmount(previous=>previous-service.price);
+      setTime(previous=>previous-service.duration);
+    }
 }
-
-const updateService =  (service,id) =>{
-
-    setServices(
-        prev =>{
-        prev[id].id = service.id;
-        prev[id].name = service.name;
-        prev[id].price = service.price;
-        prev[id].duration = service.duration;
-
-        return [...prev];
-    });
-    setTypes(prev =>{
-        prev[id] = service.name;
-        return [...prev];
-       
-    });
-
-    setPrices(prev =>{
-        prev[id] = service.price;
-        setAmount(addedPrices.reduce(sumArray));
-        return [...prev];
-    });
-
-    setAddedTimes(prev =>{
-        prev[id] = service.duration;
-        setTime(addedTimes.reduce(sumArray));
-        return [...prev];
-    });
-
-}
-
-
-//DELETE SERVICES
-const deleteService = async (id)=>{
-    setLoading(true);
-const removeService = await (() => {
- setServices(prev=>{
-        return prev.filter((service,index) => { return(index !== id)});
-})
-
-// setServicesNumber(old=>old-1);
-
-// setID(prev=>{
-//     return prev.filter(service =>{return (prev.indexOf(service) != id)})
-// })
-
- setTypes(prev =>{
-    return prev.filter((service , index ) =>{return (index !== id)})
-});
-
- setPrices(prev =>{
-    setAmount(prev => prev - addedPrices[id]);
-    return prev.filter((service ,index) =>{return (index !== id)})
-});
-
- setAddedTimes(prev =>{
-    setTime(prev => prev - addedTimes[id]);
-    return prev.filter((service,index) =>{return (index !== id)})
-});
-})
-removeService();
-setLoading(false);
- 
-}
-
 
 if (error) {
     
@@ -234,8 +189,6 @@ if (error) {
       </View>
     );
   }
-  
-
 
 if (isLoading) {
     
@@ -251,12 +204,52 @@ return (
             <View style= {styles.container}>
                 <View style = {styles.firstImage}>
 
-                <Image source = {require("../../../assets/pictures/barber2.jpg")} style = {{height : "100%",width : "100%"}}   />
-
+                {/* <Image source = {require("../../../assets/pictures/barber2.jpg")} style = {{height : "100%",width : "100%"}}   /> */}
+               <BarberInfos 
+                  name = {props.navigation.getParam("name")}
+                  surname = {props.navigation.getParam("surname")}
+                  wilaya = {props.navigation.getParam("wilaya")}
+                  region = {props.navigation.getParam("region")}
+                  mark = {props.navigation.getParam("mark")}
+               />
                 </View>
 
                 <View style = {styles.bookingInfoContainer}>
                 <View style = {{height : "80%"}}>
+
+                <View style = {styles.addService}>
+                    <View style= {{maxHeight : "100%"}}>
+                    <Text style = {styles.myServices} >Mes Services</Text>
+               <ScrollView  refreshing={isRefreshing} >
+               
+               { 
+                
+                      barberServices.map((service,index)=>{
+
+                          return(  
+                          
+                            <MyCheckBox
+                              key = {index}
+                              name = {service.name}
+                              price = {service.price}
+                              duration = {service.duration}
+                              setCheck = {checkHandler}
+                              servicesHandler = {servicesHandler}
+                              value = {service}
+                              
+                      />    
+                      
+                      )
+
+                      })
+
+        }
+
+                </ScrollView>
+             
+                </View>
+                    </View>
+                    <Divider style={{ backgroundColor: 'black' ,width : "80%",alignSelf : "center",marginBottom : "5%"}} />
                     <View style = {styles.totalPrice}>
                         <Text style = {styles.totalText}>Prix Total : </Text>
                         <Text style = {styles.totalNumber} >{totalAmount} DZD</Text>
@@ -265,47 +258,7 @@ return (
                         <Text style = {styles.totalText}>Temps Total : </Text>
                         <Text style = {styles.totalNumber} >{totalTime} MIN </Text>
                     </View>
-
-
-                    <View style = {styles.addService}>
-                    <View style= {{maxHeight : "100%"}}>
-               <ScrollView  refreshing={isRefreshing} >
-                {
-                pickedServices.map((service,index)=>{
-                  
-                    return ( 
-                        <ServicePicker 
-                        key = {index}
-                        id = {index}
-                        updateService = {updateService} 
-                        barberServices = {barberServices} 
-                        addedTypes = {addedTypes}
-                        deleteService = {deleteService}
-                        service = {service}
-                        />   
-                            )
-
-                })
-                
-                }
-                </ScrollView>
-                  {
-                        pickedServices.length < barberServices.length &&
-                      
-                        <Button 
-                        onPress = {()=>setServicesHandler({id : 0 ,name : " " , price : 0 , duration : 0})} title = "Ajouter un Service"
-                        containerStyle = {{width : "40%",alignSelf : "center",marginVertical : "5%" , }}
-                        titleStyle  = {{fontSize : screen.width/30,fontFamily : "poppins",color : "#fff"}}
-                        type="outline" 
-                        buttonStyle = {{backgroundColor : "#fd6c57",borderColor :"#fd6c57"}}
-                        />
-                  }
-                </View>
-                  
-                  
-                    </View>
-
-                    
+               
                     </View>
                    
                
@@ -328,7 +281,12 @@ return (
                       barber : props.navigation.getParam("barberId"),
                       workingTime : data,
                       bookings : bookings,
-                      clientID
+                      clientID,
+                      name:props.navigation.getParam("name"),
+                      surname:props.navigation.getParam("surname"),
+                      mark:props.navigation.getParam("mark"),
+                      region:props.navigation.getParam("region"),
+                      wilaya:props.navigation.getParam("wilaya")
                      })
                      }
                    /> 
@@ -349,7 +307,7 @@ return (
 BookStepOne.navigationOptions = ()=> {
     return {
       headerTransparent : true,
-      title : "Réserver Un Service" ,
+      title : "" ,
       headerBackTitle : " ",
       headerTintColor: "#fff" 
     }
@@ -363,7 +321,10 @@ const styles= StyleSheet.create({
             flex : 1 ,
    },
    firstImage : {
-        height :"30%"
+        height :"30%",
+        alignItems :"center",
+        justifyContent : "center",
+        backgroundColor : Colors.primary
    },
 //////////////////////////////////////////////////////////////////////////   
    bookingInfoContainer : {
@@ -375,44 +336,54 @@ const styles= StyleSheet.create({
         position : "absolute",
         top : "25%",
         overflow : "hidden",
-        justifyContent : "space-around"
+        justifyContent : "space-around",
+        paddingVertical : "5%",
+        // backgroundColor:"#F5F0EB"
       
    },
 ////////////////////////////////////////////////////////////////////////////
     totalPrice : {
         flexDirection : "row",
         justifyContent  : "space-between",
-        marginVertical : "5%",
+        marginBottom : "5%",
         width : "90%",
         alignSelf : "center",
+       
         
     },
     totalTime : {
-        
+
         flexDirection : "row",
         justifyContent  : "space-between",
        
         width : "90%",
         alignSelf : "center",
+        // marginBottom : "20%"
      
         
     },
     totalText : {
     fontFamily : "poppins-bold",
     fontSize : screen.width/26,
-    
-
+  
     },
     totalNumber : {
         fontFamily : "poppins-bold",
         fontSize : screen.width/26,
         color : "#fd6c57"
     },
+    myServices : {
+      fontFamily : "poppins-bold",
+      fontSize : screen.width/26,
+      alignSelf : "center",
+      marginVertical : 5
+      },
     ////////////////////////////////////////////////////////////////////////////////
     addService : {
-            height : "80%",
+          height : '70%',
             width: "90%",
             alignSelf: "center",
+            marginBottom : "5%"
         
     },
     oneService : {
@@ -421,6 +392,24 @@ const styles= StyleSheet.create({
     
             alignItems : "center"
     },
+    info : {
+      fontFamily : "poppins",
+      color : "#9d9da1",
+
+  fontSize : screen.width/30,
+},
+barberName :{
+  fontFamily : "poppins-bold",
+  fontSize : screen.width/24,
+  color :"#fff"
+},
+barberAdress : {
+  fontFamily : "poppins",
+   color : "#fff",
+
+  fontSize : screen.width/30,
+
+},
     //////////////////////////////////////////////////////
     centered: {
         flex:1,
