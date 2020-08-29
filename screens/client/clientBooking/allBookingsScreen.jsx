@@ -27,7 +27,7 @@ const AllBookingsScreen = (props) => {
 const allBookings = useSelector(state => state.bookings.bookings);
 //get Client ID
 const clientID= props.navigation.dangerouslyGetParent().getParam('clientID');  
-
+const tokens = useSelector(state=>state.tokens.clientTokens);
 //Selected Date State
 const [selectedDate , setSelectedDate] = useState(moment(moment().format("YYYY-MM-DD")).format());
 
@@ -130,7 +130,7 @@ const expired = useCallback(async ()=>{
     setError(false);
     setIsRefreshing(true);
       setLoading(true);
-      await dispatch(expiredbookings(clientID));
+      await dispatch(expiredbookings(clientID,tokens));
       await dispatch(getClientBookings(clientID));
       setIsRefreshing(false);
      setLoading(false);

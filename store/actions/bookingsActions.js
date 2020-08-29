@@ -1,6 +1,7 @@
 import moment from "moment";
 import React, { useState } from "react";
 import { View, StyleSheet, Button, Alert } from "react-native";
+import { useSelector } from "react-redux";
 
 export const ADD_BOOKING = "ADD_BOOKING"; 
 export const GET_BOOKING = "GET_BOOKING"; 
@@ -41,10 +42,9 @@ export const addBooking = (booking) => {
 
 
 };
+/********************************************************************************************* */
 
-
-
-
+/********************************************************************************************** */
 export const getClientBookings = (clienId)=>{
 
   return async (dispatch) =>{
@@ -190,28 +190,58 @@ export const cancelBooking = (id)=> {
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //Expired Bookings 
 
-export const expiredbookings = (clientId)=> {
+export const expiredbookings = (clientId,tokens)=> {
 
   return async (dispatch) =>{
 try {
  
 
-  const response = await fetch(
-      `http://173.212.234.137:3000/bookings/expiredbookings`,
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      body : JSON.stringify({clientId : clientId})
-      }
-      
-      
-    );
+  const arr = await fetch(`http://173.212.234.137:3000/getbookings/expired/${clientId}`);
+  const resData = await arr.json ();
 
-    if (!response.ok) {
-      throw new Error('Something went wrong!');
-    }
+              if(resData.length > 0) {
+                const allMessages = [];
+
+                tokens.map(e=>{
+                
+                allMessages.push(
+                  {
+                    to: e.expoToken,
+                    sound: 'default',
+                    title: 'Expirée',
+                    body: 'Vous avez une réservation qui a expirée !',
+                    data: { data: 'goes here' ,title: 'Vous avez une réservation qui a expirée !u',
+                    body: 'Vous avez une réservation qui a expirée !',},
+                  }
+                
+                )
+                
+                })
+              
+                allMessages.map(async (e)=>{
+                  await fetch('https://exp.host/--/api/v2/push/send', {
+                    method: 'POST',
+                    headers: {
+                      Accept: 'application/json',
+                      'Accept-encoding': 'gzip, deflate',
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(e),
+                  });
+                
+                
+                })
+                
+              }
+
+    // if (!response.ok) {
+    //   throw new Error('Something went wrong!');
+    // }
+    // else {
+     
+    
+
+    // }
 
 //     const resData = await response.json;
 

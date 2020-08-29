@@ -5,6 +5,7 @@ export const UPDATE_CLIENT_PASSWORD ="UPDATE_CLIENT_PASSWORD";
 export const UPDATE_CLIENT_PHONE = "UPDATE_CLIENT_PHONE";
 export const UPDATE_CLIENT = "UPDATE_CLIENT";
 export const DELETE_CLIENT = "DELETE_CLIENT";
+export const UPDATE_CLIENT_TOKEN = "UPDATE_CLIENT_TOKEN";
 
 
 export const createClient=(id,phone,password,sex,name,surname,wilaya,region)=>{
@@ -131,6 +132,8 @@ export const updateClientPhone= (id,phone,clientid) => {
     };
 
 };
+
+
 
 
 export const updateClient= (id,name,surname,email,address,image,wilaya,region) => {

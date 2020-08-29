@@ -310,7 +310,7 @@ app.patch("/bookings/expiredbookings",(req,res)=>{
      console.log(err)
      res.send(err);
    } else {
-
+  
      res.send("Success");
    }
    
@@ -319,16 +319,30 @@ app.patch("/bookings/expiredbookings",(req,res)=>{
  });
 
 
-app.get("/bookings/expired",(req,res)=>{
-  console.log(req.body.clientId);
+app.get("/getbookings/expired/:clientId",(req,res)=>{
+
  
-   con.query("SELECT DATE_ADD(NOW(), INTERVAL 1 HOUR) ,CURRENT_TIMESTAMP , status, cast(now() as date),end,date  as date,SUBSTRING(date_booking,1,10) as bookingDate, NOW() FROM booking WHERE  SUBSTRING(date_booking,1,10)  = SUBSTRING(NOW(),1,10) AND booking.client_id = '557115451' AND status = 'en attente'  AND CURRENT_TIMESTAMP > start OR SUBSTRING(date_booking,1,10) < SUBSTRING(NOW(),1,10)  AND booking.client_id = '557115451' ",[],
+   con.query("SELECT * from booking WHERE  SUBSTRING(date_booking,1,10)  = SUBSTRING(NOW(),1,10) AND booking.client_id = ? AND status = 'en attente'  AND CURRENT_TIMESTAMP > start OR SUBSTRING(date_booking,1,10)  <  SUBSTRING(NOW(),1,10)  AND booking.client_id = ? AND status = 'en attente'",[req.params.clientId,req.params.clientId],
    (err,result,fields)=>{ 
  
    if (err) {
      res.send(err);
    } else {
- 
+           if(result.length >0) {
+            con.query("UPDATE booking SET status = 'expirée' WHERE  SUBSTRING(date_booking,1,10)  = SUBSTRING(NOW(),1,10) AND booking.client_id = ? AND status = 'en attente'  AND CURRENT_TIMESTAMP > start OR SUBSTRING(date_booking,1,10)  <  SUBSTRING(NOW(),1,10)  AND booking.client_id = ? AND status = 'en attente' ",[req.params.clientId,req.params.clientId],
+            (err,result,fields)=>{ 
+          
+            if (err) {
+              console.log(err)
+              res.send(err);
+            } else {
+           
+              console.log("success");
+            }
+            
+          });
+           }
+   
      res.send(result);
    }
    
@@ -533,9 +547,12 @@ app.delete('/userDelete/:uid',(req,res)=>{
 });
 ///////////////////////////////////////////////Firebase functions end//////////////////////////////
 
+//////////////////////////////////////////////Notifications///////////////////////////////////////////
 
 
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 // Starting our server.
 app.listen(3000, () => {
     console.log('Connected');

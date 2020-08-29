@@ -1,23 +1,34 @@
-import React ,{useEffect, useState,useCallback}  from 'react';
-import { StyleSheet, Text, View, ImageBackground , Image ,Dimensions , StatusBar,ActivityIndicator,ScrollView, FlatList, TouchableOpacity } from 'react-native';
+import React ,{useEffect, useState,useCallback,useRef,Component }  from 'react';
+import { StyleSheet, Text, View, ImageBackground , Image ,Dimensions , StatusBar,ActivityIndicator,ScrollView, FlatList, TouchableOpacity,Alert,AppState } from 'react-native';
+import Constants from 'expo-constants';
+import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions';
+import { Notifications as Notifications2 } from 'expo';
 
-import {Button } from 'react-native-elements';
-
-import { SwitchActions } from 'react-navigation';
+import {Button ,Overlay} from 'react-native-elements';
 import { useDispatch,useSelector } from 'react-redux';
-
 import * as clientActions from '../../store/actions/clientActions';
 import Colors from "../../constants/Colors.js";
+
 import TopSalonsCard from '../../components/TopSalonsCard';
 import TopBarbersCard from '../../components/TopBarbersCard.jsx';
+
 import { getServices } from '../../store/actions/servicesActions.js';
 import { getBarbers} from '../../store/actions/listActions';
-import { getClientBookings } from '../../store/actions/bookingsActions.js';
-
+import { getClientBookings, sendNotification } from '../../store/actions/bookingsActions.js';
 
 import { expiredbookings } from '../../store/actions/bookingsActions.js';
 import { getReviews } from '../../store/actions/reviewsActions';
+import { addtoken ,getTokens } from '../../store/actions/tokenActions';
 const screen = Dimensions.get("window");
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+});
 
 
 const ClientHomeScreen = props =>{
@@ -30,22 +41,36 @@ const ClientHomeScreen = props =>{
 //get Client ID
 const clientID= props.navigation.dangerouslyGetParent().getParam('clientID');  
 
+const client= useSelector(state=>state.clients.client);
+const tokens = useSelector(state=>state.tokens.clientTokens);
 
-
+// await dispatch(addtoken({expoToken:"HI",clientId:"557115451"}));
 const [isLoading , setLoading] = useState(false);
 const [isRefreshing, setIsRefreshing] = useState(false);
   //Error Handler
 const [error, setError] = useState();
 const dispatch = useDispatch ();
 
-/********************************************************************** */
+/************************************************************************************************** */
+//Notifications 
+const [expoPushToken, setExpoPushToken] = useState('');
+const [notification, setNotification] = useState(false);
+const notificationListener = useRef();
+const [visible, setVisible] = useState(false);
+const responseListener = useRef();
+
+const toggleOverlay = () => {
+  setVisible(!visible);
+  
+};
+
    /*
    *******Fetch One barber DATA
   */
  const getClient=useCallback(async()=>{
   try{
     setLoading(true);
-
+    await dispatch(getTokens(clientID));
     await dispatch(clientActions.setClient(clientID));
   setLoading(false);
 
@@ -88,8 +113,6 @@ const getAllBarbers = useCallback(async ()=>{
       throw err ;
     }
 
-  
-
 },[dispatch,setError]);
 
 
@@ -114,7 +137,114 @@ useEffect(()=>{
 
 /********************************************************************** */
 
-if (error || allBarbers.length < 0) {
+/************NOTIFICATION ***********************************/
+
+
+useEffect(() => {
+
+  if(client.length !== 0 )
+  {
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+  
+  }
+
+    responseListener.current =  Notifications2.addListener((data) => {
+      // props.navigation.navigate("AllBarbers",{type : "coiffeurs",clientID});
+     
+        setVisible(true);
+      
+      
+      
+      // console.log(Notifications2);
+    });
+
+  return () => {
+    Notifications.removeNotificationSubscription(notificationListener);
+    Notifications.removeNotificationSubscription(responseListener);
+  };
+
+
+
+}, [client,tokens]);
+
+
+
+// Can use this function below, OR use Expo's Push Notification Tool-> https://expo.io/dashboard/notifications
+async function sendPushNotification(expoPushToken) {
+  const message = {
+    to: expoPushToken,
+    sound: 'default',
+    title: 'This is a message from Tahfifa ',
+    body: 'And here is the body!',
+    data: { data: 'goes here' },
+  };
+
+  await fetch('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Accept-encoding': 'gzip, deflate',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(message),
+  });
+}
+
+async function registerForPushNotificationsAsync() {
+  let token;
+
+  if (Constants.isDevice) {
+    const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+  
+    let finalStatus = existingStatus;
+   
+    if (existingStatus !== 'granted') {
+      console.log(' push notification!');
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+     
+      console.log('Failed to get push token for push notification!');
+      return;
+    }
+
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+      let  tokenIndex;
+     
+      if(tokens.length>0){
+       tokenIndex = await tokens.findIndex(
+        t => t.clientId === clientID && t.expoToken === token
+      );
+    
+    }
+
+        if(tokenIndex < 0 || tokens.length ===0 ) {
+         
+            await dispatch(addtoken({expoToken:token , clientId : clientID}))
+        }
+
+  } else {
+    alert('Must use physical device for Push Notifications');
+  }
+
+  if (Platform.OS === 'android') {
+    Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
+
+  // console.log(token);
+  return token;
+}
+
+/************************************************************************************************** */
+/********************************************************************** */
+
+if (error ) {
   return (
     <View style={styles.centered}>
       <Text>Une erreur est survenue !</Text>
@@ -129,7 +259,7 @@ if (error || allBarbers.length < 0) {
 
 
 
-if (isLoading  ) {
+if (isLoading || allBarbers.length <= 0 || client.length ===0) {
 
   return (
 
@@ -142,6 +272,8 @@ if (isLoading  ) {
   );
 }
 //***************************************************************************
+
+
 
     return(
 
@@ -158,8 +290,25 @@ if (isLoading  ) {
                 backgroundColor :"white"
         }}
         lightTheme = {true} /> */}
+        
             <View style = {styles.firstTitle}>  
-            <Text style = {styles.titleText}>Cherchez Votre Coiffeur</Text>
+            <Text style = {styles.titleText}>Retrouvez Votre Coiffeur</Text>
+            <Button
+        title="Press to Send Notification"
+        onPress={async () => {
+          
+          await sendPushNotification("ExponentPushToken[oT3jaoPOJ72nfHTKmLvSy8]");
+        }}
+      />
+
+<View>
+     
+
+      <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
+        <Text>Hello from Overlay!</Text>
+      </Overlay>
+    </View>
+
             </View>
        
             </ImageBackground>
@@ -180,7 +329,7 @@ if (isLoading  ) {
               </View>
               { 
            allBarbers.length > 0 ?
-          <ScrollView style ={styles.topBarbers} horizontal showsHorizontalScrollIndicator  = {false}>
+          <ScrollView style ={styles.topBarbers} horizontal showsHorizontalScrollIndicator  = {false} >
 
 
            
@@ -221,6 +370,8 @@ if (isLoading  ) {
 </View>
    
      );    
+
+    
 };
 
 ClientHomeScreen.navigationOptions= ()=>{

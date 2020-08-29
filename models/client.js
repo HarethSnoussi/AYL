@@ -15,6 +15,7 @@ class Client {
         this.wilaya=wilaya;
         this.region=region;
         this.lang=lang;
+        
     }
     
     

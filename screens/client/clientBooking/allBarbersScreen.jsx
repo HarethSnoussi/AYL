@@ -5,7 +5,7 @@ import { SearchBar } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import Colors from "../../../constants/Colors";
-import InfoOverlay from '../../../components/InfoOverlay';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { Button , Rating} from 'react-native-elements';
 import { getBarbers } from '../../../store/actions/listActions';
