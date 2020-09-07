@@ -38,8 +38,8 @@ const ClientHomeScreen = props =>{
   // OVerlay after booking Sent
 
 const [sentVisible,setSentVisible] = useState(false);
-const [stepThreeParam,setStepThreeParam] =useState(0);
-const [cpt , setCpt] = useState(0);
+
+
 const allBookings = useSelector(state => state.bookings.bookings);
   //Get ALL Barbers AND SAloons from the store to display three of them
   const allBarbers = useSelector(state => state.lists.barbers) ;
@@ -67,13 +67,7 @@ const notificationListener = useRef();
 const [visible, setVisible] = useState(false);
 const responseListener = useRef();
 
-const [finished,setFinished] = useState([]);
 
-const toggleOverlay = () => {
-
-  setVisible(!visible);
-  
-};
 
 
 
@@ -156,7 +150,6 @@ useEffect(()=>{
 
 /************NOTIFICATION ***********************************/
 
-
 useEffect(() => {
 
   if(client.length !== 0 )
@@ -164,24 +157,39 @@ useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
   
   }
+  
 
-    responseListener.current =  Notifications2.addListener((data) => {
-      // props.navigation.navigate("AllBarbers",{type : "coiffeurs",clientID});
-        
-        setVisible(true);
-         setNotificationData(previous=>[...previous,data]);
-      
-    });
-
-  return () => {
-    Notifications.removeNotificationSubscription(notificationListener);
-    Notifications.removeNotificationSubscription(responseListener);
-  };
 
 
 
 }, [client,tokens]);
 
+useEffect(()=>{
+
+  responseListener.current =  Notifications2.addListener((data) => {
+    // props.navigation.navigate("AllBarbers",{type : "coiffeurs",clientID});
+
+    notificationDataHandler(data.data);
+    toggleOverlay();
+   
+
+    
+  });
+
+return () => {
+  Notifications.removeNotificationSubscription(notificationListener);
+  Notifications.removeNotificationSubscription(responseListener);
+};
+
+
+},[])
+
+
+
+
+
+
+// console.log(notificationData);
  //Overlay Handelr
  const sentOverlayHandler = ()=>{
      
@@ -263,7 +271,24 @@ async function registerForPushNotificationsAsync() {
   return token;
 }
 
+const notificationDataHandler = useCallback((data)=>{
+  
+
+    setNotificationData(previous=>{if(previous.findIndex(e=>e.id===data.id)<0)
+     { return([...previous,data])}
+     else {return([...previous])}
+    
+    }
+    
+    );
+  
+  },[setNotificationData])
+
+
+
+
 /************NOTIFICATION END ***********************************/
+/**************OVERLAYS************************** */
 useEffect(()=>{
 
   if(stepThreeCpt != undefined){
@@ -275,22 +300,15 @@ useEffect(()=>{
 
 },[stepThreeCpt]);
 
-useEffect(()=>{
+const toggleOverlay = () => {
 
-  const finished2 =  allBookings.filter(e=>((moment().format("ll") === moment(e.bookingDate).format("ll") || moment() > moment(e.bookingDate)) && e.status === "confirmée" ))
-  setFinished(finished2);
+  setVisible(!visible);
   
-    if (finished.length > 0){
-   
-      toggleOverlay();
-    
-    }
+};
 
-},[allBookings]);
 
 /************************************************************************************************** */
 /********************************************************************** */
-
 if (error ) {
   return (
     <View style={styles.centered}>
@@ -345,14 +363,21 @@ if (isLoading || allBarbers.length <= 0 || client.length ===0) {
     
 
 <View>
+{/* { notificationData.length >0 && notificationData.map((e,index)=>{
+  return(
 
-      <NotifOverlay 
-      close={toggleOverlay} 
+  <NotifOverlay 
+      key={index}
+      close={(toggleOverlay)} 
       url ={require("../../assets/pictures/assest.png")} 
-      isVisible = {visible} 
+      isVisible = {true} 
 
       />
 
+
+)})
+  
+} */}
  
     </View>
 <View>

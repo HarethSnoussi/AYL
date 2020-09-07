@@ -51,7 +51,7 @@ const days = allBookings.map(e=>e.bookingDate);
 let mark = {};
 
 days.forEach(day => {
- if ( moment().format("ll") === moment(day).format("ll") || moment() <= moment(day)) {
+ if ( ( moment().isSame(day,"day") || moment().isBefore(day,"day"))) {
 
     mark[day] = { 
         selected: true, 
@@ -87,7 +87,7 @@ days.forEach(day => {
 mark[selectedDate.substring(0,10)] = { 
   selected: true, 
   marked: false , 
-  selectedColor:Colors.primary,
+  selectedColor:Colors.blue,
   text: {
       color: 'black',
       fontWeight: 'bold'
@@ -197,7 +197,7 @@ useEffect(()=>{
  
   const todaysBookings= async ()=>{
       setLoading(true);
-      const dayBooks = await allBookings.filter(bookings => moment(bookings.bookingDate).format() === selectedDate);
+      const dayBooks = await allBookings.filter(bookings => moment(bookings.bookingDate).isSame(selectedDate,"day"));
   
       await setDayBookings([...dayBooks]);
       setLoading(false);

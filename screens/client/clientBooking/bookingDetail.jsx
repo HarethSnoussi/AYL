@@ -25,7 +25,7 @@ const diffrence = parseInt(moment.duration(moment(start,"h:mm:ss a").diff(moment
 // const conditionAnnuler = ( (props.navigation.getParam("status") === "confirmée" && ((diffrence > 30 && moment(bookingDate).format("ll") === moment().format("ll")) || moment(bookingDate).format("ll") !== moment().format("ll"))) || props.navigation.getParam("status") === "en attente")  ;
 // console.log(diffrence);
 
-const conditionAnnuler = ( (props.navigation.getParam("status") === "confirmée" && ((diffrence >= 30 && moment(bookingDate).format("ll") === moment().format("ll")) || moment(bookingDate).format("ll") > moment().format("ll"))) || props.navigation.getParam("status") === "en attente");
+const conditionAnnuler = ( (props.navigation.getParam("status") === "confirmée" && ((diffrence >= 30 && moment().isSame(bookingDate, 'day')) || moment().isBefore(bookingDate, 'day'))) || props.navigation.getParam("status") === "en attente");
 
 const conditionCall = props.navigation.getParam("status") === "confirmée" ;
 
@@ -43,8 +43,7 @@ async function sendPushNotification() {
       sound: 'default',
       title: 'Réservation Annulée',
       body: 'Un client a annulé une réservation !',
-      data: { data: 'goes here' ,client:props.clientId, title: 'Réservation Annulée',
-      body: 'Un client a annulé une réservation !',},
+      data: { data: 'goes here'},
     }
   
   )
@@ -188,7 +187,7 @@ if (isLoading) {
 <ConfirmOverlay cancel = {cancelBookingHandler} close = {overlayToggle} isVisible = {overlayVisible} url ={require("../../../assets/pictures/question.png")}  />
 
     <BookingCard
-                             start = {start}
+                            start = {start}
                             end = {props.navigation.getParam("end")}
                             bookingDate = {bookingDate}
                             status = {props.navigation.getParam("state")}
