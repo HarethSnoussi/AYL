@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button , Rating} from 'react-native-elements';
 import { getBarbers } from '../../../store/actions/listActions';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import NotifOverlay from '../../../components/NotifOverlay';
 
 const screen = Dimensions.get("window");
 const AllBarbersScreen = props =>{
@@ -108,7 +109,7 @@ if (isLoading) {
     return(
      
       <View style = {styles.container}>
-      
+     
       
   <View style = {{flexDirection :"row",alignItems : "center",width : "95%",justifyContent :"space-around",marginVertical : "2%",alignSelf : "center",height:"10%"}}>
 
@@ -155,7 +156,7 @@ if (isLoading) {
               return (
               <BarberCard 
               key = {index}
-              navigate = {()=>props.navigation.navigate("BookStepOne",{barberId : barber.id,clientID,name:barber.name,surname:barber.surname,mark:barber.mark,region:barber.region,wilaya:barber.wilaya})}
+              navigate = {()=>props.navigation.navigate("BookStepOne",{barberId : barber.id,clientID,name:barber.name,surname:barber.surname,mark:barber.mark,region:barber.region,wilaya:barber.wilaya,overCpt :props.navigation.getParam("overCpt")})}
               navigateToBarberProfil={()=>props.navigation.navigate("Barber",{barberID : barber.id})}
               name = {barber.name}
               surname = {barber.surname}

@@ -4,7 +4,7 @@ import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import { Notifications as Notifications2 } from 'expo';
-
+import moment from 'moment';
 import {Button ,Overlay} from 'react-native-elements';
 import { useDispatch,useSelector } from 'react-redux';
 import * as clientActions from '../../store/actions/clientActions';
@@ -20,6 +20,8 @@ import { getClientBookings, sendNotification } from '../../store/actions/booking
 import { expiredbookings } from '../../store/actions/bookingsActions.js';
 import { getReviews } from '../../store/actions/reviewsActions';
 import { addtoken ,getTokens } from '../../store/actions/tokenActions';
+import SentOverlay from '../../components/SentOverlay';
+import NotifOverlay from '../../components/NotifOverlay';
 const screen = Dimensions.get("window");
 
 Notifications.setNotificationHandler({
@@ -33,13 +35,18 @@ Notifications.setNotificationHandler({
 
 const ClientHomeScreen = props =>{
   console.disableYellowBox = true;
+  // OVerlay after booking Sent
 
-
+const [sentVisible,setSentVisible] = useState(false);
+const [stepThreeParam,setStepThreeParam] =useState(0);
+const [cpt , setCpt] = useState(0);
+const allBookings = useSelector(state => state.bookings.bookings);
   //Get ALL Barbers AND SAloons from the store to display three of them
   const allBarbers = useSelector(state => state.lists.barbers) ;
   const allSaloons = useSelector(state => state.lists.saloons) ;
 //get Client ID
 const clientID= props.navigation.dangerouslyGetParent().getParam('clientID');  
+const stepThreeCpt = props.navigation.dangerouslyGetParent().getParam('stepThreeCpt');  
 
 const client= useSelector(state=>state.clients.client);
 const tokens = useSelector(state=>state.tokens.clientTokens);
@@ -55,14 +62,20 @@ const dispatch = useDispatch ();
 //Notifications 
 const [expoPushToken, setExpoPushToken] = useState('');
 const [notification, setNotification] = useState(false);
+const [notificationData,setNotificationData]= useState([]);
 const notificationListener = useRef();
 const [visible, setVisible] = useState(false);
 const responseListener = useRef();
 
+const [finished,setFinished] = useState([]);
+
 const toggleOverlay = () => {
+
   setVisible(!visible);
   
 };
+
+
 
    /*
    *******Fetch One barber DATA
@@ -72,6 +85,7 @@ const toggleOverlay = () => {
     setLoading(true);
     await dispatch(getTokens(clientID));
     await dispatch(clientActions.setClient(clientID));
+   
   setLoading(false);
 
     }catch(err){
@@ -102,6 +116,7 @@ const getAllBarbers = useCallback(async ()=>{
     await  dispatch(getBarbers());
     await dispatch(getReviews(clientID));
     await dispatch(getClientBookings(clientID));
+   
     setIsRefreshing(false);
     setLoading(false);
   
@@ -135,6 +150,8 @@ useEffect(()=>{
   };
   },[getAllBarbers]);
 
+
+
 /********************************************************************** */
 
 /************NOTIFICATION ***********************************/
@@ -150,12 +167,10 @@ useEffect(() => {
 
     responseListener.current =  Notifications2.addListener((data) => {
       // props.navigation.navigate("AllBarbers",{type : "coiffeurs",clientID});
-     
+        
         setVisible(true);
+         setNotificationData(previous=>[...previous,data]);
       
-      
-      
-      // console.log(Notifications2);
     });
 
   return () => {
@@ -166,6 +181,13 @@ useEffect(() => {
 
 
 }, [client,tokens]);
+
+ //Overlay Handelr
+ const sentOverlayHandler = ()=>{
+     
+  setSentVisible((previous) => !previous);
+ 
+ }
 
 
 
@@ -241,12 +263,44 @@ async function registerForPushNotificationsAsync() {
   return token;
 }
 
+/************NOTIFICATION END ***********************************/
+useEffect(()=>{
+
+  if(stepThreeCpt != undefined){
+
+        setSentVisible(true);
+
+  }
+
+
+},[stepThreeCpt]);
+
+useEffect(()=>{
+
+  const finished2 =  allBookings.filter(e=>((moment().format("ll") === moment(e.bookingDate).format("ll") || moment() > moment(e.bookingDate)) && e.status === "confirmée" ))
+  setFinished(finished2);
+  
+    if (finished.length > 0){
+   
+      toggleOverlay();
+    
+    }
+
+},[allBookings]);
+
 /************************************************************************************************** */
 /********************************************************************** */
 
 if (error ) {
   return (
     <View style={styles.centered}>
+     <View style = {{height : "50%",justifyContent:"center",alignItems:"center",width:"50%"}}>
+                     <Image
+                        style={{height:"100%",width:"100%",resizeMode:"contain"}}
+                        source={require("../../assets/pictures/assest.png")}
+                    />
+                
+            </View> 
       <Text>Une erreur est survenue !</Text>
       <Button
         title="Rafraîchir"
@@ -278,37 +332,43 @@ if (isLoading || allBarbers.length <= 0 || client.length ===0) {
     return(
 
       <View style ={styles.container}>
-   
+    
       <StatusBar hidden />
+   
       <ScrollView  refreshing={isRefreshing}>
+
             <ImageBackground source = {require("../../assets/pictures/barber4.png")} style = {styles.firstImage}  resizeMode ="stretch" imageStyle ={styles.image} >
-{/*            
-           <SearchBar placeholder=" Recherche salon , coiffeur"
-        containerStyle = {styles.searchBar}
-        inputContainerStyle = {{
-                borderRadius : 25,
-                backgroundColor :"white"
-        }}
-        lightTheme = {true} /> */}
+
         
             <View style = {styles.firstTitle}>  
             <Text style = {styles.titleText}>Retrouvez Votre Coiffeur</Text>
-            <Button
-        title="Press to Send Notification"
-        onPress={async () => {
-          
-          await sendPushNotification("ExponentPushToken[oT3jaoPOJ72nfHTKmLvSy8]");
-        }}
-      />
+    
 
 <View>
-     
 
-      <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
-        <Text>Hello from Overlay!</Text>
-      </Overlay>
+      <NotifOverlay 
+      close={toggleOverlay} 
+      url ={require("../../assets/pictures/assest.png")} 
+      isVisible = {visible} 
+
+      />
+
+ 
     </View>
-
+<View>
+<SentOverlay   
+          isVisible = {sentVisible} 
+          sentOverlayHandler = {sentOverlayHandler}
+          url ={require("../../assets/pictures/sentGreen.png")}
+      
+          title = "Merci !"
+          body = "Votre réservation a été envoyée avec succès"
+          buttonTitle = "Fermer"
+          overlayType  ="succes"
+          />
+</View>
+          
+          
             </View>
        
             </ImageBackground>
@@ -321,7 +381,7 @@ if (isLoading || allBarbers.length <= 0 || client.length ===0) {
                 
                 </Text>
                 <TouchableOpacity  
-                onPress={() =>props.navigation.navigate("AllBarbers",{type : "coiffeurs",clientID})} >
+                onPress={() =>props.navigation.navigate("AllBarbers",{type : "coiffeurs",clientID,overCpt : allBookings.length})} >
                 <Text style = {styles.showAll}>
                 Tout Afficher
                 </Text>
@@ -345,7 +405,7 @@ if (isLoading || allBarbers.length <= 0 || client.length ===0) {
              wilaya = {barber.wilaya}
              mark = {barber.mark}
              navigateToBarberProfil={()=>props.navigation.navigate("Barber",{barberID : barber.id})}
-             navigate = {()=>props.navigation.navigate("BookStepOne",{barberId : barber.id,clientID,name:barber.name,surname:barber.surname,mark:barber.mark,region:barber.region,wilaya:barber.wilaya})}
+             navigate = {()=>props.navigation.navigate("BookStepOne",{barberId : barber.id,clientID,name:barber.name,surname:barber.surname,mark:barber.mark,region:barber.region,wilaya:barber.wilaya,overCpt : allBookings.length})}
             />
            )})
             }
@@ -398,7 +458,7 @@ ClientHomeScreen.navigationOptions= ()=>{
 const styles= StyleSheet.create({
   container : {
       flex : 1,
-      backgroundColor : "#ffffff"
+      backgroundColor : "#fff"
   },
   /////////////////////////////////////////////
   firstImage : {

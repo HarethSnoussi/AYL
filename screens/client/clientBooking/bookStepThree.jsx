@@ -12,6 +12,7 @@ import RNPickerSelect from 'react-native-picker-select';
 
 import ConfirmBookingOverlay from "../../../components/ConfirmBookingOverlay";
 import BarberInfos from '../../../components/BarberInfos';
+import SentOverlay from '../../../components/SentOverlay';
 
 
  
@@ -20,13 +21,15 @@ moment.locale("fr");
 
 /////////////////////////////////////////////////////////////////////////
 const BookStepThree = (props)=> {
+// OVerlay after booking Sent
+const [sentVisible,setSentVisible] = useState(false);
 
 const [pickedWilaya , setPickedWilaya] = useState();
 const [pickedRegion , setRegion] = useState("");
 const [pickedAddress,setAddress] = useState("");
 //overlay State
 const [overlayState , setOverlayState]=useState(false);
-
+const [stepThreeCpt,setStepThree] = useState(props.navigation.getParam("overCpt"));
 
 const pickedWilayaHandler =  (itemValue)=>{
 
@@ -42,12 +45,35 @@ setPickedWilaya(itemValue);
 
   }
 
-return (
-  
-  <TouchableWithoutFeedback onPress = {()=>{Keyboard.dismiss()}}>
-        <View style= {styles.container}>
-                 
+ //Overlay Handelr
+ const sentOverlayHandler = ()=>{
+     
+ setSentVisible((previous) => !previous);
 
+}
+
+const stepThreeHandler = ()=>{
+
+setStepThree(previous => previous+1);
+
+};
+
+
+
+return (
+  <TouchableWithoutFeedback onPress = {()=>{Keyboard.dismiss()}}>
+        <View style= {styles.container}>  
+        <SentOverlay 
+        isVisible = {sentVisible} 
+        sentOverlayHandler = {sentOverlayHandler}
+          url ={require("../../../assets/pictures/notok.png")}
+          buttonColor = "#F26052"
+          title = "Echec !"
+          body = "Echec lors de l'envoie de la réservation"
+          buttonTitle = "Fermer"
+          overlayType ="echec"
+          
+         />
 { overlayState && <ConfirmBookingOverlay
         isVisible = {overlayState}
         overlayHandler = {overlayHandler}
@@ -58,16 +84,22 @@ return (
         amount = {props.navigation.getParam("amount")}
         duration = {props.navigation.getParam("duration")}
         services = {props.navigation.getParam("services")}
-        navigate = {()=>props.navigation.navigate("Client")}
+        navigate = {()=>props.navigation.navigate("Client",{stepThreeCpt:stepThreeCpt})}
         wilaya = {pickedWilaya}
         address = {pickedAddress.replace(/(\r\n|\n|\r)/gm, "")}
         region = {pickedRegion}
-
+        sentOverlayHandler = {sentOverlayHandler}
+        
        />   
     }
 
                 <View style = {styles.firstImage}>
-
+                {/* <SentOverlay 
+          isVisible = {sentVisible} 
+          sentOverlayHandler = {sentOverlayHandler}
+          
+          /> */}
+              
                 {/* <Image source = {require("../../../assets/pictures/barber2.jpg")} style = {{height : "100%",width : "100%"}}   /> */}
                 <BarberInfos 
                   name = {props.navigation.getParam("name")}

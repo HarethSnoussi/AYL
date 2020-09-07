@@ -9,10 +9,14 @@ import { useDispatch } from 'react-redux';
 import {cancelBooking} from "../../../store/actions/bookingsActions";
 import { Rating, AirbnbRating } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import ConfirmOverlay from '../../../components/ConfirmOverlay';
 
 const screen = Dimensions.get("window");
 
 const BookingDetail = props =>{
+
+  const [overlayVisible,setOverlayVisible] = useState(false);
+
 const services = props.navigation.getParam("services");
 const start= props.navigation.getParam("start");
 const bookingDate = props.navigation.getParam("bookingDate");
@@ -23,6 +27,48 @@ const diffrence = parseInt(moment.duration(moment(start,"h:mm:ss a").diff(moment
 
 const conditionAnnuler = ( (props.navigation.getParam("status") === "confirmée" && ((diffrence >= 30 && moment(bookingDate).format("ll") === moment().format("ll")) || moment(bookingDate).format("ll") > moment().format("ll"))) || props.navigation.getParam("status") === "en attente");
 
+const conditionCall = props.navigation.getParam("status") === "confirmée" ;
+
+/******************SEND A NOTIFICATION TO THE client WHEN A BOOKING IS Canceled ************************/
+async function sendPushNotification() {
+  const arr = await fetch(`http://173.212.234.137:3000/barber/barbertokens/${props.navigation.getParam("barberId")}`);
+  const resData = await arr.json ();
+  const allMessages = [];
+  
+  resData.map(e=>{
+  
+  allMessages.push(
+    {
+      to: e.expoToken,
+      sound: 'default',
+      title: 'Réservation Annulée',
+      body: 'Un client a annulé une réservation !',
+      data: { data: 'goes here' ,client:props.clientId, title: 'Réservation Annulée',
+      body: 'Un client a annulé une réservation !',},
+    }
+  
+  )
+  
+  })
+  
+  
+  allMessages.map(async (e)=>{
+     await fetch('https://exp.host/--/api/v2/push/send', {
+       method: 'POST',
+       headers: {
+         Accept: 'application/json',
+         'Accept-encoding': 'gzip, deflate',
+         'Content-Type': 'application/json',
+       },
+       body: JSON.stringify(e),
+     });
+   
+   
+   })
+     
+   }
+  
+  /******************SEND A NOTIFICATION TO THE BARBER WHEN A BOOKING IS MADE ************************/
 
 
 
@@ -41,28 +87,28 @@ const [barberInfos , setBarberInfos] = useState({
 
 const dispatch = useDispatch();
 
+const overlayToggle = ()=>{
+
+setOverlayVisible(previous => !previous);
+
+}
+
+
 //cancel booking
 
-const cancelBookingHandler = () =>{
+const cancelBookingHandler = async () =>{
 
 //ALERT BEFORE CANCEL A BOOKING
 // Works on both Android and iOS
-Alert.alert(
-  'Annuler la réservation ! ',
-  'Etes vous sùr de vouloir annuler cette réservation ?',
-  [
- 
-    {
-      text: 'Non',
-      onPress: () => {},
-      style: 'cancel'
-    },
-    { text: 'Oui', onPress: async () => {
+
+
       try {
         setLoading(true);
         await dispatch(cancelBooking(props.navigation.getParam("id")));
-
+        await overlayToggle();
+        await sendPushNotification();
         await props.navigation.navigate("Client");
+
         Alert.alert(
           "Réservation annulée",
           "Réservation annulée avec succés",
@@ -88,18 +134,6 @@ Alert.alert(
         
       }
   
-
-
-
-    } }
-  ],
-  { cancelable: false },
-  { onDismiss: () => {} },
-  
-
-);
-
-
 
 
 //  dispatch(cancelBooking(props.navigation.getParam("cancelDate"),props.navigation.getParam("clientId")))
@@ -139,7 +173,6 @@ useEffect(()=>{
 
 
 
-
 if (isLoading) {
   return (
     <ImageBackground style= {styles.centered} source={require('../../../assets/images/support.png')}>
@@ -151,6 +184,8 @@ if (isLoading) {
 
   return(
     <View style = {styles.container}>
+
+<ConfirmOverlay cancel = {cancelBookingHandler} close = {overlayToggle} isVisible = {overlayVisible} url ={require("../../../assets/pictures/question.png")}  />
 
     <BookingCard
                              start = {start}
@@ -166,8 +201,8 @@ if (isLoading) {
      />
             <View style = {styles.actions}>
 
-
-
+{
+            conditionCall &&
             <TouchableOpacity style = {{alignItems : "center"}}  onPress = {()=>Linking.openURL(`tel:${barberInfos.phone}`)} >
             
                <MaterialIcons name="call" 
@@ -178,6 +213,8 @@ if (isLoading) {
             <Text style = {styles.actionsText} >Appeler</Text>
 
           </TouchableOpacity>
+          
+          }
 
 
         {conditionAnnuler  &&
@@ -186,7 +223,7 @@ if (isLoading) {
           <Ionicons name="ios-close-circle-outline" 
                       size={28} 
                       color={Colors.colorF3} 
-                      onPress = {cancelBookingHandler}
+                      onPress = {overlayToggle}
                /> 
   
             <Text style = {styles.actionsText}>Annuler</Text>

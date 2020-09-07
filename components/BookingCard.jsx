@@ -13,12 +13,12 @@ const screen = Dimensions.get("window");
 
 
 const BookingCard = props =>{
-  const gradient1 = props.status === "en attente" ? "#fd6d57" : props.status === "confirmée" ? "#11998e" : "#f14638";
-  const gradient2 = props.status === "en attente" ? "#fd9054" : props.status === "confirmée" ? Colors.colorH1 : "#F4686A";
+  const gradient1 = props.status === "en attente" ? "#fd6d57" : (props.status === "confirmée" ||props.status === "réalisée" ) ? "#11998e" : "#f14638";
+  const gradient2 = props.status === "en attente" ? "#fd9054" : (props.status === "confirmée" ||props.status === "réalisée" ) ? Colors.colorH1 : "#F4686A";
 
 
     return(
-      <TouchableOpacity style = {styles.card}  onPress = {()=>props.navigation.navigate("BookingDetail", 
+      <TouchableOpacity style = {styles.card}  onPress = {()=> props.type === "all" && props.navigation.navigate("BookingDetail", 
       { 
                 day: props.day,
                   date : props.date,
@@ -46,7 +46,7 @@ const BookingCard = props =>{
          
            
 
-              <Text style = {{...styles.priceText ,...{color : gradient2,  textDecorationLine:( props.status ==="confirmée" || props.status ==="en attente" )? 'none' : "line-through" ,
+              <Text style = {{...styles.priceText ,...{color : gradient2,  textDecorationLine: props.status ==="expirée" ? 'line-through' : "none" ,
               }
               }}>
               Prix :{props.amount} DA

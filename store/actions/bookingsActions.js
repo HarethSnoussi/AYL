@@ -2,6 +2,7 @@ import moment from "moment";
 import React, { useState } from "react";
 import { View, StyleSheet, Button, Alert } from "react-native";
 import { useSelector } from "react-redux";
+import SentOverlay from "../../components/SentOverlay";
 
 export const ADD_BOOKING = "ADD_BOOKING"; 
 export const GET_BOOKING = "GET_BOOKING"; 
@@ -25,6 +26,7 @@ export const addBooking = (booking) => {
         if (!response.ok) {
           throw new Error('Something went wrong!');
         }
+       
       const myBooking = {
           amount : booking.amount,
           bookingDate : booking.bookingDate,
@@ -49,7 +51,7 @@ export const getClientBookings = (clienId)=>{
 
   return async (dispatch) =>{
       try {
-     
+  
       const arr = await fetch(`http://173.212.234.137:3000/client/bookings/${clienId}`);
       const resData = await arr.json ();
       

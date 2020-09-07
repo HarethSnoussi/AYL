@@ -286,7 +286,8 @@ return (
                       surname:props.navigation.getParam("surname"),
                       mark:props.navigation.getParam("mark"),
                       region:props.navigation.getParam("region"),
-                      wilaya:props.navigation.getParam("wilaya")
+                      wilaya:props.navigation.getParam("wilaya"),
+                      overCpt :props.navigation.getParam("overCpt")
                      })
                      }
                    /> 

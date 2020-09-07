@@ -22,10 +22,10 @@ const BarberInfos = props =>{
                 <Text style={styles.barberName}>{props.name+" "+props.surname}</Text>
                 <Text style ={styles.barberAdress}>{props.region+"-"+props.wilaya}</Text>
                 <View style={{flexDirection :"row",alignItems :"center"}}>
-                <Text style ={styles.barberAdress}>{props.mark}</Text>
+                <Text style ={styles.barberAdress}>{props.mark === null ? 2.5 : props.mark}</Text>
                 <Rating imageSize={16} 
                    readonly
-                   startingValue= {props.mark}
+                   startingValue= {props.mark === null ? 2.5 : props.mark}
                   //  ratingColor = "#FE9654"          
                    type='custom'
                     ratingBackgroundColor={'#fff'}

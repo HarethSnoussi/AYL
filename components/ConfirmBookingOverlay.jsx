@@ -8,6 +8,8 @@ import {addBooking} from "../store/actions/bookingsActions";
 import moment from 'moment';
 import Colors from '../constants/Colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import SentOverlay from './SentOverlay';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 
@@ -25,6 +27,7 @@ const end = moment.utc("2020-05-01T"+props.start).add(props.duration,"m").format
 const [isLoading,setLoading]=useState(false);
 const address = props.address + "-" + props.region+"-"+props.wilaya
 const servicesId = props.services.map(e=>e.id);
+const [sentVisible,setSentVisible] = useState(false);
 
 /******************SEND A NOTIFICATION TO THE BARBER WHEN A BOOKING IS MADE ************************/
 async function sendPushNotification() {
@@ -96,25 +99,28 @@ await sendPushNotification();
  props.overlayHandler();
  await props.navigate();
  setLoading(false);
- Alert.alert(
-  "Réservation envoyée",
-  "Réservation envoyée avec succés",
-  [
-    { text: "OK", onPress: () =>{} }
-  ],
-  { cancelable: false }
-);
+
+//  Alert.alert(
+//   "Réservation envoyée",
+//   "Réservation envoyée avec succés",
+//   [
+//     { text: "OK", onPress: () =>{} }
+//   ],
+//   { cancelable: false }
+// );
   
 } catch (error) {
   setLoading(true);
-  Alert.alert(
-    "Réservation non envoyée",
-    "Echec lors de l'envoie de la réservation",
-    [
-      { text: "OK", onPress: () =>{} }
-    ],
-    { cancelable: false }
-  );
+  await  props.overlayHandler();
+  await props.sentOverlayHandler();
+  // Alert.alert(
+  //   "Réservation non envoyée",
+  //   "Echec lors de l'envoie de la réservation",
+  //   [
+  //     { text: "OK", onPress: () =>{} }
+  //   ],
+  //   { cancelable: false }
+  // );
   setLoading(false);
   throw error;
 }
@@ -141,11 +147,15 @@ if (isLoading) {
 
 
     return (
+
     <Overlay 
+
     onBackdropPress = {props.overlayHandler}
     isVisible={props.isVisible}
     overlayStyle = {styles.overlayStyle}
     >
+<View >
+
     <TouchableOpacity style={{alignItems:"flex-end",width:"95%"}}>
     
     <Ionicons 
@@ -155,45 +165,20 @@ if (isLoading) {
        onPress={props.overlayHandler} />
     
     </TouchableOpacity>
-    <View style = {{height:"90%" , justifyContent : "space-around" }} >
+    <View style = {{height:"90%" , justifyContent : "space-around",marginTop:"5%" }} >
 
 <View style = {styles.textsContainer}>
 <View style={styles.title}>
-    <Text style={{fontFamily : "poppins-bold",color :Colors.colorF2,fontSize : screen.width /24}}>RESERVATION
+    <Text style={{fontFamily : "poppins-bold",color :Colors.primary,fontSize : screen.width /24}}>Informations
     </Text>
     </View>
-   
-    {/* <View style = {{justifyContent : "space-around" , height :"90%" }}> 
-    
-   
-        <Text style = {styles.text}>Temps : {props.duration} Min </Text>
-
-
-
-        <Text style = {styles.text} >Services : {
-          services.map(service=>{
-            return service + " " 
-          })
-          
-          } 
-          
-          </Text>
-
-
-        <Text style = {styles.text} >Date : {moment(props.bookingDate).format('LL')}</Text>
-        <Text style = {styles.text} >Horraire  : { props.start + " - " + end }</Text>
-        
-        <Text style = {styles.text}>Adresse : {props.address}  </Text>
-        <Text style = {styles.text}>Wilaya : {props.wilaya+"-"+props.region}  </Text>
-
-
-</View> */}
+  
 <View style ={{height:"70%"}}>
 <ScrollView>
-{props.services.map(service=>{
+{props.services.map((service,index)=>{
 
 return(
-  <View style ={{flexDirection :"row",width:"85%",alignSelf:"center",justifyContent:"space-around",alignItems:"center",height:screen.height*0.1,marginVertical:"2%",borderBottomWidth : 0.3}}>
+  <View key ={index} style ={{flexDirection :"row",width:"85%",alignSelf:"center",justifyContent:"space-around",alignItems:"center",height:screen.height*0.1,marginVertical:"2%",borderBottomWidth : 0.3}}>
           <Avatar
           source = {require("../assets/images/icon.png")}
           overlayContainerStyle = {{backgroundColor:"transparent",overflow:"hidden"}}
@@ -226,7 +211,7 @@ return(
 </ScrollView>
 </View>
 <View style ={{height:"20%"}}> 
-<View style ={{flexDirection :"row",width:"95%",justifyContent :"space-between",alignSelf:"center",borderTopWidth :0.3}}>
+<View style ={{flexDirection :"row",width:"90%",justifyContent :"space-between",alignSelf:"center",borderTopWidth :0.3}}>
 <View>
 <Text  style = {styles.priceText}  >Prix Total:</Text>
 <Text style = {styles.timeText} >{ props.duration} Min</Text>
@@ -251,8 +236,15 @@ return(
 
 
             <Button
+             ViewComponent={LinearGradient} 
+                   linearGradientProps={{
+                        colors: ['#fd6d57', '#fd9054'],
+                        start: {x: 0, y: 0} ,
+                        end:{x: 1, y: 0}
+                    }}
               onPress={()=>sendConfirmation()}
-             buttonStyle = {{backgroundColor:Colors.colorF2,borderRadius :5,marginVertical:"2%",alignItems :"center",justifyContent:"space-between",alignSelf:"center",width:"95%"}}
+             buttonStyle = {{borderRadius :5,marginVertical:"2%",alignItems :"center",justifyContent:"space-between",}}
+             containerStyle = {{width:"90%",alignSelf:"center"}}
              iconRight = {true}
                     icon={
                       <Ionicons 
@@ -292,6 +284,7 @@ return(
     
 
   </View>
+  </View>
       </Overlay>
       
       );
@@ -305,18 +298,21 @@ const styles= StyleSheet.create({
     width : "95%",
     height :"90%",
     borderRadius : 20,
+    
     // backgroundColor : "rgba(255, 255, 249,1)",
     
 
   },
   title : {
-    alignSelf : "center"
+    alignSelf : "center",
+    marginBottom :"1%"
   },
 
   textsContainer: {
     height : "75%",
     justifyContent : "space-around",
    overflow : "hidden",
+ 
 
    },
   text :{
@@ -365,3 +361,4 @@ const styles= StyleSheet.create({
 
 });
 export default ConfimBookingOverlay;
+

@@ -39,7 +39,7 @@ const [dayBookings , setDayBookings] = useState([]);
 //calendar selected Date object
  const [selectedDay , setSelectedDay] = useState(moment().format('ddd')) ;
 
- const [isLoading , setLoading] = useState(false);
+ const [isLoading , setLoading] = useState(true);
  const [isRefreshing, setIsRefreshing] = useState(false);
  //Error Handler
  const [error, setError] = useState();
@@ -125,13 +125,17 @@ mark[selectedDate.substring(0,10)] = {
 /*************************************************************** */
 // //Cancel EXPIRED BOOKINGS
 const expired = useCallback(async ()=>{
-
+ 
+  
   try{
     setError(false);
     setIsRefreshing(true);
       setLoading(true);
+      
       await dispatch(expiredbookings(clientID,tokens));
       await dispatch(getClientBookings(clientID));
+     
+
       setIsRefreshing(false);
      setLoading(false);
 
@@ -194,6 +198,7 @@ useEffect(()=>{
   const todaysBookings= async ()=>{
       setLoading(true);
       const dayBooks = await allBookings.filter(bookings => moment(bookings.bookingDate).format() === selectedDate);
+  
       await setDayBookings([...dayBooks]);
       setLoading(false);
   }
@@ -298,6 +303,7 @@ if (isLoading) {
                             clientId = {booking.clientId}
                             cancelDate = {booking.date}
                             id = {booking.id}
+                            type = "all"
                          /> 
 
                     )})
