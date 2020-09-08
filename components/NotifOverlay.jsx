@@ -6,8 +6,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 const screen = Dimensions.get("window");
 const NotifOverlay = props =>{
 
+    const buttonColors = props.type ==="annulée" ? ['#fd6d57', '#fd9054'] : ['#0DA598', '#11998e']  ;
 
-  
+
         return (
             <TouchableWithoutFeedback  style={{backgroundColor:"red"}} onPress = {props.close}>
           <Overlay 
@@ -22,19 +23,19 @@ const NotifOverlay = props =>{
 
                 <View style = {styles.firstTextContainer}>
                 <Text style = {{fontSize:screen.width/16,fontFamily:"poppins"}} >Mohamed Snoussi</Text>
-                <Text style ={{letterSpacing:0.5,fontFamily:"poppins-bold",color:Colors.blue,fontSize:screen.width/28}} >vient de confirmer votre réservation</Text>
+                <Text style ={{letterSpacing:0.5,fontFamily:"poppins-bold",color:Colors.blue,fontSize:screen.width/28}} >{props.body}</Text>
              
                 </View>
 
                 <View style = {styles.secondTextContainer}>
                 
-                <Text style = {{fontSize:screen.width/18,fontFamily:"poppins"}}>08:15 |  08:30</Text>
+                <Text style = {{fontSize:screen.width/18,fontFamily:"poppins"}}>{props.start +" | "+props.end}</Text>
                 </View>
 
                 <View style = {styles.thirTextContainer}>
 
-                <Text  style ={{fontFamily:"poppins",color:Colors.textGrey,fontSize:screen.width/28}} >20 Mars 2020</Text>
-                <Text style ={{fontFamily:"poppins",color:Colors.textGrey,fontSize:screen.width/28}}>17 Rue Didouche Mourad - Blida </Text>
+                <Text  style ={{fontFamily:"poppins",color:Colors.textGrey,fontSize:screen.width/28}} >{props.bookingDate}</Text>
+                <Text style ={{fontFamily:"poppins",color:Colors.textGrey,fontSize:screen.width/28}}>{props.address}</Text>
                 </View>
      <View style = {styles.buttonsContainer}>
 
@@ -47,7 +48,7 @@ const NotifOverlay = props =>{
                 onPress = {props.close}
                 ViewComponent={LinearGradient} 
                    linearGradientProps={{
-                        colors: ['#fd6d57', '#fd9054'],
+                        colors: buttonColors,
                         start: {x: 0, y: 0} ,
                         end:{x: 1, y: 0}
                     }}

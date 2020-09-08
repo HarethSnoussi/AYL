@@ -169,7 +169,7 @@ useEffect(()=>{
   responseListener.current =  Notifications2.addListener((data) => {
     // props.navigation.navigate("AllBarbers",{type : "coiffeurs",clientID});
 
-    notificationDataHandler(data.data);
+    notificationDataHandler(data.data,"notification");
     toggleOverlay();
    
 
@@ -271,18 +271,30 @@ async function registerForPushNotificationsAsync() {
   return token;
 }
 
-const notificationDataHandler = useCallback((data)=>{
-  
-
+const notificationDataHandler = (data,sender) =>{
+  console.log(notificationData);
+if(sender === "notification"){
     setNotificationData(previous=>{if(previous.findIndex(e=>e.id===data.id)<0)
      { return([...previous,data])}
-     else {return([...previous])}
+     else {
+      const index = previous.findIndex(e=>e.id===data.id)
+      const newObj = previous;
+      newObj[index].body = data.body;
+      newObj[index].type = data.type;
+      return([...newObj])
+    }
     
     }
     
     );
   
-  },[setNotificationData])
+  } else {
+   setNotificationData(previous=>previous.filter(e=>e.id !== data))
+    toggleOverlay();
+  }
+
+  }
+ 
 
 
 
@@ -363,21 +375,26 @@ if (isLoading || allBarbers.length <= 0 || client.length ===0) {
     
 
 <View>
-{/* { notificationData.length >0 && notificationData.map((e,index)=>{
+{ notificationData.length >0 && notificationData.map((e,index)=>{
   return(
 
   <NotifOverlay 
       key={index}
-      close={(toggleOverlay)} 
+      close={()=>notificationDataHandler(e.id,"self")} 
       url ={require("../../assets/pictures/assest.png")} 
       isVisible = {true} 
-
+      start={e.start}
+      end = {e.end}
+      address = {e.address}
+      bookingDate = {e.bookingDate}
+      body = {e.body}
+      type = {e.type}
       />
 
 
 )})
   
-} */}
+}
  
     </View>
 <View>
