@@ -2,7 +2,7 @@ import React,{useState,useCallback,useRef,useReducer} from 'react';
 import { StyleSheet,View,ScrollView,KeyboardAvoidingView,Text,Image,ImageBackground,StatusBar,TextInput,TouchableOpacity,Picker,ActionSheetIOS,Alert,ActivityIndicator,AsyncStorage} from 'react-native';
 import {Button} from 'react-native-elements';
 import Colors from '../../constants/Colors';
-import {MaterialIcons,MaterialCommunityIcons} from "@expo/vector-icons";
+import {MaterialIcons,MaterialCommunityIcons,Ionicons} from "@expo/vector-icons";
 import { LinearGradient } from 'expo-linear-gradient';
 import * as FirebaseRecaptcha from "expo-firebase-recaptcha";
 import * as firebase from "firebase";
@@ -61,9 +61,9 @@ const SignupScreen = props =>{
     const prefix='+213';
 
    //States for complex information textInputs
-   const [wilaya,setWilaya] = useState();
+   const [wilaya,setWilaya] = useState(undefined);
    const wilayas = ['Wilaya','Alger','Blida'];
-   const [sex,setSex] = useState();
+   const [sex,setSex] = useState(undefined);
    const sexTypes= ['Sexe','Homme','Femme'];
    const [isEye,setIsEye]=useState(false);
 
@@ -73,7 +73,7 @@ const SignupScreen = props =>{
    
    //picker only iOS function 
    const onPress = () =>{
-     const wilayasIOS = ['Wilaya','Alger','Blida'];    
+     const wilayasIOS = ['Alger','Blida'];    
      ActionSheetIOS.showActionSheetWithOptions(
        {
          options: wilayasIOS,
@@ -92,7 +92,7 @@ const SignupScreen = props =>{
 
  //picker only iOS function 
  const onPressSex = () =>{
-  const sexIOS = ['Sexe','Homme','Femme'];    
+  const sexIOS = ['Homme','Femme'];    
   ActionSheetIOS.showActionSheetWithOptions(
     {
       options: sexIOS,
@@ -151,7 +151,7 @@ const signupHandler = async () => {
 
 const phoneProvider = new firebase.auth.PhoneAuthProvider();
 
-if(formState.formIsValid && wilaya!==wilayas[0] &&  sex!==sexTypes[0]){
+if(formState.formIsValid && wilaya!==wilayas[0] &&  sex!==sexTypes[0] && wilaya!==undefined && sex!==undefined){
   try {
 
     setVerifyInProgress(true);
@@ -333,9 +333,12 @@ try {
                      >
                      {sexTypes.map(el=> <Picker.Item label={el} value={el} key={el} />)}
                      </Picker> :
-                     <Text onPress={onPressSex} style={{fontFamily:'poppins',fontSize:12,color:'#d3d3d3'}}>
-                       {sex}
-                     </Text>}
+                     <View style={{ width:'100%',flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:19,paddingRight:25}}>
+                     <Text onPress={onPressSex} style={{fontFamily:'poppins',color:Colors.lightGrey,fontSize:15,fontWeight:'500'}}>
+                       {sex?sex:sexTypes[0]}
+                     </Text>
+                     <Ionicons name="ios-arrow-down" size={24} color={Colors.lightGrey} onPress={onPressSex} />
+                     </View>}
                  </View>
                  <View style={{ width:'100%',borderWidth:1,borderRadius:25,backgroundColor:Colors.blue,borderColor:wilaya!==wilayas[0]?Colors.blue:Colors.primary,marginVertical:3,height:45,justifyContent:'center'}}>
                  {Platform.OS === 'android' ? 
@@ -346,9 +349,12 @@ try {
                              >
                              {wilayas.map(el=> <Picker.Item label={el} value={el} key={el} />)}
                              </Picker> :
-                             <Text onPress={onPress} style={{fontFamily:'poppins',fontSize:12,color:'#d3d3d3'}}>
-                               {wilaya}
-                             </Text>}
+                              <View style={{ width:'100%',flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:19,paddingRight:25}}>
+                             <Text onPress={onPress} style={{fontFamily:'poppins',color:Colors.lightGrey,fontSize:15,fontWeight:'500'}}>
+                               {wilaya?wilaya:wilayas[0]}
+                             </Text>
+                             <Ionicons name="ios-arrow-down" size={24} color={Colors.lightGrey} onPress={onPress} />
+                             </View>}
                </View>
                <CustomInput 
                     id='region'
