@@ -230,9 +230,8 @@ const alertEditPassword = ()=>{
               textColor={Colors.blue}
               widthView='80%'
               shadowColorView='black'
-              shadowOpacityView={0.96}
-              shadowOffsetView={{width: 0, height:2}}
-              shadowRadiusView={10}
+              shadowOpacityView={0.5}
+              shadowOffsetView={{width: 0, height:1}}
               elevationView={3}
               />
               <View style={styles.buttonContainer}>
@@ -275,9 +274,8 @@ const alertEditPassword = ()=>{
                 textColor={Colors.blue}
                 widthView='80%'
                 shadowColorView='black'
-                shadowOpacityView={0.96}
-                shadowOffsetView={{width: 0, height:2}}
-                shadowRadiusView={10}
+                shadowOpacityView={0.5}
+                shadowOffsetView={{width: 0, height:1}}
                 elevationView={3}
               />
               <View style={styles.buttonContainer}>
@@ -303,11 +301,11 @@ const alertEditPassword = ()=>{
           <KeyboardAvoidingView keyboardVerticalOffset={10}>
             <View style={styles.langContainer}>
               {!isArabic?(<View style={styles.langRow}>
-                <Text style={{fontFamily:'poppins',fontSize:12,color:'#323446'}}>Français</Text>
+                <Text style={{fontFamily:'poppins',fontSize:15,color:'#323446',fontWeight:'500'}}>Français</Text>
                 <Image source={require('../../../assets/images/france.png')} style={{width:24,height:24}}/>
               </View>):undefined}
               {isArabic?(<View style={styles.langRow}>
-                <Text style={{fontFamily:'poppins',fontSize:13,color:'#323446'}}>العربية</Text>
+                <Text style={{fontFamily:'poppins',fontSize:15,color:'#323446',fontWeight:'500'}}>العربية</Text>
                 <Image source={require('../../../assets/images/algeria.png')} style={{width:24,height:24}}/>
               </View>):undefined}
             </View>
@@ -397,11 +395,10 @@ const styles= StyleSheet.create({
     marginVertical:5,
     alignSelf:'center',
     shadowColor: 'black',
-    shadowOpacity: 0.96,
-    shadowOffset: {width: 0, height:2},
-    shadowRadius: 10,
+    shadowOpacity: 0.5,
+    shadowOffset: {width: 0, height:1},
     elevation: 3,
-    overflow:'hidden',
+    overflow:Platform.OS==='ios'?'visible':'hidden',
     
   },
   langRow:{

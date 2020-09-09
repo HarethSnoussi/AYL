@@ -298,9 +298,9 @@ const takeLibraryHandler = async ()=>{
                 backgroundColor='#fff'
                 textColor={Colors.blue}
                 shadowColorView='black'
-                shadowOpacityView={0.96}
-                shadowOffsetView={{width: 0, height:2}}
-                shadowRadiusView={10}
+                shadowOpacityView={0.5}
+                shadowOffsetView={{width: 0, height:1}}
+              
                 elevationView={3}
                 widthView='90%'
               />
@@ -322,9 +322,8 @@ const takeLibraryHandler = async ()=>{
               backgroundColor='#fff'
               textColor={Colors.blue}
               shadowColorView='black'
-              shadowOpacityView={0.96}
-              shadowOffsetView={{width: 0, height:2}}
-              shadowRadiusView={10}
+              shadowOpacityView={0.5}
+              shadowOffsetView={{width: 0, height:1}}
               elevationView={3}
               widthView='90%'
             />
@@ -347,9 +346,8 @@ const takeLibraryHandler = async ()=>{
                 textColor={Colors.blue}
                 autoCapitalize='sentences'
                 shadowColorView='black'
-                shadowOpacityView={0.96}
-                shadowOffsetView={{width: 0, height:2}}
-                shadowRadiusView={10}
+                shadowOpacityView={0.5}
+                shadowOffsetView={{width: 0, height:1}}
                 elevationView={3}
                 widthView='90%'
               />
@@ -368,16 +366,15 @@ const takeLibraryHandler = async ()=>{
               minLength={12}
               autoCapitalize='sentences'
               shadowColorView='black'
-              shadowOpacityView={0.96}
-              shadowOffsetView={{width: 0, height:2}}
-              shadowRadiusView={10}
+              shadowOpacityView={0.5}
+              shadowOffsetView={{width: 0, height:1}}
               elevationView={3}
               widthView='90%'
               backgroundColor='#fff'
               textColor={Colors.blue}
             />
-          <View style={{ width:'90%',borderWidth:1,paddingHorizontal:12,borderRadius:25,backgroundColor:'#fff',borderColor:wilaya!=='wilaya'?'#fff':Colors.primary,marginVertical:5,height:45,justifyContent:'center',shadowColor: 'black',shadowOpacity: 0.96,
-                          shadowOffset: {width: 0, height:2},shadowRadius: 10,elevation: 3,overflow:'hidden',alignSelf:'center'}}>
+          <View style={{ width:'90%',borderWidth:1,paddingHorizontal:12,borderRadius:25,backgroundColor:'#fff',borderColor:wilaya!=='wilaya'?'#fff':Colors.primary,marginVertical:5,height:45,justifyContent:'center',shadowColor: 'black',shadowOpacity: 0.5,
+                          shadowOffset: {width: 0, height:1},elevation: 3,overflow:Platform.OS==='ios'?'visible':'hidden',alignSelf:'center'}}>
             {Platform.OS === 'android' ? 
                       <Picker
                       selectedValue={wilaya}
@@ -386,9 +383,12 @@ const takeLibraryHandler = async ()=>{
                       >
                       {wilayas.map(el=> <Picker.Item label={el} value={el} key={el} />)}
                       </Picker> :
-                      <Text onPress={onPress} style={{fontFamily:'poppins',fontSize:12,color:'#323446'}}>
+                      <View style={{ width:'100%',flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:8,paddingRight:12}}>
+                      <Text onPress={onPress} style={{fontFamily:'poppins',fontSize:15,color:'#323446',fontWeight:'500'}}>
                         {wilaya}
-                      </Text>} 
+                      </Text>
+                      <Ionicons name="ios-arrow-down" size={24} color="#323446" onPress={onPress} />
+                      </View>} 
           </View>
           <CustomInput
             id='region'
@@ -405,9 +405,8 @@ const takeLibraryHandler = async ()=>{
             placeholderTextColor='rgba(50,52,70,0.4)'
             inputStyle={{fontSize:15}}
             shadowColorView='black'
-            shadowOpacityView={0.96}
-            shadowOffsetView={{width: 0, height:2}}
-            shadowRadiusView={10}
+            shadowOpacityView={0.5}
+            shadowOffsetView={{width: 0, height:1}}
             elevationView={3}
             widthView='90%'
             backgroundColor='#fff'
@@ -475,9 +474,8 @@ const styles= StyleSheet.create({
      borderTopLeftRadius:30,
      borderTopRightRadius:30,
      shadowColor: 'black',
-     shadowOpacity: 0.96,
-     shadowOffset: {width: 0, height:2},
-     shadowRadius: 10,
+     shadowOpacity: 0.5,
+     shadowOffset: {width: 0, height:1},
      elevation: 5,
      backgroundColor:'red'
     },
@@ -497,9 +495,8 @@ const styles= StyleSheet.create({
       borderRadius:10,
       marginTop:-50, 
       shadowColor: 'black',
-      shadowOpacity: 0.96,
-      shadowOffset: {width: 0, height:2},
-      shadowRadius: 10,
+      shadowOpacity: 0.5,
+      shadowOffset: {width: 0, height:1},
       elevation: 5,
     },
     secondCardContent:{
@@ -614,10 +611,6 @@ const styles= StyleSheet.create({
       height:'95%',
       alignItems:'center',
       justifyContent:'center',
-      shadowColor: 'black',
-      shadowOpacity: 0.96,
-      shadowOffset: {width: 0, height:2},
-      shadowRadius: 10,
       elevation: 2,
       overflow:'hidden',
       borderRadius:10
@@ -627,6 +620,11 @@ const styles= StyleSheet.create({
       height:100,
       alignItems:'center',
       justifyContent:'center',
+      borderWidth:Platform.OS==='ios'? 1:null,
+      borderRadius:Platform.OS==='ios'? 40:null,
+      marginHorizontal:Platform.OS==='ios'? 3:null,
+      borderColor:Platform.OS==='ios'? Colors.blue:undefined,
+      borderStyle:Platform.OS==='ios'? 'dashed':undefined
       
     }
 
