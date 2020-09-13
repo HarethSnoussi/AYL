@@ -22,6 +22,7 @@ import { getReviews } from '../../store/actions/reviewsActions';
 import { addtoken ,getTokens } from '../../store/actions/tokenActions';
 import SentOverlay from '../../components/SentOverlay';
 import NotifOverlay from '../../components/NotifOverlay';
+
 const screen = Dimensions.get("window");
 
 Notifications.setNotificationHandler({
@@ -61,8 +62,10 @@ const dispatch = useDispatch ();
 /************************************************************************************************** */
 //Notifications 
 const [expoPushToken, setExpoPushToken] = useState('');
-const [notification, setNotification] = useState(false);
+// const [notification, setNotification] = useState(false);
 const [notificationData,setNotificationData]= useState([]);
+const [notificationsList,setNotificationsList] = useState([]);
+
 const notificationListener = useRef();
 const [visible, setVisible] = useState(false);
 const responseListener = useRef();
@@ -166,20 +169,31 @@ useEffect(() => {
 
 useEffect(()=>{
 
-  responseListener.current =  Notifications2.addListener((data) => {
-    // props.navigation.navigate("AllBarbers",{type : "coiffeurs",clientID});
+  // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
 
-    notificationDataHandler(data.data,"notification");
-    toggleOverlay();
-   
 
-    
+  notificationListener.current = Notifications.addNotificationReceivedListener(async (notification) => {
+    // setNotification(notification);
+    const notificationsList = await Notifications.getPresentedNotificationsAsync() ;
+
+    setNotificationData(notificationsList);
   });
+
+  responseListener.current = Notifications.addNotificationResponseReceivedListener(async (notification) => {
+
+
+    const notificationsList = await Notifications.getPresentedNotificationsAsync() ;
+    notificationsList.push(notification.notification);
+    setNotificationData(notificationsList);
+  });
+
+
 
 return () => {
   Notifications.removeNotificationSubscription(notificationListener);
   Notifications.removeNotificationSubscription(responseListener);
 };
+
 
 
 },[])
@@ -189,14 +203,12 @@ return () => {
 
 
 
-// console.log(notificationData);
  //Overlay Handelr
  const sentOverlayHandler = ()=>{
      
   setSentVisible((previous) => !previous);
  
  }
-
 
 
 // Can use this function below, OR use Expo's Push Notification Tool-> https://expo.io/dashboard/notifications
@@ -271,32 +283,18 @@ async function registerForPushNotificationsAsync() {
   return token;
 }
 
-const notificationDataHandler = (data,sender) =>{
-  console.log(notificationData);
-if(sender === "notification"){
-    setNotificationData(previous=>{if(previous.findIndex(e=>e.id===data.id)<0)
-     { return([...previous,data])}
-     else {
-      const index = previous.findIndex(e=>e.id===data.id)
-      const newObj = previous;
-      newObj[index].body = data.body;
-      newObj[index].type = data.type;
-      return([...newObj])
-    }
-    
-    }
-    
-    );
-  
-  } else {
-   setNotificationData(previous=>previous.filter(e=>e.id !== data))
+
+
+const notificationDataHandler = (list,sender) =>{
+
+   setNotificationData(previous=>previous.filter(e=>e.request.identifier !== list))
+ 
     toggleOverlay();
-  }
+    Notifications.dismissNotificationAsync(list);
+  
 
   }
  
-
-
 
 
 /************NOTIFICATION END ***********************************/
@@ -343,7 +341,7 @@ if (error ) {
 
 
 
-if (isLoading || allBarbers.length <= 0 || client.length ===0) {
+if (isLoading || allBarbers.length <= 0 ) {
 
   return (
 
@@ -365,7 +363,7 @@ if (isLoading || allBarbers.length <= 0 || client.length ===0) {
     
       <StatusBar hidden />
    
-      <ScrollView  refreshing={isRefreshing}>
+      <ScrollView  >
 
             <ImageBackground source = {require("../../assets/pictures/barber4.png")} style = {styles.firstImage}  resizeMode ="stretch" imageStyle ={styles.image} >
 
@@ -375,12 +373,14 @@ if (isLoading || allBarbers.length <= 0 || client.length ===0) {
     
 
 <View>
-{ notificationData.length >0 && notificationData.map((e,index)=>{
+{ notificationData.length >0 && notificationData.map((item,index)=>{
+console.log(item.request.content.data);
+const e = item.request.content.data;
   return(
 
   <NotifOverlay 
       key={index}
-      close={()=>notificationDataHandler(e.id,"self")} 
+      close={()=>notificationDataHandler(item.request.identifier,"self")} 
       url ={require("../../assets/pictures/assest.png")} 
       isVisible = {true} 
       start={e.start}
@@ -431,7 +431,7 @@ if (isLoading || allBarbers.length <= 0 || client.length ===0) {
               </View>
               { 
            allBarbers.length > 0 ?
-          <ScrollView style ={styles.topBarbers} horizontal showsHorizontalScrollIndicator  = {false} >
+          <ScrollView refreshing={isRefreshing} style ={styles.topBarbers} horizontal showsHorizontalScrollIndicator  = {false} >
 
 
            
