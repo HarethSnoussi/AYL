@@ -174,15 +174,15 @@ useEffect(()=>{
 
   notificationListener.current = Notifications.addNotificationReceivedListener(async (notification) => {
     // setNotification(notification);
-    const notificationsList = await Notifications.getPresentedNotificationsAsync() ;
 
+    const notificationsList = await Notifications.getPresentedNotificationsAsync() ;
     setNotificationData(notificationsList);
   });
 
   responseListener.current = Notifications.addNotificationResponseReceivedListener(async (notification) => {
-
-
+ 
     const notificationsList = await Notifications.getPresentedNotificationsAsync() ;
+    Notifications.dismissAllNotificationsAsync();
     notificationsList.push(notification.notification);
     setNotificationData(notificationsList);
   });
@@ -288,7 +288,7 @@ async function registerForPushNotificationsAsync() {
 const notificationDataHandler = (list,sender) =>{
 
    setNotificationData(previous=>previous.filter(e=>e.request.identifier !== list))
- 
+   
     toggleOverlay();
     Notifications.dismissNotificationAsync(list);
   
@@ -315,7 +315,7 @@ const toggleOverlay = () => {
   setVisible(!visible);
   
 };
-
+const now = new Date();
 
 /************************************************************************************************** */
 /********************************************************************** */
@@ -374,14 +374,13 @@ if (isLoading || allBarbers.length <= 0 ) {
 
 <View>
 { notificationData.length >0 && notificationData.map((item,index)=>{
-console.log(item.request.content.data);
+
 const e = item.request.content.data;
   return(
 
   <NotifOverlay 
       key={index}
       close={()=>notificationDataHandler(item.request.identifier,"self")} 
-      url ={require("../../assets/pictures/assest.png")} 
       isVisible = {true} 
       start={e.start}
       end = {e.end}
@@ -389,6 +388,8 @@ const e = item.request.content.data;
       bookingDate = {e.bookingDate}
       body = {e.body}
       type = {e.type}
+      name = {e.name}
+      surname = {e.surname}
       />
 
 
@@ -402,11 +403,10 @@ const e = item.request.content.data;
           isVisible = {sentVisible} 
           sentOverlayHandler = {sentOverlayHandler}
           url ={require("../../assets/pictures/sentGreen.png")}
-      
           title = "Merci !"
           body = "Votre réservation a été envoyée avec succès"
           buttonTitle = "Fermer"
-          overlayType  ="succes"
+          overlayType  ="success"
           />
 </View>
           

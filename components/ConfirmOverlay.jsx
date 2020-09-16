@@ -5,8 +5,8 @@ import { Button ,Overlay} from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
 const screen = Dimensions.get("window");
 
-
 const ConfirmOverlay = props =>{
+
 
         return (
             <TouchableWithoutFeedback  style={{backgroundColor:"red"}} onPress = {props.close}>
@@ -22,7 +22,7 @@ const ConfirmOverlay = props =>{
                                     <View style = {{height:"40%",justifyContent:"center",alignItems:"center"}}>
                                     <Image
                                             style={{height:"100%",width:"100%",resizeMode:"contain"}}
-                                            source={props.url}
+                                            source={require("../assets/pictures/expired.png")}
                                         />
                                     </View>
 

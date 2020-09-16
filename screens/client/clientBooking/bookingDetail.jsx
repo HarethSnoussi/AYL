@@ -74,6 +74,7 @@ async function sendPushNotification() {
 //Loading State
 const [isLoading , setLoading] = useState (false);
 
+
 //Fetched Barber Infos
 const [barberInfos , setBarberInfos] = useState({
   "address": " ",
@@ -184,7 +185,7 @@ if (isLoading) {
   return(
     <View style = {styles.container}>
 
-<ConfirmOverlay cancel = {cancelBookingHandler} close = {overlayToggle} isVisible = {overlayVisible} url ={require("../../../assets/pictures/question.png")}  />
+<ConfirmOverlay cancel = {cancelBookingHandler} close = {overlayToggle} isVisible = {overlayVisible}  />
 
     <BookingCard
                             start = {start}

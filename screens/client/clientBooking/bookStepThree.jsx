@@ -66,7 +66,7 @@ return (
         <SentOverlay 
         isVisible = {sentVisible} 
         sentOverlayHandler = {sentOverlayHandler}
-          url ={require("../../../assets/pictures/notok.png")}
+       
           buttonColor = "#F26052"
           title = "Echec !"
           body = "Echec lors de l'envoie de la réservation"
