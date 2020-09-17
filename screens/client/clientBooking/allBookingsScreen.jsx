@@ -285,7 +285,7 @@ if (isLoading) {
 
                     dayBookings.map((booking , index)=>{
                       
-                      
+                     
                         return(
                         <BookingCard
                             key = {index}
@@ -304,6 +304,7 @@ if (isLoading) {
                             cancelDate = {booking.date}
                             id = {booking.id}
                             type = "all"
+                            address = {booking.address}
                          /> 
 
                     )})

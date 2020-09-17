@@ -113,7 +113,7 @@ const getAllBarbers = useCallback(async ()=>{
     await  dispatch(getBarbers());
     await dispatch(getReviews(clientID));
     await dispatch(getClientBookings(clientID));
-   
+    await dispatch(expiredbookings(clientID,tokens));
     setIsRefreshing(false);
     setLoading(false);
   
@@ -375,7 +375,7 @@ if (isLoading || allBarbers.length <= 0 ) {
 <View>
 { notificationData.length >0 && notificationData.map((item,index)=>{
 
-const e = item.request.content.data;
+  const e = Platform.OS === "ios" ? item.request.content.data.body : item.request.content.data ;
   return(
 
   <NotifOverlay 
