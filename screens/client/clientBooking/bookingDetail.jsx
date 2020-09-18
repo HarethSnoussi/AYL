@@ -5,7 +5,7 @@ import moment from 'moment';
 import Colors from "../../../constants/Colors";
 import BookingCard from '../../../components/BookingCard';
 import { Ionicons ,MaterialIcons } from '@expo/vector-icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {cancelBooking} from "../../../store/actions/bookingsActions";
 import { Rating, AirbnbRating } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -14,7 +14,7 @@ import ConfirmOverlay from '../../../components/ConfirmOverlay';
 const screen = Dimensions.get("window");
 
 const BookingDetail = props =>{
-
+  const client= useSelector(state=>state.clients.client);
   const [overlayVisible,setOverlayVisible] = useState(false);
 
 const services = props.navigation.getParam("services");
@@ -22,8 +22,7 @@ const start= props.navigation.getParam("start");
 const bookingDate = props.navigation.getParam("bookingDate");
 const now  = moment().format().substring(11,16) ;
 const diffrence = parseInt(moment.duration(moment(start,"h:mm:ss a").diff(moment(now,"h:mm:ss a"))).asMinutes());
-// const conditionAnnuler = ( (props.navigation.getParam("status") === "confirmée" && ((diffrence > 30 && moment(bookingDate).format("ll") === moment().format("ll")) || moment(bookingDate).format("ll") !== moment().format("ll"))) || props.navigation.getParam("status") === "en attente")  ;
-// console.log(diffrence);
+
 
 const conditionAnnuler = ( (props.navigation.getParam("status") === "confirmée" && ((diffrence >= 30 && moment().isSame(bookingDate, 'day')) || moment().isBefore(bookingDate, 'day'))) || props.navigation.getParam("status") === "en attente");
 
@@ -37,13 +36,26 @@ async function sendPushNotification() {
   
   resData.map(e=>{
   
+
+
   allMessages.push(
     {
       to: e.expoToken,
       sound: 'default',
       title: 'Réservation Annulée',
-      body: 'Un client a annulé une réservation !',
-      data: { data: 'goes here'},
+      body: 'Un client a annulé sa réservation !',
+      data: { 
+        data: 'goes here',
+
+      title: 'Réservation Annulée',
+      body: 'Cette réservation a été  annulée !',
+      start : start,
+      end : props.navigation.getParam("end"),
+      bookingDate : bookingDate,
+      address : props.navigation.getParam("address"),
+      name : client[0].name,
+      surname : client[0].surname
+    },
     }
   
   )
@@ -73,6 +85,7 @@ async function sendPushNotification() {
 
 //Loading State
 const [isLoading , setLoading] = useState (false);
+
 
 //Fetched Barber Infos
 const [barberInfos , setBarberInfos] = useState({
@@ -184,7 +197,7 @@ if (isLoading) {
   return(
     <View style = {styles.container}>
 
-<ConfirmOverlay cancel = {cancelBookingHandler} close = {overlayToggle} isVisible = {overlayVisible} url ={require("../../../assets/pictures/question.png")}  />
+<ConfirmOverlay cancel = {cancelBookingHandler} close = {overlayToggle} isVisible = {overlayVisible}  />
 
     <BookingCard
                             start = {start}

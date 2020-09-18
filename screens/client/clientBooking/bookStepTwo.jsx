@@ -13,7 +13,7 @@ import 'moment/locale/fr';
 import ConfirmBookingOverlay from "../../../components/ConfirmBookingOverlay";
 import BarberInfos from '../../../components/BarberInfos';
 
- 
+ const now  = new Date();
 const hours = [
     {id : "1",time : "05:00"},
     {id : "2",time : "05:15"},
@@ -289,7 +289,6 @@ manager();
     );
 }
 
-
 return (
             <View style= {styles.container}>
 
@@ -337,9 +336,10 @@ return (
                             mode="date"
                             onConfirm={pickedDateHandler}
                             onCancel={()=>setDatePickerVisibility(false)}
-                            minimumDate={new Date()}
+                            minimumDate={now}
                             display = "spinner"
                             date = {pickedDate}
+                            maximumDate = {new Date(now.getFullYear(), now.getMonth()+1, now.getDate())}
                         />
                        
                         

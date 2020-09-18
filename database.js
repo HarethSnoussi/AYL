@@ -320,6 +320,7 @@ app.patch("/bookings/expiredbookings",(req,res)=>{
 
 
 app.get("/getbookings/expired/:clientId",(req,res)=>{
+  const query = "SELECT booking.id,booking.amount , booking.id ,CAST(booking.date AS char) as date,CAST(booking.date_booking AS char) as bookingDate,SUBSTRING(booking.start,1,5) as start,SUBSTRING(booking.end,1,5)as end,booking.client_id as clientId,booking.barber_id as barberId , booking.status, booking.duration as bookingDuration , booking.address,booking.region,booking.wilaya,service.name , service.price , service.duration  as serviceDuration from booking INNER JOIN composition on composition.booking_id = booking.id  INNER JOIN service on  service.id = composition.service_id   WHERE client_id = ? "
 
  
    con.query("SELECT * from booking WHERE  SUBSTRING(date_booking,1,10)  = SUBSTRING(NOW(),1,10) AND booking.client_id = ? AND status = 'en attente'  AND CURRENT_TIMESTAMP > start OR SUBSTRING(date_booking,1,10)  <  SUBSTRING(NOW(),1,10)  AND booking.client_id = ? AND status = 'en attente'",[req.params.clientId,req.params.clientId],

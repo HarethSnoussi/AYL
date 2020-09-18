@@ -6,8 +6,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 const screen = Dimensions.get("window");
 const SentOverlay = props =>{
 
+    const url = props.overlayType === "success" ? require("../assets/pictures/true.png") : require("../assets/pictures/false.png");
 
-const colors = ['#0DA598', '#11998e'] ;
+const colors =  props.overlayType ==="echec" ? ['#fd6d57', '#fd9054'] : ['#0DA598', '#11998e']  ;;
 
     return( 
     <Overlay onBackdropPress = {props.sentOverlayHandler}  isVisible = {props.isVisible} overlayStyle = {styles.overlayStyle}>
@@ -15,12 +16,12 @@ const colors = ['#0DA598', '#11998e'] ;
             <View style = {{height : "30%",justifyContent:"center",alignItems:"center",marginTop :"5%"}}>
                      <Image
                         style={{height:"100%",width:"100%",resizeMode:"contain"}}
-                        source={props.url}
+                        source={url}
                     />
                 
             </View>    
 
-            <View style = {{height:"60%", justifyContent :"space-around"}}>
+            <View style = {{height:"60%", justifyContent :"space-around",width :"95%",alignSelf:"center",}}>
             <View style = {{alignItems :"center"}}>
                 <Text style = {{fontSize : screen.width / 14,fontFamily :"poppins-bold",color:Colors.blue}}>{props.title}</Text>
                  <Text style = {{fontSize : screen.width / 32,fontFamily :"poppins-bold",color:Colors.textGrey}}>{props.body}</Text>

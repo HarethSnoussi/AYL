@@ -73,6 +73,7 @@ bookingsIds.forEach( id => {
 let same = resData.filter(e=>e.id === id);
 
     let booking = {
+            address : same[0].address ,
             amount : same[0].amount,
             barberId : same[0].barberId,
             bookingDate : same[0].bookingDate,
@@ -81,10 +82,12 @@ let same = resData.filter(e=>e.id === id);
             date : same[0].date,
             end : same[0].end,
             id : same[0].id,
+            region : same[0].region,
             services:[],
             start :same[0].start ,
             status : same[0].status,
-           
+            wilaya : same[0].wilaya
+            
     }
     same.forEach(e=>{
           const service = {
@@ -196,29 +199,40 @@ export const expiredbookings = (clientId,tokens)=> {
 
   return async (dispatch) =>{
 try {
- 
-
   const arr = await fetch(`http://173.212.234.137:3000/getbookings/expired/${clientId}`);
   const resData = await arr.json ();
 
+
               if(resData.length > 0) {
                 const allMessages = [];
+                resData.map((book)=>{
 
                 tokens.map(e=>{
-                
+             
                 allMessages.push(
                   {
                     to: e.expoToken,
                     sound: 'default',
                     title: 'Expirée',
                     body: 'Vous avez une réservation qui a expirée !',
-                    data: { data: 'goes here' ,title: 'Vous avez une réservation qui a expirée !u',
-                    body: 'Vous avez une réservation qui a expirée !',},
+                    data: { data: 'goes here' ,
+                    title: 'Vous avez une réservation qui a expirée !',
+                    body: 'Vous avez une réservation qui a expirée !',
+                    type:'expiration',
+                    start : book.start,
+                    end : book.end,
+                    bookingDate : book.date_booking,
+                    address : book.address,
+                    name : book.name,
+                    surname : book.surname
+                  },
                   }
                 
                 )
                 
                 })
+
+              })
               
                 allMessages.map(async (e)=>{
                   await fetch('https://exp.host/--/api/v2/push/send', {

@@ -136,7 +136,7 @@ const BarberNavigation = createStackNavigator({
      screen : clientHomeTabs
    }, 
    AllBarbers :  AllBarbersScreen ,
-
+   AllBookingsScreen : AllBookingsScreen ,
    BookStepTwo : BookStepTwo ,
    BookStepOne : BookStepOne ,
    BookStepThree : BookStepThree ,
