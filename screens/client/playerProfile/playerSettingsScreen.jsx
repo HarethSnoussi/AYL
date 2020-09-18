@@ -1,4 +1,4 @@
-import React,{useState,useReducer,useCallback} from 'react';
+import React,{useState,useReducer,useCallback,useEffect} from 'react';
 import {StyleSheet,View,AsyncStorage,ScrollView,ImageBackground,TouchableOpacity,Text,Image,Alert,KeyboardAvoidingView,Dimensions,ActivityIndicator} from 'react-native';
 import {MaterialIcons,MaterialCommunityIcons} from "@expo/vector-icons";
 import {Button} from 'react-native-elements';
@@ -45,18 +45,36 @@ const formReducer=(state,action) =>{
 
 const PlayerSettingsScreen = props =>{
 
-  //get the client's data
-  const client= useSelector(state=>state.clients.client);
+  
  
   //use Dispatch to dispatch our action
   const dispatch= useDispatch();
   const clientUID= props.navigation.getParam('clientUID');
+  const clientID= props.navigation.getParam('clientID');
 
   const [isPhone,setIsPhone]= useState(true);
   const [isPassword,setIsPassword]= useState(false);
   const [isLang,setIsLang]= useState(false);
   const [isArabic,setIsArabic]= useState(false);
   const [isEye,setIsEye]=useState(false);
+  const [isLoadingState,setIsLoadingState]= useState(false);
+
+  const getClient=useCallback(async()=>{
+    try{
+      setError(false);
+      setIsLoadingState(true);
+      await dispatch(clientActions.setClient(clientID));
+      setIsLoadingState(false);
+      }catch(err){
+        setError(true);
+        throw err; 
+      }
+  },[dispatch,setError]);
+  
+    useEffect(()=>{
+    getClient();
+    
+    },[dispatch,getClient,setError]);
 
 const eye=()=>{//eye icon for password
   setIsEye(prevValue=>!prevValue);
@@ -82,6 +100,9 @@ const eye=()=>{//eye icon for password
   const arabic= ()=>{
     setIsArabic(prevValue=>!prevValue);
   };
+
+  //get the client's data
+  const client= useSelector(state=>state.clients.client);
 
   //State for update loading 
   const [isLoading,setIsLoading]= useState(false);
@@ -186,6 +207,33 @@ const alertEditPassword = ()=>{
    [{text:'Oui', style:'destructive', onPress:editPassword},
     {text:'Non', style:'cancel'}]);
     return;
+};
+
+if(error){
+      
+  return ( <ImageBackground source={require('../../../assets/images/support.png')} style={styles.coverTwo}>
+              <View style={{marginBottom:10,alignSelf:'center'}}>
+                <Text style={styles.noServicesText}>{client && client[0].lang?polylanfr.WeakInternet:polylanar.WeakInternet}</Text>
+              </View>
+              <Button
+                theme={{colors: {primary:'#fd6c57'}}} 
+                title="Réessayer"
+                titleStyle={styles.labelButton}
+                buttonStyle={styles.buttonStyle}
+                ViewComponent={LinearGradient}
+                onPress={getClient}
+                linearGradientProps={{
+                    colors: ['#fd6d57', '#fd9054'],
+                    start: {x: 0, y: 0} ,
+                    end:{x: 1, y: 0}
+                  }}/>
+          </ImageBackground>);
+};
+if(isLoadingState || client===undefined){
+      
+  return ( <ImageBackground source={require('../../../assets/images/support.png')} style={styles.coverTwo}>
+              <ActivityIndicator size='large' color={Colors.primary} />
+           </ImageBackground>)
 };
 
     return(
@@ -430,7 +478,14 @@ const styles= StyleSheet.create({
   borderRadius:20,
   height:40,
   alignSelf:'center'
- }
+ },
+ coverTwo:{
+  flex:1,
+  justifyContent:'center',
+  width:'100%',
+  height:'100%',
+  resizeMode:'cover'
+}
 });
 
 export default PlayerSettingsScreen;

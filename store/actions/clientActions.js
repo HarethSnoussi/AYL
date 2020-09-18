@@ -6,6 +6,7 @@ export const UPDATE_CLIENT_PHONE = "UPDATE_CLIENT_PHONE";
 export const UPDATE_CLIENT = "UPDATE_CLIENT";
 export const DELETE_CLIENT = "DELETE_CLIENT";
 export const UPDATE_CLIENT_TOKEN = "UPDATE_CLIENT_TOKEN";
+export const UPDATE_CLIENT_LANG = "UPDATE_CLIENT_LANG";
 
 
 export const createClient=(id,phone,password,sex,name,surname,wilaya,region)=>{
@@ -133,6 +134,34 @@ export const updateClientPhone= (id,phone,clientid) => {
 
 };
 
+
+export const updateClientLang= (id,lang) => {
+
+    return async dispatch => {
+           console.log(id,lang);
+         try{
+
+           const response = await fetch(`http://173.212.234.137:3000/client/updateLang/${id}`,{
+
+              method:'PATCH',
+              headers: {
+                'Content-Type': 'application/json'
+            },
+            body : JSON.stringify({lang})
+           });
+           if(!response.ok){
+               throw new Error('Oups! Une erreur est survenue in ur fetch.');
+           }
+           
+           dispatch({type:UPDATE_CLIENT_LANG,id,clientData:{lang}});
+           
+         }catch(err){
+             console.log(err);
+             throw err;
+         }
+    };
+
+};
 
 
 

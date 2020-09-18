@@ -47,6 +47,7 @@ const PlayerProfileScreen = props =>{
 
   
   const clientUID= props.navigation.dangerouslyGetParent().getParam('clientUID');
+  const clientID= props.navigation.dangerouslyGetParent().getParam('clientID');
   //get the client's data
   const client= useSelector(state=>state.clients.client);
   const [isInfo,setIsInfo]= useState(true);
@@ -433,7 +434,7 @@ const takeLibraryHandler = async ()=>{
                 </TouchableOpacity>
               </View>
               <View style={styles.cartContainer}>
-                <TouchableOpacity style={styles.cart} onPress={()=>props.navigation.navigate('PlayerSettings',{clientUID:clientUID})}>
+                <TouchableOpacity style={styles.cart} onPress={()=>props.navigation.navigate('PlayerSettings',{clientUID:clientUID,clientID:clientID})}>
                      <View style={{paddingBottom:5}}>
                        <Ionicons title = "options" name ='ios-options' color='#56A7FF' size={23} />
                      </View>
