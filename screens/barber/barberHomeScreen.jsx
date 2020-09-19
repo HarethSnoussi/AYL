@@ -126,11 +126,12 @@ const BarberHomeScreen = props =>{
                <View style={{flexDirection:'row'}}>
                 <Rating
                       type='custom'
-                      startingValue={barber && feedbacks.length===0? 1: barber.mark}
+                      startingValue={barber && feedbacks.length===0 ? 2.5 : barber.mark}
                       imageSize={20}
                       ratingBackgroundColor={'#323446'}
                       ratingColor='#fd6c57'
                       tintColor='#f9f9f9'
+                      readonly = {true}
                     />
                  <Text style={styles.commentsNumber}>{feedbacks.length!==0 ? ` (${feedbacks.length} Commentaires)`:' Aucun Commentaire!'}</Text>   
                 </View>
