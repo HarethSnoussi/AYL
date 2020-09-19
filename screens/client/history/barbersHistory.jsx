@@ -38,9 +38,10 @@ const dispatch = useDispatch();
   
 
 useEffect(()=>{
-  const a= allBarbers.filter((e)=>{
+  
+  const a= barbersList.filter((e)=>{
 
-    const itemData = e.surname ? e.surname.toUpperCase() : ''.toUpperCase();
+    const itemData = e.name ? e.name.toUpperCase() : ''.toUpperCase();
     const textData = searchState.toUpperCase();
     return itemData.startsWith(textData);
 
@@ -53,31 +54,45 @@ useEffect(()=>{
 
 
 const searchedResult = searchState === "" ? barbersList :  wilayas ;
-
-useEffect(()=>{ 
-  const getHistory = async ()=>{
-  
-    try {
-        setError(false);
-        setIsRefreshing(true);
-        setLoading(true);
-        const arr = await fetch(`http://173.212.234.137:3000/client/barbers/${clientID}`);
-        const resData = await arr.json ();
-        setBarbersIds([...resData]);
-        setIsRefreshing(false);
-        setLoading(false);
-        }
-    
-    catch (error) {
-        setError(true);
-        console.log("There is an Error");
-        throw error;
+const getHistory = useCallback(async ()=>{
+  try {
+    setError(false);
+    setIsRefreshing(true);
+    setLoading(true);
+    const arr = await fetch(`http://173.212.234.137:3000/client/barbers/${clientID}`);
+    const resData = await arr.json ();
+    setBarbersIds([...resData]);
+    setIsRefreshing(false);
+    setLoading(false);
     }
 
-}; 
-  getHistory();
+catch (error) {
+    setError(true);
+    console.log("There is an Error");
+    throw error;
+}
 
 },[setError]);
+
+
+useEffect (()=>{
+  getHistory();
+
+},[getHistory]);
+
+useEffect(()=>{
+  const willFocusSub= props.navigation.addListener(
+    'willFocus',
+    () => {
+  
+      getHistory();
+     
+    }
+  );
+  return ()=>{
+    willFocusSub.remove();
+  };
+  },[getHistory]);
 
 
 
@@ -166,7 +181,7 @@ if (isLoading) {
               return (
               <ReviewCard 
               key = {index}
-              navigate = {()=>props.navigation.navigate("BookStepOne",{barberId : barber.id,clientID})}
+              navigate = {()=>props.navigation.navigate("BookStepOne",{barberId : barber.id,clientID,name:barber.name,surname:barber.surname,mark:barber.mark,region:barber.region,wilaya:barber.wilaya})}
               name = {barber.name}
               surname = {barber.surname}
               region = {barber.region}
@@ -175,6 +190,7 @@ if (isLoading) {
               barberId = {barber.id}
               allReviews = {allReviews}
               clientId = {clientID}
+               profile = {()=>props.navigation.navigate("Barber",{barberID : barber.id})}
               />
               
               )

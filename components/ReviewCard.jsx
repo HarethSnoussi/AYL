@@ -228,7 +228,7 @@ try {
                   />
                     <Text>{props.mark === null ? 2.5 : props.mark}</Text>
                   </View>
-              <Text style ={{color : "#fd6c57",fontFamily : "poppins-bold",letterSpacing : 1,fontSize : screen.width/30}}>Voir le profil </Text>
+              <Text onPress = {props.profile} style ={{color : "#fd6c57",fontFamily : "poppins-bold",letterSpacing : 1,fontSize : screen.width/30}}>Voir le profil </Text>
                
                 </View>
                
