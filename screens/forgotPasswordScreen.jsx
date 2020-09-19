@@ -168,19 +168,19 @@ Alert.alert('Erreur!','Veuillez rentrer votre nouveau mot de passe s\'il vous pl
        <KeyboardAvoidingView  keyboardVerticalOffset={10}>
          <StatusBar hidden />
           <View style={styles.backgroundContainer}>
-            <Image source={require('../assets/images/man1-1.jpg')} style={{resizeMode:'cover',width:'100%',height:'100%'}}/>
+            <Image source={require('../assets/images/woman5.jpg')} style={{resizeMode:'cover',width:'100%',height:'100%'}}/>
           </View>
           <View style={styles.secondContainer}>
              <View style={styles.logoContainer}>
-                 <Image source={require('../assets/images/t1.png')} style={styles.logo}/>
+                 <Image source={require('../assets/images/logo.png')} style={styles.logo}/>
                  <Text style={styles.callToAction}>Contactez un coiffeur en quelques clics</Text>
              </View>
               <View style={styles.inputsContainer}>
                   <CustomInput
                     id={'phone'}
-                    rightIcon={<MaterialCommunityIcons title="lock" onPress={eye} name ={!isEye?'eye':'eye-off'} color='#323446' size={23} />}
+                    rightIcon={<MaterialIcons title = "phone" name ='phone'  color='#323446' size={23} />}
                     leftIcon={<View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around',borderRightWidth:1,borderRightColor:Colors.blue,paddingRight:5,marginRight:5}}><Image source={require('../assets/images/algeriaFlag.png')} style={{width:24,height:28,marginRight:5}}></Image><Text style={styles.phoneNumber}>+213</Text></View>}
-                    placeholder='555555555'
+                    placeholder='555555567'
                     keyboardType="phone-pad"
                     returnKeyType="next"
                     onInputChange={inputChangeHandler}
@@ -294,8 +294,8 @@ const styles= StyleSheet.create({
     alignItems:'center'
   },
   logo:{
-    width:160,
-    height:49,
+    width:180,
+    height:42,
     marginVertical:10
   },
   callToAction:{

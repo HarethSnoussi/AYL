@@ -1,4 +1,4 @@
-import {CREATE_CLIENT,SET_CLIENTS,UPDATE_CLIENT_PASSWORD,UPDATE_CLIENT,DELETE_CLIENT,SET_CLIENT,UPDATE_CLIENT_PHONE} from '../actions/clientActions';
+import {CREATE_CLIENT,SET_CLIENTS,UPDATE_CLIENT_PASSWORD,UPDATE_CLIENT,UPDATE_CLIENT_LANG,DELETE_CLIENT,SET_CLIENT,UPDATE_CLIENT_PHONE} from '../actions/clientActions';
 import Client from '../../models/client';
 
 const initialState={
@@ -90,6 +90,40 @@ const clientsReducer=(state=initialState,action)=>{
          ...state,
          client:updatedClients
        };
+
+       case UPDATE_CLIENT_LANG:
+         
+        const clientIndexLang = state.client.findIndex(client => client.id === action.id);
+        
+        const updatedClientLang = new Client(
+          action.id,
+          state.client[clientIndexLang].phone,
+          state.client[clientIndexLang].password,
+          state.client[clientIndexLang].sex,
+          state.client[clientIndexLang].name,
+          state.client[clientIndexLang].surname,
+          state.client[clientIndexLang].b_name,
+          state.client[clientIndexLang].age,
+          state.client[clientIndexLang].email,
+          state.client[clientIndexLang].address,
+          state.client[clientIndexLang].wilaya,
+          state.client[clientIndexLang].region,
+          state.client[clientIndexLang].image,
+          state.client[clientIndexLang].long,
+          state.client[clientIndexLang].lat,
+          state.client[clientIndexLang].mark,
+          action.clientData.lang,
+          state.client[clientIndexLang].type,
+          state.client[clientIndexLang].services,
+          state.client[clientIndexLang].workingTimes
+        );   
+
+        const updatedClientsLang=[...state.client];
+        updatedClientsLang[clientIndexLang]=updatedClientLang;
+        return{
+          ...state,
+          client:updatedClientsLang
+        };
 
 
        case UPDATE_CLIENT_PHONE:

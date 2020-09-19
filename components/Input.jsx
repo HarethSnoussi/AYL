@@ -82,7 +82,7 @@ const CustomInput = props =>{
 
     return(
         <View style={{width:props.widthView,borderWidth:1, borderRadius:25,backgroundColor:props.backgroundColor,
-        borderColor:!inputState.isValid?Colors.primary:props.backgroundColor,marginVertical:3,
+        borderColor:!inputState.isValid?Colors.primary:props.backgroundColor,marginVertical:5,
         height:45,shadowColor:props.shadowColorView,shadowOpacity:props.shadowOpacityView,
         shadowOffset:props.shadowOffsetView, shadowRadius:props.shadowRadiusView,elevation: props.elevationView,alignSelf:'center'}}>
             <Input

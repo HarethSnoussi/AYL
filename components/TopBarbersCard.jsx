@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Dimensions,Image,ImageBackground,TouchableOpacity
+import { StyleSheet, Text, View, Dimensions,Image,ImageBackground,TouchableOpacity,Platform
 } from 'react-native'; 
 import {Button , Rating, AirbnbRating,Avatar} from "react-native-elements";
 import {Ionicons} from '@expo/vector-icons';
@@ -72,11 +72,8 @@ const styles= StyleSheet.create({
     borderRadius : 25,
     overflow : "hidden",
     marginHorizontal : screen.width * 0.03,
-    // borderWidth : 0.3 ,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
+    borderWidth : Platform.OS === 'ios' ?0.3:null ,
+   
     elevation: 1,
    
   },
@@ -122,7 +119,9 @@ const styles= StyleSheet.create({
  button : {
    backgroundColor : "#fd6c57",
    alignSelf : "center",
-  
+   marginBottom:Platform.OS === 'ios' ?5:null,
+   paddingHorizontal:25,
+   borderRadius:20
 }
   
   });
