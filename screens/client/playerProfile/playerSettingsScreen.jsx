@@ -58,6 +58,7 @@ const PlayerSettingsScreen = props =>{
   const [isArabic,setIsArabic]= useState(false);
   const [isEye,setIsEye]=useState(false);
   const [isLoadingState,setIsLoadingState]= useState(false);
+  const [error,setError]= useState();
 
   const getClient=useCallback(async()=>{
     try{
