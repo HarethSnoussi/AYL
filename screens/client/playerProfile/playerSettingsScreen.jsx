@@ -55,6 +55,7 @@ const PlayerSettingsScreen = props =>{
   const [isPhone,setIsPhone]= useState(true);
   const [isPassword,setIsPassword]= useState(false);
   const [isLang,setIsLang]= useState(false);
+  const [isAccount,setIsAccount]= useState(false);
   const [isArabic,setIsArabic]= useState(false);
   const [isEye,setIsEye]=useState(false);
   const [isLoadingState,setIsLoadingState]= useState(false);
@@ -86,14 +87,24 @@ const eye=()=>{//eye icon for password
     setIsPhone(true);
     setIsPassword(false);
     setIsLang(false);
+    setIsAccount(false);
   };
   const password = ()=>{
     setIsPhone(false);
     setIsPassword(true);
     setIsLang(false);
+    setIsAccount(false);
   };
   const lang= ()=>{
     setIsLang(true);
+    setIsPhone(false);
+    setIsPassword(false);
+    setIsAccount(false);
+  };
+
+  const account= ()=>{
+    setIsAccount(true);
+    setIsLang(false);
     setIsPhone(false);
     setIsPassword(false);
   };
@@ -210,6 +221,29 @@ const alertEditPassword = ()=>{
     return;
 };
 
+const deleteAccount= async()=>{
+  try{
+
+     dispatch(clientActions.deleteClient(clientID));
+     dispatch(authActions.deleteUser(clientUID)); 
+     dispatch(authActions.logout());
+     AsyncStorage.clear();
+     props.navigation.navigate('Auth');
+  }catch(err){
+   console.log(err);
+   Alert.alert('Oups!','Une erreur est survenue!',[{text:"OK"}]);
+  }
+};
+
+const alertDelete = ()=>{
+  Alert.alert(
+   'Attention!',
+   'Voulez-vous vraiment supprimer votre compte?',
+   [{text:'Oui', style:'destructive', onPress:deleteAccount},
+    {text:'Non', style:'cancel'}]);
+    return;
+};
+
 if(error){
       
   return ( <ImageBackground source={require('../../../assets/images/support.png')} style={styles.coverTwo}>
@@ -243,19 +277,24 @@ if(isLoadingState || client===undefined){
           <ImageBackground source={require('../../../assets/images/man1-1.jpg')} style={styles.backgroundFirstCard} resizeMode='cover'/>
          </View>
          <View style={styles.menuContainer}>
-              <TouchableOpacity onPress={phone} style={{padding:5,width:'30%',backgroundColor:isPhone?'#fd6c57':'#fff',alignItems:'center',justifyContent:'center'}}>
-                <Text style={{color:isPhone?'#fff':'#fd6c57',fontFamily:'poppins'}}>
+              <TouchableOpacity onPress={phone} style={{padding:5,width:'25%',backgroundColor:isPhone?'#fd6c57':'#fff',alignItems:'center',justifyContent:'center'}}>
+                <Text style={{color:isPhone?'#fff':'#fd6c57',fontFamily:'poppins',fontSize:12}}>
                   {!isArabic?fr.Phone:ar.Phone}
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={password} style={{borderRightWidth:1,borderRightColor:'#fd6c57',borderLeftWidth:1,borderLeftColor:'#fd6c57',padding:5,width:'40%',backgroundColor:isPassword?'#fd6c57':'#fff',alignItems:'center',justifyContent:'center'}}>
-                  <Text style={{color:isPassword?'#fff':'#fd6c57',fontFamily:'poppins'}}>
+              <TouchableOpacity onPress={password} style={{borderRightWidth:1,borderRightColor:'#fd6c57',borderLeftWidth:1,borderLeftColor:'#fd6c57',padding:5,width:'25%',backgroundColor:isPassword?'#fd6c57':'#fff',alignItems:'center',justifyContent:'center'}}>
+                  <Text style={{color:isPassword?'#fff':'#fd6c57',fontFamily:'poppins',fontSize:10}}>
                     {!isArabic?fr.Password:ar.Password}
                   </Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={lang} style={{padding:5,width:'30%',backgroundColor:isLang?'#fd6c57':'#fff',alignItems:'center',justifyContent:'center'}}>
-                  <Text style={{color:isLang?'#fff':'#fd6c57',fontFamily:'poppins'}}>
+              <TouchableOpacity onPress={lang} style={{padding:5,width:'25%',backgroundColor:isLang?'#fd6c57':'#fff',alignItems:'center',justifyContent:'center',borderRightWidth:1,borderRightColor:'#fd6c57'}}>
+                  <Text style={{color:isLang?'#fff':'#fd6c57',fontFamily:'poppins',fontSize:12}}>
                     {!isArabic?fr.Languages:ar.Languages}
+                  </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={account} style={{padding:5,width:'25%',backgroundColor:isAccount?'#fd6c57':'#fff',alignItems:'center',justifyContent:'center'}}>
+                  <Text style={{color:isAccount?'#fff':'#fd6c57',fontFamily:'poppins',fontSize:12}}>
+                    Compte
                   </Text>
               </TouchableOpacity>
         </View>
@@ -376,6 +415,29 @@ if(isLoadingState || client===undefined){
            </View>
            </KeyboardAvoidingView>
         </ScrollView>):undefined}
+        {isAccount?(<ScrollView style={styles.scrollViewAccount} showsVerticalScrollIndicator={false}>
+          <View style={styles.noticeContainer}>
+             <Text style={styles.noticeTitle}>Remarque</Text>
+             <Text style={styles.noticeContent}>Soyez prudent! Une fois vous supprimez votre compte, vous n'aurez jamais accès avec les actuelles informations de votre compte.</Text>
+             <Text style={styles.tahfifaSignature}>Equipe Tahfifa.</Text>
+         </View>
+            <View style={styles.buttonContainer}>
+               <Button
+                    theme={{colors: {primary:'#fd6c57'}}} 
+                    title='Supprimer Mon Compte'
+                    titleStyle={styles.labelButton}
+                    buttonStyle={styles.buttonStyleDelete}
+                    ViewComponent={LinearGradient}
+                    linearGradientProps={{
+                        colors: ['#fd6d57', '#fd9054'],
+                        start: {x: 0, y: 0} ,
+                        end:{x: 1, y: 0}
+                        
+                    }}
+                    onPress={alertDelete}
+                />
+           </View>
+        </ScrollView>):undefined}
         
       </View>
 
@@ -462,6 +524,10 @@ const styles= StyleSheet.create({
     width:'100%',
     marginTop:80
   },
+  scrollViewAccount:{
+    width:'100%',
+    marginTop:50
+  },
   buttonContainer:{
     width:'90%',
     alignSelf:'center',
@@ -480,13 +546,41 @@ const styles= StyleSheet.create({
   height:40,
   alignSelf:'center'
  },
+ buttonStyleDelete:{
+  borderColor:'#fd6c57',
+  width:'80%',
+  borderRadius:20,
+  height:40,
+  alignSelf:'center',
+  marginTop:20
+ },
  coverTwo:{
   flex:1,
   justifyContent:'center',
   width:'100%',
   height:'100%',
   resizeMode:'cover'
-}
+},
+noticeContainer:{
+  width:'75%',
+  alignSelf:'center',
+ },
+ noticeTitle:{
+   fontFamily:'poppins-bold',
+   fontSize:13,
+   color:'#323446'
+ },
+ noticeContent:{
+   fontFamily:'poppins',
+   fontSize:12,
+   color:'#323446'
+ },
+ tahfifaSignature:{
+   fontFamily:'poppins',
+   fontSize:12,
+   color:'#fd6c57',
+   paddingTop:5
+ },
 });
 
 export default PlayerSettingsScreen;
