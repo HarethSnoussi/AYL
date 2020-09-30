@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useCallback,useReducer} from 'react';
-import {StyleSheet,View,AsyncStorage,ScrollView,ImageBackground,TouchableOpacity,Text,Image,Alert,KeyboardAvoidingView,Dimensions,ActionSheetIOS,Picker,ActivityIndicator} from 'react-native';
+import {StyleSheet,View,AsyncStorage,Linking,ScrollView,ImageBackground,TouchableOpacity,Text,Image,Alert,KeyboardAvoidingView,Dimensions,ActionSheetIOS,Picker,ActivityIndicator} from 'react-native';
 import CustomInput from '../../../components/Input';
 import {HeaderButtons,Item} from "react-navigation-header-buttons";
 import HeaderButton from "../../../components/HeaderButton";
@@ -52,6 +52,23 @@ const PlayerProfileScreen = props =>{
   const client= useSelector(state=>state.clients.client);
   const [isInfo,setIsInfo]= useState(true);
   const [isLocalisation,setIsLocalisation]= useState(false);
+
+  const URL = "https://tahfifaapp.com";
+  const URLAbout = "https://tahfifaapp.com/qui-sommes-nous/";
+  const url= ()=>{
+    Linking.openURL(URL).catch((err) => {
+      if(err){
+        Alert.alert('Oups!','Votre débit internet est trop faible',[{text:'OK'}]);
+    } 
+    });
+   };
+   const url2= ()=>{
+    Linking.openURL(URLAbout).catch((err) => {
+      if(err){
+        Alert.alert('Oups!','Votre débit internet est trop faible',[{text:'OK'}]);
+    } 
+    });
+   };
 
   const info = ()=>{
     setIsInfo(true);
@@ -185,28 +202,7 @@ const takeLibraryHandler = async ()=>{
   
   },[disaptchFormState]);
 
-  const deleteAccount= async()=>{
-    try{
-
-       dispatch(clientActions.deleteClient(client[0].id));
-       dispatch(authActions.deleteUser(clientUID)); 
-       dispatch(authActions.logout());
-       AsyncStorage.clear();
-       props.navigation.navigate('Auth');
-    }catch(err){
-     console.log(err);
-     Alert.alert('Oups!','Une erreur est survenue!',[{text:"OK"}]);
-    }
- };
-
- const alertDelete = ()=>{
-    Alert.alert(
-     'Attention!',
-     'Voulez-vous vraiment supprimer votre compte?',
-     [{text:'Oui', style:'destructive', onPress:deleteAccount},
-      {text:'Non', style:'cancel'}]);
-      return;
- };
+  
 
  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //Update client's data Management after pressing in Check icon
@@ -215,7 +211,7 @@ const takeLibraryHandler = async ()=>{
       
     try{
         setIsLoading(true);
-         await dispatch(clientActions.updateClient(client[0].id,formState.inputValues.name,formState.inputValues.surname,
+         await dispatch(clientActions.updateClient(clientID,formState.inputValues.name,formState.inputValues.surname,
                                           formState.inputValues.email,formState.inputValues.address,
                                           pickedImage,wilaya,formState.inputValues.region));
         setIsLoading(false);                        
@@ -230,7 +226,7 @@ const takeLibraryHandler = async ()=>{
       Alert.alert('Erreur!','Veuillez remplir le(s) champ(s) manquants svp!',[{text:"OK"}]);
     }
   
-  },[dispatch,client[0].id,formState,pickedImage,wilaya]);
+  },[dispatch,clientID,formState,pickedImage,wilaya]);
 
    
 
@@ -238,12 +234,9 @@ const takeLibraryHandler = async ()=>{
       <View style={styles.container}>
       <View style={styles.firstCard}>
         <ImageBackground source={require('../../../assets/images/man1-1.jpg')} style={styles.backgroundFirstCard} resizeMode='cover'>
-          <View style={{width:'100%',flexDirection:'row',justifyContent:'space-between',height:'20%',alignItems:'center'}}>
-            <TouchableOpacity style={styles.iconFormCircle1} onPress={()=>props.navigation.navigate('Accueil')}>
-                <Ionicons title = "back" name ='md-arrow-back' color='#fff' size={26} />
-            </TouchableOpacity>
+          <View style={{width:'100%',height:'20%',alignItems:'center',justifyContent:'center'}}>
             <TouchableOpacity style={styles.iconFormCircle2} onPress={saveHandler}>
-                {!isLoading?<Ionicons title = "check" name ='md-checkmark' color='#fff' size={26} />:
+                {!isLoading?<Ionicons title = "check" name ='md-checkmark' color='#fff' size={32} onPress={saveHandler}  />:
                  <ActivityIndicator color={Colors.primary}/>}
             </TouchableOpacity>
           </View>
@@ -260,7 +253,7 @@ const takeLibraryHandler = async ()=>{
                   <TouchableOpacity style={styles.iconFormCircle1} onPress={takeImageHandler}>
                     <MaterialIcons title = "camera" name ='camera-enhance' color='#323446' size={23} />
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.iconFormCircle2} onPress={takeLibraryHandler}>
+                  <TouchableOpacity style={styles.iconFormCircleGalery} onPress={takeLibraryHandler}>
                     <MaterialIcons title = "library" name ='photo-library' color='#FE457C' size={23} />
                   </TouchableOpacity>
                 </View>  
@@ -418,9 +411,9 @@ const takeLibraryHandler = async ()=>{
      </ScrollView>):
      (<ScrollView style={{width:'100%'}} showsVerticalScrollIndicator={false}>
          <View style={styles.noticeContainer}>
-             <Text style={styles.noticeTitle}>Remarque</Text>
-             <Text style={styles.noticeContent}>Avertir notre équipe avant de supprimer votre compte!</Text>
-             <Text style={styles.tahfifaSignature}>Equipe Tahfifa.</Text>
+             <Text style={styles.noticeTitle}>Saviez-vous?</Text>
+             <Text style={styles.noticeContent}>Visitez-nous sur le lien suivant pour plus d'informations: <Text onPress={url} style={{color:Colors.primary}}>tahfifaapp.com</Text></Text>
+             <Text style={styles.tahfifaSignature} onPress={url2}>Equipe TAHFIFA.</Text>
          </View>
          <View style={styles.buttonContainer}>
               <View style={styles.cartContainer}>
@@ -441,16 +434,6 @@ const takeLibraryHandler = async ()=>{
                      <View>
                        <Text style={styles.optionTitle}>Paramètres</Text>
                      </View>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.cartContainer}>
-                <TouchableOpacity style={styles.cart} onPress={alertDelete}>
-                       <View style={{paddingBottom:5}}>
-                          <MaterialCommunityIcons title = "delete" name ='delete-forever' color='#FE457C' size={23} />
-                        </View>
-                        <View>
-                          <Text style={styles.optionTitle}>Mon compte</Text>
-                        </View>
                 </TouchableOpacity>
               </View>
          </View>
@@ -541,12 +524,19 @@ const styles= StyleSheet.create({
       alignItems:'center'
     },
     iconFormCircle2:{
+      width:50,
+      height:50,
+      borderRadius:20,
+      justifyContent:'center',
+      alignItems:'center',
+      alignSelf:'flex-end'
+    },
+    iconFormCircleGalery:{
       width:40,
       height:30,
       borderRadius:20,
       justifyContent:'center',
       alignItems:'center',
-      
     },
     age:{
       fontFamily:'poppins',
@@ -617,7 +607,7 @@ const styles= StyleSheet.create({
       borderRadius:10
     },
     cartContainer:{
-      width:'33%',
+      width:'50%',
       height:100,
       alignItems:'center',
       justifyContent:'center',
