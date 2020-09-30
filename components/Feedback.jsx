@@ -31,6 +31,7 @@ const Feedback = props =>{
                     />:<Text style={styles.noMark}>Aucune note!</Text>}
                 </View>
                 <View style={styles.commentContainer}>
+                <Text style={{fontFamily:'poppins-bold',fontSize:13,color:Colors.blue}}>{props.name===null && props.surname=== null ? 'Inconnu':props.name+' '+ props.surname}</Text>
                     <Text style={styles.comment}>
                     {props.comment? props.comment:'Aucun commentaire!'}
                     </Text>
