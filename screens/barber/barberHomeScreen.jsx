@@ -89,21 +89,7 @@ const BarberHomeScreen = props =>{
     };
    
   
-    const callPhone = phoneNumber=>{
-  
-        let phoneNum = '';
-    
-        if (Platform.OS === 'android') {
-          phoneNum = `tel:${phoneNumber}`;
-        } else {
-          phoneNum = `telprompt:${phoneNumber}`;
-        }
-    
-        Linking.openURL(phoneNum);
-     
-     };
-
-
+   
     if(isLoading || barber === undefined ){
       return ( <ImageBackground source={require('../../assets/images/support.png')} style={styles.coverTwo}>
                   <ActivityIndicator size='large' color={Colors.primary} />
@@ -141,13 +127,7 @@ const BarberHomeScreen = props =>{
                        <Entypo title = "scissors" name ='scissors' color='#fff' size={23} />
                     </View>
                     <Text style={styles.iconText}>Services</Text>
-                  </TouchableOpacity> 
-                  <TouchableOpacity style={styles.iconContainer} onPress={()=>callPhone(barber.phone)}>
-                    <View style={styles.iconFormCircle2}>
-                       <MaterialIcons title = "call" name ='call' color='#fff' size={23} />
-                    </View>
-                    <Text style={styles.iconText}>Appeler</Text>
-                  </TouchableOpacity> 
+                  </TouchableOpacity>
                   <TouchableOpacity style={styles.iconContainer}>
                     <View style={styles.iconFormCircle3}>
                       <MaterialCommunityIcons title = "calendar-account" name ='calendar-account' color='#fff' size={23} />
@@ -312,6 +292,8 @@ const BarberHomeScreen = props =>{
            {feedbacks.map(feed=>  <Feedback
                key={feed.id}
                mark={feed.mark}
+               name={feed.name}
+               surname={feed.surname}
                comment={feed.comment}
                feedbacks={feedbacks}
               />)}
