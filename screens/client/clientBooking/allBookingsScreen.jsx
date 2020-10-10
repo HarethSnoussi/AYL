@@ -198,15 +198,15 @@ useEffect(()=>{
   const todaysBookings= async ()=>{
       setLoading(true);
       const dayBooks = await allBookings.filter(bookings => moment(bookings.bookingDate).isSame(selectedDate,"day"));
-  
+
       await setDayBookings([...dayBooks]);
       setLoading(false);
   }
 
-  // if((selectedDateText ===moment (new Date()).format("ll")  ))
+ //if((selectedDateText ===moment (new Date()).format("ll")  ))
   todaysBookings();
   
-},[allBookings,selectedDate])
+},[])
 
 
 /***************************************************************************************************************************************************************************** */
@@ -269,7 +269,7 @@ if (isLoading) {
             
             
             }}
-           
+            current = {selectedDate}
              markedDates = {mark}
              onDayPress={(date)=>selectedDateHandler(date)}
              />
@@ -305,6 +305,7 @@ if (isLoading) {
                             id = {booking.id}
                             type = "all"
                             address = {booking.address}
+                            duration = {booking.bookingDuration}
                          /> 
 
                     )})

@@ -31,7 +31,8 @@ const BookingCard = props =>{
                   clientId : props.clientId,
                   cancelDate : props.cancelDate,
                   id  : props.id,
-                  bookingDate :props.bookingDate
+                  bookingDate :props.bookingDate,
+                  duration : props.duration
                  })}  >
         <LinearGradient colors = { [gradient1, gradient2]} style = {styles.leftDate}>
               <Text style = {styles.dateText}>{props.day}</Text>
@@ -85,7 +86,8 @@ const BookingCard = props =>{
                       clientId : props.clientId,
                       cancelDate : props.cancelDate,
                       id  : props.id,
-                      bookingDate :props.bookingDate
+                      bookingDate :props.bookingDate,
+                      duration : props.duration
                      })} 
            >
           

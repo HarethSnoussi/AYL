@@ -176,8 +176,11 @@ setPickedSlot(0);
 setButtonIndex(-1);
 //Display only Working Time
 let todaysSlots = [];
-const days = workingTime.map(e=>e.day.toUpperCase
+const workingDays =  workingTime.filter(e=>e.start !== null || e.end !== null)
+    ;
+const days = workingDays.map(e=>e.day.toUpperCase
     ());
+ 
 const day = moment(pickedDate).format('ddd').substring(0,3).toUpperCase
 ();
 const nowHour = (new Date().getHours()+2).toString()+":00" ;
@@ -185,12 +188,13 @@ const nowHour = (new Date().getHours()+2).toString()+":00" ;
 
 // const end = moment.utc("2020-05-01T"+nowHour).add(60,"m").format("HH:mm"); 
 //  console.log(end)
- 
 
-if(days.indexOf(day) >= 0)
+if(days.length >0)
 {
-   
-    todaysSlots = hours.slice(hoursTime.indexOf(workingTime[days.indexOf(day)].start) , hoursTime.indexOf(workingTime[days.indexOf(day)].end) );
+    if(days.indexOf(day) >= 0)
+{
+
+    todaysSlots = hours.slice(hoursTime.indexOf(workingDays[days.indexOf(day)].start) , hoursTime.indexOf(workingDays[days.indexOf(day)].end) );
     // setAvailableSlots([...todaysSlots]);
   
     // if(pickedDate.toDateString() === new Date().toDateString()){
@@ -267,7 +271,7 @@ else{
 
 // setLoading(false);
 
-}
+}}
 }
 
 manager();

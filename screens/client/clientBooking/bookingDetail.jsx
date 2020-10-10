@@ -7,10 +7,10 @@ import BookingCard from '../../../components/BookingCard';
 import { Ionicons ,MaterialIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import {cancelBooking} from "../../../store/actions/bookingsActions";
-import { Rating, AirbnbRating } from 'react-native-elements';
+import { Rating, AirbnbRating ,Avatar} from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ConfirmOverlay from '../../../components/ConfirmOverlay';
-
+import { LinearGradient } from 'expo-linear-gradient';
 const screen = Dimensions.get("window");
 
 const BookingDetail = props =>{
@@ -23,6 +23,8 @@ const bookingDate = props.navigation.getParam("bookingDate");
 const now  = moment().format().substring(11,16) ;
 const diffrence = parseInt(moment.duration(moment(start,"h:mm:ss a").diff(moment(now,"h:mm:ss a"))).asMinutes());
 
+const gradient1 = props.navigation.getParam("status") === "en attente" ? "#fd6d57" : (props.navigation.getParam("status") === "confirmée" ||props.navigation.getParam("status") === "réalisée" ) ? "#11998e" : "#f14638";
+const gradient2 = props.navigation.getParam("status") === "en attente" ? "#fd9054" : (props.navigation.getParam("status") === "confirmée" ||props.navigation.getParam("status") === "réalisée" ) ? Colors.colorH1 : "#F4686A";
 
 const conditionAnnuler = ( (props.navigation.getParam("status") === "confirmée" && ((diffrence >= 30 && moment().isSame(bookingDate, 'day')) || moment().isBefore(bookingDate, 'day'))) || props.navigation.getParam("status") === "en attente");
 
@@ -36,6 +38,9 @@ async function sendPushNotification() {
   
   resData.map(e=>{
   
+    // <Text style = {styles.barberText}>Coiffeur  : {barberInfos.surname + " "+barberInfos.name}</Text>
+                
+    // <Text style = {styles.barberText} >Adresse : {barberInfos.address}</Text>
 
 
   allMessages.push(
@@ -184,7 +189,6 @@ useEffect(()=>{
 },[])
 
 
-
 if (isLoading) {
   return (
     <ImageBackground style= {styles.centered} source={require('../../../assets/images/support.png')}>
@@ -198,7 +202,9 @@ if (isLoading) {
     <View style = {styles.container}>
 
 <ConfirmOverlay cancel = {cancelBookingHandler} close = {overlayToggle} isVisible = {overlayVisible}  />
-
+<View style ={{justifyContent:"center",marginVertical : "5%"}}>
+<Text style = {styles.barberTitle}>Ma Réservation </Text>
+</View>
     <BookingCard
                             start = {start}
                             end = {props.navigation.getParam("end")}
@@ -211,9 +217,12 @@ if (isLoading) {
                             detail = {false}
     
      />
+
+     {props.navigation.getParam("status") !== "expirée" && 
             <View style = {styles.actions}>
 
-{
+
+            {
             conditionCall &&
             <TouchableOpacity style = {{alignItems : "center"}}  onPress = {()=>Linking.openURL(`tel:${barberInfos.phone}`)} >
             
@@ -243,46 +252,112 @@ if (isLoading) {
           </View>}
        
             </View>
+          }
+<View style = {styles.barber}>
 
-            <View style = {styles.barber}>
-            <Text style = {styles.barberTitle}>Information Du Coiffeur </Text>
-                <Text style = {styles.barberText}>Nom : {barberInfos.surname}</Text>
-                <Text style = {styles.barberText} >Prénom : {barberInfos.name}</Text>
-                <Text style = {styles.barberText} >Adresse : {barberInfos.address}</Text>
-                <Text style = {styles.barberText} >Tel : {barberInfos.phone}</Text>
-            </View>
+<View style={styles.title}>
+    <Text style={{fontFamily : "poppins-bold",color :Colors.blue,fontSize : screen.width /28}}>Détail de la réservation
+    </Text>
+    </View>
 
-            <View style = {styles.services}>
+
+    <View style ={{height : "40%",width:"100%"}}>
+<ScrollView>
+{      
+      services.map((service,index) => {
+
+          return(   
+         
+         <View key = {index} style = {{alignSelf :"center" , flexDirection :"row",justifyContent :"space-between",width:"90%",height:screen.height*0.08}}>
+       
+        
+              <Text  style={styles.serviceText}>
+              {service.name +"  "}
+              </Text>
+            
+              <Text  style={styles.serviceText}>
+              {service.price + " DA " }
+              </Text>
+              
+              </View>
+              )
+
+
+      })
+   
+   } 
+
+</ScrollView>
+
+</View>
+
+
+
+<LinearGradient colors = { [gradient1, gradient2]} style ={{height:"20%",justifyContent:"center"}}> 
+<View style ={{flexDirection :"row",width:"90%",justifyContent :"space-between",alignSelf:"center"}}>
+<View>
+<Text  style = {styles.priceText}  >Prix Total:</Text>
+<Text style = {styles.timeText} >{props.navigation.getParam("duration")+" Min"}</Text>
+
+</View>
+<Text style = {styles.priceText} >{props.navigation.getParam("amount")+" DA"}</Text>
+
+
+</View>
+
+
+
+</LinearGradient>
+
+
+{/* <View  style={{
+    borderBottomColor: 'black',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    width : "80%",
+    alignSelf :"center",
+    marginTop: "5%"
+  }}>
+
+                </View> */}
+
+                <View style = {{height : "30%",alignItems:"center",paddingTop : "2%"}}>
+                <View style = {{width : "90%",marginBottom : "5%",}}>
+                <Text style = {{color : Colors.textGrey,fontFamily : "poppins-bold",fontSize : screen.width /26}}>Coiffeur</Text>
+                </View>
+                <View style = {{alignSelf :"center" , flexDirection :"row",width:"90%",alignItems:"center"}}>
+              
+                <Avatar
+          source = {require("../../../assets/pictures/person2.jpg")}
+          overlayContainerStyle = {{overflow:"hidden"}}
+          size = "small"
+          rounded
+          
+           />
+           <View style = {{marginLeft : "10%"}}>
+                <Text  style={styles.serviceText}>
+                {barberInfos.surname + " "+barberInfos.name}
+                </Text>
+                </View>
+                </View>
+
+                </View>
+
+</View>
+
+
+
+ 
+                
+  
+
+            {/* <View style = {styles.services}>
 
                 <ScrollView>
-            <Text style = {styles.servicesTitle}>Services </Text>
-             
-          {      
-            services.map((service,index) => {
-
-                return(   
-               
-               
-                    <Text key = {index} style={styles.serviceText}>
-                    {service.name +" / "+ 
-                    service.serviceDuration +" Min / "+ 
-                    service.price + " DA "
-                    }
-                    </Text>
-                   
-                    )
-
-
-            })
-         
-         }
-         
-         
-        
+            
 
                 </ScrollView>
 
-            </View>
+            </View> */}
 
 
           
@@ -294,14 +369,17 @@ if (isLoading) {
 };
 
 
-BookingDetail.navigationOptions = (navData) => {
-    return {
-      headerTintColor:Colors.primary,
-      headerBackTitle : " ",
-      title : "Détail de la réservation"
-    }
-    
-    };
+    BookingDetail.navigationOptions = (navData) => {
+      return {
+         headerTransparent : true,
+        headerTintColor:'#111',
+        headerBackTitle : " ",
+        title : "",
+        // headerShown: false,
+      }
+      
+      };
+
 
 const styles= StyleSheet.create({
 container : {
@@ -324,8 +402,8 @@ backgroundColor  : "#fff" ,
 alignSelf : "center" ,
 borderRadius : 15,
 marginVertical : "2%",
-height : screen.height * 0.3 ,
-justifyContent : "space-around"
+height : screen.height * 0.6 ,
+// justifyContent : "space-between"
 
 },
 services : {
@@ -335,15 +413,9 @@ services : {
     width : "90%",
     alignSelf : "center",
 },
-review :
-{ 
-  height : screen.height * 0.2 , 
-  backgroundColor :"#fff",
-  marginVertical : "2%",
-  width :"90%",
+title : {
   alignSelf : "center",
-  borderRadius : 15,
-
+  marginBottom :"5%"
 },
 
 
@@ -361,13 +433,12 @@ barberText : {
 barberTitle : {
     alignSelf : "center",
     fontFamily : "poppins-bold",
-    color : Colors.primary,
-    fontSize : screen.width /28
+    color : Colors.Blue,
+    fontSize : screen.width /26
 },
 serviceText :{
     fontFamily : "poppins",
-    marginLeft : 5,
-    marginBottom : 5,
+   
     fontSize : screen.width /28
 
 },
@@ -377,6 +448,20 @@ servicesTitle : {
     marginBottom : 10 ,
     color : Colors.primary,
     fontSize : screen.width /28
+
+},
+priceText:{
+  fontFamily : "poppins-bold",
+  fontSize : screen.width / 20,
+  color:"#fff",
+ 
+
+},
+timeText:{
+  fontFamily : "poppins-bold",
+  fontSize : screen.width / 30,
+  color: "#fff",
+
 
 },
 //////////////////////////////////////////////////////
