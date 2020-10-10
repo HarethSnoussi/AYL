@@ -238,6 +238,8 @@ try {
           <FirebaseRecaptcha.FirebaseRecaptchaVerifierModal
                 ref={recaptchaVerifier}
                 firebaseConfig={Firebaseconfig}
+                title='Prouvez que vous êtes humain!'
+                cancelLabel='Fermer'
               />
             <View style={styles.firstContainer}>
                <Text style={styles.title}>Créez Votre Compte</Text>

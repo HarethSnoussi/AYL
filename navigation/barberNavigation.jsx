@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer,createSwitchNavigator} from 'react-navigation';
-import {Platform,AsyncStorage} from 'react-native';
+import {Platform} from 'react-native';
 import Colors from '../constants/Colors';
 import {createMaterialBottomTabNavigator} from "react-navigation-material-bottom-tabs"
 
@@ -13,7 +13,7 @@ import ClientHomeScreen from '../screens/home/clientHomeScreen';
 
 // import PlayerProfileScreen from "../screens/player/playerProfile/playerProfileScreen";
 // import ForgotPasswordScreen from "../screens/forgotPasswordScreen";
-
+import EditPasswordScreen from '../screens/editPasswordScreen';
 import LoginScreen from '../screens/loginScreen';
 import SignupScreen from '../screens/client/signupScreen';
 import StartupScreen from '../screens/startupScreen';
@@ -152,7 +152,8 @@ const BarberNavigation = createStackNavigator({
 const AuthNavigation = createStackNavigator({
 Login: LoginScreen,
 Signup: SignupScreen,
-ForgotPassword: ForgotPasswordScreen
+ForgotPassword: ForgotPasswordScreen,
+EditPassword:EditPasswordScreen
 });
 
 const MainNavigation = createSwitchNavigator({
