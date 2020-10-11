@@ -1,5 +1,5 @@
 import React,{useState,useCallback,useReducer,useRef} from 'react';
-import { StyleSheet,View,KeyboardAvoidingView,Text,Image,Dimensions,StatusBar,Alert,ActivityIndicator,TextInput} from 'react-native';
+import { StyleSheet,View,KeyboardAvoidingView,Text,Platform,Image,Dimensions,StatusBar,Alert,ActivityIndicator,TextInput,TouchableWithoutFeedback,Keyboard} from 'react-native';
 import {MaterialIcons,MaterialCommunityIcons} from "@expo/vector-icons";
 import {Button } from 'react-native-elements';
 import Colors from '../constants/Colors';
@@ -157,8 +157,9 @@ const verifyNumber = async ()=>{
     };
 
     return(
+      <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
       <View style={styles.container}>
-       <KeyboardAvoidingView  keyboardVerticalOffset={10}>
+       <KeyboardAvoidingView  keyboardVerticalOffset={10} behavior={Platform.OS === "ios" ? "padding" : null}>
          <StatusBar hidden />
          <FirebaseRecaptcha.FirebaseRecaptchaVerifierModal
                 ref={recaptchaVerifier}
@@ -267,7 +268,7 @@ const verifyNumber = async ()=>{
           </View>
        </KeyboardAvoidingView> 
      </View>
-
+     </TouchableWithoutFeedback>
      );    
 };
 

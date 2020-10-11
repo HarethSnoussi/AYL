@@ -1,5 +1,5 @@
 import React,{useReducer,useCallback,useState} from 'react';
-import { StyleSheet,Alert,View,ScrollView,StatusBar,ImageBackground,KeyboardAvoidingView,Text,Platform,Image,Dimensions,TouchableOpacity,ActivityIndicator,AsyncStorage} from 'react-native';
+import { StyleSheet,Alert,View,TouchableWithoutFeedback,Keyboard,StatusBar,ImageBackground,KeyboardAvoidingView,Text,Platform,Image,Dimensions,TouchableOpacity,ActivityIndicator,AsyncStorage} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {MaterialIcons,MaterialCommunityIcons} from "@expo/vector-icons";
 import {Button } from 'react-native-elements';
@@ -128,14 +128,17 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
            
 
     return(
+      <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
+      <View style={{width:'100%',flex:1}}>
       <ImageBackground source={require('../assets/images/chico.jpg')} style={styles.container}>
-      <KeyboardAvoidingView keyboardVerticalOffset={10}>
+      <KeyboardAvoidingView keyboardVerticalOffset={10} behavior={Platform.OS === "ios" ? "padding" : null}>
       <StatusBar hidden />
           <View style={styles.firstContainer}>
              <Image source={require('../assets/images/icon.png')} style={styles.icon}/>
              <Text style={styles.slogan}>Réservez votre coiffure à l'heure et à l'endroit qui vous arrangent</Text>
           </View>
           <View style={styles.secondContainer}>
+            
                  <CustomInput
                     id='phone'
                     rightIcon={<MaterialIcons title = "phone" name ='phone' color='#323446' size={23} />}
@@ -201,7 +204,8 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
           
       </KeyboardAvoidingView>
     </ImageBackground>
-
+    </View>
+    </TouchableWithoutFeedback>
      );    
 };
 
