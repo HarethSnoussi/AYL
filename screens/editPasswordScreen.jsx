@@ -1,5 +1,5 @@
 import React,{useState,useCallback,useReducer} from 'react';
-import { StyleSheet,View,KeyboardAvoidingView,TouchableWithoutFeedback,Keyboard,Text,Image,Dimensions,StatusBar,Alert,ActivityIndicator,AsyncStorage,TextInput} from 'react-native';
+import { StyleSheet,View,KeyboardAvoidingView,TouchableWithoutFeedback,Keyboard,Text,Image,Dimensions,StatusBar,Alert,ActivityIndicator,AsyncStorage,Platform} from 'react-native';
 import {MaterialIcons,MaterialCommunityIcons} from "@expo/vector-icons";
 import {Button } from 'react-native-elements';
 import Colors from '../constants/Colors';
@@ -103,6 +103,7 @@ const login = async()=>{
     const resData= await result.json();
     const clients= await fetch('http://173.212.234.137:3000/client');
     const clientsData= await clients.json();
+    console.log(clientsData);
     setIsLogin(false);
 
     const currentClientObject= clientsData.find(item=> item.phone===prefix+phoneNumber && item.password===hashedPassword);
@@ -138,7 +139,7 @@ const login = async()=>{
     return(
       <TouchableWithoutFeedback onPress = {()=>{Keyboard.dismiss()}}>
       <View style={styles.container}>
-       <KeyboardAvoidingView  keyboardVerticalOffset={10}>
+       <KeyboardAvoidingView  keyboardVerticalOffset={10} behavior={Platform.OS === "ios" ? "padding" : null}>
          <StatusBar hidden />
          
           <View style={styles.backgroundContainer}>

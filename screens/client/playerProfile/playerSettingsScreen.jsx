@@ -272,6 +272,7 @@ if(isLoadingState || client===undefined){
 };
 
     return(
+      <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
       <View style={styles.container}>
          <View style={styles.firstCard}>
           <ImageBackground source={require('../../../assets/images/man1-1.jpg')} style={styles.backgroundFirstCard} resizeMode='cover'/>
@@ -440,7 +441,7 @@ if(isLoadingState || client===undefined){
         </ScrollView>):undefined}
         
       </View>
-
+      </TouchableWithoutFeedback>
      );    
 };
 
