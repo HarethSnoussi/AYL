@@ -1,5 +1,5 @@
 import React,{useState,useCallback,useRef,useReducer} from 'react';
-import { StyleSheet,View,ScrollView,KeyboardAvoidingView,Text,Image,ImageBackground,StatusBar,TextInput,TouchableOpacity,Picker,ActionSheetIOS,Alert,ActivityIndicator,AsyncStorage} from 'react-native';
+import { StyleSheet,View,ScrollView,KeyboardAvoidingView,Text,Image,TouchableWithoutFeedback,Keyboard,StatusBar,TextInput,TouchableOpacity,Picker,ActionSheetIOS,Alert,ActivityIndicator,AsyncStorage,Platform} from 'react-native';
 import {Button} from 'react-native-elements';
 import Colors from '../../constants/Colors';
 import {MaterialIcons,MaterialCommunityIcons,Ionicons} from "@expo/vector-icons";
@@ -231,9 +231,9 @@ try {
 };
 
    return(
-      
+    <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}> 
        <View stlye={styles.container}>
-          <KeyboardAvoidingView keyboardVerticalOffset={10}>
+          <KeyboardAvoidingView keyboardVerticalOffset={10} behavior={Platform.OS === "ios" ? "padding" : null}>
           <StatusBar hidden />
           <FirebaseRecaptcha.FirebaseRecaptchaVerifierModal
                 ref={recaptchaVerifier}
@@ -335,12 +335,12 @@ try {
                      >
                      {sexTypes.map(el=> <Picker.Item label={el} value={el} key={el} />)}
                      </Picker> :
-                     <View style={{ width:'100%',flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:19,paddingRight:25}}>
-                     <Text onPress={onPressSex} style={{fontFamily:'poppins',color:Colors.lightGrey,fontSize:15,fontWeight:'500'}}>
+                     <TouchableOpacity onPress={onPressSex} style={{ width:'100%',flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:19,paddingRight:25}}>
+                     <Text  style={{fontFamily:'poppins',color:Colors.lightGrey,fontSize:15,fontWeight:'500'}}>
                        {sex?sex:sexTypes[0]}
                      </Text>
                      <Ionicons name="ios-arrow-down" size={24} color={Colors.lightGrey} onPress={onPressSex} />
-                     </View>}
+                     </TouchableOpacity>}
                  </View>
                  <View style={{ width:'100%',borderWidth:1,borderRadius:25,backgroundColor:Colors.blue,borderColor:wilaya!==wilayas[0]?Colors.blue:Colors.primary,marginVertical:3,height:45,justifyContent:'center'}}>
                  {Platform.OS === 'android' ? 
@@ -351,12 +351,12 @@ try {
                              >
                              {wilayas.map(el=> <Picker.Item label={el} value={el} key={el} />)}
                              </Picker> :
-                              <View style={{ width:'100%',flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:19,paddingRight:25}}>
-                             <Text onPress={onPress} style={{fontFamily:'poppins',color:Colors.lightGrey,fontSize:15,fontWeight:'500'}}>
+                              <TouchableOpacity onPress={onPress}  style={{ width:'100%',flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:19,paddingRight:25}}>
+                             <Text style={{fontFamily:'poppins',color:Colors.lightGrey,fontSize:15,fontWeight:'500'}}>
                                {wilaya?wilaya:wilayas[0]}
                              </Text>
                              <Ionicons name="ios-arrow-down" size={24} color={Colors.lightGrey} onPress={onPress} />
-                             </View>}
+                             </TouchableOpacity>}
                </View>
                <CustomInput 
                     id='region'
@@ -434,7 +434,7 @@ try {
             </ScrollView>
          </KeyboardAvoidingView>
        </View>
-    
+       </TouchableWithoutFeedback>
 
     );    
 };

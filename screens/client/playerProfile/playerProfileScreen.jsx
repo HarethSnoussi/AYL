@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useCallback,useReducer} from 'react';
-import {StyleSheet,View,AsyncStorage,Linking,ScrollView,ImageBackground,TouchableOpacity,Text,Image,Alert,KeyboardAvoidingView,Dimensions,ActionSheetIOS,Picker,ActivityIndicator} from 'react-native';
+import {StyleSheet,View,AsyncStorage,Linking,ScrollView,ImageBackground,TouchableOpacity,Text,Image,Alert,KeyboardAvoidingView,Dimensions,ActionSheetIOS,Picker,ActivityIndicator,TouchableWithoutFeedback,Keyboard} from 'react-native';
 import CustomInput from '../../../components/Input';
 import {HeaderButtons,Item} from "react-navigation-header-buttons";
 import HeaderButton from "../../../components/HeaderButton";
@@ -231,9 +231,10 @@ const takeLibraryHandler = async ()=>{
    
 
     return(
+      <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
       <View style={styles.container}>
       <View style={styles.firstCard}>
-        <ImageBackground source={require('../../../assets/images/man1-1.jpg')} style={styles.backgroundFirstCard} resizeMode='cover'>
+        <ImageBackground source={client[0].sex==='Femme'?require( '../../../assets/images/woman5.jpg'):require('../../../assets/images/man1-1.jpg')} style={styles.backgroundFirstCard} resizeMode='cover'>
           <View style={{width:'100%',height:'20%',alignItems:'center',justifyContent:'center'}}>
             <TouchableOpacity style={styles.iconFormCircle2} onPress={saveHandler}>
                 {!isLoading?<Ionicons title = "check" name ='md-checkmark' color='#fff' size={32} onPress={saveHandler}  />:
@@ -245,7 +246,8 @@ const takeLibraryHandler = async ()=>{
      <View style={styles.secondCard}>
           <View style={styles.secondCardContent}>
               <View style={styles.imageContainer}>
-              {!pickedImage ? <Image source={require('../../../assets/images/man2.jpg')} style={styles.image} />
+              {!pickedImage && client[0].sex==='Homme' ? <Image source={require('../../../assets/images/man2.jpg')} style={styles.image} />:
+                !pickedImage && client[0].sex==='Femme' ? <Image source={require('../../../assets/images/angelina.png')} style={styles.image} />
                 : (<Image style={styles.image} source={{uri:pickedImage}} />)}
               </View>
               <View style={styles.detailsContainer}>
@@ -377,12 +379,12 @@ const takeLibraryHandler = async ()=>{
                       >
                       {wilayas.map(el=> <Picker.Item label={el} value={el} key={el} />)}
                       </Picker> :
-                      <View style={{ width:'100%',flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:8,paddingRight:12}}>
-                      <Text onPress={onPress} style={{fontFamily:'poppins',fontSize:15,color:'#323446',fontWeight:'500'}}>
+                      <TouchableOpacity onPress={onPress} style={{ width:'100%',flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:8,paddingRight:12}}>
+                      <Text  style={{fontFamily:'poppins',fontSize:15,color:'#323446',fontWeight:'500'}}>
                         {wilaya}
                       </Text>
                       <Ionicons name="ios-arrow-down" size={24} color="#323446" onPress={onPress} />
-                      </View>} 
+                      </TouchableOpacity>} 
           </View>
           <CustomInput
             id='region'
@@ -439,6 +441,7 @@ const takeLibraryHandler = async ()=>{
          </View>
        </ScrollView>)}
   </View>
+  </TouchableWithoutFeedback>
 
      );    
 };
