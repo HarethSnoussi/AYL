@@ -1,5 +1,5 @@
 import React,{useState,useReducer,useCallback,useEffect} from 'react';
-import {StyleSheet,View,AsyncStorage,ScrollView,ImageBackground,TouchableOpacity,Text,Image,Alert,KeyboardAvoidingView,Dimensions,ActivityIndicator} from 'react-native';
+import {StyleSheet,View,AsyncStorage,ScrollView,ImageBackground,TouchableOpacity,Text,Image,Alert,KeyboardAvoidingView,Dimensions,ActivityIndicator,TouchableWithoutFeedback,Keyboard,Platform} from 'react-native';
 import {MaterialIcons,MaterialCommunityIcons} from "@expo/vector-icons";
 import {Button} from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -194,7 +194,7 @@ const editPassword=async()=>{
             return;
           }
           setIsLoadingPassword(true);
-          dispatch(clientActions.updateClientPassword(client[0].id,hashedPassword));                                   
+          dispatch(clientActions.updateClientPassword(clientID,hashedPassword));                                   
           setIsLoadingPassword(false);
           dispatch(authActions.logout());
           AsyncStorage.clear();
@@ -274,6 +274,7 @@ if(isLoadingState || client===undefined){
     return(
       <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
       <View style={styles.container}>
+     
          <View style={styles.firstCard}>
           <ImageBackground source={require('../../../assets/images/man1-1.jpg')} style={styles.backgroundFirstCard} resizeMode='cover'/>
          </View>
@@ -300,7 +301,7 @@ if(isLoadingState || client===undefined){
               </TouchableOpacity>
         </View>
         {isPhone?(<ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-          <KeyboardAvoidingView keyboardVerticalOffset={10}>
+          <KeyboardAvoidingView keyboardVerticalOffset={10} behavior={Platform.OS === "ios" ? "padding" : null}>
               <CustomInput
               id='phone'
               rightIcon={<MaterialIcons title="phone" name ='phone' color='#323446' size={23} />}
@@ -343,7 +344,7 @@ if(isLoadingState || client===undefined){
            </KeyboardAvoidingView>
         </ScrollView>):undefined}
         {isPassword?(<ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-          <KeyboardAvoidingView keyboardVerticalOffset={10}>
+          <KeyboardAvoidingView keyboardVerticalOffset={10} behavior={Platform.OS === "ios" ? "padding" : null}>
                 <CustomInput
                 id='password'
                 rightIcon={<MaterialCommunityIcons title="lock" onPress={eye} name ={!isEye?'eye':'eye-off'} color='#323446' size={23} />}
@@ -387,7 +388,7 @@ if(isLoadingState || client===undefined){
            </KeyboardAvoidingView>
         </ScrollView>):undefined}
         {isLang?(<ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-          <KeyboardAvoidingView keyboardVerticalOffset={10}>
+          <KeyboardAvoidingView keyboardVerticalOffset={10} behavior={Platform.OS === "ios" ? "padding" : null}>
             <View style={styles.langContainer}>
               {!isArabic?(<View style={styles.langRow}>
                 <Text style={{fontFamily:'poppins',fontSize:15,color:'#323446',fontWeight:'500'}}>Français</Text>
@@ -439,7 +440,7 @@ if(isLoadingState || client===undefined){
                 />
            </View>
         </ScrollView>):undefined}
-        
+       
       </View>
       </TouchableWithoutFeedback>
      );    
