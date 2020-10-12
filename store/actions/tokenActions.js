@@ -1,6 +1,6 @@
 export const GET_TOKENS = "GET_TOKENS"; 
 export const ADD_TOKEN = "ADD_TOKEN";
-
+export const DELETE_TOKEN = "DELETE_TOKEN";
 export const getTokens = (clientId)=>{
 
     return async (dispatch) =>{
