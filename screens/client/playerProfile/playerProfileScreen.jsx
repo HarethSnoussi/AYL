@@ -12,6 +12,7 @@ import * as clientActions from '../../../store/actions/clientActions';
 
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
+import { currentToken, deleteToken } from '../../../store/actions/tokenActions';
 
 const screen = Dimensions.get("window");
 
@@ -48,7 +49,11 @@ const PlayerProfileScreen = props =>{
   
   const clientUID= props.navigation.dangerouslyGetParent().getParam('clientUID');
   const clientID= props.navigation.dangerouslyGetParent().getParam('clientID');
+  const myToken = useSelector(state=>state.tokens.currentToken);
   //get the client's data
+
+
+
   const client= useSelector(state=>state.clients.client);
   const [isInfo,setIsInfo]= useState(true);
   const [isLocalisation,setIsLocalisation]= useState(false);
@@ -164,7 +169,8 @@ const takeLibraryHandler = async ()=>{
     
     
     // logout handler
-    const logout = ()=>{
+    const logout = async ()=>{
+      await  dispatch(deleteToken(myToken));
       dispatch(authActions.logout());
       AsyncStorage.clear();
       props.navigation.navigate('Auth');

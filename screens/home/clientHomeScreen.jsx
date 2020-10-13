@@ -19,7 +19,7 @@ import { getClientBookings, sendNotification } from '../../store/actions/booking
 
 import { expiredbookings } from '../../store/actions/bookingsActions.js';
 import { getReviews } from '../../store/actions/reviewsActions';
-import { addtoken ,getTokens } from '../../store/actions/tokenActions';
+import { addtoken ,currentToken,getTokens } from '../../store/actions/tokenActions';
 import SentOverlay from '../../components/SentOverlay';
 import NotifOverlay from '../../components/NotifOverlay';
 
@@ -51,6 +51,8 @@ const stepThreeCpt = props.navigation.dangerouslyGetParent().getParam('stepThree
 
 const client= useSelector(state=>state.clients.client);
 const tokens = useSelector(state=>state.tokens.clientTokens);
+
+
 
 // await dispatch(addtoken({expoToken:"HI",clientId:"557115451"}));
 const [isLoading , setLoading] = useState(false);
@@ -280,6 +282,7 @@ async function registerForPushNotificationsAsync() {
   }
 
   // console.log(token);
+  dispatch(currentToken({token}))
   return token;
 }
 
