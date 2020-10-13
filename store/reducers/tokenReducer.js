@@ -1,10 +1,10 @@
-const { GET_TOKENS, ADD_TOKEN } = require("../actions/tokenActions");
+const { GET_TOKENS, ADD_TOKEN, CURRENT_TOKEN ,DELETE_TOKEN} = require("../actions/tokenActions");
 
 
 const initialState = {
  
     clientTokens : [],
-   
+    currentToken : null
 
 };
 
@@ -26,6 +26,28 @@ const tokenReducer = (state = initialState,action)=>{
                 return {
                     ...state , 
                     clientTokens : [...state.clientTokens,...temp]
+                };
+
+
+                
+                case DELETE_TOKEN :
+                    let tokenDelete = action.token ;
+                    let removedTokens = [];
+                    removedTokens = state.clientTokens.filter(token=>token !== tokenDelete);
+
+
+                    return {
+                        ...state , 
+                        clientTokens : [...state.clientTokens,...removedTokens]
+                    };
+
+
+            case CURRENT_TOKEN :
+                let token = action.token ;
+     
+                return {
+                    ...state , 
+                    currentToken : token
                 };
 
        default : return state ;

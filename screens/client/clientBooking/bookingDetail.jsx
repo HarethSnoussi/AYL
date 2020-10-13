@@ -7,7 +7,7 @@ import BookingCard from '../../../components/BookingCard';
 import { Ionicons ,MaterialIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import {cancelBooking} from "../../../store/actions/bookingsActions";
-import { Rating, AirbnbRating ,Avatar} from 'react-native-elements';
+import { Rating, AirbnbRating ,Avatar,Button} from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ConfirmOverlay from '../../../components/ConfirmOverlay';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -218,7 +218,7 @@ if (isLoading) {
     
      />
 
-     {props.navigation.getParam("status") !== "expirée" && 
+     {props.navigation.getParam("status") !== "expirée" &&  props.navigation.getParam("status") !== "réalisée" && 
             <View style = {styles.actions}>
 
 
@@ -226,11 +226,20 @@ if (isLoading) {
             conditionCall &&
             <TouchableOpacity style = {{alignItems : "center"}}  onPress = {()=>Linking.openURL(`tel:${barberInfos.phone}`)} >
             
-               <MaterialIcons name="call" 
+               
+
+<Button
+buttonStyle = {{backgroundColor : "white"}}
+  icon={
+    <MaterialIcons name="call" 
                             size={28} 
                             color={Colors.colorH1} 
                            
                     />
+  }
+  iconRight
+
+/>
             <Text style = {styles.actionsText} >Appeler</Text>
 
           </TouchableOpacity>
@@ -239,17 +248,24 @@ if (isLoading) {
 
 
         {conditionAnnuler  &&
-          <View style = {{alignItems : "center"}} >
+          <TouchableOpacity style = {{alignItems : "center"}} >
           
-          <Ionicons name="ios-close-circle-outline" 
-                      size={28} 
-                      color={Colors.colorF3} 
-                      onPress = {overlayToggle}
-               /> 
-  
+        
+              <Button
+                  buttonStyle = {{backgroundColor : "white"}}
+                    icon={
+                      <Ionicons name="ios-close-circle-outline" 
+                                        size={28} 
+                                        color={Colors.colorF3} 
+                                        onPress = {overlayToggle}
+                                /> 
+                    }
+                    iconRight
+
+            />
             <Text style = {styles.actionsText}>Annuler</Text>
 
-          </View>}
+          </TouchableOpacity>}
        
             </View>
           }
@@ -393,8 +409,8 @@ borderRadius : 15,
 flexDirection : "row",
 alignItems : "center",
 justifyContent : "space-around",
-backgroundColor : "#fff"
-
+backgroundColor : "#fff",
+paddingTop : "1%"
 },
 barber : {
 width : "90%",
@@ -422,7 +438,8 @@ title : {
 //TExt Styling //
 actionsText : {
     fontFamily : "poppins",
-    fontSize : screen.width /30
+    fontSize : screen.width /30,
+    color : Colors.blue
 },
 barberText : {
     fontFamily : "poppins",
