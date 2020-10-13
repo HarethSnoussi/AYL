@@ -63,7 +63,7 @@ const LoginScreen = props =>{
               formIsValid:false});
 
   const inputChangeHandler = useCallback((inputIdentifier, inputValue,inputValidity) =>{
-
+    
     disaptchFormState({type:Form_Input_Update,value:inputValue,isValid:inputValidity,inputID:inputIdentifier});
   },[disaptchFormState]);
 
@@ -85,8 +85,9 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
 
   //Press Login Button handling ==> LOGIN
   const login = async ()=>{
-
-    if(formState.formIsValid){
+    console.log(formState.inputValues.phone);
+    console.log(formState.inputValues.password);
+    if(formState.inputValues.phone!=='' && formState.inputValues.password!==''){
       try{
         const hashedPassword = await Crypto.digestStringAsync(
           Crypto.CryptoDigestAlgorithm.SHA512,

@@ -1,5 +1,5 @@
 import React, {useReducer,useEffect} from 'react';
-import { StyleSheet, Text, View,Dimensions } from 'react-native';
+import { StyleSheet, Text, View,Dimensions, } from 'react-native';
 import { Input } from 'react-native-elements';
 import Colors from "../constants/Colors";
 
@@ -7,7 +7,6 @@ import Colors from "../constants/Colors";
 const screen = Dimensions.get('window');
 
 const INPUT_UPDATE = 'INPUT_UPDATE';
-const INPUT_BLUR = 'INPUT_BLUR';
 const inputReducer = (state,action)=>{
      switch(action.type){
          case INPUT_UPDATE:
@@ -16,12 +15,6 @@ const inputReducer = (state,action)=>{
                  value:action.value,
                  isValid:action.isValid
              };
-
-        case INPUT_BLUR:
-            return{
-                ...state,
-                touched:true
-            };
 
          default:
              return state;
@@ -38,13 +31,7 @@ const CustomInput = props =>{
             touched:false
         });
 
-    //forward the value and the information whether it's valid or not to the parent
-    const {onInputChange,id} = props;
-    useEffect(()=>{
-        if(inputState.touched){
-        onInputChange(id,inputState.value,inputState.isValid);
-        }
-    },[inputState,onInputChange,id]);
+    
 
         const inputChangeHandler= text=>{
             const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -75,10 +62,15 @@ const CustomInput = props =>{
             dispatchInputState({type:INPUT_UPDATE,value:text,isValid:isValid})
         }
 
-        const lostFocusHandler = ()=>{
+        //forward the value and the information whether it's valid or not to the parent
+    const {onInputChange,id} = props;
+    useEffect(()=>{
+        
+        onInputChange(id,inputState.value,inputState.isValid);
+      
+    },[inputState,onInputChange,id]);
 
-            dispatchInputState({type:INPUT_BLUR});
-        }
+       
 
     return(
         <View style={{width:props.widthView,borderWidth:1, borderRadius:25,backgroundColor:props.backgroundColor,
@@ -89,7 +81,6 @@ const CustomInput = props =>{
                 {...props}
                 value={inputState.value}
                 onChangeText={inputChangeHandler}
-                onBlur={lostFocusHandler}
                 placeholder={props.placeholder}
                 inputContainerStyle={styles.input}
                 placeholderTextColor={props.placeholderTextColor}

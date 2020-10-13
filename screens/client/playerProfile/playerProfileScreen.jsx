@@ -1,8 +1,6 @@
 import React,{useState,useEffect,useCallback,useReducer} from 'react';
-import {StyleSheet,View,AsyncStorage,Linking,ScrollView,ImageBackground,TouchableOpacity,Text,Image,Alert,KeyboardAvoidingView,Dimensions,ActionSheetIOS,Picker,ActivityIndicator,TouchableWithoutFeedback,Keyboard} from 'react-native';
+import {StyleSheet,View,AsyncStorage,Linking,ScrollView,ImageBackground,TouchableOpacity,Text,Image,Alert,KeyboardAvoidingView,Dimensions,ActionSheetIOS,Picker,ActivityIndicator,TouchableWithoutFeedback,Keyboard,Platform} from 'react-native';
 import CustomInput from '../../../components/Input';
-import {HeaderButtons,Item} from "react-navigation-header-buttons";
-import HeaderButton from "../../../components/HeaderButton";
 import Colors from '../../../constants/Colors';
 import {Ionicons,MaterialIcons,MaterialCommunityIcons} from "@expo/vector-icons";
 import {useDispatch,useSelector} from "react-redux";
@@ -281,7 +279,7 @@ const takeLibraryHandler = async ()=>{
              </TouchableOpacity>
         </View>
      {isInfo?(<ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-        <KeyboardAvoidingView keyboardVerticalOffset={10}>
+        <KeyboardAvoidingView keyboardVerticalOffset={10} behavior={Platform.OS === "ios" ? "padding" : null}>
          
             <CustomInput
                 id='name'
