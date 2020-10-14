@@ -217,6 +217,7 @@ LoginScreen.navigationOptions= ()=>{
         backgroundColor: 'white'
     },
     headerBackTitle : " ",
+    headerLeft:()=>null,
     headerTitle: () => (
       <Image 
       resizeMode="cover"
