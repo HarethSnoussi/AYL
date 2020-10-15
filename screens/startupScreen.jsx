@@ -22,24 +22,9 @@ const StartupScreen = props =>{
            const expirationDate = new Date(expiryDate);
            //AsyncStorage.clear();
            
-
-           await dispatch(authActions.refreshTokenStepOne(token));
-           //AsyncStorage.clear();
-           const userTokenData= await AsyncStorage.getItem('userTokenData');
-           if(!userTokenData){
-            props.navigation.navigate('Auth');
-            return;
-           }
-   
-           const transformedTokenData= JSON.parse(userTokenData);
-           const {refreshToken,expiresIn}= transformedTokenData;
-           
-
-           const expirationTime = expirationDate.getTime() - new Date().getTime();
-           const newExpirationTime= expirationTime + parseInt(expiresIn);
-            
+           dispatch(authActions.authenticate(token,userID,expirationDate));
             props.navigation.navigate('Client',{clientID:id,clientUID:userID});
-            dispatch(authActions.authenticate(refreshToken,userID,newExpirationTime));
+            
        }
        tryLogin();
     },[dispatch]);
