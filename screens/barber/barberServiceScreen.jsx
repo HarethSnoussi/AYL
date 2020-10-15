@@ -130,6 +130,7 @@ BarberServiceScreen.navigationOptions = navData => {
         ),
         headerTintColor: '#fff',
         
+        
   };
   
 }
