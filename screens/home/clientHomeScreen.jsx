@@ -35,7 +35,7 @@ Notifications.setNotificationHandler({
 
 
 const ClientHomeScreen = props =>{
-  console.disableYellowBox = true;
+
   // OVerlay after booking Sent
 
 const [sentVisible,setSentVisible] = useState(false);

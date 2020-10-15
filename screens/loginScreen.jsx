@@ -85,8 +85,7 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
 
   //Press Login Button handling ==> LOGIN
   const login = async ()=>{
-    console.log(formState.inputValues.phone);
-    console.log(formState.inputValues.password);
+ 
     if(formState.inputValues.phone!=='' && formState.inputValues.password!==''){
       try{
         const hashedPassword = await Crypto.digestStringAsync(
