@@ -1,8 +1,5 @@
 import React,{useState,useReducer,useCallback,useEffect} from 'react';
-
 import {StyleSheet,View,AsyncStorage,ScrollView,ImageBackground,TouchableOpacity,Text,Image,Alert,KeyboardAvoidingView,Dimensions,ActivityIndicator,TouchableWithoutFeedback,Keyboard,Platform} from 'react-native';
-
-
 import {MaterialIcons,MaterialCommunityIcons} from "@expo/vector-icons";
 import {Button} from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';

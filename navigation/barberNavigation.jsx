@@ -14,6 +14,7 @@ import ClientHomeScreen from '../screens/home/clientHomeScreen';
 // import PlayerProfileScreen from "../screens/player/playerProfile/playerProfileScreen";
 // import ForgotPasswordScreen from "../screens/forgotPasswordScreen";
 import EditPasswordScreen from '../screens/editPasswordScreen';
+import WelcomeScreen from '../screens/welcomeScreen';
 import LoginScreen from '../screens/loginScreen';
 import SignupScreen from '../screens/client/signupScreen';
 import StartupScreen from '../screens/startupScreen';
@@ -150,6 +151,7 @@ const BarberNavigation = createStackNavigator({
 
 
 const AuthNavigation = createStackNavigator({
+Welcome:WelcomeScreen,
 Login: LoginScreen,
 Signup: SignupScreen,
 ForgotPassword: ForgotPasswordScreen,
