@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View,Dimensions,ImageBackground } from 'react-native';
+import { StyleSheet, Text, View,Dimensions,ImageBackground,TouchableOpacity } from 'react-native';
 import Colors from "../constants/Colors";
-
+import {MaterialIcons,MaterialCommunityIcons} from "@expo/vector-icons";
 
 //responsivity (Dimensions get method)
 const height = Dimensions.get('window').height;
@@ -9,14 +9,12 @@ const height = Dimensions.get('window').height;
 
 
 const ServiceCart = props =>{
-     const isImage= {barbe:require('../assets/images/beard.jpeg'),hair:require('../assets/images/hairstyle.png')}; 
     
-   
 
     return(
         <View style={styles.serviceContainer}>
           <View style={styles.backgroundContainer}>
-            <ImageBackground style={styles.background} resizeMode='cover' source={isImage.hair}>
+            <ImageBackground style={styles.background} resizeMode='cover' source={props.source}>
                     <View style={styles.firstRow}>
                         <View style={styles.serviceNumberContainer}>
                           <Text style={styles.number}>{'Service '+props.number}</Text>
@@ -26,15 +24,17 @@ const ServiceCart = props =>{
                         </View>
                     </View>
                     <View style={styles.secondRow}>
+                          <Text style={styles.textType}>{props.type}</Text>
                           <Text style={styles.textPrice}>{props.price+' دج'}</Text>
                     </View>
             </ImageBackground>
           </View>
          
-           <View style={styles.iconsContainer}>
-               <View>
+          <View style={styles.iconsContainer}>
+               <View style={{width:'100%',alignItems:'center',justifyContent:'center'}}>
                    <Text style={styles.serviceName}>{props.name}</Text>
                </View>
+             
            </View>
        </View>
      );    
@@ -44,21 +44,21 @@ const ServiceCart = props =>{
 const styles= StyleSheet.create({
 
   serviceContainer:{
-    overflow:'hidden',
-    shadowOpacity:1,
-    shadowRadius:10,
-    shadowColor:"#323446",
+    overflow:Platform.OS==='ios'?'visible':'hidden',
+    shadowOpacity:0.5,
+    shadowOffset:{width:0,height:2},
+    shadowRadius:2,
+    shadowColor:"#000",
+    borderRadius:10,
     elevation:5,
     alignSelf:'center',
-    flexDirection:'row',
     width:'90%',
     marginVertical:10,
-    borderRadius:10,
-    height:height*0.15
+    height:height*0.25
   },
   backgroundContainer:{
-    width:'65%',
-    height:'100%',
+    width:'100%',
+    height:'70%',
     backgroundColor:'#f9f9f9'
   },
   background:{
@@ -88,12 +88,19 @@ const styles= StyleSheet.create({
   },
   secondRow:{
     backgroundColor:'#fff',
-    width:'50%',
+    width:'100%',
+    flexDirection:'row',
+    justifyContent:'space-between',
     alignSelf:'center',
     alignItems:'center',
-    justifyContent:'flex-end',
-    borderTopRightRadius:30,
-    borderTopLeftRadius:30
+    borderTopRightRadius:20,
+    borderTopLeftRadius:20,
+    paddingHorizontal:20
+  },
+  textType:{
+    fontSize:12,
+    color:Colors.primary,
+    fontFamily:'poppins-bold'
   },
   textPrice:{
     fontSize:18,
@@ -106,19 +113,17 @@ const styles= StyleSheet.create({
     fontSize:12,
     alignSelf:'center'
   },
-  iconsRow:{
-    flexDirection:'row',
-    justifyContent:'space-around',
-    width:'100%'
-  },
   iconsContainer:{
-    width:'35%',
-    justifyContent:'center',
+    width:'100%',
+    height:'30%',
+    flexDirection:'row',
     alignItems:'center',
-    backgroundColor:'#fff',
+    backgroundColor:Platform.OS==='android'?'#fff':'#f9f9f9',
     paddingVertical:10,
-    paddingHorizontal:10
+    borderTopColor:'#f0F0F0',
+    borderTopWidth:1,
   },
+  
  
 });
 

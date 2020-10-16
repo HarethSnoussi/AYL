@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet,View,Image, ScrollView,ImageBackground,Text,TouchableOpacity,Platform} from 'react-native';
+import { StyleSheet,View,Image, ScrollView,ImageBackground,Text,TouchableOpacity,Platform,StatusBar} from 'react-native';
 import Colors from '../../constants/Colors';
 import ServiceCart from '../../components/ServiceCart';
 import {Entypo} from "@expo/vector-icons";
@@ -11,12 +11,14 @@ const BarberServiceScreen = props =>{
   
 
   const barber= useSelector(state=>state.barber.barber);
-
+  const feedbacks=useSelector(state=>state.reviews.feedbacks);
+  const isImage= {beard:require('../../assets/images/barbe.jpg'),hair:require('../../assets/images/hair.jpg'),supp:require('../../assets/images/supplements.jpg'),womanHair:require('../../assets/images/womanhair.jpg'),wedding:require('../../assets/images/mariage.jpg'),care:require('../../assets/images/soins.jpg')};
     
      
     if(barber[0].services.length === 0){
       return (
         <View style={styles.container}> 
+        <StatusBar hidden />
         <View style={styles.firstContainer}>
           <View style={styles.coverContainer}>
               <ImageBackground source={require('../../assets/images/barberScreen.png')} style={styles.cover} />
@@ -24,14 +26,15 @@ const BarberServiceScreen = props =>{
           
           <View style={styles.infoContainer}>
              <View style={styles.imageContainer}>
-                 <Image source={require('../../assets/images/man2.jpg')} style={styles.icon} />
+                 {barber[0] && barber[0].sex==='Homme' ?<Image source={require('../../assets/images/man2.jpg')} style={styles.icon} />:
+                 <Image source={require('../../assets/images/angelina.png')} style={styles.icon} />}
              </View>
            
              <Text style={styles.bname}>{barber[0] && barber[0].b_name!==null?barber[0].b_name:'Nom business'}</Text>
              
              <Rating
                    type='custom'
-                   startingValue={barber[0] && barber[0].mark===null? 1: barber[0].mark}
+                   startingValue={barber[0] && feedbacks.length===0 ? 2.5 : barber[0].mark}
                    imageSize={20}
                    ratingBackgroundColor={'#323446'}
                    ratingColor='#fd6c57'
@@ -61,6 +64,7 @@ const BarberServiceScreen = props =>{
    
     return(
         <View style={styles.container}> 
+        <StatusBar hidden />
          <View style={styles.firstContainer}>
            <View style={styles.coverContainer}>
                <ImageBackground source={require('../../assets/images/barberScreen.png')} style={styles.cover} />
@@ -68,14 +72,15 @@ const BarberServiceScreen = props =>{
            
            <View style={styles.infoContainer}>
               <View style={styles.imageContainer}>
-                  <Image source={require('../../assets/images/man2.jpg')} style={styles.icon} />
+              {barber[0] && barber[0].sex==='Homme' ?<Image source={require('../../assets/images/man2.jpg')} style={styles.icon} />:
+                 <Image source={require('../../assets/images/angelina.png')} style={styles.icon} />}
               </View>
             
               <Text style={styles.bname}>{barber[0] && barber[0].b_name!==null?barber[0].b_name:'Nom business'}</Text>
              
                 <Rating
                       type='custom'
-                      startingValue={barber[0] && barber[0].mark===null? 1: barber[0].mark}
+                      startingValue={barber[0] && feedbacks.length===0 ? 2.5 : barber[0].mark}
                       imageSize={20}
                       ratingBackgroundColor={'#323446'}
                       ratingColor='#fd6c57'
@@ -97,7 +102,9 @@ const BarberServiceScreen = props =>{
           <ServiceCart
             key={service.serviceId}
             number={index+1}
+            source={service.typeOfService==='Cheveux'?isImage.hair: service.typeOfService==='Barbe'?isImage.beard: service.typeOfService==='Soins'?isImage.care:service.typeOfService==='Mariage'?isImage.wedding:service.typeOfService==='Suppléments'?isImage.supp:service.typeOfService==='Cheveux femme'?isImage.womanHair:undefined}
             name={service.name}
+            type={service.typeOfService}
             minute={service.duration}
             price={service.price}
           />)}
