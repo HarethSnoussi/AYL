@@ -1,12 +1,15 @@
 import React,{useState,useEffect,useCallback} from 'react';
 import { StyleSheet, Text, View, ImageBackground , Image,Dimensions,TouchableOpacity,ScrollView,StatusBar,Linking,Alert,ActivityIndicator} from 'react-native';
-import {MaterialIcons,MaterialCommunityIcons,Entypo} from "@expo/vector-icons";
+import {MaterialCommunityIcons,Entypo} from "@expo/vector-icons";
 import {  Rating  } from 'react-native-elements';
 import Colors from "../../constants/Colors";
 import { useDispatch,useSelector } from 'react-redux';
 import * as barberActions from '../../store/actions/barberActions';
 import * as reviewsActions from '../../store/actions/reviewsActions';
 import Feedback from '../../components/Feedback';
+
+
+const height = Dimensions.get('window').height;
 
 const BarberHomeScreen = props =>{
 
@@ -92,6 +95,7 @@ const BarberHomeScreen = props =>{
    
     if(isLoading || barber === undefined ){
       return ( <ImageBackground source={require('../../assets/images/support.png')} style={styles.coverTwo}>
+                  <StatusBar hidden/>
                   <ActivityIndicator size='large' color={Colors.primary} />
               </ImageBackground>)
     };
@@ -105,7 +109,8 @@ const BarberHomeScreen = props =>{
            </View>
            <View style={styles.infoContainer}>
                <View style={styles.imageContainer}>
-                  <Image source={require('../../assets/images/man2.jpg')} style={styles.icon} />
+               {barber && barber.sex==='Homme' ?<Image source={require('../../assets/images/man2.jpg')} style={styles.icon} />:
+                 <Image source={require('../../assets/images/angelina.png')} style={styles.icon} />}
                </View>
                <Text style={styles.bname}>{barber && barber.b_name!==null?barber.b_name:'Nom business'}</Text>
                <Text style={styles.jobAge}>{barber && (barber.name!==null || barber.surname!==null || barber.age!==null)?`${barber.name} ${barber.surname}, ${barber.age}ans`:'Nom, prénom et votre age'}</Text>
@@ -289,6 +294,11 @@ const BarberHomeScreen = props =>{
          </ScrollView>):undefined}
 
          {isFeedback?(<ScrollView style={{width:'100%'}} showsVerticalScrollIndicator={false} contentContainerStyle={{alignItems:'center'}}>
+         {feedbacks.length ===0 ?
+          (<View style={styles.noFeedbacksContainer}>
+            <Text style={styles.noFeedbacksText}>Aucun feedback n'est disponible.</Text>
+          </View>):
+          (<View>
            {feedbacks.map(feed=>  <Feedback
                key={feed.id}
                mark={feed.mark}
@@ -297,7 +307,7 @@ const BarberHomeScreen = props =>{
                comment={feed.comment}
                feedbacks={feedbacks}
               />)}
-              
+              </View>)}
          </ScrollView>):undefined}
 
       </View>
@@ -543,7 +553,18 @@ const styles= StyleSheet.create({
    width:'100%',
    height:'100%',
    resizeMode:'cover'
- }
+ },
+ noFeedbacksContainer:{
+  width:'100%',
+  justifyContent:'center',
+  alignItems:'center',
+  marginTop:height*0.2,
+},
+noFeedbacksText:{
+  fontFamily:'poppins',
+  fontSize:13,
+  color:Colors.blue
+},  
 });
 
 export default BarberHomeScreen;

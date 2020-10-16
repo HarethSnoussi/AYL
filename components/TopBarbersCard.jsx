@@ -72,9 +72,7 @@ const styles= StyleSheet.create({
     borderRadius : 25,
     overflow : "hidden",
     marginHorizontal : screen.width * 0.03,
-    borderWidth : Platform.OS === 'ios' ?0.3:null ,
-   
-    elevation: 1,
+    borderWidth : 0.3,
    
   },
   barberPictureContainer : {
@@ -119,7 +117,7 @@ const styles= StyleSheet.create({
  button : {
    backgroundColor : "#fd6c57",
    alignSelf : "center",
-   marginBottom:Platform.OS === 'ios' ?5:null,
+   marginBottom:5,
    paddingHorizontal:25,
    borderRadius:20
 }

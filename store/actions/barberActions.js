@@ -79,6 +79,7 @@ export const setBarber= id => {
                             price : e.price,
                             duration : e.duration,
                             barberID:e.barber_id,
+                            typeOfService:e.typeOfService,
                             durationHour:durationHours,
                             durationMinute:durationMinutes
                     }

@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     labelButton2:{
         color:'#FFF',
         fontFamily:'poppins',
-        fontSize:20,
+        fontSize:22,
         textTransform:null,
         
         },
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
         width:'70%',
         marginHorizontal:10,
         marginVertical:10,
-        height:40,
+        height:50,
         alignSelf:'center',
         }
 
