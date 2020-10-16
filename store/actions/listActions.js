@@ -4,14 +4,14 @@ export const GET_REVIEWS = "GET_REVIEWS";
 
 
 
-export const getBarbers = ()=>{
+export const getBarbers = (sex)=>{
 
     return async (dispatch) =>{
         try {
 
-            const arr = await fetch(`http://173.212.234.137:3000/barbers/allbarbers`);
+            const arr = await fetch(`http://173.212.234.137:3000/barbers/allbarbers/${sex}`);
             const resData = await arr.json ();
-            
+         
             dispatch({type : GET_BARBERS , barbers : resData});
         }
         

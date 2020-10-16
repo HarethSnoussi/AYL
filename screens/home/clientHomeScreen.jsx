@@ -107,12 +107,13 @@ const responseListener = useRef();
   },[getClient]);
 
 /********************************************************************** */
-const getAllBarbers = useCallback(async ()=>{
+const getAllBarbers = useCallback(async (sex)=>{
   try{
     setError(false);
     setIsRefreshing(true);
     setLoading(true);
-    await  dispatch(getBarbers());
+   
+    await  dispatch(getBarbers(sex));
     await dispatch(getReviews(clientID));
     await dispatch(getClientBookings(clientID));
     await dispatch(expiredbookings(clientID,tokens));
@@ -131,16 +132,21 @@ const getAllBarbers = useCallback(async ()=>{
 
 
 useEffect (()=>{
-getAllBarbers();
+  
+if(client.length !== 0)
+{
+  getAllBarbers(client[0].sex);
 
-},[dispatch,getAllBarbers]);
+}
+
+},[dispatch,getAllBarbers,client]);
 
 useEffect(()=>{
   const willFocusSub= props.navigation.addListener(
     'willFocus',
     () => {
   
-      getAllBarbers();
+      getAllBarbers(client[0].sex);
      
     }
   );
@@ -345,7 +351,7 @@ if (error ) {
 
 
 
-if (isLoading || allBarbers.length <= 0 ) {
+if (isLoading || allBarbers.length <= 0 || client.length === 0 ) {
 
   return (
 
@@ -370,7 +376,7 @@ if (isLoading || allBarbers.length <= 0 ) {
    
       <ScrollView  >
 
-            <ImageBackground source = {require("../../assets/pictures/barber4.png")} style = {styles.firstImage}  resizeMode ="stretch" imageStyle ={styles.image} >
+            <ImageBackground source = {client[0].sex ==="Femme"? require("../../assets/pictures/woman3.png") :require("../../assets/pictures/barber4.png") } style = {styles.firstImage}  resizeMode ="stretch" imageStyle ={styles.image} >
 
         
             <View style = {styles.firstTitle}>  
@@ -440,7 +446,7 @@ if (isLoading || allBarbers.length <= 0 ) {
 
 
            
-         {allBarbers.slice(0,3).map((barber , index)=> {
+         {allBarbers.slice(0,5).map((barber , index)=> {
          
          return(
             <TopBarbersCard 
