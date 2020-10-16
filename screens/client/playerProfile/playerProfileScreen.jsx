@@ -1,6 +1,7 @@
 import React,{useState,useEffect,useCallback,useReducer} from 'react';
-import {StyleSheet,View,AsyncStorage,Linking,ScrollView,ImageBackground,TouchableOpacity,Text,Image,Alert,KeyboardAvoidingView,Dimensions,ActionSheetIOS,Picker,ActivityIndicator,TouchableWithoutFeedback,Keyboard,Platform} from 'react-native';
+import {StyleSheet,View,AsyncStorage,Linking,ScrollView,ImageBackground,TouchableOpacity,Text,Image,Alert,KeyboardAvoidingView,Dimensions,ActionSheetIOS,Picker,ActivityIndicator,TouchableWithoutFeedback,Keyboard,Platform, ViewBase} from 'react-native';
 import CustomInput from '../../../components/Input';
+import {Button } from 'react-native-elements';
 import Colors from '../../../constants/Colors';
 import {Ionicons,MaterialIcons,MaterialCommunityIcons} from "@expo/vector-icons";
 import {useDispatch,useSelector} from "react-redux";
@@ -238,12 +239,13 @@ const takeLibraryHandler = async ()=>{
       <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
       <View style={styles.container}>
       <View style={styles.firstCard}>
-        <ImageBackground source={client[0].sex==='Femme'?require( '../../../assets/images/woman5.jpg'):require('../../../assets/images/man1-1.jpg')} style={styles.backgroundFirstCard} resizeMode='cover'>
-          <View style={{width:'100%',height:'20%',alignItems:'center',justifyContent:'center'}}>
-            <TouchableOpacity style={styles.iconFormCircle2} onPress={saveHandler}>
-                {!isLoading?<Ionicons title = "check" name ='md-checkmark' color='#fff' size={32} onPress={saveHandler}  />:
-                 <ActivityIndicator color={Colors.primary}/>}
-            </TouchableOpacity>
+        <ImageBackground source={client[0] && client[0].sex==='Femme'?require( '../../../assets/images/woman5.jpg'):require('../../../assets/images/man1-1.jpg')} style={styles.backgroundFirstCard} resizeMode='cover'>
+          <View style={{width:'100%',height:'20%',alignItems:'flex-end',justifyContent:'center'}}>
+           
+        {!isLoading? <Button theme={{colors: {primary:'transparent'}}} icon={<Ionicons title = "check" name ='md-checkmark' color='#fff' size={32} />} onPress={saveHandler}  buttonStyle={styles.buttonStyle2}/>:
+                 <ActivityIndicator style={styles.buttonStyle2} color={Colors.primary}/>}
+            
+           
           </View>
         </ImageBackground>
      </View>
@@ -530,13 +532,10 @@ const styles= StyleSheet.create({
       justifyContent:'center',
       alignItems:'center'
     },
-    iconFormCircle2:{
+    buttonStyle2:{
       width:50,
       height:50,
-      borderRadius:20,
-      justifyContent:'center',
-      alignItems:'center',
-      alignSelf:'flex-end'
+      marginTop:30,
     },
     iconFormCircleGalery:{
       width:40,

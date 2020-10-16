@@ -325,6 +325,7 @@ const now = new Date();
 if (error ) {
   return (
     <View style={styles.centered}>
+      <StatusBar hidden />
      <View style = {{height : "50%",justifyContent:"center",alignItems:"center",width:"50%"}}>
                      <Image
                         style={{height:"100%",width:"100%",resizeMode:"contain"}}
@@ -349,6 +350,7 @@ if (isLoading || allBarbers.length <= 0 ) {
   return (
 
     <ImageBackground style= {styles.centered} source={require('../../assets/images/support.png')}>
+      <StatusBar hidden />
 
       <ActivityIndicator size="large" color= {Colors.primary} />
 
@@ -553,7 +555,7 @@ bestText :{
 },
 showAll : {
   fontFamily : "poppins",
-  color : "#9d9da1",
+  color : Colors.primary,
   fontSize :screen.width/30
 
 },
