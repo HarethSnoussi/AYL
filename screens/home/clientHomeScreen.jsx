@@ -1,5 +1,5 @@
 import React ,{useEffect, useState,useCallback,useRef,Component }  from 'react';
-import { StyleSheet, Text, View, ImageBackground , Image ,Dimensions , StatusBar,ActivityIndicator,ScrollView, FlatList, TouchableOpacity,Alert,AppState } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground , Image ,Dimensions , StatusBar,ActivityIndicator,ScrollView, FlatList, TouchableOpacity,Alert,AppState, LogBox } from 'react-native';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
@@ -32,7 +32,7 @@ Notifications.setNotificationHandler({
     shouldSetBadge: true,
   }),
 });
-
+LogBox.ignoreAllLogs();
 
 const ClientHomeScreen = props =>{
 
