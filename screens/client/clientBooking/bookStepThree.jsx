@@ -30,7 +30,7 @@ const [pickedAddress,setAddress] = useState("");
 //overlay State
 const [overlayState , setOverlayState]=useState(false);
 const [stepThreeCpt,setStepThree] = useState(props.navigation.getParam("overCpt"));
-
+const [keyboardState,setKeyboardState]= useState (false);
 const pickedWilayaHandler =  (itemValue)=>{
 
 setPickedWilaya(itemValue);
@@ -57,6 +57,25 @@ const stepThreeHandler = ()=>{
 setStepThree(previous => previous+1);
 
 };
+
+// KEYBOARD
+
+useEffect(() => {
+  Keyboard.addListener("keyboardDidShow", keyboardHandler);
+  Keyboard.addListener("keyboardDidHide", keyboardHandler);
+
+  // cleanup function
+  return () => {
+    Keyboard.removeListener("keyboardDidShow", keyboardHandler);
+    Keyboard.removeListener("keyboardDidHide", keyboardHandler);
+  };
+}, []);
+
+const keyboardHandler = () => {
+  setKeyboardState(previous=>!previous);
+};
+
+
 
 
 
@@ -110,8 +129,15 @@ return (
                />
                 </View>
 
-                <View style = {styles.bookingInfoContainer}>
-                <KeyboardAvoidingView keyboardVerticalOffset={10}>
+                <View style = {{  width : "100%",
+       height : "75%",
+       backgroundColor : "#fff",
+       borderTopLeftRadius : keyboardState ? 0 :25,
+       borderTopRightRadius : keyboardState ? 0 : 25,
+        position : "absolute",
+        top : keyboardState ? 0:"25%",
+        overflow : "hidden",}}>
+                <KeyboardAvoidingView  keyboardVerticalOffset={10}>
                
                     <View style = {styles.title}>
                         <Text style = {{fontFamily : "poppins-bold",fontSize : screen.width/26}}>
@@ -129,9 +155,10 @@ return (
                     >
                             
                     <RNPickerSelect
+                      
                         onValueChange={(itemValue) => pickedWilayaHandler(itemValue)}
                         items={[
-                            { label: 'Alger', value: 'Alger' },
+                            { label: 'Alger', value: 'Alger'},
                             { label: 'Blida', value: 'Blida' },
                             { label: 'Oran', value: 'Oran' },
                         ]}
@@ -141,8 +168,19 @@ return (
                                 color : "#7f7d7c",
                                 value : null
                             }}
+                            style = {{inputAndroid: {
+                                          fontSize: 16,
+                                          paddingHorizontal: 10,
+                                          paddingVertical: 8,
+                                          borderWidth: 0.5,
+                                          borderColor: 'purple',
+                                          borderRadius: 8,
+                                          color: 'black',
+                                          
+                                        }}}
+                    
                     />
-
+ 
                     </View>
 
                     
@@ -257,6 +295,7 @@ const styles= StyleSheet.create({
     paddingLeft : "2%",
     // borderWidth: 1,
     elevation : 2 ,
+    
         },
      
         region : {

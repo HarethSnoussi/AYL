@@ -260,8 +260,9 @@ await setAvailableSlots([...slots]);
 
 }
 else{
-    if(pickedDate.toDateString() === new Date().toDateString()){
-        todaysSlots = hours.slice(hoursTime.indexOf(nowHour), hoursTime.indexOf(workingTime[days.indexOf(day)].end) );  
+    if(pickedDate.toDateString() === new Date().toDateString() && days.indexOf(day) >= 0){
+
+        todaysSlots = hours.slice(hoursTime.indexOf(nowHour), hoursTime.indexOf(workingDays[days.indexOf(day)].end) );  
 
     }
     setAvailableSlots([...todaysSlots]);
