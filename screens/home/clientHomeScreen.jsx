@@ -145,15 +145,15 @@ useEffect(()=>{
   const willFocusSub= props.navigation.addListener(
     'willFocus',
     () => {
-  
-      getAllBarbers(client[0].sex);
+     if(client.length!==0){
+      getAllBarbers(client[0].sex);}
      
     }
   );
   return ()=>{
     willFocusSub.remove();
   };
-  },[getAllBarbers]);
+  },[getAllBarbers,client]);
 
 
 
@@ -328,7 +328,7 @@ const now = new Date();
 
 /************************************************************************************************** */
 /********************************************************************** */
-if (error ) {
+if (error  ) {
   return (
     <View style={styles.centered}>
       <StatusBar hidden />
@@ -351,7 +351,7 @@ if (error ) {
 
 
 
-if (isLoading || allBarbers.length <= 0 || client.length === 0 ) {
+if (isLoading || allBarbers.length <= 0 ) {
 
   return (
 
@@ -374,7 +374,7 @@ if (isLoading || allBarbers.length <= 0 || client.length === 0 ) {
     
       <StatusBar hidden />
    
-      <ScrollView  >
+      <ScrollView refreshing={isRefreshing} >
 
             <ImageBackground source = {client[0].sex ==="Femme"? require("../../assets/pictures/woman3.png") :require("../../assets/pictures/barber4.png") } style = {styles.firstImage}  resizeMode ="stretch" imageStyle ={styles.image} >
 
