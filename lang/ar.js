@@ -27,6 +27,7 @@ export default{
     //barberHome screen********************************************************************
     Yo:"سنة",
     NoComments:"لا وجود لتعليق!",
+    Book:'أحجز',
     Comments:'تعليقات',
     Information:"المعلومات",
     Services:"الخدمات",
@@ -35,7 +36,7 @@ export default{
     About:"الملف الشخصي",
     Portfolio:"النموذج الخاص بك",
     Feedback:"التعليقات",
-    NoFeedback:"لم تتلق أي تعليقات حتى الآن.",
+    NoFeedback:"لم يتلق أي تعليقات حتى الآن.",
     Fullname:"الإسم الكامل",
     StartFrom:"إبتداءا من",
     Available:"أوقات العمل",

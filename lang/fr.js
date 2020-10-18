@@ -27,6 +27,7 @@ export default{
     //barberHome screen********************************************************************
     Yo:"ans",
     NoComments:"Aucun commentaire!",
+    Book:'Réserver',
     Comments:'Commentaires',
     Nomakrs:'Aucune note!',
     Information:"Infos",
@@ -36,7 +37,7 @@ export default{
     About:"A propos",
     Portfolio:"Portfolio",
     Feedback:"Feedback",
-    NoFeedback:"Vous n'avez reçu aucun Feedback pour le moment.",
+    NoFeedback:"Il n'a reçu aucun Feedback pour le moment.",
     Fullname:"Nom Complet",
     StartFrom:"A partir de",
     Available:"Disponibilité",
