@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useCallback,useReducer} from 'react';
-import {StyleSheet,View,AsyncStorage,Linking,ScrollView,ImageBackground,TouchableOpacity,Text,Image,Alert,KeyboardAvoidingView,Dimensions,ActionSheetIOS,Picker,ActivityIndicator,TouchableWithoutFeedback,Keyboard,Platform, ViewBase} from 'react-native';
+import {StyleSheet,View,AsyncStorage,Linking,ScrollView,ImageBackground,TouchableOpacity,Text,Image,Alert,KeyboardAvoidingView,Dimensions,ActionSheetIOS,Picker,ActivityIndicator,TouchableWithoutFeedback,Keyboard,Platform, ViewBase,StatusBar} from 'react-native';
 import CustomInput from '../../../components/Input';
 import {Button } from 'react-native-elements';
 import Colors from '../../../constants/Colors';
@@ -7,8 +7,8 @@ import {Ionicons,MaterialIcons,MaterialCommunityIcons} from "@expo/vector-icons"
 import {useDispatch,useSelector} from "react-redux";
 import * as authActions from '../../../store/actions/authActions';
 import * as clientActions from '../../../store/actions/clientActions';
-
-
+import polylanar from "../../../lang/ar";
+import polylanfr from "../../../lang/fr";
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { currentToken, deleteToken } from '../../../store/actions/tokenActions';
@@ -62,14 +62,14 @@ const PlayerProfileScreen = props =>{
   const url= ()=>{
     Linking.openURL(URL).catch((err) => {
       if(err){
-        Alert.alert('Oups!','Votre débit internet est trop faible',[{text:'OK'}]);
+        Alert.alert(client && client[0].lang?polylanfr.Oups:polylanar.Oups,client && client[0].lang?polylanfr.WeakInternet:polylanar.WeakInternet,[{text:client && client[0].lang?polylanfr.OK:polylanar.OK}]);
     } 
     });
    };
    const url2= ()=>{
     Linking.openURL(URLAbout).catch((err) => {
       if(err){
-        Alert.alert('Oups!','Votre débit internet est trop faible',[{text:'OK'}]);
+        Alert.alert(client && client[0].lang?polylanfr.Oups:polylanar.Oups,client && client[0].lang?polylanfr.WeakInternet:polylanar.WeakInternet,[{text:client && client[0].lang?polylanfr.OK:polylanar.OK}]);
     } 
     });
    };
@@ -85,14 +85,14 @@ const PlayerProfileScreen = props =>{
 
   //States for complex information textInputs
  const [wilaya,setWilaya] = useState(client[0]?client[0].wilaya:undefined);
- const wilayas = ['Wilaya','Alger','Blida'];
+ const wilayas = [client && client[0].lang?polylanfr.City:polylanar.City,'Alger','Blida'];
  const [isLoading,setIsLoading]=useState(false);
  const dispatch = useDispatch();
  
  
  //picker only iOS function 
  const onPress = () =>{
-   const wilayasIOS = ['Wilaya','Alger','Blida'];    
+   const wilayasIOS = [client && client[0].lang?polylanfr.City:polylanar.City,'Alger','Blida'];    
    ActionSheetIOS.showActionSheetWithOptions(
      {
        options: wilayasIOS,
@@ -120,7 +120,7 @@ const verifyPermissions= async ()=>{
   if(result.status !== 'granted'){
       Alert.alert('Permissions insuffisantes!',
       'Vous devez accorder les autorisations de la caméra pour utiliser cette application.',
-      [{text:"D'accord"}]);
+      [{text:client && client[0].lang?polylanfr.Agree:polylanar.Agree}]);
       return false;
   }
   return true;
@@ -176,10 +176,10 @@ const takeLibraryHandler = async ()=>{
     };
     const alertLogout = ()=>{
       Alert.alert(
-       'Attention!',
-       'Voulez-vous vraiment vous déconnecter?',
-       [{text:'Oui', style:'destructive', onPress:logout},
-        {text:'Non', style:'cancel'}]);
+        client && client[0].lang?polylanfr.Warning:polylanar.Warning,
+        client && client[0].lang?polylanfr.DoYouWantToDisconnect:polylanar.DoYouWantToDisconnect,
+       [{text:client && client[0].lang?polylanfr.Yes:polylanar.Yes, style:'destructive', onPress:logout},
+        {text:client && client[0].lang?polylanfr.No:polylanar.No, style:'cancel'}]);
         return;
    };
 
@@ -220,15 +220,15 @@ const takeLibraryHandler = async ()=>{
                                           formState.inputValues.email,formState.inputValues.address,
                                           pickedImage,wilaya,formState.inputValues.region));
         setIsLoading(false);                        
-        Alert.alert('Félicitation!','Vos données ont été changées avec succès!',[{text:"OK"}]);
+        Alert.alert(client && client[0].lang?polylanfr.Congratulations:polylanar.Congratulations,client && client[0].lang?polylanfr.SuccessfulDataSent:polylanar.SuccessfulDataSent,[{text:client && client[0].lang?polylanfr.OK:polylanar.OK}]);
   
     }catch(err){
       console.log(err);
-      Alert.alert('Oups!','Une erreur est survenue!',[{text:"OK"}]);
+      Alert.alert(client && client[0].lang?polylanfr.Oups:polylanar.Oups,client && client[0].lang?polylanfr.WeakInternet:polylanar.WeakInternet,[{text:client && client[0].lang?polylanfr.OK:polylanar.OK}]);
     }
     
     }else{
-      Alert.alert('Erreur!','Veuillez remplir le(s) champ(s) manquants svp!',[{text:"OK"}]);
+      Alert.alert(client && client[0].lang?polylanfr.Error:polylanar.Error,client && client[0].lang?polylanfr.EmptyFields:polylanar.EmptyFields,[{text:client && client[0].lang?polylanfr.OK:polylanar.OK}]);
     }
   
   },[dispatch,clientID,formState,pickedImage,wilaya]);
@@ -238,6 +238,7 @@ const takeLibraryHandler = async ()=>{
     return(
       <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
       <View style={styles.container}>
+      <StatusBar hidden />
       <View style={styles.firstCard}>
         <ImageBackground source={client[0] && client[0].sex==='Femme'?require( '../../../assets/images/woman5.jpg'):require('../../../assets/images/man1-1.jpg')} style={styles.backgroundFirstCard} resizeMode='cover'>
           <View style={{width:'100%',height:'20%',alignItems:'flex-end',justifyContent:'center'}}>
@@ -266,18 +267,18 @@ const takeLibraryHandler = async ()=>{
                   </TouchableOpacity>
                 </View>  
                 <View style={{width:'70%'}}>
-                  <Text style={styles.bnameText}>{client[0].surname!==null?client[0].surname: 'Votre prénom'}</Text>
-                  <Text style={styles.age}>{client[0].wilaya!==null?client[0].wilaya: 'Votre wilaya'}</Text>
+                  <Text style={styles.bnameText}>{client[0].surname!==null?client[0].surname: client && client[0].lang?polylanfr.YourSurname:polylanar.Surname}</Text>
+                  <Text style={styles.age}>{client[0].wilaya!==null?client[0].wilaya: client && client[0].lang?polylanfr.City:polylanar.City}</Text>
                 </View>
               </View>
           </View>
         </View>
         <View style={styles.menuContainer}>
              <TouchableOpacity onPress={info} style={{padding:5,width:'50%',backgroundColor:isInfo?'#fd6c57':'#fff',alignItems:'center',justifyContent:'center'}}>
-                <Text style={{color:isInfo?'#fff':'#fd6c57',fontFamily:'poppins'}}>Informations</Text>
+                <Text style={{color:isInfo?'#fff':'#fd6c57',fontFamily:'poppins'}}>{client && client[0].lang?polylanfr.profileInfo:polylanar.profileInfo}</Text>
              </TouchableOpacity>
              <TouchableOpacity onPress={localisation} style={{padding:5,width:'50%',backgroundColor:isLocalisation?'#fd6c57':'#fff',alignItems:'center',justifyContent:'center'}}>
-                 <Text style={{color:isLocalisation?'#fff':'#fd6c57',fontFamily:'poppins'}}>Mon Compte</Text>
+                 <Text style={{color:isLocalisation?'#fff':'#fd6c57',fontFamily:'poppins'}}>{client && client[0].lang?polylanfr.MyAccount:polylanar.MyAccount}</Text>
              </TouchableOpacity>
         </View>
      {isInfo?(<ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
@@ -286,7 +287,7 @@ const takeLibraryHandler = async ()=>{
             <CustomInput
                 id='name'
                 rightIcon={<MaterialIcons title = "firstName" name ='person' color='#323446' size={23} />}
-                placeholder='Nom'
+                placeholder={client && client[0].lang?polylanfr.Name:polylanar.Name}
                 keyboardType="default"
                 returnKeyType="next"
                 onInputChange={inputChangeHandler}
@@ -310,7 +311,7 @@ const takeLibraryHandler = async ()=>{
             <CustomInput
               id='surname'
               rightIcon={<MaterialIcons title = "firstName" name ='person' color='#323446' size={23} />}
-              placeholder='Prénom'
+              placeholder={client && client[0].lang?polylanfr.Surname:polylanar.Surname}
               keyboardType="default"
               returnKeyType="next"
               onInputChange={inputChangeHandler}
@@ -333,7 +334,7 @@ const takeLibraryHandler = async ()=>{
             <CustomInput
                 id='email'
                 rightIcon={<MaterialIcons title = "email" name ='email' color='#323446' size={23} />}
-                placeholder='Email'
+                placeholder={client && client[0].lang?polylanfr.Email:polylanar.Email}
                 keyboardType="default"
                 returnKeyType="next"
                 onInputChange={inputChangeHandler}
@@ -356,7 +357,7 @@ const takeLibraryHandler = async ()=>{
             <CustomInput
               id='address'
               rightIcon={<MaterialIcons title = "address" name ='map' color='#323446' size={23} />}
-              placeholder='Adresse'
+              placeholder={client && client[0].lang?polylanfr.Address:polylanar.Address}
               keyboardType="default"
               returnKeyType="next"
               onInputChange={inputChangeHandler}
@@ -395,7 +396,7 @@ const takeLibraryHandler = async ()=>{
           <CustomInput
             id='region'
             rightIcon={<MaterialIcons title="region" name ='home' color='#323446' size={23} />}
-            placeholder='Région'
+            placeholder={client && client[0].lang?polylanfr.Region:polylanar.Region}
             keyboardType="default"
             returnKeyType="next"
             minLength={3}
@@ -419,9 +420,9 @@ const takeLibraryHandler = async ()=>{
      </ScrollView>):
      (<ScrollView style={{width:'100%'}} showsVerticalScrollIndicator={false}>
          <View style={styles.noticeContainer}>
-             <Text style={styles.noticeTitle}>Saviez-vous?</Text>
-             <Text style={styles.noticeContent}>Visitez-nous sur le lien suivant pour plus d'informations: <Text onPress={url} style={{color:Colors.primary}}>tahfifaapp.com</Text></Text>
-             <Text style={styles.tahfifaSignature} onPress={url2}>Equipe TAHFIFA.</Text>
+             <Text style={styles.noticeTitle}>{client && client[0].lang?polylanfr.DoYouKnow:polylanar.DoYouKnow}</Text>
+             <Text style={styles.noticeContent}>{client && client[0].lang?polylanfr.DoYouKnowNotice:polylanar.DoYouKnowNotice} <Text onPress={url} style={{color:Colors.primary}}>tahfifaapp.com</Text></Text>
+             <Text style={styles.tahfifaSignature} onPress={url2}>{client && client[0].lang?polylanfr.TeamTahfifa:polylanar.TeamTahfifa}</Text>
          </View>
          <View style={styles.buttonContainer}>
               <View style={styles.cartContainer}>
@@ -430,7 +431,7 @@ const takeLibraryHandler = async ()=>{
                       <MaterialCommunityIcons title = "logout" name ='logout' color='#FD6C57' size={23} />
                     </View>
                     <View>
-                      <Text style={styles.optionTitle}>Se déconnecter</Text>
+                      <Text style={styles.optionTitle}>{client && client[0].lang?polylanfr.Disconnect:polylanar.Disconnect}</Text>
                     </View>
                 </TouchableOpacity>
               </View>
@@ -440,7 +441,7 @@ const takeLibraryHandler = async ()=>{
                        <Ionicons title = "options" name ='ios-options' color='#56A7FF' size={23} />
                      </View>
                      <View>
-                       <Text style={styles.optionTitle}>Paramètres</Text>
+                       <Text style={styles.optionTitle}>{client && client[0].lang?polylanfr.Parameters:polylanar.Parameters}</Text>
                      </View>
                 </TouchableOpacity>
               </View>

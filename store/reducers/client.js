@@ -102,20 +102,14 @@ const clientsReducer=(state=initialState,action)=>{
           state.client[clientIndexLang].sex,
           state.client[clientIndexLang].name,
           state.client[clientIndexLang].surname,
-          state.client[clientIndexLang].b_name,
-          state.client[clientIndexLang].age,
           state.client[clientIndexLang].email,
           state.client[clientIndexLang].address,
-          state.client[clientIndexLang].wilaya,
-          state.client[clientIndexLang].region,
-          state.client[clientIndexLang].image,
           state.client[clientIndexLang].long,
           state.client[clientIndexLang].lat,
-          state.client[clientIndexLang].mark,
+          state.client[clientIndexLang].image,
+          state.client[clientIndexLang].wilaya,
+          state.client[clientIndexLang].region,
           action.clientData.lang,
-          state.client[clientIndexLang].type,
-          state.client[clientIndexLang].services,
-          state.client[clientIndexLang].workingTimes
         );   
 
         const updatedClientsLang=[...state.client];
