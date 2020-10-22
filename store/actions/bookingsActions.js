@@ -23,7 +23,12 @@ export const addBooking = (booking) => {
         }
         
         );
-        if (!response.ok) {
+
+        const resData = await response.json ();
+     
+
+        if (!resData) {
+          
           throw new Error('Something went wrong!');
         }
        

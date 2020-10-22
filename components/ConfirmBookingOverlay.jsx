@@ -89,10 +89,7 @@ const date = new Date();
 try {
 
 setLoading(true);
-
-
  await dispatch(addBooking(booking));
-
  /*********************************************** */
 await sendPushNotification();
  /************************************************ */

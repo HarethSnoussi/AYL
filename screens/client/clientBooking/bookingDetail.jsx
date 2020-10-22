@@ -218,7 +218,7 @@ if (isLoading) {
     
      />
 
-     {props.navigation.getParam("status") !== "expirée" &&  props.navigation.getParam("status") !== "réalisée" && 
+     {props.navigation.getParam("status") !== "expirée" &&  props.navigation.getParam("status") !== "réalisée" &&  props.navigation.getParam("status") !== "annulée" && 
             <View style = {styles.actions}>
 
 
@@ -431,7 +431,7 @@ services : {
 },
 title : {
   alignSelf : "center",
-  marginBottom :"5%"
+  paddingVertical :"3%",
 },
 
 
