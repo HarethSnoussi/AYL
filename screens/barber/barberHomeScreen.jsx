@@ -112,8 +112,7 @@ const BarberHomeScreen = props =>{
            </View>
            <View style={styles.infoContainer}>
                <View style={styles.imageContainer}>
-               {barber && barber.sex==='Homme' ?<Image source={require('../../assets/images/man2.jpg')} style={styles.icon} />:
-                 <Image source={require('../../assets/images/angelina.png')} style={styles.icon} />}
+               <Image source={require('../../assets/images/unknown.jpeg')} style={styles.icon} />
                </View>
                <Text style={styles.bname}>{barber && barber.b_name!==null?barber.b_name:client && client.lang?polylanfr.BusinessName:polylanar.BusinessName}</Text>
                <Text style={styles.jobAge}>{barber && (barber.name!==null || barber.surname!==null || barber.age!==null)?`${barber.name} ${barber.surname}, ${barber.age} ${client && client.lang?polylanfr.Yo:polylanar.Yo}`:client && client.lang?polylanfr.personalInforamtion:polylanar.personalInforamtion}</Text>

@@ -16,7 +16,7 @@ const TopBarbersCard = (props)=> {
         <View  style = {styles.barberPictureContainer}>
 
          <ImageBackground resizeMode = "stretch" style = {{width : "100%" ,height : "100%" ,alignItems : "center" , justifyContent : "center"}} source = {require("../assets/pictures/test4.png")}>  
-            <Avatar source = {require("../assets/pictures/person1.jpg")}
+            <Avatar source = {require("../assets/images/unknown.jpeg")}
               containerStyle = {styles.barberPicture}
               rounded
               size= "large"

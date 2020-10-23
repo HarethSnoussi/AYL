@@ -11,7 +11,7 @@ const BarberInfos = props =>{
     <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}}  colors={['#fd6c57', '#fd9054']} style = {{height : "100%",width : "100%",justifyContent:"center",alignItems :"center"}} >
                 <View style = {{width : "85%",height :"70%",borderRadius :5,flexDirection : "row",padding :"5%",justifyContent:'space-between',alignItems :"center"}}>
                 <View style = {{width: "30%"}}>
-                <Avatar source = {require("../assets/pictures/person1.jpg")}
+                <Avatar source = {require("../assets/images/unknown.jpeg")}
                         containerStyle = {{borderWidth:1,borderRadius : 5,overflow:"hidden"}}
                         
                         size= {screen.width/4}

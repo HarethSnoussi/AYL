@@ -253,9 +253,8 @@ const takeLibraryHandler = async ()=>{
      <View style={styles.secondCard}>
           <View style={styles.secondCardContent}>
               <View style={styles.imageContainer}>
-              {!pickedImage && client[0].sex==='Homme' ? <Image source={require('../../../assets/images/man2.jpg')} style={styles.image} />:
-                !pickedImage && client[0].sex==='Femme' ? <Image source={require('../../../assets/images/angelina.png')} style={styles.image} />
-                : (<Image style={styles.image} source={{uri:pickedImage}} />)}
+              {!pickedImage ? <Image source={require('../../../assets/images/unknown.jpeg')} style={styles.image} />:
+                (<Image style={styles.image} source={{uri:pickedImage}} />)}
               </View>
               <View style={styles.detailsContainer}>
                 <View style={{width:'30%'}}>

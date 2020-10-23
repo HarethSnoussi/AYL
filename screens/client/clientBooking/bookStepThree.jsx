@@ -135,17 +135,17 @@ return (
                 </View>
 
                 <View style = {{  width : "100%",
-       height : "75%",
-       backgroundColor : "#fff",
-       borderTopLeftRadius : keyboardState ? 0 :25,
-       borderTopRightRadius : keyboardState ? 0 : 25,
-        position : "absolute",
-        top : keyboardState ? 0:"25%",
-        overflow : "hidden",}}>
+                    height : "75%",
+                    backgroundColor : "#fff",
+                    borderTopLeftRadius : keyboardState ? 0 :25,
+                    borderTopRightRadius : keyboardState ? 0 : 25,
+                    position : "absolute",
+                    top : keyboardState ? 0:"25%",
+                    overflow : "hidden",}}>
                 <KeyboardAvoidingView  keyboardVerticalOffset={10}>
                
                     <View style = {styles.title}>
-                        <Text style = {{fontFamily : "poppins-bold",fontSize : screen.width/26}}>
+                        <Text style = {{fontFamily : "poppins-bold",fontSize : screen.width/26,color:Colors.blue}}>
                         Adresse de la réservation
                         </Text>
 
@@ -291,53 +291,56 @@ const styles= StyleSheet.create({
    alignSelf : 'center',
    justifyContent :"space-around",
    alignItems : "center",
-   marginVertical : "5%"
+   marginTop : "15%"
 },
   /********************************************************************** */ 
     wilaya : {  
     width: "80%", 
-    backgroundColor : "#f0f0f0",
-    borderRadius : 10,
-    // marginLeft : "2%",
-    // overflow :"hidden",
-    paddingLeft : "2%",
-    // borderWidth: 1,
-    elevation : 2 ,
-    height : "15%",
-    justifyContent :"center"
-    
-        },
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.5,
+      shadowRadius: 2,
+      elevation: 2,
+      backgroundColor : "#f0f0f0",
+      borderRadius : 10,
+      paddingLeft : "2%",
+      elevation : 2 ,
+      height : "15%",
+      justifyContent :"center",
+      paddingLeft : 15,
+   },
      
-        region : {
-         height : "30%",
-        // marginLeft : "2%",
-        // overflow :"hidden",
-        justifyContent : "space-around",
-        // paddingLeft : "2%",
-        width : "80%",
-        // backgroundColor : "red"
+    region : {
+      height : "30%",
+      justifyContent : "space-around",
+      width : "80%",
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.5,
+      shadowRadius: 2,
+      elevation: 2,
+      overflow:'visible'
+    },
 
-        },
-
-        address : {
-        height : "50%",
-        width : "80%",
-        //  marginLeft : "2%",
-        // overflow :"hidden",
-        justifyContent : "space-around",
-        // backgroundColor :"red"
-        
-        },
+    address : {
+      height : "50%",
+      width : "80%",
+      justifyContent : "space-around",
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.5,
+      shadowRadius: 2,
+      elevation: 2,
+      overflow:'visible'
+    },
   /********************************************************************** */
   regionInput :{ 
-    // borderColor: 'gray', borderWidth: 1,
-    elevation : 2 ,
-    paddingLeft : 5 ,
+    paddingLeft : 15,
     backgroundColor :"white",
     borderRadius : 10,
     height :"60%",
     backgroundColor : "#f0f0f0",
-    width : "100%"
+    width : "100%",
+    
     
     },
   addressInput :{ 
@@ -347,15 +350,9 @@ const styles= StyleSheet.create({
     height :"80%",
     backgroundColor : "#f0f0f0",
     textAlignVertical: 'top',
-    paddingLeft : 5,
-    paddingTop : 5,
+    paddingLeft : 15,
+    paddingTop : 15,
     width : "100%",
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
-    elevation: 2,
-
 
 },
 

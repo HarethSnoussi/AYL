@@ -24,7 +24,7 @@ const BarberCard = props =>{
        
         <View style = {styles.cardContainer}>
         <View style = {styles.cardImage}>
-        <Image source = {require("../assets/pictures/barber7.png")} style = {styles.image}  />
+        <Image source = {require("../assets/images/unknown.jpeg")} style = {styles.image}  />
 
         </View>
 

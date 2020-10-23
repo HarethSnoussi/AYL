@@ -486,7 +486,7 @@ const styles= StyleSheet.create({
    
     width:'90%',
     alignSelf:'center',
-    paddingTop:20,
+    paddingTop:40,
   },
   labelButton:{
     color:'#FFF',
@@ -499,7 +499,7 @@ const styles= StyleSheet.create({
      width:'90%',
      alignSelf:'center',
      justifyContent:'center',
-     marginTop:10
+     marginTop:30
     },
    buttonStyle:{
     borderColor:'#fd6c57',

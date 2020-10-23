@@ -238,7 +238,7 @@ const styles= StyleSheet.create({
     
    },
   firstContainer:{
-    width:'70%',
+    width:'60%',
     height:'50%',
     alignSelf:'center',
     alignItems:'center',
@@ -252,7 +252,7 @@ const styles= StyleSheet.create({
     fontSize:15,
     fontFamily:'poppins-bold',
     color:'#FFF',
-    paddingTop:15
+    paddingTop:15,
   },
   secondContainer:{
     width:'85%',

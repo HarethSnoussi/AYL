@@ -272,7 +272,7 @@ buttonStyle = {{backgroundColor : "white"}}
 <View style = {styles.barber}>
 
 <View style={styles.title}>
-    <Text style={{fontFamily : "poppins-bold",color :Colors.blue,fontSize : screen.width /28}}>Détail de la réservation
+    <Text style={{fontFamily : "poppins-bold",color :Colors.blue,fontSize : screen.width /28,paddingBottom:5}}>Détail de la réservation
     </Text>
     </View>
 
@@ -343,7 +343,7 @@ buttonStyle = {{backgroundColor : "white"}}
                 <View style = {{alignSelf :"center" , flexDirection :"row",width:"90%",alignItems:"center"}}>
               
                 <Avatar
-          source = {require("../../../assets/pictures/person2.jpg")}
+          source = {require("../../../assets/images/unknown.jpeg")}
           overlayContainerStyle = {{overflow:"hidden"}}
           size = "small"
           rounded
