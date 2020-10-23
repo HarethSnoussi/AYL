@@ -2,6 +2,9 @@ import React from 'react';
 import { StyleSheet, Text, View,Dimensions,ImageBackground,TouchableOpacity } from 'react-native';
 import Colors from "../constants/Colors";
 import {MaterialIcons,MaterialCommunityIcons} from "@expo/vector-icons";
+import polylanar from "../lang/ar";
+import polylanfr from "../lang/fr";
+import {useSelector } from 'react-redux';
 
 //responsivity (Dimensions get method)
 const height = Dimensions.get('window').height;
@@ -10,6 +13,7 @@ const height = Dimensions.get('window').height;
 
 const ServiceCart = props =>{
     
+  const client= useSelector(state=>state.clients.client[0]);
 
     return(
         <View style={styles.serviceContainer}>
@@ -17,10 +21,10 @@ const ServiceCart = props =>{
             <ImageBackground style={styles.background} resizeMode='cover' source={props.source}>
                     <View style={styles.firstRow}>
                         <View style={styles.serviceNumberContainer}>
-                          <Text style={styles.number}>{'Service '+props.number}</Text>
+                          <Text style={styles.number}>{client && client.lang?polylanfr.Service+' '+props.number:polylanar.Service+' '+props.number}</Text>
                         </View>
                         <View style={styles.serviceNumberContainer}>
-                          <Text style={styles.number}>{props.minute+' min'}</Text>
+                          <Text style={styles.number}>{client && client.lang?props.minute+' '+polylanfr.Minute:props.minute+' '+polylanar.Minute}</Text>
                         </View>
                     </View>
                     <View style={styles.secondRow}>

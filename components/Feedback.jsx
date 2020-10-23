@@ -2,6 +2,9 @@ import React from 'react';
 import { StyleSheet, Text, View,Dimensions,Image } from 'react-native';
 import Colors from "../constants/Colors";
 import {  Rating  } from 'react-native-elements';
+import {useSelector } from 'react-redux';
+import polylanar from "../lang/ar";
+import polylanfr from "../lang/fr";
 
 //responsivity (Dimensions get method)
 const screen = Dimensions.get('window');
@@ -10,10 +13,10 @@ const screen = Dimensions.get('window');
 
 const Feedback = props =>{
 
-   
+    const client= useSelector(state=>state.clients.client[0]);
 
     return(
-        props.feedbacks.length!==0? (<View style={styles.feedbackContainer}>
+        <View style={styles.feedbackContainer}>
             <View style={styles.photoContainer}>
                 <View style={styles.photoCircle}>
                     <Image source={require('../assets/images/avatarman.jpg')} style={styles.photo} />
@@ -28,19 +31,16 @@ const Feedback = props =>{
                     ratingBackgroundColor={Colors.blue}
                     ratingColor={Colors.primary}
                     tintColor='#fff'
-                    />:<Text style={styles.noMark}>Aucune note!</Text>}
+                    />:<Text style={styles.noMark}>{client && client.lang?polylanfr.Nomarks:polylanar.Nomarks}</Text>}
                 </View>
                 <View style={styles.commentContainer}>
                 <Text style={{fontFamily:'poppins-bold',fontSize:13,color:Colors.blue}}>{props.name===null && props.surname=== null ? 'Inconnu':props.name+' '+ props.surname}</Text>
                     <Text style={styles.comment}>
-                    {props.comment? props.comment:'Aucun commentaire!'}
+                    {props.comment? props.comment:client && client.lang?polylanfr.NoComments:polylanar.NoComments}
                     </Text>
                 </View>
             </View>
-        </View>):
-       ( <View style={styles.noFeedbacksContainer}>
-           <Text style={styles.noFeedbacksText}>Vous n'avez reçu aucun feedback pour le moment.</Text>
-         </View>)
+        </View>
         
      );    
 };

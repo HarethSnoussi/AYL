@@ -5,6 +5,8 @@ import ServiceCart from '../../components/ServiceCart';
 import {Entypo} from "@expo/vector-icons";
 import {useSelector } from 'react-redux';
 import {  Rating  } from 'react-native-elements';
+import polylanar from "../../lang/ar";
+import polylanfr from "../../lang/fr";
  
 const BarberServiceScreen = props =>{
   
@@ -12,6 +14,8 @@ const BarberServiceScreen = props =>{
 
   const barber= useSelector(state=>state.barber.barber);
   const feedbacks=useSelector(state=>state.reviews.feedbacks);
+  const client= useSelector(state=>state.clients.client);
+  
   const isImage= {beard:require('../../assets/images/barbe.jpg'),hair:require('../../assets/images/hair.jpg'),supp:require('../../assets/images/supplements.jpg'),womanHair:require('../../assets/images/womanhair.jpg'),wedding:require('../../assets/images/mariage.jpg'),care:require('../../assets/images/soins.jpg')};
     
      
@@ -30,7 +34,7 @@ const BarberServiceScreen = props =>{
                  <Image source={require('../../assets/images/angelina.png')} style={styles.icon} />}
              </View>
            
-             <Text style={styles.bname}>{barber[0] && barber[0].b_name!==null?barber[0].b_name:'Nom business'}</Text>
+             <Text style={styles.bname}>{barber[0] && barber[0].b_name!==null?barber[0].b_name:client[0] && client[0].lang?polylanfr.BusinessName:polylanar.BusinessName}</Text>
              
              <Rating
                    type='custom'
@@ -45,14 +49,14 @@ const BarberServiceScreen = props =>{
                  <View style={styles.iconFormCircle}>
                  <Entypo title = "scissors" name ='scissors' color='#fff' size={23} />
                  </View>
-                 <Text style={styles.iconText}>Services</Text>
+                 <Text style={styles.iconText}>{client[0] && client[0].lang?polylanfr.Services:polylanar.Services}</Text>
                </TouchableOpacity>
              </View>
           </View>
         </View>
         <View style={styles.noServicesContainer}>
             <View style={{marginBottom:10,alignSelf:'center'}}>
-              <Text style={styles.noServicesText}>Aucun service trouvé.</Text>
+              <Text style={styles.noServicesText}>{client[0] && client[0].lang?polylanfr.NoServices:polylanar.NoServices}</Text>
             </View>
             
         </View>
@@ -76,7 +80,7 @@ const BarberServiceScreen = props =>{
                  <Image source={require('../../assets/images/angelina.png')} style={styles.icon} />}
               </View>
             
-              <Text style={styles.bname}>{barber[0] && barber[0].b_name!==null?barber[0].b_name:'Nom business'}</Text>
+              <Text style={styles.bname}>{barber[0] && barber[0].b_name!==null?barber[0].b_name:client[0] && client[0].lang?polylanfr.BusinessName:polylanar.BusinessName}</Text>
              
                 <Rating
                       type='custom'
@@ -91,7 +95,7 @@ const BarberServiceScreen = props =>{
                  <View style={styles.iconFormCircle}>
                  <Entypo title = "scissors" name ='scissors' color='#fff' size={23} />
                  </View>
-                 <Text style={styles.iconText}>Services</Text>
+                 <Text style={styles.iconText}>{client[0] && client[0].lang?polylanfr.Services:polylanar.Services}</Text>
                </TouchableOpacity>
               </View>
            </View>
