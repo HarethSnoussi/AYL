@@ -266,7 +266,7 @@ return (
                    containerStyle = {{ height : "15%",width : "80%",alignSelf:"center" ,justifyContent : "center"  }} 
                    title = "Continuer" 
                    titleStyle = {{fontFamily : "poppins-bold",fontSize : screen.width/28}}
-                   buttonStyle = {{borderRadius : 55}} 
+                   buttonStyle = {{borderRadius : Platform.OS === "android" ? 55 : 20}} 
                    ViewComponent={LinearGradient} 
                    linearGradientProps={{
                         colors: ['#fd6d57', '#fd9054'],

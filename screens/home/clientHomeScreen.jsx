@@ -342,7 +342,7 @@ if (error  ) {
       <Text>Une erreur est survenue !</Text>
       <Button
         title="Rafraîchir"
-         onPress = {getAllBarbers}
+         onPress = {getClient}
          buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : 25,paddingHorizontal : "5%",marginVertical : "5%"}}
       />
     </View>
@@ -350,8 +350,9 @@ if (error  ) {
 }
 
 
-
 if (isLoading || allBarbers.length <= 0 ) {
+
+
 
   return (
 

@@ -116,6 +116,11 @@ const [overlayState , setOverlayState]=useState(false);
       const [isLoading , setLoading] = useState (false);
 
 
+      const [isRefreshing, setIsRefreshing] = useState(false);
+      //Error Handler
+    const [error, setError] = useState();
+    
+
 
 //Make the DatePcikerVisible
 const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -134,6 +139,14 @@ const [availableSlots , setAvailableSlots] = useState([]);
 
 //picked Hour
 const [pickedSlot,setPickedSlot] = useState(0);
+
+//Fetched DATA
+const [data,setData] = useState([]);
+
+//fetched Bookings 
+
+const [bookings,setBookings] = useState([]);
+
 
 //Selected date
 const pickedDateHandler = (date) => {
@@ -164,6 +177,54 @@ const pickedDateHandler = (date) => {
 
 //fetch Worktime of the Barber
 
+//GET WORKING TIME
+
+const getData = async ()=>{
+
+    try {
+        setError(false);
+        setIsRefreshing(true);
+        setLoading(true);
+       
+        const arr = await fetch(`http://173.212.234.137:3000/bookings/barberBookings/${props.navigation.getParam("barber")}`);
+         const resData = await arr.json ();
+     
+        setBookings([...resData]);
+        setIsRefreshing(false);
+        setLoading(false);
+
+        }
+    
+    catch (error) {
+        console.log("There is an Error");
+        setError(true);
+        throw error;
+
+    }
+
+
+ };
+
+useEffect(()=>{
+  
+   getData();
+   },[setBookings]);
+
+
+   useEffect(()=>{
+    const willFocusSub= props.navigation.addListener(
+      'willFocus',
+      () => {
+      
+        getData();
+    }
+       
+     
+    );
+    return ()=>{
+      willFocusSub.remove();
+    };
+    },[bookings]);
 
 
 
@@ -209,7 +270,7 @@ if(days.length >0)
 const todaysSlotsTime = todaysSlots.map(e=>e.time);
 
 //Filter the selected Date Bookings
-const filteredBookings = allBookings.filter(booking=>moment(booking.bookingDate).format("ll") === moment(pickedDate).format("ll"));
+const filteredBookings = bookings.filter(booking=>moment(booking.bookingDate).format("ll") === moment(pickedDate).format("ll"));
 
 
 let bookingHours = [];
@@ -277,13 +338,29 @@ else{
 
 manager();
 
- },[pickedDate]);
+ },[pickedDate,bookings]);
 
 //  console.log((new Date().getHours()+1).toString()+":00");
 // console.log(moment(new Date()).format('ll'));
 // console.log(moment("2020-07-25").format('ll'));
 
 // console.log(moment(pickedDate).format('dddd').substring(0, 3) );
+
+if (error) {
+    
+    return (
+      <View style={styles.centered}>
+        <Text>Une erreur est survenue !</Text>
+        <Button
+          title="Rafraîchir"
+           onPress = {loadServices}
+           buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : 25,paddingHorizontal : "5%",marginVertical : "5%"}}
+        />
+      </View>
+    );
+  }
+
+
  if (isLoading) {
     
     return (
@@ -392,7 +469,7 @@ return (
                    containerStyle = {{ height : "15%",width : "80%",alignSelf:"center" ,justifyContent : "center"  }} 
                    title = "Réserver" 
                    titleStyle = {{fontFamily : "poppins-bold"}}
-                   buttonStyle = {{borderRadius : 55}} 
+                   buttonStyle = {{borderRadius : Platform.OS === "android" ? 55 : 20}} 
                    ViewComponent={LinearGradient} 
                    linearGradientProps={{
                         colors: ['#fd6d57', '#fd9054'],

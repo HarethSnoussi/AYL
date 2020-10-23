@@ -52,6 +52,11 @@ setPickedWilaya(itemValue);
 
 }
 
+const goBack = ()=>{
+  props.navigation.goBack();
+
+};
+
 const stepThreeHandler = ()=>{
 
 setStepThree(previous => previous+1);
@@ -85,7 +90,7 @@ return (
         <SentOverlay 
         isVisible = {sentVisible} 
         sentOverlayHandler = {sentOverlayHandler}
-       
+        goBack = {goBack}
           buttonColor = "#F26052"
           title = "Echec !"
           body = "Echec lors de l'envoie de la réservation"
@@ -185,21 +190,22 @@ return (
 
                     
                     <View style = {styles.region}>
-                    <Text style = {styles.label} >Région *</Text>
+                    {/* <Text style = {styles.label} >Région *</Text> */}
                     <TextInput
                         style = {styles.regionInput}
                         multiline = {false}
                          numberOfLines={2}
                         onChangeText={text => setRegion(text)}
-                          
+                        placeholder = "Région"
                         value={pickedRegion}
                         />
 
                     </View>
                  
                     <View style = {styles.address}>
+                    {/* <View style = {{height :"20%"}}>
                     <Text style = {styles.label}>Adresse *</Text>
-
+</View> */}
                     <TextInput
                       style = {{...styles.addressInput,...{borderColor : pickedAddress === "" ? Colors.primary : "grey"}}}
 
@@ -208,6 +214,8 @@ return (
                     value={pickedAddress}
                     multiline = {true}
                     numberOfLines={4}
+                   
+                    placeholder = "Adresse de la réservation"
                         />
                        
                     </View>
@@ -219,7 +227,7 @@ return (
                    containerStyle = {{ height : "15%",width : "80%",alignSelf:"center" ,justifyContent : "center" }} 
                    title = "Réserver" 
                    titleStyle = {{fontFamily : "poppins-bold",fontSize : screen.width/26}}
-                   buttonStyle = {{borderRadius : 55}} 
+                   buttonStyle = {{borderRadius : Platform.OS === "android" ? 55 : 20}} 
                    ViewComponent={LinearGradient} 
                    linearGradientProps={{
                         colors: ['#fd6d57', '#fd9054'],
@@ -295,6 +303,8 @@ const styles= StyleSheet.create({
     paddingLeft : "2%",
     // borderWidth: 1,
     elevation : 2 ,
+    height : "15%",
+    justifyContent :"center"
     
         },
      
@@ -310,11 +320,12 @@ const styles= StyleSheet.create({
         },
 
         address : {
-        // height : "30%",
+        height : "50%",
         width : "80%",
         //  marginLeft : "2%",
         // overflow :"hidden",
         justifyContent : "space-around",
+        // backgroundColor :"red"
         
         },
   /********************************************************************** */
@@ -333,7 +344,7 @@ const styles= StyleSheet.create({
     // borderColor: 'gray', borderWidth: 1,
     backgroundColor :"white",
     borderRadius : 10,
-    // height :"60%",
+    height :"80%",
     backgroundColor : "#f0f0f0",
     textAlignVertical: 'top',
     paddingLeft : 5,
