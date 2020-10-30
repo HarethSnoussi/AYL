@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View,Image, ImageBackground,Dimensions,TouchableOpacity} from 'react-native';
 import { Button , Rating} from 'react-native-elements';
-
 import {Ionicons} from "@expo/vector-icons";
 import { EvilIcons } from '@expo/vector-icons';
 import Colors from "../constants/Colors";
@@ -18,13 +17,14 @@ const BarberCard = props =>{
   //   titleStyle = styles.titleBig;
   //   adressStyle = styles.adressBig;
   // }
-  
+
 
     return(
        
         <View style = {styles.cardContainer}>
         <View style = {styles.cardImage}>
-        <Image source = {require("../assets/images/unknown.jpeg")} style = {styles.image}  />
+       <Image source={{uri:`http://173.212.234.137/profileImages/barber/${props.image}`}} style={styles.image} />
+              
 
         </View>
 

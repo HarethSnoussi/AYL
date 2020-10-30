@@ -163,7 +163,7 @@ if (isLoading) {
               region = {barber.region}
               mark = {barber.mark}
               wilaya = {barber.wilaya}
-              
+              image={barber.image!==null?barber.image:'unknown.jpeg'}
               />
               
               )

@@ -108,6 +108,38 @@ export const updateClientPassword= (id,password) => {
 
 };
 
+export const updateClientImage= (id,imgsource,image) => {
+
+    return async () => {
+
+        const clientImageData={imgsource,image};
+           console.log(imgsource,image);
+         try{
+
+           const response = await fetch(`http://173.212.234.137:3000/client/profileimage/${id}`,{
+
+              method:'PATCH',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body : JSON.stringify(clientImageData)
+        } 
+        );
+        if(!response.ok){
+            throw new Error('Oups! Une erreur est survenue.');
+        }
+
+          
+          
+         }catch(err){
+             console.log(err);
+             throw err;
+         }
+    };
+
+};
+
 export const updateClientPhone= (id,phone,clientid) => {
 
     return async dispatch => {

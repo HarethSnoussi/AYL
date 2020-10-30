@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View,Dimensions,Image } from 'react-native';
 import Colors from "../constants/Colors";
-import {  Rating  } from 'react-native-elements';
 import {useSelector } from 'react-redux';
+import {  Rating  } from 'react-native-elements';
 import polylanar from "../lang/ar";
 import polylanfr from "../lang/fr";
 
@@ -19,7 +19,7 @@ const Feedback = props =>{
         <View style={styles.feedbackContainer}>
             <View style={styles.photoContainer}>
                 <View style={styles.photoCircle}>
-                    <Image source={require('../assets/images/avatarman.jpg')} style={styles.photo} />
+                    <Image source={{uri:`http://173.212.234.137/profileImages/client/${props.image}`}} style={styles.photo} />
                 </View>
             </View>
             <View style={styles.commentRatingContainer}>

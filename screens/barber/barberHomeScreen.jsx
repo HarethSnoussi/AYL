@@ -1,11 +1,12 @@
 import React,{useState,useEffect,useCallback} from 'react';
-import { StyleSheet, Text, View, ImageBackground , Image,Dimensions,TouchableOpacity,ScrollView,StatusBar,Linking,Alert,ActivityIndicator} from 'react-native';
+import { StyleSheet, Text, View, ImageBackground , Image,Dimensions,TouchableOpacity,ScrollView,StatusBar,Alert,ActivityIndicator} from 'react-native';
 import {MaterialCommunityIcons,Entypo} from "@expo/vector-icons";
 import {  Rating  } from 'react-native-elements';
 import Colors from "../../constants/Colors";
 import { useDispatch,useSelector } from 'react-redux';
 import * as barberActions from '../../store/actions/barberActions';
 import * as reviewsActions from '../../store/actions/reviewsActions';
+import * as portfolioActions from '../../store/actions/portfolioActions';
 import Feedback from '../../components/Feedback';
 import polylanar from "../../lang/ar";
 import polylanfr from "../../lang/fr";
@@ -30,7 +31,7 @@ const BarberHomeScreen = props =>{
     setIsLoading(true);
     await dispatch(barberActions.setBarber(barberID));
     await dispatch(reviewsActions.setFeedbacks(barberID));
-    
+    await dispatch(portfolioActions.setPortfolio(barberID));
     setIsLoading(false);
     }catch(err){
       console.log(err);
@@ -54,6 +55,8 @@ const BarberHomeScreen = props =>{
   },[getBarber]);
 
    const barber=useSelector(state=>state.barber.barber[0]);
+
+   const barberPortfolio=useSelector(state=>state.portfolio.portfolio);
    const client= useSelector(state=>state.clients.client[0]);
    
    const feedbacks=useSelector(state=>state.reviews.feedbacks);
@@ -112,7 +115,8 @@ const BarberHomeScreen = props =>{
            </View>
            <View style={styles.infoContainer}>
                <View style={styles.imageContainer}>
-               <Image source={require('../../assets/images/unknown.jpeg')} style={styles.icon} />
+               {barber && barber.image!==null?<Image source={{uri:`http://173.212.234.137/profileImages/barber/${barber.image}`}} style={styles.modelImage} />:
+                <Image source={require('../../assets/images/unknown.jpeg')} style={styles.modelImage} />}
                </View>
                <Text style={styles.bname}>{barber && barber.b_name!==null?barber.b_name:client && client.lang?polylanfr.BusinessName:polylanar.BusinessName}</Text>
                <Text style={styles.jobAge}>{barber && (barber.name!==null || barber.surname!==null || barber.age!==null)?`${barber.name} ${barber.surname}, ${barber.age} ${client && client.lang?polylanfr.Yo:polylanar.Yo}`:client && client.lang?polylanfr.personalInforamtion:polylanar.personalInforamtion}</Text>
@@ -224,24 +228,19 @@ const BarberHomeScreen = props =>{
             <View style={styles.forthRow}>
                 <View style={styles.forthRowElementsContainer}>
                   <Text style={styles.title}>{client && client.lang?polylanfr.Models:polylanar.Models}</Text>
+                  <TouchableOpacity onPress={()=>{setIsAbout(false); setIsPortfolio(true);}}>
                   <Text style={styles.detail}>{client && client.lang?polylanfr.DisplayAll:polylanar.DisplayAll}</Text>
+                  </TouchableOpacity>
                 </View>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.photosContainer} contentContainerStyle={{justifyContent:'space-around'}}>
-                  <View style={styles.modelImageContainer}>
-                    <Image source={require('../../assets/images/man1.jpg')} style={styles.modelImage} />
-                  </View>
-                  <View style={styles.modelImageContainer}>
-                    <Image source={require('../../assets/images/man2.jpg')} style={styles.modelImage} />
-                  </View>
-                  <View style={styles.modelImageContainer}>
-                    <Image source={require('../../assets/images/man3.jpg')} style={styles.modelImage} />
-                  </View>
-                  <View style={styles.modelImageContainer}>
-                    <Image source={require('../../assets/images/man4.jpg')} style={styles.modelImage} />
-                  </View>
-                  <View style={styles.modelImageContainer}>
-                    <Image source={require('../../assets/images/man5.jpg')} style={styles.modelImage} />
-                  </View>
+                {barberPortfolio.slice(0,4).map(picture=>
+
+                  (<View 
+                    key={picture.id}
+                    style={styles.modelImageContainer}>
+                    <Image source={{uri:picture.model===null?`http://173.212.234.137/uploads/ayoungleaderportfolio.jpg` :`http://173.212.234.137/uploads/${picture.model}`}} style={styles.modelImage} />
+                  </View>)
+                  )}
                 </ScrollView>
             </View>
 
@@ -249,50 +248,24 @@ const BarberHomeScreen = props =>{
          </ScrollView>):undefined}
 
         {isPortfolio?(<ScrollView style={{width:'100%'}} showsVerticalScrollIndicator={false} contentContainerStyle={{alignItems:'center'}}>
-               <View style={{flexDirection:'row',width:'90%',marginVertical:10}}>
-                  <View style={{width:'33.3%',alignItems:'center'}}>
-                    <Image source={require('../../assets/images/man1.jpg')} style={styles.modelImage} />
-                  </View>
-                  <View style={{width:'33.3%',alignItems:'center'}}>
-                    <Image source={require('../../assets/images/man2.jpg')} style={styles.modelImage} />
-                  </View>
-                  <View style={{width:'33.3%',alignItems:'center'}}>
-                    <Image source={require('../../assets/images/man3.jpg')} style={styles.modelImage} />
-                  </View>
+        <View style={{flexDirection:'row',width:'90%',marginVertical:10}}>
+               {barberPortfolio.slice(0,3).map(picture=>(<View 
+                    key={picture.id}
+                    style={{width:'33.3%',alignItems:'center'}}>
+                    <Image source={{uri:picture.model===null?`http://173.212.234.137/uploads/ayoungleaderportfolio.jpg` :`http://173.212.234.137/uploads/${picture.model}`}} style={styles.modelImage} />
+                  </View>)
+                 )}
+                 
                </View>
+
                <View style={{flexDirection:'row',width:'90%',marginVertical:10}}>
-                  <View style={{width:'33.3%',alignItems:'center'}}>
-                    <Image source={require('../../assets/images/man4.jpg')} style={styles.modelImage} />
-                  </View>
-                  <View style={{width:'33.3%',alignItems:'center'}}>
-                    <Image source={require('../../assets/images/man5.jpg')} style={styles.modelImage} />
-                  </View>
-                  <View style={{width:'33.3%',alignItems:'center'}}>
-                    <Image source={require('../../assets/images/man1.jpg')} style={styles.modelImage} />
-                  </View>
+               {barberPortfolio.slice(3,6).map(picture=>(<View 
+                    key={picture.id}
+                    style={{width:'33.3%',alignItems:'center'}}>
+                    <Image source={{uri:picture.model===null?`http://173.212.234.137/uploads/ayoungleaderportfolio.jpg` :`http://173.212.234.137/uploads/${picture.model}`}} style={styles.modelImage} />
+                  </View>))}
                </View>
-               <View style={{flexDirection:'row',width:'90%',marginVertical:10}}>
-                  <View style={{width:'33.3%',alignItems:'center'}}>
-                    <Image source={require('../../assets/images/man1.jpg')} style={styles.modelImage} />
-                  </View>
-                  <View style={{width:'33.3%',alignItems:'center'}}>
-                    <Image source={require('../../assets/images/man2.jpg')} style={styles.modelImage} />
-                  </View>
-                  <View style={{width:'33.3%',alignItems:'center'}}>
-                    <Image source={require('../../assets/images/man3.jpg')} style={styles.modelImage} />
-                  </View>
-               </View>
-               <View style={{flexDirection:'row',width:'90%',marginVertical:10}}>
-                  <View style={{width:'33.3%',alignItems:'center'}}>
-                    <Image source={require('../../assets/images/man4.jpg')} style={styles.modelImage} />
-                  </View>
-                  <View style={{width:'33.3%',alignItems:'center'}}>
-                    <Image source={require('../../assets/images/man5.jpg')} style={styles.modelImage} />
-                  </View>
-                  <View style={{width:'33.3%',alignItems:'center'}}>
-                    <Image source={require('../../assets/images/man1.jpg')} style={styles.modelImage} />
-                  </View>
-               </View>
+
          </ScrollView>):undefined}
 
          {isFeedback?(<ScrollView style={{width:'100%'}} showsVerticalScrollIndicator={false} contentContainerStyle={{alignItems:'center'}}>
@@ -307,6 +280,7 @@ const BarberHomeScreen = props =>{
                name={feed.name}
                surname={feed.surname}
                comment={feed.comment}
+               image={feed.image!==null?feed.image:'unknown.jpeg'}
                feedbacks={feedbacks}
               />)}
               </View>)}
