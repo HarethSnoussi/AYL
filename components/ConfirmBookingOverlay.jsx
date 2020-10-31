@@ -75,7 +75,7 @@ const date = new Date();
     amount : props.amount ,
     address : props.address,
     barberId : props.barberId,
-    bookingDate : props.bookingDate ,
+    bookingDate : moment(props.bookingDate).format() ,
     clientId : props.clientId,
     date : date,
     duration : props.duration,
@@ -124,6 +124,7 @@ await sendPushNotification();
 
 
 };
+
 
 const services = props.services.map(e=>e.name);
 

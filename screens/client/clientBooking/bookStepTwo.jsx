@@ -152,7 +152,7 @@ const [bookings,setBookings] = useState([]);
 const pickedDateHandler = (date) => {
  
    setDatePickerVisibility(false);
-    setPickedDateText(moment(date).format('LL'));
+    setPickedDateText(moment(date).format('L'));
    
     setPickedDate(date);
    
@@ -270,11 +270,14 @@ if(days.length >0)
 const todaysSlotsTime = todaysSlots.map(e=>e.time);
 
 //Filter the selected Date Bookings
-const filteredBookings = bookings.filter(booking=>moment(booking.bookingDate).format("ll") === moment(pickedDate).format("ll"));
+const filteredBookings = bookings.filter(booking=> moment(booking.bookingDate).isSame(pickedDate,"day") &&  moment(booking.bookingDate).isSame(pickedDate,"month")&& moment(booking.bookingDate).isSame(pickedDate,"year") );
+
 
 
 let bookingHours = [];
 let slots = todaysSlots ;
+
+
 //Map throught all the existing Bookings and remove them
 if(filteredBookings.length > 0)
 {
@@ -346,6 +349,7 @@ manager();
 
 // console.log(moment(pickedDate).format('dddd').substring(0, 3) );
 
+
 if (error) {
     
     return (
@@ -376,6 +380,7 @@ return (
 
 { overlayState && <ConfirmBookingOverlay
         isVisible = {overlayState}
+        
         overlayHandler = {overlayHandler}
         bookingDate = {pickedDate}
         start = {pickedSlot}
@@ -422,6 +427,7 @@ return (
                             display = "spinner"
                             date = {pickedDate}
                             maximumDate = {new Date(now.getFullYear(), now.getMonth()+1, now.getDate())}
+                            
                         />
                        
                         

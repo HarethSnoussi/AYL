@@ -182,7 +182,7 @@ useEffect(()=>{
 
   notificationListener.current = Notifications.addNotificationReceivedListener(async (notification) => {
     // setNotification(notification);
-
+   
     const notificationsList = await Notifications.getPresentedNotificationsAsync() ;
     setNotificationData(notificationsList);
   });
@@ -300,6 +300,7 @@ const notificationDataHandler = (list,sender) =>{
    
     toggleOverlay();
     Notifications.dismissNotificationAsync(list);
+    // Notifications.dismissAllNotificationsAsync();
   
 
   }
@@ -388,7 +389,8 @@ if (isLoading || allBarbers.length <= 0 ) {
 { notificationData.length >0 && notificationData.map((item,index)=>{
 
   const e = Platform.OS === "ios" ? item.request.content.data.body : item.request.content.data ;
-  return(
+ if ( e.body !== undefined)
+ { return(
 
   <NotifOverlay 
       key={index}
@@ -405,7 +407,9 @@ if (isLoading || allBarbers.length <= 0 ) {
       />
 
 
-)})
+)}
+
+})
   
 }
  
