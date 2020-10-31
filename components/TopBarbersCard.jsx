@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Dimensions,Image,ImageBackground,TouchableOpacity,Platform
 } from 'react-native'; 
 import {Button , Rating, AirbnbRating,Avatar} from "react-native-elements";
-import {Ionicons} from '@expo/vector-icons';
+import {useSelector } from 'react-redux';
 import Colors from '../constants/Colors';
 
 const screen = Dimensions.get("window");
 
 const TopBarbersCard = (props)=> {
 
+  const barber= useSelector(state=>state.barber.barber[0]);
 
     return(
 
@@ -16,11 +17,15 @@ const TopBarbersCard = (props)=> {
         <View  style = {styles.barberPictureContainer}>
 
          <ImageBackground resizeMode = "stretch" style = {{width : "100%" ,height : "100%" ,alignItems : "center" , justifyContent : "center"}} source = {require("../assets/pictures/test4.png")}>  
-            <Avatar source = {require("../assets/pictures/person1.jpg")}
+           {barber && barber.image!==null?(<Avatar source = {{uri:`http://173.212.234.137/profileImages/barber/${barber.image}`}}
               containerStyle = {styles.barberPicture}
               rounded
               size= "large"
-              />
+              />): (<Avatar source = {require("../assets/images/unknown.jpeg")}
+              containerStyle = {styles.barberPicture}
+              rounded
+              size= "large"
+              />)}
               </ImageBackground>
         </View>
         <View style = {styles.barberInfos}>

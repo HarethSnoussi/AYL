@@ -241,7 +241,7 @@ return(
                         end:{x: 1, y: 0}
                     }}
               onPress={()=>sendConfirmation()}
-             buttonStyle = {{borderRadius :5,marginVertical:"2%",alignItems :"center",justifyContent:"space-between",}}
+             buttonStyle = {{borderRadius :25,marginVertical:"2%",alignItems :"center",justifyContent:"space-between",paddingHorizontal:20}}
              containerStyle = {{width:"90%",alignSelf:"center"}}
              iconRight = {true}
                     icon={
@@ -323,7 +323,7 @@ const styles= StyleSheet.create({
     fontFamily : "poppins-bold",
     fontSize : screen.width / 18,
     color: Colors.blue,
-   
+    paddingTop:5
 
   },
   timeText:{

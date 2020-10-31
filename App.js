@@ -18,6 +18,7 @@ import listReducer from './store/reducers/listReducer';
 import reviewReducer from './store/reducers/reviewsReducer';
 import barbersReducer from './store/reducers/barber';
 import tokenReducer from './store/reducers/tokenReducer';
+import portfolioReducer from './store/reducers/portfolio';
 
 enableScreens();
 
@@ -32,7 +33,8 @@ bookings : bookingsReducer,
 lists : listReducer,
 reviews : reviewReducer,
 barber:barbersReducer,
-tokens:tokenReducer
+tokens:tokenReducer,
+portfolio:portfolioReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

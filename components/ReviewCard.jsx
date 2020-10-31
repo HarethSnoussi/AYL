@@ -190,7 +190,7 @@ try {
       </Overlay>
 
         <View style = {styles.cardImage}>
-        <Image source = {require("../assets/pictures/barber7.png")} style = {styles.image}  />
+        <Image source = {{uri:`http://173.212.234.137/profileImages/barber/${props.image}`}} style = {styles.image}  />
 
         </View>
 

@@ -49,6 +49,7 @@ const PlayerProfileScreen = props =>{
   const clientUID= props.navigation.dangerouslyGetParent().getParam('clientUID');
   const clientID= props.navigation.dangerouslyGetParent().getParam('clientID');
   const myToken = useSelector(state=>state.tokens.currentToken);
+  
   //get the client's data
 
 
@@ -87,6 +88,7 @@ const PlayerProfileScreen = props =>{
  const [wilaya,setWilaya] = useState(client[0]?client[0].wilaya:undefined);
  const wilayas = [client && client[0].lang?polylanfr.City:polylanar.City,'Alger','Blida'];
  const [isLoading,setIsLoading]=useState(false);
+ const [isLoadingImage,setIsLoadingImage]=useState(false);
  const dispatch = useDispatch();
  
  
@@ -126,44 +128,70 @@ const verifyPermissions= async ()=>{
   return true;
 };
 
+//////////////////////////****************************************************************************Image 1 
 const takeImageHandler = async ()=>{
- const hasPermissions = await verifyPermissions();
- if(!hasPermissions){
-     return;
- }
- const image = await ImagePicker.launchCameraAsync({
-  mediaTypes: ImagePicker.MediaTypeOptions.All,
-     allowsEditing:true,
-     aspect:[60,60],
-     quality:0.7
- });
-  
-  setPickedImage(image.uri);
-  
-};
 
-
-
-const takeLibraryHandler = async ()=>{
+  try{
   const hasPermissions = await verifyPermissions();
   if(!hasPermissions){
       return;
   }
- 
-  const library = await ImagePicker.launchImageLibraryAsync({
-   mediaTypes: ImagePicker.MediaTypeOptions.All,
-   allowsEditing:true,
-   aspect:[60,60],
-   quality:0.7
- });
+  let image = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing:true,
+      aspect:[60,60],
+      quality:0.7,
+      base64: true
+  });
   
-  
-  if(library){
-   setPickedImage(library.uri);
+  if (!image.cancelled) {
+    const imageSplit= image.uri.split('/');
+    const imageName= imageSplit.pop();
+    
+    setPickedImage(imageName);
+    
+    setIsLoadingImage(true);
+    await dispatch(clientActions.updateClientImage(clientID,image.base64,imageName));
+    setIsLoadingImage(false);
+    }
+  }catch(err){
+    console.log(err);
+  Alert.alert(client && client[0].lang?polylanfr.Oups:polylanar.Oups,client && client[0].lang?polylanfr.WeakInternet:polylanar.WeakInternet,[{text:client && client[0].lang?polylanfr.OK:polylanar.OK}]);
   }
+};
+
+  const takeLibraryHandler = async ()=>{
+
+  try{
+    const hasPermissions = await verifyPermissions();
+    if(!hasPermissions){
+        return;
+    }
+
+    let library = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    allowsEditing:true,
+    aspect:[60,60],
+    quality:0.7,
+    base64: true
+  });
+
+  if (!library.cancelled) {
+    const imageSplit= library.uri.split('/');
+    const imageName= imageSplit.pop();
+    
+    setPickedImage(imageName);
+    
+    setIsLoadingImage(true);
+    await dispatch(clientActions.updateClientImage(clientID,library.base64,imageName));
+    setIsLoadingImage(false);
+    }
+  }catch(err){
+    console.log(err);
+    Alert.alert(client && client[0].lang?polylanfr.Oups:polylanar.Oups,client && client[0].lang?polylanfr.WeakInternet:polylanar.WeakInternet,[{text:client && client[0].lang?polylanfr.OK:polylanar.OK}]);
+    }
   
-  
- };
+  };
 
     
     
@@ -233,7 +261,13 @@ const takeLibraryHandler = async ()=>{
   
   },[dispatch,clientID,formState,pickedImage,wilaya]);
 
-   
+  if(isLoadingImage){
+    return <ImageBackground source={require('../../../assets/images/support.png')} style={styles.activityIndicatorContainer} >
+            <StatusBar hidden />
+            <ActivityIndicator size='large' color={Colors.primary} />
+           </ImageBackground>
+  };
+
 
     return(
       <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
@@ -253,9 +287,8 @@ const takeLibraryHandler = async ()=>{
      <View style={styles.secondCard}>
           <View style={styles.secondCardContent}>
               <View style={styles.imageContainer}>
-              {!pickedImage && client[0].sex==='Homme' ? <Image source={require('../../../assets/images/man2.jpg')} style={styles.image} />:
-                !pickedImage && client[0].sex==='Femme' ? <Image source={require('../../../assets/images/angelina.png')} style={styles.image} />
-                : (<Image style={styles.image} source={{uri:pickedImage}} />)}
+              {client && pickedImage?<Image source={{uri:`http://173.212.234.137/profileImages/client/${pickedImage}`}} style={styles.image} />:
+                <Image source={require('../../../assets/images/unknown.jpeg')} style={styles.image} />}
               </View>
               <View style={styles.detailsContainer}>
                 <View style={{width:'30%'}}>
@@ -624,6 +657,14 @@ const styles= StyleSheet.create({
       borderColor:Platform.OS==='ios'? Colors.blue:undefined,
       borderStyle:Platform.OS==='ios'? 'dashed':undefined
       
+    },  
+  activityIndicatorContainer:{
+      flex:1,
+      resizeMode:'cover',
+      width:'100%',
+      height:'100%',
+      justifyContent:'center',
+      alignItems:'center' 
     }
 
 });

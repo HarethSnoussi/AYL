@@ -191,6 +191,7 @@ if (isLoading) {
               allReviews = {allReviews}
               clientId = {clientID}
                profile = {()=>props.navigation.navigate("Barber",{barberID : barber.id})}
+               image={barber.image!==null?barber.image:'unknown.jpeg'}
               />
               
               )
