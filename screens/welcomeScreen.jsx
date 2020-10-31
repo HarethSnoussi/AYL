@@ -12,25 +12,25 @@ export default class WelcomeScreen extends Component {
         this.state= {
             firstUse : [
                 {
-                    img: require("../assets/images/welcome1.jpg"),
+                    img: {uri:'http://173.212.234.137/assets/tahfifa/welcome1.jpg'},
                     title:'title 1',
                     text: 'text1',
                     button:  <Button theme={{colors: {primary:'transparent'}}} title="Se connecter" onPress={() => this.props.navigation.navigate('Login')} titleStyle={styles.labelButton2} buttonStyle={styles.buttonStyle2}/>
                 },
                 {
-                    img: require("../assets/images/welcome2.jpg"),
+                    img: {uri:'http://173.212.234.137/assets/tahfifa/welcome2.jpg'},
                     title:'title 2',
                     text: 'text2',
                     button:  <Button theme={{colors: {primary:'transparent'}}} title="Se connecter" onPress={() => this.props.navigation.navigate('Login')} titleStyle={styles.labelButton2} buttonStyle={styles.buttonStyle2}/>
                 },
                 {
-                    img: require("../assets/images/welcome3.jpg"),
+                    img: {uri:'http://173.212.234.137/assets/tahfifa/welcome3.jpg'},
                     title:'title 3',
                     text: 'text3',
                     button:  <Button theme={{colors: {primary:'transparent'}}} title="Se connecter" onPress={() => this.props.navigation.navigate('Login')} titleStyle={styles.labelButton2} buttonStyle={styles.buttonStyle2}/>
                 },
                 {
-                    img: require("../assets/images/welcome4.jpg"),
+                    img: {uri:'http://173.212.234.137/assets/tahfifa/welcome4.jpg'},
                     title:'title 4',
                     text: 'text4',
                 },

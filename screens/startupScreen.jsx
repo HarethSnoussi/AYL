@@ -32,7 +32,7 @@ const StartupScreen = props =>{
     return(
       <View style = {styles.container}>
         <ImageBackground 
-        source={require('../assets/images/support.png')} 
+        source={{uri:'http://173.212.234.137/assets/tahfifa/support.png'}} 
         style={styles.bigBackgroundImage}
         >
             <ActivityIndicator size='large' color={Colors.primary} />

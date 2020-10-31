@@ -22,7 +22,7 @@ const ConfirmOverlay = props =>{
                                     <View style = {{height:"40%",justifyContent:"center",alignItems:"center"}}>
                                     <Image
                                             style={{height:"100%",width:"100%",resizeMode:"contain"}}
-                                            source={require("../assets/pictures/expired.png")}
+                                            source={{uri:'http://173.212.234.137/assets/tahfifa/expired.png'}}
                                         />
                                     </View>
 

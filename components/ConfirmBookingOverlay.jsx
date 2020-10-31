@@ -177,7 +177,7 @@ if (isLoading) {
 return(
   <View key ={index} style ={{flexDirection :"row",width:"85%",alignSelf:"center",justifyContent:"space-around",alignItems:"center",height:screen.height*0.1,marginVertical:"2%",borderBottomWidth : 0.3}}>
           <Avatar
-          source = {require("../assets/images/icon.png")}
+          source = {{uri:'http://173.212.234.137/assets/tahfifa/icon.png'}}
           overlayContainerStyle = {{backgroundColor:"transparent",overflow:"hidden"}}
           size = "small"
            />

@@ -262,7 +262,7 @@ const takeImageHandler = async ()=>{
   },[dispatch,clientID,formState,pickedImage,wilaya]);
 
   if(isLoadingImage){
-    return <ImageBackground source={require('../../../assets/images/support.png')} style={styles.activityIndicatorContainer} >
+    return <ImageBackground source={{uri:'http://173.212.234.137/assets/tahfifa/support.png'}} style={styles.activityIndicatorContainer} >
             <StatusBar hidden />
             <ActivityIndicator size='large' color={Colors.primary} />
            </ImageBackground>
@@ -274,7 +274,7 @@ const takeImageHandler = async ()=>{
       <View style={styles.container}>
       <StatusBar hidden />
       <View style={styles.firstCard}>
-        <ImageBackground source={client[0] && client[0].sex==='Femme'?require( '../../../assets/images/woman5.jpg'):require('../../../assets/images/man1-1.jpg')} style={styles.backgroundFirstCard} resizeMode='cover'>
+        <ImageBackground source={client[0] && client[0].sex==='Femme'?{uri:'http://173.212.234.137/assets/tahfifa/woman5.jpg'}:{uri:'http://173.212.234.137/assets/tahfifa/man1-1.jpg'}} style={styles.backgroundFirstCard} resizeMode='cover'>
           <View style={{width:'100%',height:'20%',alignItems:'flex-end',justifyContent:'center'}}>
            
         {!isLoading? <Button theme={{colors: {primary:'transparent'}}} icon={<Ionicons title = "check" name ='md-checkmark' color='#fff' size={32} />} onPress={saveHandler}  buttonStyle={styles.buttonStyle2}/>:
@@ -288,7 +288,7 @@ const takeImageHandler = async ()=>{
           <View style={styles.secondCardContent}>
               <View style={styles.imageContainer}>
               {client && pickedImage?<Image source={{uri:`http://173.212.234.137/profileImages/client/${pickedImage}`}} style={styles.image} />:
-                <Image source={require('../../../assets/images/unknown.jpeg')} style={styles.image} />}
+                <Image source={{uri:'http://173.212.234.137/assets/tahfifa/unknwon.jpeg'}} style={styles.image} />}
               </View>
               <View style={styles.detailsContainer}>
                 <View style={{width:'30%'}}>
