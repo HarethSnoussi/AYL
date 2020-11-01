@@ -11,7 +11,7 @@ const TopSalonsCard = (props)=> {
 
 <View style = {styles.topBarbersCard} >
                       <View style = {styles.cardImage}>
-                       <Image source = {require("../assets/pictures/barber7.png")} style = {styles.image}  />
+                       <Image source = {{uri:'http://173.212.234.137/assets/tahfifa/barber7.png'}} style = {styles.image}  />
                       </View>
 
                       <View style= {styles.cardBody}> 

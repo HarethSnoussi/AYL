@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 const screen = Dimensions.get("window");
 const SentOverlay = props =>{
 
-    const url = props.overlayType === "success" ? require("../assets/pictures/true.png") : require("../assets/pictures/false.png");
+    const url = props.overlayType === "success" ? {uri:'http://173.212.234.137/assets/tahfifa/true.png'} : {uri:'http://173.212.234.137/assets/tahfifa/false.png'};
 
 const colors =  props.overlayType ==="echec" ? ['#fd6d57', '#fd9054'] : ['#0DA598', '#11998e']  ;;
 
