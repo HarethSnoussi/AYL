@@ -126,7 +126,7 @@ const [overlayState , setOverlayState]=useState(false);
 const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
 //Picked DateText 
-const [pickedDateText,setPickedDateText] = useState (moment().format('LL'));
+const [pickedDateText,setPickedDateText] = useState (moment().format('L'));
 
 //Picked DateText 
 const [pickedDate,setPickedDate] = useState (new Date());
@@ -277,15 +277,16 @@ const filteredBookings = bookings.filter(booking=> moment(booking.bookingDate).i
 let bookingHours = [];
 let slots = todaysSlots ;
 
-
 //Map throught all the existing Bookings and remove them
 if(filteredBookings.length > 0)
 {
+  console.log(filteredBookings);
 filteredBookings.map(booking=>{
     let bookingDuration = Math.ceil(booking.bookingDuration/15)  ; 
-    if(bookingDuration === 1 ) {
-        bookingDuration = 0;
-    }
+    // if(bookingDuration === 1 ) {
+    //     bookingDuration = 0;
+    // }
+   
 if(todaysSlotsTime.indexOf(booking.start) === 0)
 {
     bookingHours = todaysSlotsTime.slice(0,todaysSlotsTime.indexOf(booking.start)+bookingDuration+2);

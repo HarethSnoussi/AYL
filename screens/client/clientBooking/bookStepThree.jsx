@@ -66,18 +66,22 @@ setStepThree(previous => previous+1);
 // KEYBOARD
 
 useEffect(() => {
-  Keyboard.addListener("keyboardDidShow", keyboardHandler);
-  Keyboard.addListener("keyboardDidHide", keyboardHandler);
+  Keyboard.addListener("keyboardDidShow", keyboardDidShow);
+  Keyboard.addListener("keyboardDidHide", keyboardDidHide);
 
   // cleanup function
   return () => {
-    Keyboard.removeListener("keyboardDidShow", keyboardHandler);
-    Keyboard.removeListener("keyboardDidHide", keyboardHandler);
+    Keyboard.removeListener("keyboardDidShow", keyboardDidShow);
+    Keyboard.removeListener("keyboardDidHide", keyboardDidHide);
   };
 }, []);
 
-const keyboardHandler = () => {
-  setKeyboardState(previous=>!previous);
+const keyboardDidShow = () => {
+  setKeyboardState(true);
+};
+
+const keyboardDidHide = () => {
+  setKeyboardState(false);
 };
 
 
