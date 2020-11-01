@@ -289,7 +289,7 @@ try {
                  <CustomInput 
                      id='phone'
                      rightIcon={<MaterialIcons title = "phone" name ='phone' color={Colors.lightGrey} size={23} />}
-                     leftIcon={<View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around',borderRightWidth:1,borderRightColor:Colors.lightGrey,paddingRight:5,marginRight:5}}><Image source={require('../../assets/images/algeriaFlag.png')} style={{width:24,height:28,marginRight:5,marginLeft:-15}}/><Text style={styles.phoneNumber}>+213</Text></View>}
+                     leftIcon={<View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around',borderRightWidth:1,borderRightColor:Colors.lightGrey,paddingRight:5,marginRight:5}}><Image source={{uri:'http://173.212.234.137/assets/tahfifa/algeriaFlag.png'}} style={{width:24,height:28,marginRight:5,marginLeft:-15}}/><Text style={styles.phoneNumber}>+213</Text></View>}
                      placeholder='555555555'
                      keyboardType="phone-pad"
                      returnKeyType="next"

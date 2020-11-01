@@ -17,7 +17,7 @@ const BarberInfos = props =>{
                 {barber && barber.image!==null?(<Avatar source = {{uri:`http://173.212.234.137/profileImages/barber/${barber.image}`}}
                       containerStyle = {{borderWidth:1,borderRadius : 5,overflow:"hidden"}}
                       size= {screen.width/4}
-                />):(<Avatar source = {require("../assets/images/unknown.jpeg")}
+                />):(<Avatar source = {{uri:'http://173.212.234.137/assets/tahfifa/unknown.jpeg'}}
                 containerStyle = {{borderWidth:1,borderRadius : 5,overflow:"hidden"}}
                 size= {screen.width/4}
                 />)}

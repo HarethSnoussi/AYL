@@ -16,12 +16,12 @@ const TopBarbersCard = (props)=> {
         <View style = {styles.barberContainer}>
         <View  style = {styles.barberPictureContainer}>
 
-         <ImageBackground resizeMode = "stretch" style = {{width : "100%" ,height : "100%" ,alignItems : "center" , justifyContent : "center"}} source = {require("../assets/pictures/test4.png")}>  
+         <ImageBackground resizeMode = "stretch" style = {{width : "100%" ,height : "100%" ,alignItems : "center" , justifyContent : "center"}} source = {{uri:'http://173.212.234.137/assets/tahfifa/test4.png'}}>  
            {barber && barber.image!==null?(<Avatar source = {{uri:`http://173.212.234.137/profileImages/barber/${barber.image}`}}
               containerStyle = {styles.barberPicture}
               rounded
               size= "large"
-              />): (<Avatar source = {require("../assets/images/unknown.jpeg")}
+              />): (<Avatar source = {{uri:'http://173.212.234.137/assets/tahfifa/unknown.jpeg'}}
               containerStyle = {styles.barberPicture}
               rounded
               size= "large"

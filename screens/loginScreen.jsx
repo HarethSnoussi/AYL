@@ -130,11 +130,11 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
     return(
       <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
       <View style={{width:'100%',flex:1}}>
-      <ImageBackground source={require('../assets/images/chico.jpg')} style={styles.container}>
+      <ImageBackground source={{uri:'http://173.212.234.137/assets/tahfifa/chico.jpg'}} style={styles.container}>
       <KeyboardAvoidingView keyboardVerticalOffset={10} behavior={Platform.OS === "ios" ? "padding" : null}>
       <StatusBar hidden />
           <View style={styles.firstContainer}>
-             <Image source={require('../assets/images/icon.png')} style={styles.icon}/>
+             <Image source={{uri:'http://173.212.234.137/assets/tahfifa/icon.png'}} style={styles.icon}/>
              <Text style={styles.slogan}>Réservez votre coiffure à l'heure et à l'endroit qui vous arrangent</Text>
           </View>
           <View style={styles.secondContainer}>
@@ -142,7 +142,7 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
                  <CustomInput
                     id='phone'
                     rightIcon={<MaterialIcons title = "phone" name ='phone' color='#323446' size={23} />}
-                    leftIcon={<View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around',borderRightWidth:1,borderRightColor:Colors.blue,paddingRight:5,marginRight:5}}><Image source={require('../assets/images/algeriaFlag.png')} style={{width:24,height:28,marginRight:5,marginLeft:-15}}/><Text style={styles.phoneNumber}>+213</Text></View>}
+                    leftIcon={<View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around',borderRightWidth:1,borderRightColor:Colors.blue,paddingRight:5,marginRight:5}}><Image source={{uri:'http://173.212.234.137/assets/tahfifa/algeriaFlag.png'}} style={{width:24,height:28,marginRight:5,marginLeft:-15}}/><Text style={styles.phoneNumber}>+213</Text></View>}
                     placeholder='555555555'
                     keyboardType="phone-pad"
                     returnKeyType="next"
