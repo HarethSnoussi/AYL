@@ -7,6 +7,7 @@ import { EvilIcons } from '@expo/vector-icons';
 import Colors from "../constants/Colors";
 import { useDispatch } from 'react-redux';
 import { addreview, updateReview } from '../store/actions/reviewsActions';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 
@@ -199,11 +200,11 @@ try {
         <View>
               <View style= {styles.name}>
                 <Text style = {{fontFamily : "poppins-bold", fontSize : screen.width/26}} >{props.name + " " + props.surname}</Text>
-                <View style = {{flexDirection : "row"}}>
+                <TouchableOpacity style = {{flexDirection : "row"}} onPress = {toggleOverlay}>
              
-                <EvilIcons name="pencil" size={24} color="#9d9da1" onPress = {toggleOverlay} />
+                <EvilIcons name="pencil" size={24} color="#9d9da1"  />
                 <Text style = {{fontFamily : "poppins", color : "#9d9da1",fontSize : screen.width/30}}>Avis</Text>
-                </View>
+                </TouchableOpacity>
               </View>
               <Text style = {{fontFamily : "poppins", color : "#9d9da1",fontSize : screen.width/30}} >
               {props.region + "-" + props.wilaya}
@@ -298,7 +299,7 @@ image : {
   height : "100%",
   width : "100%",
    borderRadius : 25,
-   resizeMode : "cover"
+   resizeMode : "contain"
   
 
 },

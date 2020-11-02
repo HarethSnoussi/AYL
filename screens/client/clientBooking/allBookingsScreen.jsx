@@ -125,17 +125,14 @@ mark[selectedDate.substring(0,10)] = {
 /*************************************************************** */
 // //Cancel EXPIRED BOOKINGS
 const expired = useCallback(async ()=>{
- 
+
   
   try{
     setError(false);
     setIsRefreshing(true);
       setLoading(true);
-      
       await dispatch(expiredbookings(clientID,tokens));
       await dispatch(getClientBookings(clientID));
-     
-
       setIsRefreshing(false);
      setLoading(false);
 
@@ -156,12 +153,11 @@ useEffect(()=>{
 
 
 useEffect(()=>{
+
 const willFocusSub= props.navigation.addListener(
   'willFocus',
   () => {
-
     expired();
-   
   }
 );
 return ()=>{
@@ -206,7 +202,7 @@ useEffect(()=>{
  //if((selectedDateText ===moment (new Date()).format("ll")  ))
   todaysBookings();
   
-},[])
+},[expired])
 
 
 /***************************************************************************************************************************************************************************** */
@@ -269,7 +265,7 @@ if (isLoading) {
             
             
             }}
-            current = {selectedDate}
+            current = {selectedDate.substring(0,10)}
              markedDates = {mark}
              onDayPress={(date)=>selectedDateHandler(date)}
              />

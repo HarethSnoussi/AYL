@@ -219,26 +219,7 @@ return () => {
  }
 
 
-// Can use this function below, OR use Expo's Push Notification Tool-> https://expo.io/dashboard/notifications
-async function sendPushNotification(expoPushToken) {
-  const message = {
-    to: expoPushToken,
-    sound: 'default',
-    title: 'This is a message from Tahfifa ',
-    body: 'And here is the body!',
-    data: { data: 'goes here' },
-  };
 
-  await fetch('https://exp.host/--/api/v2/push/send', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Accept-encoding': 'gzip, deflate',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(message),
-  });
-}
 
 async function registerForPushNotificationsAsync() {
   let token;
@@ -325,7 +306,7 @@ const toggleOverlay = () => {
   setVisible(!visible);
   
 };
-const now = new Date();
+
 
 /************************************************************************************************** */
 /********************************************************************** */
@@ -382,7 +363,7 @@ if (isLoading || allBarbers.length <= 0 ) {
 
         
             <View style = {styles.firstTitle}>  
-            <Text style = {styles.titleText}>Retrouvez Votre Coiffeur</Text>
+         {   client[0].sex ==="Homme" ?   <Text style = {styles.titleText}> Retrouvez Votre Coiffeur</Text> : <Text style = {styles.titleText}> Retrouvez Votre Coiffeuse</Text>  }
     
 
 <View>
@@ -433,11 +414,7 @@ if (isLoading || allBarbers.length <= 0 ) {
 
 
           <View style = {styles.textTopBarbers}>
-                <Text style = {styles.bestText}>
-                
-                Meilleurs Coiffeurs
-                
-                </Text>
+                { client[0].sex ==="Homme" ? <Text style = {styles.bestText}> Meilleurs Coiffeurs</Text> : <Text style = {styles.bestText}> Meilleures Coiffeuses</Text> }
                 <TouchableOpacity  
                 onPress={() =>props.navigation.navigate("AllBarbers",{type : "coiffeurs",clientID,overCpt : allBookings.length})} >
                 <Text style = {styles.showAll}>
@@ -462,7 +439,7 @@ if (isLoading || allBarbers.length <= 0 ) {
              region = {barber.region}
              wilaya = {barber.wilaya}
              mark = {barber.mark}
-             navigateToBarberProfil={()=>props.navigation.navigate("Barber",{barberID : barber.id})}
+             navigateToBarberProfil={()=>props.navigation.navigate("Barber",{barberID : barber.id,clientID:clientID,overCpt:allBookings.length})}
              navigate = {()=>props.navigation.navigate("BookStepOne",{barberId : barber.id,clientID,name:barber.name,surname:barber.surname,mark:barber.mark,region:barber.region,wilaya:barber.wilaya,overCpt : allBookings.length})}
             />
            )})
@@ -473,12 +450,17 @@ if (isLoading || allBarbers.length <= 0 ) {
            :
 
            <View style = {styles.unAvailable}>  
-           
+         {  client[0].sex ==="Homme" ?
            <Text>
               Aucun Coiffeur Disponible !
 
+           </Text> :
+
+           <Text>
+              Aucun Coiffeuse Disponible !
+
            </Text>
-           
+           }
            </View>
           
         

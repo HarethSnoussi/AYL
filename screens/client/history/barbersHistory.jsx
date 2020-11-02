@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button , Rating} from 'react-native-elements';
 import { getBarbers } from '../../../store/actions/listActions';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { getReviews } from '../../../store/actions/reviewsActions';
 
 const screen = Dimensions.get("window");
 const BarbersHistory = props =>{
@@ -59,9 +60,12 @@ const getHistory = useCallback(async ()=>{
     setError(false);
     setIsRefreshing(true);
     setLoading(true);
+    
     const arr = await fetch(`http://173.212.234.137:3000/client/barbers/${clientID}`);
     const resData = await arr.json ();
+   
     setBarbersIds([...resData]);
+    await dispatch(getReviews(clientID));
     setIsRefreshing(false);
     setLoading(false);
     }

@@ -120,6 +120,7 @@ cardContainer : {
   borderBottomWidth : 0.4,
   overflow : "hidden",
   alignSelf : "flex-end",
+  marginBottom : 2
     
 },
 cardImage : {
@@ -134,7 +135,7 @@ image : {
   height : "100%",
   width : "100%",
    borderRadius : 25,
-   resizeMode : "cover"
+   resizeMode : "contain"
   
 
 },
