@@ -1,5 +1,5 @@
 import React,{useState,useCallback,useRef,useReducer} from 'react';
-import { StyleSheet,View,ScrollView,KeyboardAvoidingView,Text,Image,TouchableWithoutFeedback,Keyboard,StatusBar,TextInput,TouchableOpacity,Picker,ActionSheetIOS,Alert,ActivityIndicator,AsyncStorage,Platform} from 'react-native';
+import { StyleSheet,View,ScrollView,KeyboardAvoidingView,Text,Image,TouchableWithoutFeedback,Keyboard,StatusBar,TextInput,TouchableOpacity,Picker,ActionSheetIOS,Alert,ActivityIndicator,AsyncStorage,Platform,Dimensions} from 'react-native';
 import {Button} from 'react-native-elements';
 import Colors from '../../constants/Colors';
 import {MaterialIcons,MaterialCommunityIcons,Ionicons} from "@expo/vector-icons";
@@ -11,6 +11,9 @@ import * as clientActions from '../../store/actions/clientActions';
 import {useDispatch} from 'react-redux';
 import * as Crypto from 'expo-crypto'; 
 import CustomInput from '../../components/Input';
+
+
+const screen = Dimensions.get("window");
 
 //Firebase config
 try {
@@ -233,7 +236,7 @@ try {
    return(
     <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}> 
        <View stlye={styles.container}>
-          <KeyboardAvoidingView keyboardVerticalOffset={10} behavior={Platform.OS === "ios" ? "padding" : null}>
+          <KeyboardAvoidingView keyboardVerticalOffset={screen.width/36} behavior={Platform.OS === "ios" ? "padding" : null}>
           <StatusBar hidden />
           <FirebaseRecaptcha.FirebaseRecaptchaVerifierModal
                 ref={recaptchaVerifier}
@@ -249,7 +252,7 @@ try {
              
                  <CustomInput 
                      id='name'
-                     rightIcon={<MaterialIcons title="name" name ='person' color={Colors.lightGrey} size={23} />}
+                     rightIcon={<MaterialIcons title="name" name ='person' color={Colors.lightGrey} size={screen.width/15.7} />}
                      placeholder='Nom'
                      keyboardType="default"
                      returnKeyType="next"
@@ -268,7 +271,7 @@ try {
                  
                  <CustomInput 
                     id='surname'
-                    rightIcon={<MaterialIcons title="surname" name ='person' color={Colors.lightGrey} size={23} />}
+                    rightIcon={<MaterialIcons title="surname" name ='person' color={Colors.lightGrey} size={screen.width/15.7} />}
                     placeholder='Prénom'
                     keyboardType="default"
                     returnKeyType="next"
@@ -288,8 +291,8 @@ try {
               
                  <CustomInput 
                      id='phone'
-                     rightIcon={<MaterialIcons title = "phone" name ='phone' color={Colors.lightGrey} size={23} />}
-                     leftIcon={<View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around',borderRightWidth:1,borderRightColor:Colors.lightGrey,paddingRight:5,marginRight:5}}><Image source={{uri:'http://173.212.234.137/assets/tahfifa/algeriaFlag.png'}} style={{width:24,height:28,marginRight:5,marginLeft:-15}}/><Text style={styles.phoneNumber}>+213</Text></View>}
+                     rightIcon={<MaterialIcons title = "phone" name ='phone' color={Colors.lightGrey} size={screen.width/15.7} />}
+                     leftIcon={<View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around',borderRightWidth:1,borderRightColor:Colors.lightGrey,paddingRight:screen.width/72,marginRight:screen.width/72}}><Image source={{uri:'http://173.212.234.137/assets/tahfifa/algeriaFlag.png'}} style={{width:screen.width/15,height:screen.width/12.7,marginRight:screen.width/72,marginLeft:-(screen.width/24)}}/><Text style={styles.phoneNumber}>+213</Text></View>}
                      placeholder='555555555'
                      keyboardType="phone-pad"
                      returnKeyType="next"
@@ -299,7 +302,7 @@ try {
                      phone
                      required
                      placeholderTextColor={Colors.lightGrey}
-                     inputStyle={{fontSize:15}}
+                     inputStyle={{fontSize:screen.width/24}}
                      backgroundColor={Colors.blue}
                      textColor={Colors.lightGrey}
                      widthView='100%'
@@ -307,7 +310,7 @@ try {
 
                    <CustomInput
                     id='password'
-                    rightIcon={<MaterialCommunityIcons title="lock" onPress={eye} name ={!isEye?'eye':'eye-off'} color={Colors.lightGrey} size={23} />}
+                    rightIcon={<MaterialCommunityIcons title="lock" onPress={eye} name ={!isEye?'eye':'eye-off'} color={Colors.lightGrey} size={screen.width/15.7} />}
                     placeholder='Mot de Passe'
                     keyboardType="default"
                     returnKeyType="next"
@@ -319,43 +322,43 @@ try {
                     initiallyValid={true}
                     required
                     placeholderTextColor={Colors.lightGrey}
-                    inputStyle={{fontSize:15}}
+                    inputStyle={{fontSize:screen.width/24}}
                     backgroundColor={Colors.blue}
                     textColor={Colors.lightGrey}
                     widthView='100%'
                   />
                  
               
-               <View style={{ width:'100%',borderWidth:1,borderRadius:25,backgroundColor:Colors.blue,borderColor:sex!==sexTypes[0]?Colors.blue:Colors.primary,marginVertical:3,height:45,justifyContent:'center'}}>
+               <View style={{ width:'100%',borderWidth:1,borderRadius:screen.width/14.4,backgroundColor:Colors.blue,borderColor:sex!==sexTypes[0]?Colors.blue:Colors.primary,marginVertical:screen.width/120,height:screen.width/8,justifyContent:'center'}}>
                  {Platform.OS === 'android' ? 
                      <Picker
                      selectedValue={sex}
                      onValueChange={itemValue => setSex(itemValue)}
-                     style={{fontFamily:'poppins',fontSize:12,color:'#d3d3d3',marginHorizontal:14}}
+                     style={{fontFamily:'poppins',fontSize:screen.width/30,color:'#d3d3d3',marginHorizontal:screen.width/25.7}}
                      >
                      {sexTypes.map(el=> <Picker.Item label={el} value={el} key={el} />)}
                      </Picker> :
-                     <TouchableOpacity onPress={onPressSex} style={{ width:'100%',flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:19,paddingRight:25}}>
-                     <Text  style={{fontFamily:'poppins',color:Colors.lightGrey,fontSize:15,fontWeight:'500'}}>
+                     <TouchableOpacity onPress={onPressSex} style={{ width:'100%',flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:screen.width/18.95,paddingRight:screen.width/14.4}}>
+                     <Text  style={{fontFamily:'poppins',color:Colors.lightGrey,fontSize:screen.width/24,fontWeight:'500'}}>
                        {sex?sex:sexTypes[0]}
                      </Text>
-                     <Ionicons name="ios-arrow-down" size={24} color={Colors.lightGrey} onPress={onPressSex} />
+                     <Ionicons name="ios-arrow-down" size={screen.width/15} color={Colors.lightGrey} onPress={onPressSex} />
                      </TouchableOpacity>}
                  </View>
-                 <View style={{ width:'100%',borderWidth:1,borderRadius:25,backgroundColor:Colors.blue,borderColor:wilaya!==wilayas[0]?Colors.blue:Colors.primary,marginVertical:3,height:45,justifyContent:'center'}}>
+                 <View style={{ width:'100%',borderWidth:1,borderRadius:screen.width/14.4,backgroundColor:Colors.blue,borderColor:wilaya!==wilayas[0]?Colors.blue:Colors.primary,marginVertical:screen.width/120,height:screen.width/8,justifyContent:'center'}}>
                  {Platform.OS === 'android' ? 
                              <Picker
                              selectedValue={wilaya}
                              onValueChange={itemValue => setWilaya(itemValue)}
-                             style={{fontFamily:'poppins',fontSize:12,color:'#d3d3d3',marginHorizontal:14}}
+                             style={{fontFamily:'poppins',fontSize:screen.width/30,color:'#d3d3d3',marginHorizontal:screen.width/25.7}}
                              >
                              {wilayas.map(el=> <Picker.Item label={el} value={el} key={el} />)}
                              </Picker> :
-                              <TouchableOpacity onPress={onPress}  style={{ width:'100%',flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:19,paddingRight:25}}>
-                             <Text style={{fontFamily:'poppins',color:Colors.lightGrey,fontSize:15,fontWeight:'500'}}>
+                              <TouchableOpacity onPress={onPress}  style={{ width:'100%',flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:screen.width/18.95,paddingRight:screen.width/14.4}}>
+                             <Text style={{fontFamily:'poppins',color:Colors.lightGrey,fontSize:screen.width/24,fontWeight:'500'}}>
                                {wilaya?wilaya:wilayas[0]}
                              </Text>
-                             <Ionicons name="ios-arrow-down" size={24} color={Colors.lightGrey} onPress={onPress} />
+                             <Ionicons name="ios-arrow-down" size={screen.width/15} color={Colors.lightGrey} onPress={onPress} />
                              </TouchableOpacity>}
                </View>
                <CustomInput 
@@ -401,7 +404,7 @@ try {
              </View>
                  </View>):
                  (<View>
-                  <View style={{width:'100%',borderWidth:1, borderRadius:25,backgroundColor:'#d3d3d3',borderColor:confirmError?Colors.primary:'#d3d3d3',marginVertical:3,height:45,alignItems:'center',justifyContent:'center'}}>
+                  <View style={{width:'100%',borderWidth:1, borderRadius:screen.width/14.4,backgroundColor:'#d3d3d3',borderColor:confirmError?Colors.primary:'#d3d3d3',marginVertical:screen.width/120,height:screen.width/8,alignItems:'center',justifyContent:'center'}}>
                     <TextInput
                             placeholder='Entrez les 6 chiffres'
                             keyboardType='number-pad'
@@ -480,18 +483,18 @@ const styles= StyleSheet.create({
   title:{
     fontFamily:'poppins-bold',
     color:'#fd6c57',
-    fontSize:24
+    fontSize:screen.width/15
   },
   secondContainer:{
    
     width:'90%',
     alignSelf:'center',
-    paddingTop:40,
+    paddingTop:screen.width/9,
   },
   labelButton:{
     color:'#FFF',
     fontFamily:'poppins',
-    fontSize:16,
+    fontSize:screen.width/22.5,
     textTransform:null,
    },
    thirdContainer:{
@@ -499,55 +502,55 @@ const styles= StyleSheet.create({
      width:'90%',
      alignSelf:'center',
      justifyContent:'center',
-     marginTop:30
+     marginTop:screen.width/12
     },
    buttonStyle:{
     borderColor:'#fd6c57',
     width:'100%',
-    borderRadius:20,
-    height:45,
+    borderRadius:screen.width/18,
+    height:screen.width/8,
     alignSelf:'center',
-    marginTop:10
+    marginTop:screen.width/36
    },
    confirmedButtonStyle:{
     borderColor:'#fd6c57',
     width:'100%',
-    borderRadius:20,
-    height:45,
+    borderRadius:screen.width/18,
+    height:screen.width/8,
     alignSelf:'center',
-    marginTop:3
+    marginTop:screen.width/120
    },
     loginContainer:{
      flexDirection:'row',
-     paddingTop:15,
+     paddingTop:screen.width/24,
      alignSelf:'center'
    },
    doYouHaveAnAccount:{
-     fontSize:14,
+     fontSize:screen.width/21.2,
      fontFamily:'poppins',
      color:'#323446'
    },
    loginText:{
-     fontSize:14,
+     fontSize:screen.width/21.2,
      fontFamily:'poppins-bold',
      color:'#fd6c57'
    },
    phoneNumber:{
-    fontSize:15,
+    fontSize:screen.width/24,
     color:Colors.lightGrey,
   },
   loader: {
-    marginTop: 5,
+    marginTop: screen.width/72,
   },
   confirmErrorText:{
     color:Colors.primary,
-    fontSize:13,
+    fontSize:screen.width/27.7,
     alignSelf:'center'
   },
   smsText:{
     color:'green',
-    fontSize:11,
-    paddingTop:5,
+    fontSize:screen.width/32.7,
+    paddingTop:screen.width/72,
     alignSelf:'center'
   }
   

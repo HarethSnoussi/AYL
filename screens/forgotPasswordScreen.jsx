@@ -1,6 +1,6 @@
 import React,{useState,useCallback,useReducer,useRef} from 'react';
 import { StyleSheet,View,KeyboardAvoidingView,Text,Platform,Image,Dimensions,StatusBar,Alert,ActivityIndicator,TextInput,TouchableWithoutFeedback,Keyboard} from 'react-native';
-import {MaterialIcons,MaterialCommunityIcons} from "@expo/vector-icons";
+import {MaterialIcons,FontAwesome5} from "@expo/vector-icons";
 import {Button } from 'react-native-elements';
 import Colors from '../constants/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -159,7 +159,7 @@ const verifyNumber = async ()=>{
     return(
       <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
       <View style={styles.container}>
-       <KeyboardAvoidingView  keyboardVerticalOffset={10} behavior={Platform.OS === "ios" ? "padding" : null}>
+       <KeyboardAvoidingView  keyboardVerticalOffset={screen.width/36} behavior={Platform.OS === "ios" ? "padding" : null}>
          <StatusBar hidden />
          <FirebaseRecaptcha.FirebaseRecaptchaVerifierModal
                 ref={recaptchaVerifier}
@@ -178,8 +178,8 @@ const verifyNumber = async ()=>{
              {!verificationId ? (<View style={styles.inputsContainer}>
                   <CustomInput
                     id={'phone'}
-                    rightIcon={<MaterialIcons title = "phone" name ='phone'  color='#323446' size={23} />}
-                    leftIcon={<View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around',borderRightWidth:1,borderRightColor:Colors.blue,paddingRight:5,marginRight:5}}><Image source={{uri:'http://173.212.234.137/assets/tahfifa/algeriaFlag.png'}} style={{width:24,height:28,marginRight:5}}></Image><Text style={styles.phoneNumber}>+213</Text></View>}
+                    rightIcon={<MaterialIcons title = "phone" name ='phone'  color='#323446' size={screen.width/15.7} />}
+                    leftIcon={<View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around',borderRightWidth:1,borderRightColor:Colors.blue,paddingRight:screen.width/72,marginRight:screen.width/72}}><Image source={{uri:'http://173.212.234.137/assets/tahfifa/algeriaFlag.png'}} style={{width:screen.width/15,height:screen.width/12.85,marginRight:screen.width/72}}></Image><Text style={styles.phoneNumber}>+213</Text></View>}
                     placeholder='555555567'
                     keyboardType="phone-pad"
                     returnKeyType="next"
@@ -189,7 +189,7 @@ const verifyNumber = async ()=>{
                     phone
                     required
                     placeholderTextColor='rgba(50,52,70,0.4)'
-                    inputStyle={{fontSize:15}}
+                    inputStyle={{fontSize:screen.width/24}}
                     editable={!verificationId}
                     backgroundColor={Colors.lightGrey}
                     textColor={Colors.blue}
@@ -213,7 +213,7 @@ const verifyNumber = async ()=>{
                   {verifyInProgress && <ActivityIndicator color={Colors.primary} style={styles.loader} />}
               </View>):
              (<View style={styles.inputsContainer}>
-              <View style={{width:'100%',borderWidth:1, borderRadius:25,backgroundColor:'#d3d3d3',borderColor:confirmError?Colors.primary:'#d3d3d3',marginVertical:3,height:45,alignItems:'center',justifyContent:'center'}}>
+              <View style={{width:'100%',borderWidth:1, borderRadius:screen.width/24,backgroundColor:'#d3d3d3',borderColor:confirmError?Colors.primary:'#d3d3d3',marginVertical:screen.width/120,height:screen.width/8,alignItems:'center',justifyContent:'center'}}>
                 <TextInput
                         placeholder='Entrez les 6 chiffres'
                         keyboardType='number-pad'
@@ -259,9 +259,9 @@ const verifyNumber = async ()=>{
                 </View>)} 
              
             <View style={styles.signupContainer}>
-                <Text style={{color:!verificationId ?Colors.primary:'#A8A8A8',fontFamily:'poppins',fontSize:12,alignSelf:'center',}}>1- Vérifiez votre numéro de téléphone.</Text>
-                <Text style={{color:verificationId?Colors.primary:Colors.blue,fontFamily:'poppins',fontSize:12,alignSelf:'center',}}>2- Entrez le code sms.</Text>
-                <Text style={{color:Colors.blue,fontFamily:'poppins',fontSize:12,alignSelf:'center',}}>3- Réinitialisez votre mot de passe.</Text>
+                <Text style={{color:!verificationId ?Colors.primary:'#A8A8A8',fontFamily:'poppins',fontSize:screen.width/30,alignSelf:'center',}}>1- Vérifiez votre numéro de téléphone.</Text>
+                <Text style={{color:verificationId?Colors.primary:Colors.blue,fontFamily:'poppins',fontSize:screen.width/30,alignSelf:'center',}}>2- Entrez le code sms.</Text>
+                <Text style={{color:Colors.blue,fontFamily:'poppins',fontSize:screen.width/30,alignSelf:'center',}}>3- Réinitialisez votre mot de passe.</Text>
             </View>
                   
              
@@ -291,8 +291,8 @@ ForgotPasswordScreen.navigationOptions= ()=>{
       />
     ),
     
-    headerTintColor: '#fff'
-  
+    headerTintColor: '#fff',
+    headerLeft:(navData)=>(<FontAwesome5 onPress={()=>navData.navigation.goBack()} name="arrow-left" size={24} color="white" style={{marginLeft:screen.width/36}} />) 
   };
 }
 
@@ -309,8 +309,8 @@ const styles= StyleSheet.create({
     height:'65%',
     width:'100%',
     backgroundColor:'#fff',
-    borderTopLeftRadius:30,
-    borderTopRightRadius:30,
+    borderTopLeftRadius:screen.width/12,
+    borderTopRightRadius:screen.width/12,
     overflow:'hidden'
   },
   logoContainer:{
@@ -320,12 +320,12 @@ const styles= StyleSheet.create({
     alignItems:'center'
   },
   logo:{
-    width:180,
-    height:42,
-    marginVertical:10
+    width:screen.width/2,
+    height:screen.width/8.6,
+    marginVertical:screen.width/36
   },
   callToAction:{
-    fontSize:13,
+    fontSize:screen.width/27.7,
     fontFamily:'poppins',
     color:'#323446'
   },
@@ -338,62 +338,66 @@ const styles= StyleSheet.create({
   inputPasswordContainer:{
     width:'90%',
     borderWidth:1,
-    borderRadius:25,
-    height:50,
-    marginTop:10,
+    borderRadius:screen.width/14.4,
+    height:screen.width/7.2,
+    marginTop:screen.width/36,
     backgroundColor:'#d3d3d3',
     borderColor:'#d3d3d3'
   },
   labelButton:{
     color:'#FFF',
     fontFamily:'poppins',
-    fontSize:16,
+    fontSize:screen.width/22.5,
     textTransform:null,
    },
    buttonStyle:{
     borderColor:'#fd6c57',
     width:'100%',
-    borderRadius:20,
-    height:45,
+    borderRadius:screen.width/18,
+    height:screen.width/8,
     alignSelf:'center',
-    marginTop:15
+    marginTop:screen.width/24
    },
   signupContainer:{
-    paddingTop:10,
+    paddingTop:screen.width/36,
     alignSelf:'center',
     height:'20%',
     
   },
   loader: {
-    marginTop: 10,
+    marginTop: screen.width/36,
   },
   cofirmResendContainer:{
     flexDirection:'row',
     justifyContent:'space-around',
     alignItems:'center',
     width:'100%',
-    marginTop:15
+    marginTop:screen.width/24
   },
   confirmedButtonStyle:{
     borderColor:'#fd6c57',
     width:'80%',
-    borderRadius:20,
-    height:45,
+    borderRadius:screen.width/18,
+    height:screen.width/8,
     alignSelf:'center',
-    marginTop:3
+    marginTop:screen.width/120
    },
    confirmErrorText:{
     color:Colors.primary,
-    fontSize:13,
+    fontSize:screen.width/27.7,
     alignSelf:'center'
   },
   smsText:{
     color:Colors.blue,
-    fontSize:11,
-    paddingTop:10,
+    fontSize:screen.width/32.7,
+    paddingTop:screen.width/36,
     alignSelf:'center',
     fontFamily:'poppins-bold'
   },
+  phoneNumber:{
+    fontSize:screen.width/24,
+    color:Colors.blue,
+  }
 });
 
 export default ForgotPasswordScreen;

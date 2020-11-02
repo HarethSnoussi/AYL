@@ -35,7 +35,7 @@ if(heartColor === "#9d9da1")
         <LinearGradient colors={[firstGrad, secondGrad]} style={{flex : 1,justifyContent : "flex-end"}}>
         <View style = {{height : "95%"}}>
         <View style = {{flexDirection : "row",justifyContent : "space-between" , marginLeft : "5%"}}>
-        <Ionicons onPress = {()=>{heartColorHandler()}} name="ios-heart" size={24} color={heartColor} />
+        <Ionicons onPress = {()=>{heartColorHandler()}} name="ios-heart" size={screen.width/15} color={heartColor} />
        
 
 
@@ -50,7 +50,7 @@ if(heartColor === "#9d9da1")
 <Text style = {styles.name}>Snoussi El Hareth</Text>
             <Text style = {styles.info}>Blida - Bab Essebt</Text>
             
-            <Rating imageSize={20} 
+            <Rating imageSize={screen.width/18} 
                     readonly
                    startingValue="3.6"
                    style={styles.rating }
@@ -118,7 +118,7 @@ const styles= StyleSheet.create({
     height :screen.width * 0.6,
     width : screen.width * 0.5,
     alignSelf : "center",
-    borderRadius : 25,
+    borderRadius : screen.width/14.4,
     overflow : "hidden",
     marginHorizontal : screen.width * 0.03,
     borderWidth : 0.3 ,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet,View,Image, ScrollView,ImageBackground,Text,TouchableOpacity,Platform,StatusBar} from 'react-native';
+import { StyleSheet,View,Image, ScrollView,ImageBackground,Text,TouchableOpacity,Dimensions,StatusBar} from 'react-native';
 import Colors from '../../constants/Colors';
 import ServiceCart from '../../components/ServiceCart';
 import {Entypo} from "@expo/vector-icons";
@@ -8,6 +8,8 @@ import {  Rating  } from 'react-native-elements';
 import polylanar from "../../lang/ar";
 import polylanfr from "../../lang/fr";
  
+const screen = Dimensions.get("window");
+
 const BarberServiceScreen = props =>{
   
   
@@ -39,7 +41,7 @@ const BarberServiceScreen = props =>{
              <Rating
                    type='custom'
                    startingValue={barber[0] && feedbacks.length===0 ? 2.5 : barber[0].mark}
-                   imageSize={20}
+                   imageSize={screen.width/18}
                    ratingBackgroundColor={'#323446'}
                    ratingColor='#fd6c57'
                    tintColor='#f9f9f9'
@@ -47,7 +49,7 @@ const BarberServiceScreen = props =>{
              <View style={styles.iconsMenuContainer}>
                <TouchableOpacity style={styles.iconContainer} onPress={()=>props.navigation.navigate('EditService')}>
                  <View style={styles.iconFormCircle}>
-                 <Entypo title = "scissors" name ='scissors' color='#fff' size={23} />
+                 <Entypo title = "scissors" name ='scissors' color='#fff' size={screen.width/15.7} />
                  </View>
                  <Text style={styles.iconText}>{client[0] && client[0].lang?polylanfr.Services:polylanar.Services}</Text>
                </TouchableOpacity>
@@ -55,7 +57,7 @@ const BarberServiceScreen = props =>{
           </View>
         </View>
         <View style={styles.noServicesContainer}>
-            <View style={{marginBottom:10,alignSelf:'center'}}>
+            <View style={{marginBottom:screen.width/36,alignSelf:'center'}}>
               <Text style={styles.noServicesText}>{client[0] && client[0].lang?polylanfr.NoServices:polylanar.NoServices}</Text>
             </View>
             
@@ -93,7 +95,7 @@ const BarberServiceScreen = props =>{
               <View style={styles.iconsMenuContainer}>
               <TouchableOpacity style={styles.iconContainer} onPress={()=>props.navigation.navigate('EditService')}>
                  <View style={styles.iconFormCircle}>
-                 <Entypo title = "scissors" name ='scissors' color='#fff' size={23} />
+                 <Entypo title = "scissors" name ='scissors' color='#fff' size={screen.width/15.7} />
                  </View>
                  <Text style={styles.iconText}>{client[0] && client[0].lang?polylanfr.Services:polylanar.Services}</Text>
                </TouchableOpacity>
@@ -139,9 +141,7 @@ BarberServiceScreen.navigationOptions = navData => {
           
           />
         ),
-        headerTintColor: '#fff',
-        
-        
+        headerTintColor: '#fff'
   };
   
 }
@@ -180,45 +180,46 @@ const styles= StyleSheet.create({
     alignItems:'center'
   },
   imageContainer:{
-    width:90,
-    height:90,
-    borderRadius:50,
-    marginTop:-55,
+    width:screen.width/4,
+    height:screen.width/4,
+    borderRadius:screen.width/7.2,
+    marginTop:-(screen.width/6.5),
     overflow:'hidden'
   },
   bname:{
     fontFamily:'poppins-bold',
-    fontSize:17,color:'#323446',
-    paddingTop:3
+    fontSize:screen.width/21.2,
+    color:'#323446',
+    paddingTop:screen.width/120
   },
   jobAge:{
     fontFamily:'poppins',
     color:'#fd6c57',
-    paddingBottom:3,
-    fontSize:11
+    paddingBottom:screen.width/120,
+    fontSize:screen.width/32.7
   },
   iconFormCircle:{
     backgroundColor:'#FD6C57',
-    width:40,
-    height:40,
-    borderRadius:20,
+    width:screen.width/9,
+    height:screen.width/9,
+    borderRadius:screen.width/18,
     justifyContent:'center',
     alignItems:'center',
   },
   
   iconContainer:{
-    marginHorizontal:13,
+    marginHorizontal:screen.width/27.7,
     alignItems:'center'
   },
   iconText:{
     fontFamily:'poppins',
     color:'grey',
-    paddingTop:3,
-    fontSize:10
+    paddingTop:screen.width/120,
+    fontSize:screen.width/36
   },
   iconsMenuContainer:{
    alignItems:'center',
-   marginTop:10  
+   marginTop:screen.width/36  
   },
   activityIndicatorContainer:{
    flex:1,
@@ -236,7 +237,7 @@ const styles= StyleSheet.create({
 },
 noServicesText:{
   fontFamily:'poppins',
-  fontSize:14,
+  fontSize:screen.width/25.7,
   color:Colors.blue
 }
 });

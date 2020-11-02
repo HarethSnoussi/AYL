@@ -45,7 +45,7 @@ const clientsReducer=(state=initialState,action)=>{
          action.clientData.address,
          state.client[clientindex].long,
          state.client[clientindex].lat,
-         action.clientData.image,
+         state.client[clientindex].image,
          action.clientData.wilaya,
          action.clientData.region,
          state.client[clientindex].lang,

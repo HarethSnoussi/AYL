@@ -86,7 +86,7 @@ const url = props.type === "confirmée" ? {uri:'http://173.212.234.137/assets/ta
           height:"80%",
           backgroundColor:"#fff",
           justifyContent:"center",
-          borderRadius:25
+          borderRadius:screen.width/14.4
       },
       imageContainer : {
           height : "20%",
@@ -124,10 +124,10 @@ const url = props.type === "confirmée" ? {uri:'http://173.212.234.137/assets/ta
           justifyContent:"space-around"
       },
       buttonStyle : {
-          borderRadius : 5,
+          borderRadius : screen.width/72,
           paddingHorizontal : "5%",
       
-          borderRadius:25
+          borderRadius:screen.width/14.4
   },
   buttonText :{
       color :"#fff",

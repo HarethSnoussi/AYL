@@ -153,7 +153,7 @@ const login = async()=>{
              <View style={styles.inputsContainer}> 
              <CustomInput
                   id='password'
-                  rightIcon={<MaterialCommunityIcons title="lock" onPress={eye} name ={!isEye?'eye':'eye-off'} color='#323446' size={23} />}
+                  rightIcon={<MaterialCommunityIcons title="lock" onPress={eye} name ={!isEye?'eye':'eye-off'} color='#323446' size={screen.width/15.7} />}
                   placeholder='Nouveau Mot de Passe'
                   keyboardType="default"
                   returnKeyType="next"
@@ -165,7 +165,7 @@ const login = async()=>{
                   initiallyValid={true}
                   required
                   placeholderTextColor='rgba(50,52,70,0.4)'
-                  inputStyle={{fontSize:15}}
+                  inputStyle={{fontSize:screen.width/24}}
                   backgroundColor={Colors.lightGrey}
                   textColor={Colors.blue}
                   widthView='100%'
@@ -188,9 +188,9 @@ const login = async()=>{
              
              
             <View style={styles.signupContainer}>
-                <Text style={{color:'#A8A8A8',fontFamily:'poppins',fontSize:12,alignSelf:'center',}}>1- Vérifiez votre numéro de téléphone.</Text>
-                <Text style={{color:'#A8A8A8',fontFamily:'poppins',fontSize:12,alignSelf:'center',}}>2- Entrez le code sms.</Text>
-                <Text style={{color:Colors.primary,fontFamily:'poppins',fontSize:12,alignSelf:'center',}}>3- Réinitialisez votre mot de passe.</Text>
+                <Text style={{color:'#A8A8A8',fontFamily:'poppins',fontSize:screen.width/30,alignSelf:'center',}}>1- Vérifiez votre numéro de téléphone.</Text>
+                <Text style={{color:'#A8A8A8',fontFamily:'poppins',fontSize:screen.width/30,alignSelf:'center',}}>2- Entrez le code sms.</Text>
+                <Text style={{color:Colors.primary,fontFamily:'poppins',fontSize:screen.width/30,alignSelf:'center',}}>3- Réinitialisez votre mot de passe.</Text>
             </View>
                   
              
@@ -237,8 +237,8 @@ const styles= StyleSheet.create({
     height:'65%',
     width:'100%',
     backgroundColor:'#fff',
-    borderTopLeftRadius:30,
-    borderTopRightRadius:30,
+    borderTopLeftRadius:screen.width/12,
+    borderTopRightRadius:screen.width/12,
     overflow:'hidden'
   },
   logoContainer:{
@@ -248,12 +248,12 @@ const styles= StyleSheet.create({
     alignItems:'center'
   },
   logo:{
-    width:180,
-    height:42,
-    marginVertical:10
+    width:screen.width/2,
+    height:screen.width/8.6,
+    marginVertical:screen.width/36
   },
   callToAction:{
-    fontSize:13,
+    fontSize:screen.width/27.7,
     fontFamily:'poppins',
     color:'#323446'
   },
@@ -266,30 +266,30 @@ const styles= StyleSheet.create({
  
   input:{
     borderBottomWidth:0,
-    paddingHorizontal:10
+    paddingHorizontal:screen.width/36
   },
   inputPasswordContainer:{
     width:'90%',
     borderWidth:1,
-    borderRadius:25,
-    height:50,
-    marginTop:10,
+    borderRadius:screen.width/14.4,
+    height:screen.width/7.2,
+    marginTop:screen.width/36,
     backgroundColor:'#d3d3d3',
     borderColor:'#d3d3d3'
   },
   labelButton:{
     color:'#FFF',
     fontFamily:'poppins',
-    fontSize:16,
+    fontSize:screen.width/22.5,
     textTransform:null,
    },
    buttonStyle:{
     borderColor:'#fd6c57',
     width:'100%',
-    borderRadius:20,
-    height:45,
+    borderRadius:screen.width/18,
+    height:screen.width/8,
     alignSelf:'center',
-    marginTop:15
+    marginTop:screen.width/24
    },
   signupContainer:{
     alignSelf:'center',
@@ -297,14 +297,14 @@ const styles= StyleSheet.create({
     
   },
   loader: {
-    marginTop: 10,
+    marginTop: screen.width/36,
   },
   cofirmResendContainer:{
     flexDirection:'row',
     justifyContent:'space-around',
     alignItems:'center',
     width:'100%',
-    marginTop:15
+    marginTop:screen.width/24
   },
   
 });

@@ -141,8 +141,8 @@ return (
                 <View style = {{  width : "100%",
                     height : "75%",
                     backgroundColor : "#fff",
-                    borderTopLeftRadius : keyboardState ? 0 :25,
-                    borderTopRightRadius : keyboardState ? 0 : 25,
+                    borderTopLeftRadius : keyboardState ? 0 :screen.width/14.4,
+                    borderTopRightRadius : keyboardState ? 0 : screen.width/14.4,
                     position : "absolute",
                     top : keyboardState ? 0:"25%",
                     overflow : "hidden",}}>
@@ -178,12 +178,12 @@ return (
                                 value : null
                             }}
                             style = {{inputAndroid: {
-                                          fontSize: 16,
-                                          paddingHorizontal: 10,
-                                          paddingVertical: 8,
+                                          fontSize: screen.width/22.5,
+                                          paddingHorizontal: screen.width/36,
+                                          paddingVertical: screen.width/45,
                                           borderWidth: 0.5,
                                           borderColor: 'purple',
-                                          borderRadius: 8,
+                                          borderRadius: screen.width/45,
                                           color: 'black',
                                           
                                         }}}
@@ -231,7 +231,7 @@ return (
                    containerStyle = {{ height : "15%",width : "80%",alignSelf:"center" ,justifyContent : "center" }} 
                    title = "Réserver" 
                    titleStyle = {{fontFamily : "poppins-bold",fontSize : screen.width/26}}
-                   buttonStyle = {{borderRadius : Platform.OS === "android" ? 55 : 20}} 
+                   buttonStyle = {{borderRadius : Platform.OS === "android" ? screen.width/6.5 : screen.width/18}} 
                    ViewComponent={LinearGradient} 
                    linearGradientProps={{
                         colors: ['#fd6d57', '#fd9054'],
@@ -277,8 +277,8 @@ const styles= StyleSheet.create({
        width : "100%",
        height : "75%",
        backgroundColor : "#fff",
-       borderTopLeftRadius : 25,
-       borderTopRightRadius : 25,
+       borderTopLeftRadius : screen.width/14.4,
+       borderTopRightRadius : screen.width/14.4,
         position : "absolute",
         top : "25%",
         overflow : "hidden",
@@ -303,15 +303,15 @@ const styles= StyleSheet.create({
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.5,
-      shadowRadius: 2,
+      shadowRadius: screen.width/180,
       elevation: 2,
       backgroundColor : "#f0f0f0",
-      borderRadius : 10,
+      borderRadius : screen.width/36,
       paddingLeft : "2%",
       elevation : 2 ,
       height : "15%",
       justifyContent :"center",
-      paddingLeft : 15,
+      paddingLeft : screen.width/24,
    },
      
     region : {
@@ -320,7 +320,7 @@ const styles= StyleSheet.create({
       width : "80%",
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.5,
-      shadowRadius: 2,
+      shadowRadius: screen.width/180,
       elevation: 2,
       overflow:'visible'
     },
@@ -332,15 +332,15 @@ const styles= StyleSheet.create({
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.5,
-      shadowRadius: 2,
+      shadowRadius: screen.width/180,
       elevation: 2,
       overflow:'visible'
     },
   /********************************************************************** */
   regionInput :{ 
-    paddingLeft : 15,
+    paddingLeft : screen.width/24,
     backgroundColor :"white",
-    borderRadius : 10,
+    borderRadius : screen.width/36,
     height :"60%",
     backgroundColor : "#f0f0f0",
     width : "100%",
@@ -350,12 +350,12 @@ const styles= StyleSheet.create({
   addressInput :{ 
     // borderColor: 'gray', borderWidth: 1,
     backgroundColor :"white",
-    borderRadius : 10,
+    borderRadius : screen.width/36,
     height :"80%",
     backgroundColor : "#f0f0f0",
     textAlignVertical: 'top',
-    paddingLeft : 15,
-    paddingTop : 15,
+    paddingLeft : screen.width/24,
+    paddingTop : screen.width/24,
     width : "100%",
 
 },

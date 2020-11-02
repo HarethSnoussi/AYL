@@ -31,17 +31,16 @@ const TopBarbersCard = (props)=> {
         <View style = {styles.barberInfos}>
             <Text style = {styles.name}>{props.surname + " "+props.name}</Text>
             <Text style = {styles.info}>{props.wilaya +" - "+props.region}</Text>
-            <Rating imageSize={20} 
-                    readonly
-                   startingValue= {props.mark === null ? 2.5 : props.mark}
-                   value = {props.mark === null ? 2.5 : props.mark}
-                   style={styles.rating }
-                   ratingColor = "#FE9654"          
-                   type='custom'
-                    ratingBackgroundColor={'#323446'}
-                    tintColor='#fff'
-
-                        />
+            <Rating 
+              imageSize={screen.width/18} 
+              readonly
+              startingValue= {props.mark === null ? 2.5 : props.mark}
+              value = {props.mark === null ? 2.5 : props.mark}
+              style={styles.rating }
+              ratingColor = "#FE9654"          
+              type='custom'
+              ratingBackgroundColor={'#323446'}
+              tintColor='#fff' />
 
             <TouchableOpacity style={{alignItems : "center"}} onPress={props.navigateToBarberProfil}>
                   <Text style ={{color : "#fd6c57",fontFamily : "poppins-bold",letterSpacing : 1,fontSize : screen.width/30}}>Voir le profil </Text>
@@ -74,44 +73,38 @@ const styles= StyleSheet.create({
     height : "90%",
     width : screen.width * 0.6,
     alignSelf : "center",
-    borderRadius : 25,
+    borderRadius : screen.width/14.4,
     overflow : "hidden",
     marginHorizontal : screen.width * 0.03,
     borderWidth : 0.3,
    
   },
   barberPictureContainer : {
-        width : "100%",
-        height : "40%",
-        overflow : "hidden",
-        alignItems : "center",
-        justifyContent : "center",
-        
+    width : "100%",
+    height : "40%",
+    overflow : "hidden",
+    alignItems : "center",
+    justifyContent : "center",
   },
   barberPicture : {
-  borderWidth :1
-  
+   borderWidth :1,
+   width:screen.width/5.5,
+   height:screen.width/5.5
   },
-  
   barberInfos : {
-  height : "60%",
-  justifyContent : "space-around",
- 
-  overflow : "hidden",
-  
-  
+    height : "60%",
+    justifyContent : "space-around",
+    overflow : "hidden"
   },
   rating : {
   
   },
    /////////////////////////////////////////////////
  info : {
-        fontFamily : "poppins",
-        color : "#9d9da1",
+    fontFamily : "poppins",
+    color : "#9d9da1",
     alignSelf : "center",
     fontSize : screen.width/30
-
-
  },
  name : {
     fontFamily : "poppins-bold",
@@ -122,9 +115,9 @@ const styles= StyleSheet.create({
  button : {
    backgroundColor : "#fd6c57",
    alignSelf : "center",
-   marginBottom:5,
-   paddingHorizontal:25,
-   borderRadius:20
+   marginBottom:screen.width/72,
+   paddingHorizontal:screen.width/14.4,
+   borderRadius:screen.width/18
 }
   
   });

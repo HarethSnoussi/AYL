@@ -147,7 +147,7 @@ try {
       minValue = {0.5}
       />
       </View>
-    <View style = {{paddingTop : 5}}>
+    <View style = {{paddingTop : screen.width/72}}>
      <Text style = {{fontFamily : "poppins-bold",fontSize : screen.width/24,color : "#FED500"}}>{mark}/5</Text>
      </View>
 
@@ -175,7 +175,7 @@ try {
                    containerStyle = {{ height : "15%",width : "80%",alignSelf:"center" ,justifyContent : "center" }} 
                    title = "Envoyer" 
                    titleStyle = {{fontFamily : "poppins-bold",fontSize : screen.width/26}}
-                   buttonStyle = {{borderRadius : 55}} 
+                   buttonStyle = {{borderRadius : screen.width/6.54}} 
                    ViewComponent={LinearGradient} 
                    linearGradientProps={{
                         colors: ['#fd6d57', '#fd9054'],
@@ -218,7 +218,7 @@ try {
               <Rating
                 type='star'
                 ratingCount={1}
-                imageSize={15}
+                imageSize={screen.width/24}
                 startingValue = {1}
                 style = {styles.rating}
                 ratingColor = "#FE9654"          
@@ -235,7 +235,7 @@ try {
                
                 <Button  
                 title ="Réserver" 
-                buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : 25,paddingHorizontal : "5%"}}
+                buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : screen.width/14.4,paddingHorizontal : "5%"}}
                 titleStyle = {{color :"#fff",fontSize : screen.width/30}}
                 onPress = {props.navigate}
                 />
@@ -263,9 +263,9 @@ const styles= StyleSheet.create({
     searchBar :{
       width : "80%" , 
       alignSelf : "center",
-      borderRadius : 20 , 
+      borderRadius : screen.width/18 , 
       backgroundColor : "rgba(52, 52, 52, 0)" ,
-      marginBottom : 15 ,
+      marginBottom : screen.width/24 ,
       borderTopWidth : 0 , 
       borderBottomWidth : 0 
       },
@@ -298,7 +298,7 @@ cardImage : {
 image : {
   height : "100%",
   width : "100%",
-   borderRadius : 25,
+   borderRadius : screen.width/14.4,
    resizeMode : "contain"
   
 
@@ -332,14 +332,14 @@ extraHours : {
 },
 extraButton : {
 overflow : "hidden",
-borderRadius : 25,
+borderRadius : screen.width/14.4,
 
 
 },
 rating :{
 backgroundColor : "red",
 alignSelf : "flex-start",
-marginRight : 7
+marginRight : screen.width/51.4
 
 },
 
@@ -349,7 +349,7 @@ marginRight : 7
 overlayContainer : {
     height:"70%",
     width : "90%",
-    borderRadius : 25,
+    borderRadius : screen.width/14.4,
    
     justifyContent : "space-around",
     overflow : "hidden"
@@ -373,13 +373,13 @@ ratingContainer : {
 },
 commentContainer:{
  backgroundColor : "#f9f9f9",
- borderRadius : 15,
+ borderRadius : screen.width/24,
  height : "60%",
  justifyContent : "flex-start",
  shadowColor: '#000',
  shadowOffset: { width: 0, height: 2 },
  shadowOpacity: 0.5,
- shadowRadius: 2,
+ shadowRadius: screen.width/180,
  elevation: 2,
  padding : "5%",
  width : "95%",

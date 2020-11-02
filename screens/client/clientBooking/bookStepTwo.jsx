@@ -359,7 +359,7 @@ if (error) {
         <Button
           title="Rafraîchir"
            onPress = {loadServices}
-           buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : 25,paddingHorizontal : "5%",marginVertical : "5%"}}
+           buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : screen.width/14.4,paddingHorizontal : "5%",marginVertical : "5%"}}
         />
       </View>
     );
@@ -417,7 +417,7 @@ return (
                         style = {{fontSize : screen.width/26,fontFamily : "poppins"}} >{pickedDateText}
                         </Text>
 
-                        <FontAwesome  name="calendar" size={24} color="black" />
+                        <FontAwesome  name="calendar" size={screen.width/15} color="black" />
                         
                         <DateTimePickerModal
                             isVisible={isDatePickerVisible}
@@ -451,7 +451,7 @@ return (
                             key = {index}
                             title = {item.time}
                             containerStyle ={{width : "20%",margin : "2.5%",}}
-                            titleStyle = {{fontFamily : "poppins",color : index ===selectedButtonIndex ?  "#fff": "#000",fontSize : 13}}
+                            titleStyle = {{fontFamily : "poppins",color : index ===selectedButtonIndex ?  "#fff": "#000",fontSize : screen.width/27.7}}
                             type="outline"
                             buttonStyle = {{backgroundColor :index ===selectedButtonIndex ?  "#fd6c57": "#fff",borderColor : "#000"}}
                             onPress = {()=>buttonColorHandler(index)}
@@ -476,7 +476,7 @@ return (
                    containerStyle = {{ height : "15%",width : "80%",alignSelf:"center" ,justifyContent : "center"  }} 
                    title = "Réserver" 
                    titleStyle = {{fontFamily : "poppins-bold"}}
-                   buttonStyle = {{borderRadius : Platform.OS === "android" ? 55 : 20}} 
+                   buttonStyle = {{borderRadius : Platform.OS === "android" ? screen.width/6.5 : screen.width/18}} 
                    ViewComponent={LinearGradient} 
                    linearGradientProps={{
                         colors: ['#fd6d57', '#fd9054'],
@@ -552,8 +552,8 @@ const styles= StyleSheet.create({
        width : "100%",
        height : "75%",
        backgroundColor : "white",
-       borderTopLeftRadius : 25,
-       borderTopRightRadius : 25,
+       borderTopLeftRadius : screen.width/14.4,
+       borderTopRightRadius : screen.width/14.4,
         position : "absolute",
         top : "25%",
         overflow : "hidden",

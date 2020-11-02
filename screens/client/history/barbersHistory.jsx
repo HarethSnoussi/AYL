@@ -128,7 +128,7 @@ if (error) {
       <Button
         title="Try again"
          onPress = {getAllBarbers}
-         buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : 25,paddingHorizontal : "5%",marginVertical : "5%"}}
+         buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : screen.width/14.4,paddingHorizontal : "5%",marginVertical : "5%"}}
       />
     </View>
   );
@@ -155,15 +155,15 @@ if (isLoading) {
                 containerStyle = {styles.searchBar}
                 onChangeText = {(text)=>setSearchState(text)}
                 inputContainerStyle = {{
-                        borderRadius : 25
+                        borderRadius : screen.width/14.4
                 }}
                 lightTheme = {true}
-                searchIcon = {{color : "#fd6c57", size : 25}}
+                searchIcon = {{color : "#fd6c57", size : screen.width/14.4}}
                 value={searchState}
                 onClear={text => setSearchState('')}
               />
    </View>
-      <View style = {{width :"90%" , alignSelf : "center",marginVertical : 5,flexDirection : "row",justifyContent : "space-between"}}>
+      <View style = {{width :"90%" , alignSelf : "center",marginVertical : screen.width/72,flexDirection : "row",justifyContent : "space-between"}}>
       
          <View>
           <Text style = {{fontFamily : "poppins-bold",fontSize : screen.width/24}}>
@@ -239,7 +239,7 @@ const styles= StyleSheet.create({
     searchBar :{
       width : "90%" , 
       alignSelf : "center",
-      borderRadius : 20 , 
+      borderRadius : screen.width/18 , 
       backgroundColor : "rgba(52, 52, 52, 0)" ,
       // marginTop : "2%",
       borderTopWidth : 0 , 
@@ -310,14 +310,14 @@ extraHours : {
 },
 extraButton : {
 overflow : "hidden",
-borderRadius : 25,
+borderRadius : screen.width/14.4,
 
 
 },
 rating :{
 backgroundColor : "red",
 alignSelf : "flex-start",
-marginRight : 7
+marginRight : screen.width/51.4
 
 },
 

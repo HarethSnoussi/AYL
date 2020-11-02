@@ -51,7 +51,7 @@ const BarberCard = props =>{
               <Rating
                 type='star'
                 ratingCount={1}
-                imageSize={15}
+                imageSize={screen.width/24}
                 startingValue = {1}
                 style = {styles.rating}
                 ratingColor = "#FE9654"          
@@ -70,7 +70,7 @@ const BarberCard = props =>{
                
                 <Button  
                 title ="Réserver" 
-                buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : 25,paddingHorizontal : "5%"}}
+                buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : screen.width/14.4,paddingHorizontal : "5%"}}
                 titleStyle = {{color :"#fff",fontSize :screen.width/30}}
                 onPress = {props.navigate}
                 />
@@ -98,9 +98,9 @@ const styles= StyleSheet.create({
     searchBar :{
       width : "80%" , 
       alignSelf : "center",
-      borderRadius : 20 , 
+      borderRadius : screen.width/18 , 
       backgroundColor : "rgba(52, 52, 52, 0)" ,
-      marginBottom : 15 ,
+      marginBottom : screen.width/24 ,
       borderTopWidth : 0 , 
       borderBottomWidth : 0 
       },
@@ -120,7 +120,7 @@ cardContainer : {
   borderBottomWidth : 0.4,
   overflow : "hidden",
   alignSelf : "flex-end",
-  marginBottom : 2
+  marginBottom : screen.width/180
     
 },
 cardImage : {
@@ -134,7 +134,7 @@ cardImage : {
 image : {
   height : "100%",
   width : "100%",
-   borderRadius : 25,
+   borderRadius : screen.width/14.4,
    resizeMode : "contain"
   
 
@@ -168,14 +168,14 @@ extraHours : {
 },
 extraButton : {
 overflow : "hidden",
-borderRadius : 25,
+borderRadius : screen.width/14.4,
 
 
 },
 rating :{
 backgroundColor : "red",
 alignSelf : "flex-start",
-marginRight : 7
+marginRight : screen.width/51.4
 
 }
 
