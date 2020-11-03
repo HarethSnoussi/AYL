@@ -141,8 +141,8 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
             
                  <CustomInput
                     id='phone'
-                    rightIcon={<MaterialIcons title = "phone" name ='phone' color='#323446' size={23} />}
-                    leftIcon={<View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around',borderRightWidth:1,borderRightColor:Colors.blue,paddingRight:5,marginRight:5}}><Image source={{uri:'http://173.212.234.137/assets/tahfifa/algeriaFlag.png'}} style={{width:24,height:28,marginRight:5,marginLeft:-15}}/><Text style={styles.phoneNumber}>+213</Text></View>}
+                    rightIcon={<MaterialIcons title = "phone" name ='phone' color='#323446' size={screen.width/15.7} />}
+                    leftIcon={<View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around',borderRightWidth:1,borderRightColor:Colors.blue,paddingRight:screen.width/72,marginRight:screen.width/72}}><Image source={{uri:'http://173.212.234.137/assets/tahfifa/algeriaFlag.png'}} style={{width:screen.width/15,height:screen.width/12.85,marginRight:screen.width/72,marginRight:screen.width/72}}/><Text style={styles.phoneNumber}>+213</Text></View>}
                     placeholder='555555555'
                     keyboardType="phone-pad"
                     returnKeyType="next"
@@ -152,14 +152,14 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
                     phone
                     required
                     placeholderTextColor='rgba(50,52,70,0.4)'
-                    inputStyle={{fontSize:15}}
+                    inputStyle={{fontSize:screen.width/24}}
                     backgroundColor='#d3d3d3'
                     textColor={Colors.blue}
                     widthView='100%'
                   />
                   <CustomInput
                     id='password'
-                    rightIcon={<MaterialCommunityIcons title="lock" onPress={eye} name ={!isEye?'eye':'eye-off'} color='#323446' size={23} />}
+                    rightIcon={<MaterialCommunityIcons title="lock" onPress={eye} name ={!isEye?'eye':'eye-off'} color='#323446' size={screen.width/15.7} />}
                     placeholder='Mot de Passe'
                     keyboardType="default"
                     returnKeyType="next"
@@ -171,7 +171,7 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
                     initiallyValid={true}
                     required
                     placeholderTextColor='rgba(50,52,70,0.4)'
-                    inputStyle={{fontSize:15}}
+                    inputStyle={{fontSize:screen.width/24}}
                     backgroundColor='#d3d3d3'
                     textColor={Colors.blue}
                     widthView='100%'
@@ -189,7 +189,7 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
                         end:{x: 1, y: 0}
                         
                     }}
-                  />:<ActivityIndicator color={Colors.primary} style={{marginTop:5}}/>}
+                  />:<ActivityIndicator color={Colors.primary} style={{marginTop:screen.width/72}}/>}
                   <TouchableOpacity onPress={()=>props.navigation.navigate('ForgotPassword')}>
                   <Text style={styles.forgotPassword}>Mot de passe oublié?</Text>
                 </TouchableOpacity>
@@ -245,14 +245,14 @@ const styles= StyleSheet.create({
     justifyContent:'flex-end'
   },
   icon:{
-    width:80,
-    height:80
+    width:screen.width/4.5,
+    height:screen.width/4.5
   },
   slogan:{
-    fontSize:15,
+    fontSize:screen.width/24,
     fontFamily:'poppins-bold',
     color:'#FFF',
-    paddingTop:15,
+    paddingTop:screen.width/24,
   },
   secondContainer:{
     width:'85%',
@@ -263,38 +263,42 @@ const styles= StyleSheet.create({
   labelButton:{
    color:'#FFF',
    fontFamily:'poppins',
-   fontSize:16,
+   fontSize:screen.width/22.5,
    textTransform:null,
   },
   buttonStyle:{
    borderColor:'#fd6c57',
    width:'100%',
-   borderRadius:20,
-   height:45,
+   borderRadius:screen.width/18,
+   height:screen.width/8,
    alignSelf:'center',
-   marginTop:10
+   marginTop:screen.width/36
   },
    loginContainer:{
     flexDirection:'row',
-    paddingTop:20,
+    paddingTop:screen.width/18,
     alignSelf:'center'
   },
   doYouHaveAnAccount:{
-    fontSize:14,
+    fontSize:screen.width/25.7,
     fontFamily:'poppins',
     color:'#fff'
   },
   loginText:{
-    fontSize:14,
+    fontSize:screen.width/25.7,
     fontFamily:'poppins-bold',
     color:'#fd6c57'
   },
   forgotPassword:{
-    fontSize:14,
+    fontSize:screen.width/25.7,
     fontFamily:'poppins',
     color:'#fff',
     alignSelf:'center',
-    paddingTop:10
+    paddingTop:screen.width/36
+  },
+  phoneNumber:{
+    fontSize:screen.width/24,
+    color:Colors.blue,
   }
   
 });

@@ -1,9 +1,12 @@
 import  React ,  {Component} from 'react';
-import { View, Text,Dimensions, ImageBackground,Image,StatusBar,TouchableOpacity } from 'react-native';
+import { View, Text,Dimensions, ImageBackground,Image,StatusBar} from 'react-native';
 import Carousel ,{ Pagination } from 'react-native-snap-carousel';
 import { LinearGradient } from 'expo-linear-gradient';
 import {Button } from 'react-native-elements';
 import styles from '../constants/guideScreenStyle';
+
+//responsivity (Dimensions get method)
+const screen = Dimensions.get('window');
 
 export default class WelcomeScreen extends Component {
 
@@ -56,8 +59,8 @@ export default class WelcomeScreen extends Component {
                      alignItems:'flex-end'
                  }}
                  imageStyle={{
-                     borderBottomRightRadius:200,
-                     borderBottomLeftRadius:200
+                     borderBottomRightRadius:screen.width/1.8,
+                     borderBottomLeftRadius:screen.width/1.8
                     }}
                 >
                 {item.button}
@@ -89,10 +92,10 @@ export default class WelcomeScreen extends Component {
                     dotsLength={this.state.firstUse.length}
                     containerStyle={{ }}
                     dotStyle={{
-                        width: 10,
-                        height: 10,
-                        borderRadius: 10,
-                        marginHorizontal: 5,
+                        width: screen.width/36,
+                        height: screen.width/36,
+                        borderRadius: screen.width/36,
+                        marginHorizontal: screen.width/72,
                         backgroundColor: "#fd6c57"
                     }}
                     inactiveDotStyle={{
@@ -104,7 +107,7 @@ export default class WelcomeScreen extends Component {
                />
                 </View>
 
-              <View style={{height:'40%',width:'100%',justifyContent:'space-between',paddingVertical:25}}>
+              <View style={{height:'40%',width:'100%',justifyContent:'space-between',paddingVertical:screen.width/14.4}}>
                 <View>
                     <Text style={styles.title}>{this.state.firstUse[this.state.activeTab].title}</Text>
                     <Text style={styles.text}>{this.state.firstUse[this.state.activeTab].text}</Text>

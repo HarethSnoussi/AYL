@@ -5,7 +5,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import moment from 'moment';
 import Colors from "../../../constants/Colors";
-import { FontAwesome } from '@expo/vector-icons'; 
 import 'moment/locale/fr';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -184,7 +183,7 @@ if (error) {
         <Button
           title="Rafraîchir"
            onPress = {loadServices}
-           buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : 25,paddingHorizontal : "5%",marginVertical : "5%"}}
+           buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : screen.width/14.4,paddingHorizontal : "5%",marginVertical : "5%"}}
         />
       </View>
     );
@@ -266,7 +265,7 @@ return (
                    containerStyle = {{ height : "15%",width : "80%",alignSelf:"center" ,justifyContent : "center"  }} 
                    title = "Continuer" 
                    titleStyle = {{fontFamily : "poppins-bold",fontSize : screen.width/28}}
-                   buttonStyle = {{borderRadius : Platform.OS === "android" ? 55 : 20}} 
+                   buttonStyle = {{borderRadius : Platform.OS === "android" ? screen.width/6.5 : screen.width/18}} 
                    ViewComponent={LinearGradient} 
                    linearGradientProps={{
                         colors: ['#fd6d57', '#fd9054'],
@@ -310,7 +309,8 @@ BookStepOne.navigationOptions = ()=> {
       headerTransparent : true,
       title : "" ,
       headerBackTitle : " ",
-      headerTintColor: "#fff" 
+      headerTintColor: "#fff",
+      
     }
 
 }
@@ -332,8 +332,8 @@ const styles= StyleSheet.create({
        width : "100%",
        height : "75%",
        backgroundColor : "white",
-       borderTopLeftRadius : 25,
-       borderTopRightRadius : 25,
+       borderTopLeftRadius : screen.width/14.4,
+       borderTopRightRadius : screen.width/14.4,
         position : "absolute",
         top : "25%",
         overflow : "hidden",
@@ -377,7 +377,7 @@ const styles= StyleSheet.create({
       fontFamily : "poppins-bold",
       fontSize : screen.width/26,
       alignSelf : "center",
-      marginVertical : 5
+      marginVertical : screen.width/72
       },
     ////////////////////////////////////////////////////////////////////////////////
     addService : {

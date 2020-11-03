@@ -159,7 +159,7 @@ if (isLoading) {
     
     <Ionicons 
       name="md-close" 
-      size={22} 
+      size={screen.width/16.4} 
       color = {Colors.primary}
        onPress={props.overlayHandler} />
     
@@ -242,13 +242,13 @@ return(
                         end:{x: 1, y: 0}
                     }}
               onPress={()=>sendConfirmation()}
-             buttonStyle = {{borderRadius :25,marginVertical:"2%",alignItems :"center",justifyContent:"space-between",paddingHorizontal:20}}
+             buttonStyle = {{borderRadius :screen.width/14.4,marginVertical:"2%",alignItems :"center",justifyContent:"space-between",paddingHorizontal:screen.width/18}}
              containerStyle = {{width:"90%",alignSelf:"center"}}
              iconRight = {true}
                     icon={
                       <Ionicons 
                               name = "md-checkmark" 
-                              size = {28}
+                              size = {screen.width/12.85}
                               onPress={()=>sendConfirmation()}
                               color = "#fff"
                               />
@@ -296,7 +296,7 @@ const styles= StyleSheet.create({
   overlayStyle:{
     width : "95%",
     height :"90%",
-    borderRadius : 20,
+    borderRadius : screen.width/18,
     
     // backgroundColor : "rgba(255, 255, 249,1)",
     
@@ -346,7 +346,7 @@ const styles= StyleSheet.create({
    
     width : "40%",
     justifyContent : "space-between",
-    marginTop : 5
+    marginTop : screen.width/72
     },
 
     centered: {

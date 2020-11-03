@@ -11,14 +11,14 @@ const BarberInfos = props =>{
     return( 
     
     <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}}  colors={['#fd6c57', '#fd9054']} style = {{height : "100%",width : "100%",justifyContent:"center",alignItems :"center"}} >
-                <View style = {{width : "85%",height :"70%",borderRadius :5,flexDirection : "row",padding :"5%",justifyContent:'space-between',alignItems :"center"}}>
+                <View style = {{width : "85%",height :"70%",borderRadius :screen.width/72,flexDirection : "row",padding :"5%",justifyContent:'space-between',alignItems :"center"}}>
                 <View style = {{width: "30%"}}>
 
                 {barber && barber.image!==null?(<Avatar source = {{uri:`http://173.212.234.137/profileImages/barber/${barber.image}`}}
-                      containerStyle = {{borderWidth:1,borderRadius : 5,overflow:"hidden"}}
+                      containerStyle = {{borderWidth:1,borderRadius : screen.width/72,overflow:"hidden"}}
                       size= {screen.width/4}
                 />):(<Avatar source = {{uri:'http://173.212.234.137/assets/tahfifa/unknown.jpeg'}}
-                containerStyle = {{borderWidth:1,borderRadius : 5,overflow:"hidden"}}
+                containerStyle = {{borderWidth:1,borderRadius : screen.width/72,overflow:"hidden"}}
                 size= {screen.width/4}
                 />)}
 
@@ -28,14 +28,15 @@ const BarberInfos = props =>{
                 <Text style ={styles.barberAdress}>{props.region+"-"+props.wilaya}</Text>
                 <View style={{flexDirection :"row",alignItems :"center"}}>
                 <Text style ={styles.barberAdress}>{props.mark === null ? 2.5 : props.mark}</Text>
-                <Rating imageSize={16} 
+                <Rating 
+                   imageSize={screen.width/22.5} 
                    readonly
                    startingValue= {props.mark === null ? 2.5 : props.mark}
                   //  ratingColor = "#FE9654"          
                    type='custom'
                     ratingBackgroundColor={'#fff'}
                     tintColor="#fd9054"
-                    style={{marginLeft : 5}}
+                    style={{marginLeft : screen.width/72}}
                         />
                   </View>
                 </View>
@@ -61,8 +62,8 @@ const styles= StyleSheet.create({
        width : "100%",
        height : "75%",
        backgroundColor : "white",
-       borderTopLeftRadius : 25,
-       borderTopRightRadius : 25,
+       borderTopLeftRadius : screen.width/14.4,
+       borderTopRightRadius : screen.width/14.4,
         position : "absolute",
         top : "25%",
         overflow : "hidden",
@@ -106,7 +107,7 @@ const styles= StyleSheet.create({
       fontFamily : "poppins-bold",
       fontSize : screen.width/26,
       alignSelf : "center",
-      marginVertical : 5
+      marginVertical : screen.width/72
       },
     ////////////////////////////////////////////////////////////////////////////////
     addService : {

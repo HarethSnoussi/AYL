@@ -1,5 +1,7 @@
-import {StyleSheet} from 'react-native'
+import {StyleSheet,Dimensions} from 'react-native'
 import Colors from './Colors';
+
+const screen= Dimensions.get('window');
 
 const styles = StyleSheet.create({
 
@@ -26,25 +28,25 @@ const styles = StyleSheet.create({
     text:{
 
       textAlign:'center',
-      fontSize: 14,
-      paddingHorizontal:10,
+      fontSize: screen.width/25.7,
+      paddingHorizontal:screen.width/36,
       color:Colors.blue,
-      paddingBottom:20,
+      paddingBottom:screen.width/18,
       fontFamily:'poppins'
     },
     textConditions:{
         textAlign:'center',
-        fontSize: 13,
-        paddingHorizontal:10,
+        fontSize: screen.width/27.7,
+        paddingHorizontal:screen.width/36,
         color:Colors.blue,
         fontFamily:'poppins',
-        paddingTop:5
+        paddingTop:screen.width/72
     },
 
     title:{
 
       textAlign:'center',
-      fontSize:25,
+      fontSize:screen.width/14.4,
       fontFamily:'poppins-bold',
       color:Colors.primary
 
@@ -52,7 +54,7 @@ const styles = StyleSheet.create({
     titleToConnect:{
 
         textAlign:'center',
-        fontSize:23,
+        fontSize:screen.width/15.7,
         fontFamily:'poppins',
         color:'#fff'
   
@@ -60,29 +62,29 @@ const styles = StyleSheet.create({
     labelButton:{
         color:'#FFF',
         fontFamily:'poppins',
-        fontSize:18,
+        fontSize:screen.width/20,
         textTransform:null,
         
         },
     buttonStyle:{
         width:'80%',
-        borderRadius:20,
-        height:50,
+        borderRadius:screen.width/18,
+        height:screen.width/7.2,
         alignSelf:'center',
         },
     labelButton2:{
         color:'#FFF',
         fontFamily:'poppins',
-        fontSize:22,
+        fontSize:screen.width/16.4,
         textTransform:null,
         
         },
     buttonStyle2:{
         borderColor:'transparent',
         width:'70%',
-        marginHorizontal:10,
-        marginVertical:10,
-        height:50,
+        marginHorizontal:screen.width/36,
+        marginVertical:screen.width/36,
+        height:screen.width/7.2,
         alignSelf:'center',
         }
 

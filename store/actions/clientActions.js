@@ -197,7 +197,7 @@ export const updateClientLang= (id,lang) => {
 
 
 
-export const updateClient= (id,name,surname,email,address,image,wilaya,region) => {
+export const updateClient= (id,name,surname,email,address,wilaya,region) => {
 
     return async dispatch => {
 
@@ -207,13 +207,13 @@ export const updateClient= (id,name,surname,email,address,image,wilaya,region) =
               headers: {
                 'Content-Type': 'application/json'
             },
-            body : JSON.stringify({name,surname,email,address,image,wilaya,region})
+            body : JSON.stringify({name,surname,email,address,wilaya,region})
            });
            if(!response.ok){
                throw new Error('Oups! Une erreur est survenue.');
            }
            
-           dispatch({type:UPDATE_CLIENT,id,clientData:{name,surname,email,address,image,wilaya,region}});
+           dispatch({type:UPDATE_CLIENT,id,clientData:{name,surname,email,address,wilaya,region}});
            
          }catch(err){
              console.log(err);

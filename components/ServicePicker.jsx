@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { View, Picker, StyleSheet,Text } from "react-native";
+import { View, Picker, StyleSheet,Dimensions } from "react-native";
 import { Button } from "react-native-elements";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { Ionicons } from '@expo/vector-icons';
 import RNPickerSelect from 'react-native-picker-select';
+
+
+const screen= Dimensions.get('window');
 
 const ServicePicker = (props) =>{
 
@@ -56,7 +59,7 @@ return(
 
 <View style = {{flexDirection : "row",justifyContent : "space-between",alignItems : "center"}} >
     <View style = {styles.oneService}>
-    <View style={{  width: "90%", backgroundColor : "#f0f0f0", borderRadius : 10}}>
+    <View style={{  width: "90%", backgroundColor : "#f0f0f0", borderRadius : screen.width/36}}>
     {
         
         <RNPickerSelect
@@ -104,7 +107,7 @@ return(
      onPress = {deleteService} 
      containerStyle = {{width : "10%"}}
      icon = {
-        <Ionicons name="md-remove-circle-outline" size={24} color="#fd6c57" />
+        <Ionicons name="md-remove-circle-outline" size={screen.width/15} color="#fd6c57" />
      }
          
      />  }    
@@ -126,8 +129,8 @@ const styles= StyleSheet.create({
         width : "100%",
         height : "75%",
         backgroundColor : "white",
-        borderTopLeftRadius : 25,
-        borderTopRightRadius : 25,
+        borderTopLeftRadius : screen.width/14.4,
+        borderTopRightRadius : screen.width/14.4,
          position : "absolute",
          top : "25%",
          overflow : "hidden",
@@ -146,7 +149,7 @@ const styles= StyleSheet.create({
              flexDirection :"row",
              alignItems : "center",
              overflow : "hidden",
-             marginVertical : 5 
+             marginVertical : screen.width/72 
      }
   
      });

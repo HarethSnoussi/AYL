@@ -325,7 +325,7 @@ if (error  ) {
       <Button
         title="Rafraîchir"
          onPress = {getClient}
-         buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : 25,paddingHorizontal : "5%",marginVertical : "5%"}}
+         buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : screen.width/14.4,paddingHorizontal : "5%",marginVertical : "5%"}}
       />
     </View>
   );
@@ -525,8 +525,8 @@ unAvailable : {
  textTopBarbers : {
    flexDirection : "row",
    justifyContent : "space-between",
-    marginTop : 15,
-    marginHorizontal : 15,
+    marginTop : screen.width/24,
+    marginHorizontal : screen.width/24,
    
     alignItems :"center"
  },
@@ -564,9 +564,9 @@ titleText : {
  searchBar :{
   width : "80%" , 
   alignSelf : "center",
-  borderRadius : 20 , 
+  borderRadius : screen.width/18 , 
   backgroundColor : "rgba(52, 52, 52, 0)" ,
-  marginTop : 15,
+  marginTop : screen.width/24,
   borderTopWidth : 0 , 
   borderBottomWidth : 0 
   },
@@ -575,8 +575,8 @@ titleText : {
     width : "80%" , 
     alignSelf : "center",
     alignItems : "center",
-  borderRadius : 15,
-  marginTop : 35,
+  borderRadius : screen.width/24,
+  marginTop : screen.width/10.3,
   justifyContent : "center",
  
 

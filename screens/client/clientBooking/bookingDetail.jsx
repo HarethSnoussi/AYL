@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View,ActivityIndicator, Alert,ScrollView, Dimensions,ImageBackground,Linking} from 'react-native';
-
 import moment from 'moment';
 import Colors from "../../../constants/Colors";
 import BookingCard from '../../../components/BookingCard';
@@ -11,6 +10,7 @@ import { Rating, AirbnbRating ,Avatar,Button} from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ConfirmOverlay from '../../../components/ConfirmOverlay';
 import { LinearGradient } from 'expo-linear-gradient';
+
 const screen = Dimensions.get("window");
 
 const BookingDetail = props =>{
@@ -232,7 +232,7 @@ if (isLoading) {
 buttonStyle = {{backgroundColor : "white"}}
   icon={
     <MaterialIcons name="call" 
-                            size={28} 
+                            size={screen.width/12.85} 
                             color={Colors.colorH1} 
                            
                     />
@@ -255,7 +255,7 @@ buttonStyle = {{backgroundColor : "white"}}
                   buttonStyle = {{backgroundColor : "white"}}
                     icon={
                       <Ionicons name="ios-close-circle-outline" 
-                                        size={28} 
+                                        size={screen.width/12.85} 
                                         color={Colors.colorF3} 
                                         onPress = {overlayToggle}
                                 /> 
@@ -272,7 +272,7 @@ buttonStyle = {{backgroundColor : "white"}}
 <View style = {styles.barber}>
 
 <View style={styles.title}>
-    <Text style={{fontFamily : "poppins-bold",color :Colors.blue,fontSize : screen.width /28,paddingBottom:5}}>Détail de la réservation
+    <Text style={{fontFamily : "poppins-bold",color :Colors.blue,fontSize : screen.width /28,paddingBottom:screen.width/72}}>Détail de la réservation
     </Text>
     </View>
 
@@ -405,7 +405,7 @@ actions : {
  width :"90%",
  height : screen.height * 0.1 ,
  alignSelf : "center",
-borderRadius : 15,
+borderRadius : screen.width/24,
 flexDirection : "row",
 alignItems : "center",
 justifyContent : "space-around",
@@ -416,7 +416,7 @@ barber : {
 width : "90%",
 backgroundColor  : "#fff" ,
 alignSelf : "center" ,
-borderRadius : 15,
+borderRadius : screen.width/24,
 marginVertical : "2%",
 height : screen.height * 0.6 ,
 // justifyContent : "space-between"
@@ -425,7 +425,7 @@ height : screen.height * 0.6 ,
 services : {
   height : screen.height * 0.3 ,
     backgroundColor : "#fff",
-    borderRadius :  15,
+    borderRadius :  screen.width/24,
     width : "90%",
     alignSelf : "center",
 },
@@ -443,7 +443,7 @@ actionsText : {
 },
 barberText : {
     fontFamily : "poppins",
-    marginLeft : 5,
+    marginLeft : screen.width/72,
     fontSize : screen.width /28
 
 },
@@ -451,7 +451,7 @@ barberTitle : {
     alignSelf : "center",
     fontFamily : "poppins-bold",
     color : Colors.Blue,
-    fontSize : screen.width /26
+    fontSize : screen.width /24
 },
 serviceText :{
     fontFamily : "poppins",
@@ -462,7 +462,7 @@ serviceText :{
 servicesTitle : {
     alignSelf : "center",
     fontFamily : "poppins-bold",
-    marginBottom : 10 ,
+    marginBottom : screen.width/36 ,
     color : Colors.primary,
     fontSize : screen.width /28
 

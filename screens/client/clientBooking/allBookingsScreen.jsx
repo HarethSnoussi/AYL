@@ -214,7 +214,7 @@ if (error) {
       <Button
         title="Try again"
          onPress = {expired}
-         buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : 25,paddingHorizontal : "5%",marginVertical : "5%"}}
+         buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : screen.width/14.4,paddingHorizontal : "5%",marginVertical : "5%"}}
       />
     </View>
   );
@@ -242,7 +242,7 @@ if (isLoading) {
         <View style={{}}  >
 
             <Calendar
-            style = {{borderBottomLeftRadius : 25,borderBottomRightRadius : 25,overflow : "hidden",paddingVertical : "2%" , marginBottom : 15}}
+            style = {{borderBottomLeftRadius : screen.width/14.4,borderBottomRightRadius : screen.width/14.4,overflow : "hidden",paddingVertical : "2%" , marginBottom : screen.width/24}}
            theme={{
             // selectedDayTextColor: Colors.primary,
 
