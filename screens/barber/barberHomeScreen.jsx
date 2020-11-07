@@ -30,6 +30,7 @@ const BarberHomeScreen = props =>{
   try{
     setError(false);
     setIsLoading(true);
+   
     await dispatch(barberActions.setBarber(barberID));
     await dispatch(reviewsActions.setFeedbacks(barberID));
     await dispatch(portfolioActions.setPortfolio(barberID));
