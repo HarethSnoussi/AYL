@@ -283,6 +283,7 @@ const BarberHomeScreen = props =>{
                surname={feed.surname}
                comment={feed.comment}
                image={feed.image!==null?feed.image:'unknown.jpeg'}
+               date={new Date(feed.date).getDate() +'/'+(new Date(feed.date).getMonth()+1)}
                feedbacks={feedbacks}
               />)}
               </View>)}

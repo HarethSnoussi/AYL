@@ -439,6 +439,7 @@ if (isLoading || allBarbers.length <= 0 ) {
              region = {barber.region}
              wilaya = {barber.wilaya}
              mark = {barber.mark}
+             image={barber.image!==null?barber.image:'unknown.jpeg'}
              navigateToBarberProfil={()=>props.navigation.navigate("Barber",{barberID : barber.id,clientID:clientID,overCpt:allBookings.length})}
              navigate = {()=>props.navigation.navigate("BookStepOne",{barberId : barber.id,clientID,name:barber.name,surname:barber.surname,mark:barber.mark,region:barber.region,wilaya:barber.wilaya,overCpt : allBookings.length})}
             />

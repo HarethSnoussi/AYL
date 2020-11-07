@@ -9,7 +9,7 @@ const screen = Dimensions.get("window");
 
 const TopBarbersCard = (props)=> {
 
-  const barber= useSelector(state=>state.barber.barber[0]);
+  
 
     return(
 
@@ -17,15 +17,11 @@ const TopBarbersCard = (props)=> {
         <View  style = {styles.barberPictureContainer}>
 
          <ImageBackground resizeMode = "stretch" style = {{width : "100%" ,height : "100%" ,alignItems : "center" , justifyContent : "center"}} source = {{uri:'http://173.212.234.137/assets/tahfifa/test4.png'}}>  
-           {barber && barber.image!==null?(<Avatar source = {{uri:`http://173.212.234.137/profileImages/barber/${barber.image}`}}
+           <Avatar source = {{uri:`http://173.212.234.137/profileImages/barber/${props.image}`}}
               containerStyle = {styles.barberPicture}
               rounded
               size= "large"
-              />): (<Avatar source = {{uri:'http://173.212.234.137/assets/tahfifa/unknown.jpeg'}}
-              containerStyle = {styles.barberPicture}
-              rounded
-              size= "large"
-              />)}
+              />
               </ImageBackground>
         </View>
         <View style = {styles.barberInfos}>
