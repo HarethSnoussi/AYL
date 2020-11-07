@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View,Image, ImageBackground, Dimensions,ActivityIndicator,ScrollView} from 'react-native';
 import BarberCard from '../../../components/BarberCard';
 import { SearchBar } from 'react-native-elements';
-import { Ionicons } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { Ionicons,Feather } from '@expo/vector-icons';
+
 import Colors from "../../../constants/Colors";
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,6 +13,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import NotifOverlay from '../../../components/NotifOverlay';
 
 const screen = Dimensions.get("window");
+
+
 const AllBarbersScreen = props =>{
 const width = screen.width ;
 
@@ -20,66 +22,61 @@ const clientID =   props.navigation.getParam("clientID");
 
 const allBarbers = props.navigation.getParam("type") === "coiffeurs" ? useSelector(state => state.lists.barbers) : useSelector(state => state.lists.saloons) ;
 
+const regions = allBarbers.map(e=>e.region);
+
   const [isRefreshing, setIsRefreshing] = useState(false);
   //Error Handler
   const [error, setError] = useState();
   const [isLoading,setLoading] = useState(false);
-  const [overlayState , setOverlay] = useState (false);
+
   const [searchState,setSearchState] = useState("");
-  const [stadiumIndex , setStadiumIndex] = useState(0);
-  const [wilayas,setWilayas] = useState([]);
+
+  const [foundBarbers,setFoundBarbers] = useState([]);
+  const [foundRegions,setFoundRegions] = useState([]);
+  const [pressed,setPressed]=useState(false);
+
   // const confirmedBookings = useSelector(state =>state.bookings.confirmedBookings);
 
  
 const dispatch = useDispatch();
   
 
-const SearchFilterFunction = (text)=> {
-  setSearchState(text);
- 
- 
-  //passing the inserted text in textinput
-  // const newData = this.arrayholder.filter(function(item) {
-  //   //applying filter for the inserted text in search bar
-  //   const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
-  //   const textData = text.toUpperCase();
-  //   return itemData.indexOf(textData) > -1; }
-  };
-
-
 useEffect(()=>{
-const a= allBarbers.filter((e)=>{
 
-    const itemData = e.region ? e.region.toUpperCase() : ''.toUpperCase();
-    const textData = searchState.toUpperCase();
-    return itemData.startsWith(textData);
+const a= regions.filter((e)=>{
+
+  const itemData = e ? e.toUpperCase() : ''.toUpperCase();
+  
+  const textData = searchState.toUpperCase();
+  
+  return itemData.startsWith(textData);
 
 })
+const resultBarbers = allBarbers.filter(e=>e.region.toUpperCase() === searchState.toUpperCase());
+
+setFoundBarbers([...resultBarbers]);
+
+searchState === "" ? setFoundRegions([]): setFoundRegions(a);
+
+},[searchState,setFoundBarbers]);
 
 
- setWilayas(a);
+//on Press on search result 
 
-},[searchState]);
+const searchResult = async (s)=>{
 
-// const barbersByWilayas = allBarbers.filter(e=>e.wilaya.toUpperCase() === searchState.toUpperCase());
-
-
-const searchedResult = searchState === "" ? allBarbers :  wilayas ;
-
-//GEt ALL BARBERS 
-
-// useEffect(()=>{
-
-// const fetchBarbers = async ()=>{
-// setLoading(true);
-// await dispatch(getBarbers());
-// setLoading(false);
-
-// }
-//  fetchBarbers();
+setSearchState(s);
 
 
-// },[dispatch]);
+}
+
+
+
+
+
+const searchedResult = searchState === "" ? allBarbers :  foundBarbers ;
+
+
 
 
 
@@ -138,7 +135,11 @@ if (isLoading) {
                 onClear={text => setSearchState('')}
               />
    </View>
-      <View style = {{width :"90%" , alignSelf : "center",marginVertical : screen.width/72,flexDirection : "row",justifyContent : "space-between"}}>
+
+
+{      
+  searchedResult.length !== 0 &&
+  <View style = {{width :"90%" , alignSelf : "center",marginVertical : screen.width/72,flexDirection : "row",justifyContent : "space-between"}}>
       
          <View>
         
@@ -147,13 +148,42 @@ if (isLoading) {
           </View>
           {/* <FontAwesome5  name="filter" size={24} color="#333"  /> */}
       </View>
-            <ScrollView   showsVerticalScrollIndicator  = {false} style = {{borderWidth : 0.3}}>
-          
+      
+      }
 
+
+            <ScrollView    showsVerticalScrollIndicator  = {false} style = {{borderWidth : searchedResult.length !== 0 ?  0.3 : 0}}>
+          <View style = {{   width : "90%" , 
+                 alignSelf : "center",
+                
+     
+      }}>
+{
+  searchState !== "" && foundBarbers.length === 0 &&foundRegions.map((e,index)=>{
+return(
+  
+  <TouchableOpacity  onPress={()=>{searchResult(e)}} key ={index} style={styles.searchedRegion} >
+  <Feather name="arrow-up-right" size={screen.width/19.2} color="black" style = {{marginRight : "5%"}} />
+    <Text style = {{fontFamily : "poppins",fontSize : width/26}} >{e}</Text>
+   
+    </TouchableOpacity>
+
+ 
+)
+
+
+  })
+ 
+
+}
+
+</View>
           {
             searchedResult.map((barber,index)=> {
-
+              
               return (
+                
+              
               <BarberCard 
               key = {index}
               navigate = {()=>props.navigation.navigate("BookStepOne",{barberId : barber.id,clientID,name:barber.name,surname:barber.surname,mark:barber.mark,region:barber.region,wilaya:barber.wilaya,overCpt :props.navigation.getParam("overCpt")})}
@@ -217,6 +247,12 @@ const styles= StyleSheet.create({
         height : screen.height * 0.3 ,
         overflow : "hidden",
       } ,
+    searchedRegion : 
+{
+  paddingVertical : screen.width/26,
+        borderBottomWidth:0.6,
+        flexDirection :"row"
+      },
     
 ///////////////////////////////////////////////////////
 cardContainer : {
