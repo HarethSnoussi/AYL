@@ -1,6 +1,6 @@
 import React,{useState,useCallback,useReducer,useRef} from 'react';
 import { StyleSheet,View,KeyboardAvoidingView,Text,Platform,Image,Dimensions,StatusBar,Alert,ActivityIndicator,TextInput,TouchableWithoutFeedback,Keyboard} from 'react-native';
-import {MaterialIcons,FontAwesome5} from "@expo/vector-icons";
+import {MaterialIcons} from "@expo/vector-icons";
 import {Button } from 'react-native-elements';
 import Colors from '../constants/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -291,8 +291,7 @@ ForgotPasswordScreen.navigationOptions= ()=>{
       />
     ),
     
-    headerTintColor: '#fff',
-    headerLeft:(navData)=>(<FontAwesome5 onPress={()=>navData.navigation.goBack()} name="arrow-left" size={24} color="white" style={{marginLeft:screen.width/36}} />) 
+    headerTintColor: '#fff' 
   };
 }
 
