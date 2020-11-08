@@ -38,6 +38,7 @@ const Feedback = props =>{
                     <Text style={styles.comment}>
                     {props.comment? props.comment:client && client.lang?polylanfr.NoComments:polylanar.NoComments}
                     </Text>
+                    <Text style={{fontSize:screen.width/36,fontFamily:'poppins-bold',color:'grey'}}>{props.date}</Text>
                 </View>
             </View>
         </View>
