@@ -55,6 +55,7 @@ const PlayerProfileScreen = props =>{
 
 
   const client= useSelector(state=>state.clients.client);
+  console.log(client)
   const [isInfo,setIsInfo]= useState(true);
   const [isLocalisation,setIsLocalisation]= useState(false);
 
@@ -258,7 +259,7 @@ const takeImageHandler = async ()=>{
       Alert.alert(client && client[0].lang?polylanfr.Error:polylanar.Error,client && client[0].lang?polylanfr.EmptyFields:polylanar.EmptyFields,[{text:client && client[0].lang?polylanfr.OK:polylanar.OK}]);
     }
   
-  },[dispatch,clientID,formState,pickedImage,wilaya]);
+  },[dispatch,clientID,formState,wilaya]);
 
   if(isLoadingImage){
     return <ImageBackground source={{uri:'http://173.212.234.137/assets/tahfifa/support.png'}} style={styles.activityIndicatorContainer} >
@@ -286,8 +287,8 @@ const takeImageHandler = async ()=>{
      <View style={styles.secondCard}>
           <View style={styles.secondCardContent}>
               <View style={styles.imageContainer}>
-              {client && pickedImage?<Image source={{uri:`http://173.212.234.137/profileImages/client/${pickedImage}`}} style={styles.image} />:
-                <Image source={{uri:'http://173.212.234.137/assets/tahfifa/unknwon.jpeg'}} style={styles.image} />}
+              {client[0] && pickedImage!==null?<Image source={{uri:`http://173.212.234.137/profileImages/client/${pickedImage}`}} style={styles.image} />:
+                <Image source={{uri:'http://173.212.234.137/assets/tahfifa/unknown.jpeg'}} style={styles.image} />}
               </View>
               <View style={styles.detailsContainer}>
                 <View style={{width:'30%'}}>

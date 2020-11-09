@@ -14,7 +14,7 @@ import CustomInput from '../../components/Input';
 
 
 const screen = Dimensions.get("window");
-
+console.log(screen);
 //Firebase config
 try {
   if (Firebaseconfig.apiKey) {
@@ -52,7 +52,7 @@ const formReducer=(state,action) =>{
 };
 
 const SignupScreen = props =>{
-
+  
     //States for recaptcha and auth handling
     const recaptchaVerifier = useRef(null);
     const [verificationId, setVerificationId] = useState('');
@@ -236,7 +236,7 @@ try {
    return(
     <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}> 
        <View stlye={styles.container}>
-          <KeyboardAvoidingView keyboardVerticalOffset={screen.width/36} behavior={Platform.OS === "ios" ? "padding" : null}>
+          <KeyboardAvoidingView keyboardVerticalOffset={10} behavior={Platform.OS === "ios" ? "padding" : null}>
           <StatusBar hidden />
           <FirebaseRecaptcha.FirebaseRecaptchaVerifierModal
                 ref={recaptchaVerifier}
@@ -489,7 +489,7 @@ const styles= StyleSheet.create({
    
     width:'90%',
     alignSelf:'center',
-    paddingTop:screen.width/9,
+    paddingTop:screen.width/14.4,
   },
   labelButton:{
     color:'#FFF',
@@ -502,7 +502,7 @@ const styles= StyleSheet.create({
      width:'90%',
      alignSelf:'center',
      justifyContent:'center',
-     marginTop:screen.width/12
+     marginTop:screen.width/36
     },
    buttonStyle:{
     borderColor:'#fd6c57',
@@ -522,16 +522,16 @@ const styles= StyleSheet.create({
    },
     loginContainer:{
      flexDirection:'row',
-     paddingTop:screen.width/24,
+     paddingTop:screen.width/72,
      alignSelf:'center'
    },
    doYouHaveAnAccount:{
-     fontSize:screen.width/21.2,
+     fontSize:screen.width/24,
      fontFamily:'poppins',
      color:'#323446'
    },
    loginText:{
-     fontSize:screen.width/21.2,
+     fontSize:screen.width/24,
      fontFamily:'poppins-bold',
      color:'#fd6c57'
    },

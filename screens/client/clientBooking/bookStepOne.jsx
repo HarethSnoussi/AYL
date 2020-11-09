@@ -180,7 +180,7 @@ if (error) {
 if (isLoading) {
     
     return (
-      <ImageBackground style= {styles.centered} source={{uri:'http://173.212.234.137/assets/tahfifa/support.png'}}>
+      <ImageBackground  source={{uri:'http://173.212.234.137/assets/tahfifabarber/support.png'}} style= {styles.centered}>
         <ActivityIndicator size="large" color= {Colors.primary} />
       
       </ImageBackground>
@@ -198,6 +198,7 @@ return (
                   wilaya = {props.navigation.getParam("wilaya")}
                   region = {props.navigation.getParam("region")}
                   mark = {props.navigation.getParam("mark")}
+                  image={props.navigation.getParam("image")!==null?props.navigation.getParam("image"):'unknown.jpeg'}
                />
                 </View>
 
@@ -274,6 +275,7 @@ return (
                       mark:props.navigation.getParam("mark"),
                       region:props.navigation.getParam("region"),
                       wilaya:props.navigation.getParam("wilaya"),
+                      image:props.navigation.getParam("image"),
                       overCpt :props.navigation.getParam("overCpt")
                      })
                      }
@@ -402,7 +404,6 @@ barberAdress : {
     //////////////////////////////////////////////////////
     centered: {
         flex:1,
-        alignItems:'center',
         justifyContent:'center',
         width:'100%',
         height:'100%',
