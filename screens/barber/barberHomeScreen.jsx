@@ -141,7 +141,7 @@ const BarberHomeScreen = props =>{
                     </View>
                     <Text style={styles.iconText}>{client && client.lang?polylanfr.Services:polylanar.Services}</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.iconContainer} onPress = {()=>props.navigation.navigate("BookStepOne",{barberId :barberID,clientID:props.clientID,name:barber.name,surname:barber.surname,mark:barber.mark,region:barber.region,wilaya:barber.wilaya,overCpt : props.overCpt})}>
+                  <TouchableOpacity style={styles.iconContainer} onPress = {()=>props.navigation.navigate("BookStepOne",{barberId :barberID,clientID:props.clientID,name:barber.name,surname:barber.surname,mark:barber.mark,region:barber.region,wilaya:barber.wilaya,image:barber.image,overCpt : props.overCpt})}>
                     <View style={styles.iconFormCircle3}>
                       <MaterialCommunityIcons title = "calendar-account" name ='calendar-account' color='#fff' size={screen.width/15.7} />
                     </View>

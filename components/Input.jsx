@@ -97,7 +97,7 @@ const styles= StyleSheet.create({
     input:{
         borderBottomWidth:0,
         paddingHorizontal:screen.width/36,
-        paddingVertical:screen.width<=500?null:screen.width/36,
+        paddingVertical:screen.width<399?null:screen.width>=400 && screen.width<=500?screen.width/60:screen.width/36,
       },
 });
 

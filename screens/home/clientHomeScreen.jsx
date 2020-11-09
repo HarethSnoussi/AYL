@@ -256,7 +256,7 @@ async function registerForPushNotificationsAsync() {
         }
 
   } else {
-    alert('Must use physical device for Push Notifications');
+    //alert('Must use physical device for Push Notifications');
   }
 
   if (Platform.OS === 'android') {
@@ -441,7 +441,7 @@ if (isLoading || allBarbers.length <= 0 ) {
              mark = {barber.mark}
              image={barber.image!==null?barber.image:'unknown.jpeg'}
              navigateToBarberProfil={()=>props.navigation.navigate("Barber",{barberID : barber.id,clientID:clientID,overCpt:allBookings.length})}
-             navigate = {()=>props.navigation.navigate("BookStepOne",{barberId : barber.id,clientID,name:barber.name,surname:barber.surname,mark:barber.mark,region:barber.region,wilaya:barber.wilaya,overCpt : allBookings.length})}
+             navigate = {()=>props.navigation.navigate("BookStepOne",{barberId : barber.id,clientID,name:barber.name,surname:barber.surname,mark:barber.mark,region:barber.region,wilaya:barber.wilaya,image:barber.image,overCpt : allBookings.length})}
             />
            )})
             }

@@ -13,7 +13,7 @@ const ConfirmOverlay = props =>{
         <Overlay 
        onBackdropPress = {props.close}
         isVisible={props.isVisible}
-        overlayStyle = {{width :"80%",height :"40%",backgroundColor:"#fff",borderRadius:screen.width/24,overflow:"hidden",marginBottom:"40%",elevation:2,padding:0}}
+        overlayStyle = {{width :"80%",height :"50%",backgroundColor:"#fff",borderRadius:screen.width/24,overflow:"hidden",marginBottom:"40%",elevation:2,padding:0}}
         
         
         >
@@ -28,7 +28,8 @@ const ConfirmOverlay = props =>{
 
                                     <View style = {{justifyContent:"center",alignItems:"center",height :"30%"}}>
                                         <Text style = {{fontSize : screen.width / 24,fontFamily :"poppins-bold",color:Colors.blue}} >Annuler</Text>
-                                        <Text style = {{fontSize : screen.width / 32,fontFamily :"poppins-bold",color:Colors.textGrey}}>Voulez vous vraiment annuler cette réservation</Text>
+                                        <Text style = {{fontSize : screen.width / 30,fontFamily :"poppins-bold",color:Colors.textGrey}}>Voulez-vous vraiment annuler</Text>
+                                        <Text style = {{fontSize : screen.width / 30,fontFamily :"poppins-bold",color:Colors.textGrey}}>cette réservation?</Text>
 
                                     </View>
                     </View>
@@ -39,7 +40,7 @@ const ConfirmOverlay = props =>{
                     <Button  
                 // title ={props.buttonTitle} 
                 title = "Oui"
-                buttonStyle = {{backgroundColor : Colors.primary,borderRadius : 0,paddingHorizontal : "5%",alignSelf:"center",width:"80%",borderRadius :screen.width/24}}
+                buttonStyle = {{backgroundColor : Colors.primary,paddingHorizontal : "5%",alignSelf:"center",width:"80%",borderRadius :screen.width/24}}
                 titleStyle = {{color :"#fff",fontSize :screen.width/30}}
                 onPress = {props.cancel}
                 />
@@ -47,7 +48,7 @@ const ConfirmOverlay = props =>{
             <Button  
                 // title ={props.buttonTitle} 
                 title = "Non"
-                buttonStyle = {{backgroundColor : "#fff",borderRadius : 0,paddingHorizontal : "5%",alignSelf:"center",width:"80%",borderRadius :screen.width/24,elevation:2}}
+                buttonStyle = {{backgroundColor : "#fff",paddingHorizontal : "5%",alignSelf:"center",width:"80%",borderRadius :screen.width/24,elevation:2}}
                 titleStyle = {{color :Colors.primary,fontSize :screen.width/30}}
                 onPress = {props.close}
                 />

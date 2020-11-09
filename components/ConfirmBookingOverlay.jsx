@@ -242,7 +242,7 @@ return(
                         end:{x: 1, y: 0}
                     }}
               onPress={()=>sendConfirmation()}
-             buttonStyle = {{borderRadius :screen.width/14.4,marginVertical:"2%",alignItems :"center",justifyContent:"space-between",paddingHorizontal:screen.width/18}}
+             buttonStyle = {{borderRadius :screen.width/24,marginVertical:"2%",alignItems :"center",justifyContent:"space-between",paddingHorizontal:screen.width/18}}
              containerStyle = {{width:"90%",alignSelf:"center"}}
              iconRight = {true}
                     icon={

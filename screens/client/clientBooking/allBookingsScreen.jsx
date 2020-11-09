@@ -242,7 +242,7 @@ if (isLoading) {
         <View style={{}}  >
 
             <Calendar
-            style = {{borderBottomLeftRadius : screen.width/14.4,borderBottomRightRadius : screen.width/14.4,overflow : "hidden",paddingVertical : "2%" , marginBottom : screen.width/24}}
+            style = {{borderBottomLeftRadius : screen.width/14.4,borderBottomRightRadius : screen.width/14.4,overflow : "hidden",paddingVertical : screen.width/12, marginBottom : screen.width/24}}
            theme={{
             // selectedDayTextColor: Colors.primary,
 
