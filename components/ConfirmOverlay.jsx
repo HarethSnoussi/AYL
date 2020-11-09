@@ -9,7 +9,7 @@ const ConfirmOverlay = props =>{
 
 
         return (
-            <TouchableWithoutFeedback  style={{backgroundColor:"red"}} onPress = {props.close}>
+            <TouchableWithoutFeedback   onPress = {props.close}>
         <Overlay 
        onBackdropPress = {props.close}
         isVisible={props.isVisible}
@@ -22,7 +22,7 @@ const ConfirmOverlay = props =>{
                                     <View style = {{height:"40%",justifyContent:"center",alignItems:"center"}}>
                                     <Image
                                             style={{height:"100%",width:"100%",resizeMode:"contain"}}
-                                            source={{uri:'http://173.212.234.137/assets/tahfifa/expired.png'}}
+                                            source={{uri:'http://173.212.234.137/assets/tahfifa/false.png'}}
                                         />
                                     </View>
 

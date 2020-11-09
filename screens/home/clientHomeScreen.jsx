@@ -85,7 +85,7 @@ const responseListener = useRef();
     await dispatch(getTokens(clientID));
     await dispatch(clientActions.setClient(clientID));
    
-  setLoading(false);
+   setLoading(false);
 
     }catch(err){
       console.log(err);
@@ -363,7 +363,8 @@ if (isLoading || allBarbers.length <= 0 ) {
 
         
             <View style = {styles.firstTitle}>  
-         {   client[0].sex ==="Homme" ?   <Text style = {styles.titleText}> Retrouvez Votre Coiffeur</Text> : <Text style = {styles.titleText}> Retrouvez Votre Coiffeuse</Text>  }
+         { <Text style = {styles.titleText}>Votre bien-être commence ici
+</Text> }
     
 
 <View>
@@ -416,7 +417,7 @@ if (isLoading || allBarbers.length <= 0 ) {
           <View style = {styles.textTopBarbers}>
                 { client[0].sex ==="Homme" ? <Text style = {styles.bestText}> Meilleurs Coiffeurs</Text> : <Text style = {styles.bestText}> Meilleures Coiffeuses</Text> }
                 <TouchableOpacity  
-                onPress={() =>props.navigation.navigate("AllBarbers",{type : "coiffeurs",clientID,overCpt : allBookings.length})} >
+                onPress={() =>props.navigation.navigate("AllBarbers",{type : client[0].sex ==="Homme" ? "coiffeurs" : "coiffeuses",clientID,overCpt : allBookings.length})} >
                 <Text style = {styles.showAll}>
                 Tout Afficher
                 </Text>
@@ -573,7 +574,7 @@ titleText : {
   },
 
   firstTitle : {
-    width : "80%" , 
+ 
     alignSelf : "center",
     alignItems : "center",
   borderRadius : screen.width/24,

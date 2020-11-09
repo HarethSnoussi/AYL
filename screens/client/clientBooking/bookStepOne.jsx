@@ -1,17 +1,16 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { StyleSheet, Text, View , Image, Dimensions , StatusBar, Platform,ActionSheetIOS, ActivityIndicator ,ScrollView, FlatList, ImageBackground} from 'react-native';
-import { Button ,ButtonGroup,CheckBox,Divider, Avatar,Rating} from 'react-native-elements';
+import React, { useState, useEffect, useCallback } from 'react';
+import { StyleSheet, Text, View , Dimensions , Platform, ActivityIndicator ,ScrollView, ImageBackground} from 'react-native';
+import { Button ,Divider} from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import moment from 'moment';
+
 import Colors from "../../../constants/Colors";
 import 'moment/locale/fr';
 import { useDispatch, useSelector } from 'react-redux';
 
 
-import ServicePicker from '../../../components/ServicePicker';
 import { getServices } from '../../../store/actions/servicesActions';
-import { color } from 'react-native-reanimated';
+
 import MyCheckBox from '../../../components/MyCheckBox';
 import BarberInfos from '../../../components/BarberInfos';
 
@@ -29,8 +28,7 @@ const barberServices =  useSelector(state => state.services.services);
 
 const dispatch = useDispatch();
 
-//Sum of Array elements
-const sumArray = (accumulator, currentValue) => accumulator + currentValue;
+
 
 
 const [isRefreshing, setIsRefreshing] = useState(false);
@@ -42,20 +40,7 @@ const [isLoading , setLoading] = useState (false);
 //Array of ALL choosen Services by the customer
 const [pickedServices , setServices] = useState ([]);
 
-//ID OF the services
-const [addedID , setID] = useState([]);
 
-//number of Services 
-const [servicesNumber , setServicesNumber] = useState(0);
-
-//Type Added
-const [addedTypes , setTypes] = useState([]);
-
-//ALL prices Added
-const [addedPrices , setPrices] = useState ([0]);
-
-//All Added Times
-const [addedTimes , setAddedTimes] = useState([0]);
 
 //Total Amount State
 const [totalAmount,setAmount] = useState(0);
@@ -160,8 +145,8 @@ const servicesHandler = (service,bool)=>{
      setServices(previous => {
         return [...previous,  {...service }];
       });
-      setAddedTimes(previous=>[...previous,service.duration]);
-      setPrices(previous=>[...previous,service.price]);
+     
+      
       // setAmount(addedPrices.reduce(sumArray));
       // setTime(addedTimes.reduce(sumArray));
       setAmount(previous=>previous+service.price);
