@@ -46,6 +46,11 @@ const TopBarbersCard = (props)=> {
               title = "Réserver" 
               titleStyle = {{color :"#fff",fontSize : screen.width/30}}
               onPress = {props.navigate}
+              linearGradientProps={{
+                        colors: ['#fd6d57', '#fd9054'],
+                        start: {x: 0, y: 0} ,
+                        end:{x: 1, y: 0}
+                    }}
               />
 
         </View>
@@ -107,7 +112,6 @@ const styles= StyleSheet.create({
     fontSize : screen.width/24
  },
  button : {
-   backgroundColor : "#fd6c57",
    alignSelf : "center",
    marginBottom:screen.width/72,
    paddingHorizontal:screen.width/14.4,
