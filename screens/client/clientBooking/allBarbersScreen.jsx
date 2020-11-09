@@ -33,7 +33,7 @@ const regions = allBarbers.map(e=>e.region);
 
   const [foundBarbers,setFoundBarbers] = useState([]);
   const [foundRegions,setFoundRegions] = useState([]);
-  const [pressed,setPressed]=useState(false);
+
 
   // const confirmedBookings = useSelector(state =>state.bookings.confirmedBookings);
 

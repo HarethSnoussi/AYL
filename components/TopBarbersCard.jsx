@@ -13,7 +13,7 @@ const TopBarbersCard = (props)=> {
 
     return(
 
-        <View style = {styles.barberContainer}>
+        <TouchableOpacity onPress={props.navigateToBarberProfil} style = {styles.barberContainer}>
         <View  style = {styles.barberPictureContainer}>
 
          <ImageBackground resizeMode = "stretch" style = {{width : "100%" ,height : "100%" ,alignItems : "center" , justifyContent : "center"}} source = {{uri:'http://173.212.234.137/assets/tahfifa/test4.png'}}>  
@@ -38,9 +38,7 @@ const TopBarbersCard = (props)=> {
               ratingBackgroundColor={'#323446'}
               tintColor='#fff' />
 
-            <TouchableOpacity style={{alignItems : "center"}} onPress={props.navigateToBarberProfil}>
-                  <Text style ={{color : "#fd6c57",fontFamily : "poppins-bold",letterSpacing : 1,fontSize : screen.width/30}}>Voir le profil </Text>
-                </TouchableOpacity>
+        
           
                     
             <Button 
@@ -52,7 +50,7 @@ const TopBarbersCard = (props)=> {
 
         </View>
     
-  </View>
+  </TouchableOpacity>
     )
 
 

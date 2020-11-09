@@ -21,7 +21,7 @@ const BarberCard = props =>{
 
     return(
        
-        <View style = {styles.cardContainer}>
+        <TouchableOpacity  onPress={props.navigateToBarberProfil} style = {styles.cardContainer}>
         <View style = {styles.cardImage}>
        <Image source={{uri:`http://173.212.234.137/profileImages/barber/${props.image}`}} style={styles.image} />
               
@@ -38,6 +38,25 @@ const BarberCard = props =>{
                 <EvilIcons name="location" size={24} color="#9d9da1" />
                 <Text style = {{fontFamily : "poppins", color : "#9d9da1"}}>3.5 km</Text>
                 </View> */}
+
+                <View style = {{flexDirection : "row"}}>
+             <Text style={{fontFamily : "poppins",fontSize : screen.width/30}}>{props.mark === null ? 2.5 : props.mark}</Text>
+            <Rating
+              type='star'
+              ratingCount={1}
+              imageSize={screen.width/24}
+              startingValue = {1}
+              style = {styles.rating}
+              ratingColor = "#FE9654"          
+              type='custom'
+              readonly = {true}
+              tintColor='#fff'
+                />
+                 
+                </View>
+
+
+                
               </View>
               <Text style = {{fontFamily : "poppins", color : "#9d9da1",fontSize : screen.width/28}} >
               {props.region + "-" + props.wilaya}
@@ -46,33 +65,23 @@ const BarberCard = props =>{
 
               <View style= {styles.extra}>
               <View  style= {styles.extraHours}>
-              <View style = {{flexDirection : "row"}}>
             
-              <Rating
-                type='star'
-                ratingCount={1}
-                imageSize={screen.width/24}
-                startingValue = {1}
-                style = {styles.rating}
-                ratingColor = "#FE9654"          
-                type='custom'
-                readonly = {true}
-                tintColor='#fff'
-                  />
-                    <Text style={{fontFamily : "poppins",fontSize : screen.width/30}}>{props.mark === null ? 2.5 : props.mark}</Text>
-                  </View>
-                <TouchableOpacity onPress={props.navigateToBarberProfil}>
-                  <Text style ={{color : "#fd6c57",fontFamily : "poppins-bold",letterSpacing : 1,fontSize : screen.width/30}}>Voir le profil </Text>
-                </TouchableOpacity>
+             
               
                
                 </View>
                
                 <Button  
                 title ="Réserver" 
-                buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : screen.width/14.4,paddingHorizontal : "5%"}}
+                buttonStyle = {{borderRadius : screen.width/65,paddingHorizontal : "5%"}}
                 titleStyle = {{color :"#fff",fontSize :screen.width/30}}
                 onPress = {props.navigate}
+                containerStyle = {{width : "40%"}}
+                linearGradientProps={{
+                        colors: ['#fd6d57', '#fd9054'],
+                        start: {x: 0, y: 0} ,
+                        end:{x: 1, y: 0}
+                    }}
                 />
               
               </View>
@@ -80,7 +89,7 @@ const BarberCard = props =>{
           
           </View>
 
-    </View>
+    </TouchableOpacity>
 
 
      );    
@@ -112,15 +121,16 @@ const styles= StyleSheet.create({
     
 ///////////////////////////////////////////////////////
 cardContainer : {
-  width : "97%",
-  backgroundColor : "#fff",
-  height : screen.height * 0.18,
+  width : "100%",
+  
+  height : screen.height * 0.178,
   flexDirection : "row",
   justifyContent : "space-around",
   borderBottomWidth : 0.4,
   overflow : "hidden",
   alignSelf : "flex-end",
-  marginBottom : screen.width/180
+  marginBottom : screen.width/180,
+  
     
 },
 cardImage : {
@@ -146,7 +156,7 @@ cardText : {
     alignSelf : "center",
     justifyContent : "space-around",
     overflow : "hidden",
- 
+
 
 },
 name : {
@@ -159,6 +169,7 @@ extra : {
   flexDirection : "row",
   justifyContent : "space-between",
 
+ 
 
 },
 extraHours : {
@@ -175,7 +186,7 @@ borderRadius : screen.width/14.4,
 rating :{
 backgroundColor : "red",
 alignSelf : "flex-start",
-marginRight : screen.width/51.4
+marginHorizontal : screen.width/51.4
 
 }
 
