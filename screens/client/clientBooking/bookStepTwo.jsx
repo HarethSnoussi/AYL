@@ -402,6 +402,7 @@ return (
                   wilaya = {props.navigation.getParam("wilaya")}
                   region = {props.navigation.getParam("region")}
                   mark = {props.navigation.getParam("mark")}
+                  image={props.navigation.getParam("image")!==null?props.navigation.getParam("image"):'unknown.jpeg'}
                />
                 
 
@@ -500,6 +501,7 @@ return (
                             mark:props.navigation.getParam("mark"),
                             region:props.navigation.getParam("region"),
                             wilaya:props.navigation.getParam("wilaya"),
+                            image:props.navigation.getParam("image"),
                             overCpt :props.navigation.getParam("overCpt")
                             }
                     

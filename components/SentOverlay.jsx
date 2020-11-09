@@ -30,7 +30,7 @@ const colors =  props.overlayType ==="echec" ? ['#fd6d57', '#fd9054'] : ['#0DA59
 
             <Button  
                 title ={props.buttonTitle} 
-                buttonStyle = {{borderRadius : screen.width/14.4,paddingHorizontal : "5%",width:"80%",alignSelf:"center"}}
+                buttonStyle = {{borderRadius : screen.width/24,paddingHorizontal : "5%",width:"80%",alignSelf:"center"}}
                 titleStyle = {{color :"#fff",fontSize :screen.width/30}}
                 onPress = { props.overlayType === "success" ? props.sentOverlayHandler : props.goBack}
                 ViewComponent={LinearGradient} 

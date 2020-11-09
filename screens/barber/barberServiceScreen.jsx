@@ -78,7 +78,7 @@ const BarberServiceScreen = props =>{
            
            <View style={styles.infoContainer}>
               <View style={styles.imageContainer}>
-              {barber[0] && barber[0].image!==null?<Image source={{uri:`http://173.212.234.137/profileImages/barber/${barber.image}`}} style={styles.icon} />:
+              {barber[0] && barber[0].image!==null?<Image source={{uri:`http://173.212.234.137/profileImages/barber/${barber[0].image}`}} style={styles.icon} />:
                 <Image source={{uri:'http://173.212.234.137/assets/tahfifa/unknown.jpeg'}} style={styles.icon} />}
               </View>
             

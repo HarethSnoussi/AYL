@@ -142,7 +142,7 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
                  <CustomInput
                     id='phone'
                     rightIcon={<MaterialIcons title = "phone" name ='phone' color='#323446' size={screen.width/15.7} />}
-                    leftIcon={<View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around',borderRightWidth:1,borderRightColor:Colors.blue,paddingRight:screen.width/72,marginRight:screen.width/72}}><Image source={{uri:'http://173.212.234.137/assets/tahfifa/algeriaFlag.png'}} style={{width:screen.width/15,height:screen.width/12.85,marginRight:screen.width/72,marginRight:screen.width/72}}/><Text style={styles.phoneNumber}>+213</Text></View>}
+                    leftIcon={<View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around',borderRightWidth:1,borderRightColor:Colors.blue,paddingRight:screen.width/72,marginRight:screen.width/72}}><Image source={{uri:'http://173.212.234.137/assets/tahfifa/algeriaFlag.png'}} style={{width:screen.width/15,height:screen.width/12.85,marginRight:screen.width/72}}/><Text style={styles.phoneNumber}>+213</Text></View>}
                     placeholder='555555555'
                     keyboardType="phone-pad"
                     returnKeyType="next"
@@ -238,7 +238,7 @@ const styles= StyleSheet.create({
     
    },
   firstContainer:{
-    width:'60%',
+    width:'70%',
     height:'50%',
     alignSelf:'center',
     alignItems:'center',
