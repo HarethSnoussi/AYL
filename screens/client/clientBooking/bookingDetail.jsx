@@ -391,7 +391,6 @@ buttonStyle = {{backgroundColor : "white"}}
         headerTintColor:'#111',
         headerBackTitle : " ",
         title : "",
-        // headerShown: false,
       }
       
       };
