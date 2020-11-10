@@ -343,7 +343,7 @@ buttonStyle = {{backgroundColor : "white"}}
                 <View style = {{alignSelf :"center" , flexDirection :"row",width:"90%",alignItems:"center"}}>
               
                 <Avatar
-          source = {{uri:'http://173.212.234.137/assets/tahfifa/unknown.jpeg'}}
+          source = {{uri:`http://173.212.234.137/profileImages/barber/${barberInfos.image}`}}
           overlayContainerStyle = {{overflow:"hidden"}}
           size = "small"
           rounded
