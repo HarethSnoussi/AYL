@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { StyleSheet, Text, View , Dimensions , Platform, ActivityIndicator ,ScrollView, ImageBackground} from 'react-native';
 import { Button ,Divider} from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -62,77 +62,95 @@ const checkHandler = ()=>{
 }
 
 
-useEffect(()=>{
- const getData = async ()=>{
-    try {
-        setError(false);
-        setIsRefreshing(true);
-        setLoading(true);
+// useEffect(()=>{
+  
+//  const getData = async ()=>{
 
-        const arr = await fetch(`http://173.212.234.137:3000/barber/hours/${props.navigation.getParam("barberId")}`);
-        const resData = await arr.json ();
+//     try {
+//         setError(false);
+//         setIsRefreshing(true);
+//         setLoading(true);
        
-        setData([...resData]);
-        setIsRefreshing(false);
-        setLoading(false);
-        }
+//         const arr = await fetch(`http://173.212.234.137:3000/barber/hours/${props.navigation.getParam("barberId")}`);
+//         const resData = await arr.json ();
+       
+//         setData([...resData]);
+      
+       
+//         setIsRefreshing(false);
+//         setLoading(false);
+//         }
+
+
+        
     
-    catch (error) {
-        console.log("There is an Error");
-        setError(true);
-        throw error;
-    }
+//     catch (error) {
+//         console.log("There is an Error");
+//         setError(true);
+//         throw error;
+//     }
 
-    try {
-        setError(false);
-        setIsRefreshing(true);
-        setLoading(true);
-       
-        const arr = await fetch(`http://173.212.234.137:3000/bookings/barberBookings/${props.navigation.getParam("barberId")}`);
-         const resData = await arr.json ();
+//     try {
+//         setError(false);
+//         setIsRefreshing(true);
+//         setLoading(true);
+      
+//         const arr = await fetch(`http://173.212.234.137:3000/bookings/barberBookings/${props.navigation.getParam("barberId")}`);
+//          const resData = await arr.json ();
      
-        setBookings([...resData]);
-        setIsRefreshing(false);
-        setLoading(false);
+//         setBookings([...resData]);
+      
+   
+//         setIsRefreshing(false);
+//         setLoading(false);
 
-        }
+//         }
     
-    catch (error) {
-        console.log("There is an Error");
-        setError(true);
-        throw error;
+//     catch (error) {
+//         console.log("There is an Error");
+//         setError(true);
+//         throw error;
 
-    }
+//     }
 
 
- };
-getData();
-},[props.navigation.getParam("barberId")]);
+//  };
+ 
+
+//   getData();
+
+
+
+// },[props.navigation.getParam("barberId")]);
 
 /************************************************************************* */
 
-const loadServices = useCallback(async()=>{
-    try{
+const loadServices = useCallback(async ()=>{
+  
+   try{
         setError(false);
         setIsRefreshing(true);
         setLoading(true);
         await dispatch(getServices(props.navigation.getParam("barberId")));
-        setIsRefreshing(false);
-        setLoading(false);
-
+     
+          setIsRefreshing(false);
+          setLoading(false);
+       
       }catch(err){
         console.log(err);
         setError(true);
         throw err ;
       }
 
+
 },[dispatch,setError])
 
 //GET THE SERVICES
 useEffect(()=>{
-    
-    loadServices();
 
+    loadServices(); 
+
+ 
 },[dispatch,loadServices,setError]);
 
 

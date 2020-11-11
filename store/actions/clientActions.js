@@ -113,7 +113,7 @@ export const updateClientImage= (id,imgsource,image) => {
     return async () => {
 
         const clientImageData={imgsource,image};
-           console.log(imgsource,image);
+      
          try{
 
            const response = await fetch(`http://173.212.234.137:3000/client/profileimage/${id}`,{
@@ -170,7 +170,7 @@ export const updateClientPhone= (id,phone,clientid) => {
 export const updateClientLang= (id,lang) => {
 
     return async dispatch => {
-           console.log(id,lang);
+          
          try{
 
            const response = await fetch(`http://173.212.234.137:3000/client/updateLang/${id}`,{

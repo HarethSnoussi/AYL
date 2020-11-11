@@ -55,7 +55,7 @@ const PlayerProfileScreen = props =>{
 
 
   const client= useSelector(state=>state.clients.client);
-  console.log(client)
+
   const [isInfo,setIsInfo]= useState(true);
   const [isLocalisation,setIsLocalisation]= useState(false);
 
