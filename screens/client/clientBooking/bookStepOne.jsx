@@ -23,11 +23,9 @@ const BookStepOne = (props)=> {
 const clientID =   props.navigation.getParam("clientID");
 
 
-
 const barberServices =  useSelector(state => state.services.services);
 
 const dispatch = useDispatch();
-
 
 
 
@@ -62,66 +60,66 @@ const checkHandler = ()=>{
 }
 
 
-// useEffect(()=>{
+useEffect(()=>{
   
-//  const getData = async ()=>{
+ const getData = async ()=>{
 
-//     try {
-//         setError(false);
-//         setIsRefreshing(true);
-//         setLoading(true);
+    try {
+        setError(false);
+        setIsRefreshing(true);
+        setLoading(true);
        
-//         const arr = await fetch(`http://173.212.234.137:3000/barber/hours/${props.navigation.getParam("barberId")}`);
-//         const resData = await arr.json ();
+        const arr = await fetch(`http://173.212.234.137:3000/barber/hours/${props.navigation.getParam("barberId")}`);
+        const resData = await arr.json ();
        
-//         setData([...resData]);
+        setData([...resData]);
       
        
-//         setIsRefreshing(false);
-//         setLoading(false);
-//         }
+        setIsRefreshing(false);
+        setLoading(false);
+        }
 
 
         
     
-//     catch (error) {
-//         console.log("There is an Error");
-//         setError(true);
-//         throw error;
-//     }
+    catch (error) {
+        console.log("There is an Error");
+        setError(true);
+        throw error;
+    }
 
-//     try {
-//         setError(false);
-//         setIsRefreshing(true);
-//         setLoading(true);
+    try {
+        setError(false);
+        setIsRefreshing(true);
+        setLoading(true);
       
-//         const arr = await fetch(`http://173.212.234.137:3000/bookings/barberBookings/${props.navigation.getParam("barberId")}`);
-//          const resData = await arr.json ();
+        const arr = await fetch(`http://173.212.234.137:3000/bookings/barberBookings/${props.navigation.getParam("barberId")}`);
+         const resData = await arr.json ();
      
-//         setBookings([...resData]);
+        setBookings([...resData]);
       
    
-//         setIsRefreshing(false);
-//         setLoading(false);
+        setIsRefreshing(false);
+        setLoading(false);
 
-//         }
+        }
     
-//     catch (error) {
-//         console.log("There is an Error");
-//         setError(true);
-//         throw error;
+    catch (error) {
+        console.log("There is an Error");
+        setError(true);
+        throw error;
 
-//     }
+    }
 
 
-//  };
+ };
  
 
-//   getData();
+  getData();
 
 
 
-// },[props.navigation.getParam("barberId")]);
+},[props.navigation.getParam("barberId")]);
 
 /************************************************************************* */
 

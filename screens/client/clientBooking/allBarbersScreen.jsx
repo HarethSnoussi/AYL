@@ -180,14 +180,14 @@ return(
 </View>
           {
             searchedResult.map((barber,index)=> {
-              
+            
               return (
                 
               
               <BarberCard 
               key = {index}
               navigate = {()=>props.navigation.navigate("BookStepOne",{barberId : barber.id,clientID,name:barber.name,surname:barber.surname,mark:barber.mark,region:barber.region,wilaya:barber.wilaya,image:barber.image,overCpt :props.navigation.getParam("overCpt")})}
-              navigateToBarberProfil={()=>props.navigation.navigate("Barber",{barberID : barber.id})}
+              navigateToBarberProfil={()=>props.navigation.navigate("Barber",{barberId : barber.id,clientID,overCpt :props.navigation.getParam("overCpt")})}
               name = {barber.name}
               surname = {barber.surname}
               region = {barber.region}

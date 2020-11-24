@@ -200,21 +200,21 @@ try {
 
         <View>
               <View style= {styles.name}>
-                <Text style = {{fontFamily : "poppins-bold", fontSize : screen.width/26}} >{props.name + " " + props.surname}</Text>
+                <Text  onPress = {props.profile} style = {{fontFamily : "poppins-bold", fontSize : screen.width/26}} >{props.name + " " + props.surname}</Text>
                 <TouchableOpacity style = {{flexDirection : "row"}} onPress = {toggleOverlay}>
              
                 <EvilIcons name="pencil" size={24} color="#9d9da1"  />
                 <Text style = {{fontFamily : "poppins", color : "#9d9da1",fontSize : screen.width/30}}>Avis</Text>
                 </TouchableOpacity>
               </View>
-              <Text style = {{fontFamily : "poppins", color : "#9d9da1",fontSize : screen.width/30}} >
+              <Text  onPress = {props.profile}  style = {{fontFamily : "poppins", color : "#9d9da1",fontSize : screen.width/30}} >
               {props.region + "-" + props.wilaya}
               </Text>
        </View>
 
               <View style= {styles.extra}>
               <View  style= {styles.extraHours}>
-              <View style = {{flexDirection : "row"}}>
+              <TouchableOpacity onPress = {props.profile} style = {{flexDirection : "row"}}>
             
               <Rating
                 type='star'
@@ -230,7 +230,7 @@ try {
                
                   />
                     <Text>{props.mark === null ? 2.5 : props.mark}</Text>
-                  </View>
+                  </TouchableOpacity>
            
                
                 </View>

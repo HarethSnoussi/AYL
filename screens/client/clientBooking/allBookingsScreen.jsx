@@ -327,7 +327,6 @@ if (isLoading) {
 
 
 
-
 const styles= StyleSheet.create({
     container : {
       flex : 1 , 
