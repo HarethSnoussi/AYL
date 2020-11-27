@@ -17,7 +17,7 @@ const screen = Dimensions.get('window');
 
 const BarberHomeScreen = props =>{
 
-  const barberID= props.navigation.getParam('barberID');  //get Barber ID
+  const barberID= props.navigation.getParam('barberId');  //get Barber ID
   
   const [error, setError] = useState();
   const [isLoading,setIsLoading]= useState(false);//ActivityIndicator handling
@@ -100,7 +100,7 @@ const BarberHomeScreen = props =>{
     };
    
 
-   
+
     if(isLoading || barber === undefined ){
       return ( <ImageBackground source={{uri:'http://173.212.234.137/assets/tahfifa/support.png'}} style={styles.coverTwo}>
                   <StatusBar hidden/>
@@ -548,3 +548,4 @@ noFeedbacksText:{
 });
 
 export default BarberHomeScreen;
+

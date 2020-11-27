@@ -1,19 +1,20 @@
-import React ,{useEffect, useState,useCallback,useRef,Component }  from 'react';
-import { StyleSheet, Text, View, ImageBackground , Image ,Dimensions , StatusBar,ActivityIndicator,ScrollView, FlatList, TouchableOpacity,Alert,AppState, LogBox } from 'react-native';
+import React ,{useEffect, useState,useCallback,useRef}  from 'react';
+import { StyleSheet, Text, View, ImageBackground , Image ,Dimensions , StatusBar,ActivityIndicator,ScrollView, TouchableOpacity,LogBox } from 'react-native';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
-import { Notifications as Notifications2 } from 'expo';
-import moment from 'moment';
+import {Badge} from 'react-native-elements'
+
+import {Ionicons,  MaterialIcons,Foundation} from "@expo/vector-icons";
 import {Button ,Overlay} from 'react-native-elements';
 import { useDispatch,useSelector } from 'react-redux';
 import * as clientActions from '../../store/actions/clientActions';
 import Colors from "../../constants/Colors.js";
 
-import TopSalonsCard from '../../components/TopSalonsCard';
+
 import TopBarbersCard from '../../components/TopBarbersCard.jsx';
 
-import { getServices } from '../../store/actions/servicesActions.js';
+
 import { getBarbers} from '../../store/actions/listActions';
 import { getClientBookings, sendNotification } from '../../store/actions/bookingsActions.js';
 
@@ -44,6 +45,8 @@ const [sentVisible,setSentVisible] = useState(false);
 const allBookings = useSelector(state => state.bookings.bookings);
   //Get ALL Barbers AND SAloons from the store to display three of them
   const allBarbers = useSelector(state => state.lists.barbers) ;
+
+
   const allSaloons = useSelector(state => state.lists.saloons) ;
 //get Client ID
 const clientID= props.navigation.dangerouslyGetParent().getParam('clientID');  
@@ -81,13 +84,16 @@ const responseListener = useRef();
   */
  const getClient=useCallback(async()=>{
   try{
+    setIsRefreshing(true);
     setLoading(true);
     await dispatch(getTokens(clientID));
     await dispatch(clientActions.setClient(clientID));
-   
+    setIsRefreshing(false);
    setLoading(false);
 
     }catch(err){
+      setError(true);
+
       console.log(err);
     }
 },[dispatch]);
@@ -112,7 +118,6 @@ const getAllBarbers = useCallback(async (sex)=>{
     setError(false);
     setIsRefreshing(true);
     setLoading(true);
-   
     await  dispatch(getBarbers(sex));
     await dispatch(getReviews(clientID));
     await dispatch(getClientBookings(clientID));
@@ -123,8 +128,8 @@ const getAllBarbers = useCallback(async (sex)=>{
     // await dispatch(expiredbookings("+213553633809"));
     }
     catch(err){
+     
       setError(true);
-
       throw err ;
     }
 
@@ -240,21 +245,23 @@ async function registerForPushNotificationsAsync() {
       return;
     }
 
-      token = (await Notifications.getExpoPushTokenAsync()).data;
+      token = await (await Notifications.getExpoPushTokenAsync()).data;
+      
       let  tokenIndex;
      
       if(tokens.length>0){
+     
        tokenIndex = await tokens.findIndex(
         t => t.clientId === clientID && t.expoToken === token
       );
     
     }
-
-        if(tokenIndex < 0 || tokens.length ===0 ) {
+if(clientID !== undefined )
+{        if(tokenIndex < 0 || tokens.length ===0 ) {
          
             await dispatch(addtoken({expoToken:token , clientId : clientID}))
         }
-
+}
   } else {
     //alert('Must use physical device for Push Notifications');
   }
@@ -332,7 +339,7 @@ if (error  ) {
 }
 
 
-if (isLoading || allBarbers.length <= 0 ) {
+if (isLoading || allBarbers.length === 0 || client.length === 0 ) {
 
 
 
@@ -441,7 +448,7 @@ if (isLoading || allBarbers.length <= 0 ) {
              wilaya = {barber.wilaya}
              mark = {barber.mark}
              image={barber.image!==null?barber.image:'unknown.jpeg'}
-             navigateToBarberProfil={()=>props.navigation.navigate("Barber",{barberID : barber.id,clientID:clientID,overCpt:allBookings.length})}
+             navigateToBarberProfil={()=>props.navigation.navigate("Barber",{barberId : barber.id,clientID:clientID,overCpt:allBookings.length})}
              navigate = {()=>props.navigation.navigate("BookStepOne",{barberId : barber.id,clientID,name:barber.name,surname:barber.surname,mark:barber.mark,region:barber.region,wilaya:barber.wilaya,image:barber.image,overCpt : allBookings.length})}
             />
            )})
@@ -596,4 +603,8 @@ titleText : {
 
 });
 
-export default ClientHomeScreen;
+
+
+
+
+export default ClientHomeScreen ;

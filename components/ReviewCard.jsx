@@ -121,7 +121,7 @@ try {
 };
     return(
        
-        <View style = {styles.cardContainer}>
+        <View  style = {styles.cardContainer}>
       
 
 
@@ -190,54 +190,62 @@ try {
     
       </Overlay>
 
-        <View style = {styles.cardImage}>
+        <View   style = {styles.cardImage}> 
+        <TouchableOpacity onPress = {props.profile} >
         <Image source = {{uri:`http://173.212.234.137/profileImages/barber/${props.image}`}} style = {styles.image}  />
-
+</TouchableOpacity>
         </View>
 
         <View style = {styles.cardText}>
 
         <View>
               <View style= {styles.name}>
-                <Text style = {{fontFamily : "poppins-bold", fontSize : screen.width/26}} >{props.name + " " + props.surname}</Text>
+                <Text  onPress = {props.profile} style = {{fontFamily : "poppins-bold", fontSize : screen.width/26}} >{props.name + " " + props.surname}</Text>
                 <TouchableOpacity style = {{flexDirection : "row"}} onPress = {toggleOverlay}>
              
                 <EvilIcons name="pencil" size={24} color="#9d9da1"  />
                 <Text style = {{fontFamily : "poppins", color : "#9d9da1",fontSize : screen.width/30}}>Avis</Text>
                 </TouchableOpacity>
               </View>
-              <Text style = {{fontFamily : "poppins", color : "#9d9da1",fontSize : screen.width/30}} >
+              <Text  onPress = {props.profile}  style = {{fontFamily : "poppins", color : "#9d9da1",fontSize : screen.width/30}} >
               {props.region + "-" + props.wilaya}
               </Text>
        </View>
 
               <View style= {styles.extra}>
               <View  style= {styles.extraHours}>
-              <View style = {{flexDirection : "row"}}>
+              <TouchableOpacity onPress = {props.profile} style = {{flexDirection : "row"}}>
             
               <Rating
                 type='star'
-                ratingCount={1}
+                ratingCount={5}
                 imageSize={screen.width/24}
-                startingValue = {1}
+                startingValue = {props.mark === null ? 2.5 : props.mark}
                 style = {styles.rating}
                 ratingColor = "#FE9654"          
                 type='custom'
                 readonly = {true}
-                tintColor='#fff'
+                ratingBackgroundColor={'#323446'}
+              tintColor='#fff' 
                
                   />
                     <Text>{props.mark === null ? 2.5 : props.mark}</Text>
-                  </View>
-              <Text onPress = {props.profile} style ={{color : "#fd6c57",fontFamily : "poppins-bold",letterSpacing : 1,fontSize : screen.width/30}}>Voir le profil </Text>
+                  </TouchableOpacity>
+           
                
                 </View>
                
                 <Button  
                 title ="Réserver" 
-                buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : screen.width/14.4,paddingHorizontal : "5%"}}
+                buttonStyle = {{borderRadius : screen.width/65,paddingHorizontal : "5%"}}
                 titleStyle = {{color :"#fff",fontSize : screen.width/30}}
                 onPress = {props.navigate}
+                containerStyle = {{width : "40%"}}
+                linearGradientProps={{
+                        colors: ['#fd6d57', '#fd9054'],
+                        start: {x: 0, y: 0} ,
+                        end:{x: 1, y: 0}
+                    }}
                 />
               
               </View>
@@ -279,7 +287,7 @@ const styles= StyleSheet.create({
 cardContainer : {
   width : "97%",
   backgroundColor : "#fff",
-  height : screen.height * 0.18,
+  height : screen.height * 0.178,
   flexDirection : "row",
   justifyContent : "space-around",
   borderBottomWidth : 0.3,
@@ -288,7 +296,7 @@ cardContainer : {
     
 },
 cardImage : {
-    width : "30%",
+    width : "28%",
     height : "80%",
     alignSelf : "center",
     overflow : "hidden",
@@ -299,7 +307,7 @@ image : {
   height : "100%",
   width : "100%",
    borderRadius : screen.width/14.4,
-   resizeMode : "contain"
+ 
   
 
 },
@@ -337,7 +345,7 @@ borderRadius : screen.width/14.4,
 
 },
 rating :{
-backgroundColor : "red",
+
 alignSelf : "flex-start",
 marginRight : screen.width/51.4
 

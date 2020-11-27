@@ -134,7 +134,7 @@ cardContainer : {
     
 },
 cardImage : {
-    width : "30%",
+    width : "28%",
     height : "80%",
     alignSelf : "center",
     overflow : "hidden",
@@ -145,7 +145,6 @@ image : {
   height : "100%",
   width : "100%",
    borderRadius : screen.width/14.4,
-   resizeMode : "contain"
   
 
 },

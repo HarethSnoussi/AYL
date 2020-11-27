@@ -14,7 +14,7 @@ import CustomInput from '../../components/Input';
 
 
 const screen = Dimensions.get("window");
-console.log(screen);
+
 //Firebase config
 try {
   if (Firebaseconfig.apiKey) {

@@ -88,6 +88,12 @@ const hours = [
     {id : "71",time : "22:30"},
     {id : "72",time : "22:45"},
     {id : "73",time : "23:00"},
+    {id : "73",time : "23:15"},
+    {id : "73",time : "23:30"},
+    {id : "73",time : "23:45"},
+    {id : "73",time : "00:00"},
+
+
     ];
 
 const hoursTime = hours.map(hour=>hour.time);
@@ -102,6 +108,8 @@ const services = props.navigation.getParam("services").filter(service => service
 const totalTime = props.navigation.getParam("duration");
 const workingTime = props.navigation.getParam("workingTime");
 const allBookings = props.navigation.getParam("bookings");
+
+
 let duration = Math.ceil(totalTime/15)  ; 
 
 if(duration === 1 ) {

@@ -32,7 +32,14 @@ import BarberHistory from '../screens/client/history/barbersHistory';
 import BarberServiceScreen from '../screens/barber/barberServiceScreen';
 
 import BookingDetail from '../screens/client/clientBooking/bookingDetail';
+import { GET_BARBERS } from '../store/actions/listActions';
+import { useSelector } from 'react-redux';
+import { getClientBookings } from '../store/actions/bookingsActions';
+import NumConfirmed from '../components/NumConfirmed';
 ///////////////////////////////////////////////////////////////////
+
+
+
 
 //Tab Navigator For Client Home
 const homeConfig = {
@@ -83,11 +90,10 @@ const homeConfig = {
   
       tabBarLabel : "Réservations" ,
       tabBarColor : Colors.secondary ,
-     
-      tabBarIcon : ({tintColor}) => {
-    
-        return( <Foundation name = "calendar" 
-        size = {22} color={tintColor} />);
+      
+      tabBarIcon :  ({tintColor}) =>  {
+      
+        return( <NumConfirmed color = {tintColor} />);
           },
           headerStyle:{
             backgroundColor: "red",
@@ -126,6 +132,7 @@ barStyle : {
 
 
 } ) ;
+
 
 
 

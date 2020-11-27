@@ -10,9 +10,9 @@ export const getServices = (barberId)=>{
    
             const arr = await fetch(`http://173.212.234.137:3000/barber/services/${barberId}`);
             const resData = await arr.json ();
-
+            
             dispatch({type : GET_SERVICES , services : resData});
-
+      
 
             }
         
