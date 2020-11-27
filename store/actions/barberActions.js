@@ -14,7 +14,7 @@ export const setBarber= id => {
              }
  
             const resData= await response.json();
-          
+   
             dispatch({type:SET_BARBER,barberData:resData});
       
        }catch(err){
