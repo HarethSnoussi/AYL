@@ -410,7 +410,7 @@ return (
 
                 <View style = {styles.bookingInfoContainer}>
                     <View style = {styles.selectDate}>
-                       <Text style = {{fontSize : screen.width/26,fontFamily : "poppins-bold"}}>Selectionner une date</Text>
+                       <Text style = {{fontSize : screen.width/26,fontFamily : "poppins-bold"}}>Sélectionner une date</Text>
                        <TouchableOpacity style = {styles.datePicker}
                        onPress = {()=>setDatePickerVisibility(true)}
                        >
@@ -441,7 +441,7 @@ return (
                     availableSlots.length > 0 ?
 
                 <View style = {styles.selectSlot}>
-                <Text style = {{fontSize : screen.width/26,fontFamily : "poppins-bold"}}>Selectionner un créneau</Text>
+                <Text style = {{fontSize : screen.width/26,fontFamily : "poppins-bold"}}>Sélectionner un créneau</Text>
                      
                      <FlatList
                     data={availableSlots}
@@ -465,7 +465,7 @@ return (
                    :
                    <View style ={{alignSelf : "center", height : "50%",justifyContent : "center"}}>
                    <Text style ={{fontFamily : "poppins-bold",fontSize : screen.width/26,color : Colors.primary}}>
-                   Aucun creneau disponible ce jour la !
+                   Aucun créneau disponible ce jour là!
                    </Text>
                    </View>
                    

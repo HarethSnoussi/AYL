@@ -115,7 +115,7 @@ const styles= StyleSheet.create({
    alignSelf : "center",
    marginBottom:screen.width/72,
    paddingHorizontal:screen.width/14.4,
-   borderRadius:screen.width/18
+   borderRadius:screen.width/24
 }
   
   });

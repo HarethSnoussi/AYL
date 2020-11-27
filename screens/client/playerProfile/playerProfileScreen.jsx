@@ -380,7 +380,7 @@ const takeImageHandler = async ()=>{
                 minLength={6}
                 backgroundColor='#fff'
                 textColor={Colors.blue}
-                autoCapitalize='sentences'
+                autoCapitalize='none'
                 shadowColorView='black'
                 shadowOpacityView={0.5}
                 shadowOffsetView={{width: 0, height:1}}
