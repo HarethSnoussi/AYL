@@ -31,7 +31,7 @@ const [sentVisible,setSentVisible] = useState(false);
 
 /******************SEND A NOTIFICATION TO THE BARBER WHEN A BOOKING IS MADE ************************/
 async function sendPushNotification() {
-const arr = await fetch(`http://173.212.234.137:3000/barber/barbertokens/${props.barberId}`);
+const arr = await fetch(`http://95.111.243.233:3000/barber/barbertokens/${props.barberId}`);
 const resData = await arr.json ();
 const allMessages = [];
 
@@ -179,7 +179,7 @@ if (isLoading) {
 return(
   <View key ={index} style ={{flexDirection :"row",width:"85%",alignSelf:"center",justifyContent:"space-around",alignItems:"center",height:screen.height*0.1,marginVertical:"2%",borderBottomWidth : 0.3}}>
           <Avatar
-          source = {{uri:'http://173.212.234.137/assets/tahfifa/icon.png'}}
+          source = {{uri:'http://95.111.243.233/assets/tahfifa/icon.png'}}
           overlayContainerStyle = {{backgroundColor:"transparent",overflow:"hidden"}}
           size = "small"
            />

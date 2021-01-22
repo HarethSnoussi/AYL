@@ -194,7 +194,7 @@ const getData = async ()=>{
         setIsRefreshing(true);
         setLoading(true);
        
-        const arr = await fetch(`http://173.212.234.137:3000/bookings/barberBookings/${props.navigation.getParam("barber")}`);
+        const arr = await fetch(`http://95.111.243.233:3000/bookings/barberBookings/${props.navigation.getParam("barber")}`);
          const resData = await arr.json ();
      
         setBookings([...resData]);
@@ -377,7 +377,7 @@ if (error) {
  if (isLoading) {
     
     return (
-      <ImageBackground style= {styles.centered} source={{uri:'http://173.212.234.137/assets/tahfifa/support.png'}}>
+      <ImageBackground style= {styles.centered} source={{uri:'http://95.111.243.233/assets/tahfifa/support.png'}}>
         <ActivityIndicator size="large" color= {Colors.primary} />
       
       </ImageBackground>

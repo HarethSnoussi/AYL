@@ -97,7 +97,7 @@ if (error) {
 if (isLoading) {
     
   return (
-    <ImageBackground style= {styles.centered} source={{uri:'http://173.212.234.137/assets/tahfifa/support.png'}}>
+    <ImageBackground style= {styles.centered} source={{uri:'http://95.111.243.233/assets/tahfifa/support.png'}}>
       <ActivityIndicator size="large" color= {Colors.primary} />
     </ImageBackground>
   );

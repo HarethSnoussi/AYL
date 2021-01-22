@@ -102,7 +102,7 @@ const BarberHomeScreen = props =>{
 
 
     if(isLoading || barber === undefined ){
-      return ( <ImageBackground source={{uri:'http://173.212.234.137/assets/tahfifa/support.png'}} style={styles.coverTwo}>
+      return ( <ImageBackground source={{uri:'http://95.111.243.233/assets/tahfifa/support.png'}} style={styles.coverTwo}>
                   <StatusBar hidden/>
                   <ActivityIndicator size='large' color={Colors.primary} />
               </ImageBackground>)
@@ -113,12 +113,12 @@ const BarberHomeScreen = props =>{
         <StatusBar hidden/>
          <View style={styles.firstContainer}>
            <View style={styles.coverContainer}>
-               <ImageBackground source={{uri:'http://173.212.234.137/assets/tahfifa/barberScreen.png'}} style={styles.cover} />
+               <ImageBackground source={{uri:'http://95.111.243.233/assets/tahfifa/barberScreen.png'}} style={styles.cover} />
            </View>
            <View style={styles.infoContainer}>
                <View style={styles.imageContainer}>
-               {barber && barber.image!==null?<Image source={{uri:`http://173.212.234.137/profileImages/barber/${barber.image}`}} style={styles.modelImage} />:
-                <Image source={{uri:'http://173.212.234.137/assets/tahfifa/unknown.jpeg'}} style={styles.modelImage} />}
+               {barber && barber.image!==null?<Image source={{uri:`http://95.111.243.233/profileImages/barber/${barber.image}`}} style={styles.modelImage} />:
+                <Image source={{uri:'http://95.111.243.233/assets/tahfifa/unknown.jpeg'}} style={styles.modelImage} />}
                </View>
                <Text style={styles.bname}>{barber && barber.b_name!==null?barber.b_name:client && client.lang?polylanfr.BusinessName:polylanar.BusinessName}</Text>
                <Text style={styles.jobAge}>{barber && (barber.name!==null || barber.surname!==null || barber.age!==null)?`${barber.name} ${barber.surname}, ${barber.age} ${client && client.lang?polylanfr.Yo:polylanar.Yo}`:client && client.lang?polylanfr.personalInforamtion:polylanar.personalInforamtion}</Text>
@@ -223,7 +223,7 @@ const BarberHomeScreen = props =>{
                   
                 </View>
                 <View  style={styles.rightColumn}>
-                    <Image source={{uri:'http://173.212.234.137/assets/tahfifa/localisation.jpg'}} style={styles.mapImage} />
+                    <Image source={{uri:'http://95.111.243.233/assets/tahfifa/localisation.jpg'}} style={styles.mapImage} />
                 </View>
             </View>
             
@@ -240,7 +240,7 @@ const BarberHomeScreen = props =>{
                   (<View 
                     key={picture.id}
                     style={styles.modelImageContainer}>
-                    <Image source={{uri:picture.model===null?`http://173.212.234.137/uploads/ayoungleaderportfolio.jpg` :`http://173.212.234.137/uploads/${picture.model}`}} style={styles.modelImage} />
+                    <Image source={{uri:picture.model===null?`http://95.111.243.233/uploads/ayoungleaderportfolio.jpg` :`http://95.111.243.233/uploads/${picture.model}`}} style={styles.modelImage} />
                   </View>)
                   )}
                 </ScrollView>
@@ -254,7 +254,7 @@ const BarberHomeScreen = props =>{
                {barberPortfolio.slice(0,3).map(picture=>(<View 
                     key={picture.id}
                     style={{width:'33.3%',alignItems:'center'}}>
-                    <Image source={{uri:picture.model===null?`http://173.212.234.137/uploads/ayoungleaderportfolio.jpg` :`http://173.212.234.137/uploads/${picture.model}`}} style={styles.modelImage} />
+                    <Image source={{uri:picture.model===null?`http://95.111.243.233/uploads/ayoungleaderportfolio.jpg` :`http://95.111.243.233/uploads/${picture.model}`}} style={styles.modelImage} />
                   </View>)
                  )}
                  
@@ -264,7 +264,7 @@ const BarberHomeScreen = props =>{
                {barberPortfolio.slice(3,6).map(picture=>(<View 
                     key={picture.id}
                     style={{width:'33.3%',alignItems:'center'}}>
-                    <Image source={{uri:picture.model===null?`http://173.212.234.137/uploads/ayoungleaderportfolio.jpg` :`http://173.212.234.137/uploads/${picture.model}`}} style={styles.modelImage} />
+                    <Image source={{uri:picture.model===null?`http://95.111.243.233/uploads/ayoungleaderportfolio.jpg` :`http://95.111.243.233/uploads/${picture.model}`}} style={styles.modelImage} />
                   </View>))}
                </View>
 

@@ -69,7 +69,7 @@ useEffect(()=>{
         setIsRefreshing(true);
         setLoading(true);
        
-        const arr = await fetch(`http://173.212.234.137:3000/barber/hours/${props.navigation.getParam("barberId")}`);
+        const arr = await fetch(`http://95.111.243.233:3000/barber/hours/${props.navigation.getParam("barberId")}`);
         const resData = await arr.json ();
        
         setData([...resData]);
@@ -93,7 +93,7 @@ useEffect(()=>{
         setIsRefreshing(true);
         setLoading(true);
       
-        const arr = await fetch(`http://173.212.234.137:3000/bookings/barberBookings/${props.navigation.getParam("barberId")}`);
+        const arr = await fetch(`http://95.111.243.233:3000/bookings/barberBookings/${props.navigation.getParam("barberId")}`);
          const resData = await arr.json ();
      
         setBookings([...resData]);
@@ -196,7 +196,7 @@ if (error) {
 if (isLoading) {
     
     return (
-      <ImageBackground  source={{uri:'http://173.212.234.137/assets/tahfifabarber/support.png'}} style= {styles.centered}>
+      <ImageBackground  source={{uri:'http://95.111.243.233/assets/tahfifabarber/support.png'}} style= {styles.centered}>
         <ActivityIndicator size="large" color= {Colors.primary} />
       
       </ImageBackground>

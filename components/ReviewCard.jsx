@@ -192,7 +192,7 @@ try {
 
         <View   style = {styles.cardImage}> 
         <TouchableOpacity onPress = {props.profile} >
-        <Image source = {{uri:`http://173.212.234.137/profileImages/barber/${props.image}`}} style = {styles.image}  />
+        <Image source = {{uri:`http://95.111.243.233/profileImages/barber/${props.image}`}} style = {styles.image}  />
 </TouchableOpacity>
         </View>
 

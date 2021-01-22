@@ -41,7 +41,7 @@ if(heartColor === "#9d9da1")
 
         </View>
         <View style = {{justifyContent :"center",alignItems : "center"}}>
-        <Avatar source = {{uri:'http://173.212.234.137/assets/tahfifa/person1.jpg'}}
+        <Avatar source = {{uri:'http://95.111.243.233/assets/tahfifa/person1.jpg'}}
               containerStyle = {styles.barberPicture}
               rounded
               size= "large"

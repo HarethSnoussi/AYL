@@ -287,7 +287,7 @@ const alertDelete = ()=>{
 
 if(error){
       
-  return ( <ImageBackground source={{uri:'http://173.212.234.137/assets/tahfifa/support.png'}} style={styles.coverTwo}>
+  return ( <ImageBackground source={{uri:'http://95.111.243.233/assets/tahfifa/support.png'}} style={styles.coverTwo}>
               <View style={{marginBottom:10,alignSelf:'center'}}>
               <StatusBar hidden />
                 <Text style={styles.noServicesText}>{client && client[0].lang?polylanfr.WeakInternet:polylanar.WeakInternet}</Text>
@@ -308,7 +308,7 @@ if(error){
 };
 if(isLoadingState || client===undefined){
       
-  return ( <ImageBackground source={{uri:'http://173.212.234.137/assets/tahfifa/support.png'}} style={styles.coverTwo}>
+  return ( <ImageBackground source={{uri:'http://95.111.243.233/assets/tahfifa/support.png'}} style={styles.coverTwo}>
               <StatusBar hidden />
               <ActivityIndicator size='large' color={Colors.primary} />
            </ImageBackground>)
@@ -319,7 +319,7 @@ if(isLoadingState || client===undefined){
       <View style={styles.container}>
       <StatusBar hidden />
          <View style={styles.firstCard}>
-          <ImageBackground source={client[0].sex==='Femme'?{uri:'http://173.212.234.137/assets/tahfifa/woman5.jpg'}:{uri:'http://173.212.234.137/assets/tahfifa/man1-1.jpg'}} style={styles.backgroundFirstCard} resizeMode='cover'/>
+          <ImageBackground source={client[0].sex==='Femme'?{uri:'http://95.111.243.233/assets/tahfifa/woman5.jpg'}:{uri:'http://95.111.243.233/assets/tahfifa/man1-1.jpg'}} style={styles.backgroundFirstCard} resizeMode='cover'/>
          </View>
          <View style={styles.menuContainer}>
               <TouchableOpacity onPress={phone} style={{padding:screen.width/72,width:'25%',backgroundColor:isPhone?'#fd6c57':'#fff',alignItems:'center',justifyContent:'center'}}>
@@ -348,7 +348,7 @@ if(isLoadingState || client===undefined){
           <CustomInput
               id='phone'
               rightIcon={<MaterialIcons title="phone" name ='phone' color='#323446' size={screen.width/15.7} />}
-              leftIcon={<View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around',borderRightWidth:1,borderRightColor:Colors.blue,paddingRight:screen.width/72,marginRight:screen.width/72}}><Image source={{uri:'http://173.212.234.137/assets/tahfifa/algeriaFlag.png'}} style={{width:screen.width/15,height:screen.width/12.85,marginRight:screen.width/72}}></Image><Text style={styles.phoneNumber}>+213</Text></View>}
+              leftIcon={<View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around',borderRightWidth:1,borderRightColor:Colors.blue,paddingRight:screen.width/72,marginRight:screen.width/72}}><Image source={{uri:'http://95.111.243.233/assets/tahfifa/algeriaFlag.png'}} style={{width:screen.width/15,height:screen.width/12.85,marginRight:screen.width/72}}></Image><Text style={styles.phoneNumber}>+213</Text></View>}
               placeholder='555555555'
               keyboardType="phone-pad"
               returnKeyType="next"
@@ -434,10 +434,10 @@ if(isLoadingState || client===undefined){
             <View style={styles.langContainer}>
               {client && client[0].lang?(<View style={styles.langRow}>
                 <Text style={{fontFamily:'poppins',fontSize:screen.width/24,color:Platform.OS==='android'?Colors.blue:'#fff'}}>Français</Text>
-                <Image source={{uri:'http://173.212.234.137/assets/tahfifa/france.png'}} style={{width:screen.width/15,height:screen.width/15}}/>
+                <Image source={{uri:'http://95.111.243.233/assets/tahfifa/france.png'}} style={{width:screen.width/15,height:screen.width/15}}/>
               </View>):(<View style={styles.langRow}>
                 <Text style={{fontFamily:'poppins',fontSize:screen.width/24,color:Platform.OS==='android'?Colors.blue:'#fff'}}>العربية</Text>
-                <Image source={{uri:'http://173.212.234.137/assets/tahfifa/algeria.png'}} style={{width:screen.width/15,height:screen.width/15}}/>
+                <Image source={{uri:'http://95.111.243.233/assets/tahfifa/algeria.png'}} style={{width:screen.width/15,height:screen.width/15}}/>
               </View>)}
             </View>
             <View style={styles.buttonContainer}>

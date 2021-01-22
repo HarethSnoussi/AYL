@@ -32,7 +32,7 @@ const conditionCall = props.navigation.getParam("status") === "confirmée" ;
 
 /******************SEND A NOTIFICATION TO THE client WHEN A BOOKING IS Canceled ************************/
 async function sendPushNotification() {
-  const arr = await fetch(`http://173.212.234.137:3000/barber/barbertokens/${props.navigation.getParam("barberId")}`);
+  const arr = await fetch(`http://95.111.243.233:3000/barber/barbertokens/${props.navigation.getParam("barberId")}`);
   const resData = await arr.json ();
   const allMessages = [];
   
@@ -168,7 +168,7 @@ useEffect(()=>{
     try {
   setLoading(true);
     
-      const arr = await fetch(`http://173.212.234.137:3000/barber/barberinfos/${props.navigation.getParam("barberId")}`);
+      const arr = await fetch(`http://95.111.243.233:3000/barber/barberinfos/${props.navigation.getParam("barberId")}`);
       const resData = await arr.json ();
       setBarberInfos(...resData);
       setLoading(false);
@@ -191,7 +191,7 @@ useEffect(()=>{
 
 if (isLoading) {
   return (
-    <ImageBackground style= {styles.centered} source={{uri:'http://173.212.234.137/assets/tahfifa/support.png'}}>
+    <ImageBackground style= {styles.centered} source={{uri:'http://95.111.243.233/assets/tahfifa/support.png'}}>
       <ActivityIndicator size="large" color= {Colors.primary} />
     
     </ImageBackground>
@@ -343,7 +343,7 @@ buttonStyle = {{backgroundColor : "white"}}
                 <View style = {{alignSelf :"center" , flexDirection :"row",width:"90%",alignItems:"center"}}>
               
                 <Avatar
-          source = {{uri:`http://173.212.234.137/profileImages/barber/${barberInfos.image}`}}
+          source = {{uri:`http://95.111.243.233/profileImages/barber/${barberInfos.image}`}}
           overlayContainerStyle = {{overflow:"hidden"}}
           size = "small"
           rounded

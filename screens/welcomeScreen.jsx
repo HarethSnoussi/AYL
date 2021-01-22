@@ -15,25 +15,25 @@ export default class WelcomeScreen extends Component {
         this.state= {
             firstUse : [
                 {
-                    img: {uri:'http://173.212.234.137/assets/tahfifa/welcome1.jpg'},
+                    img: {uri:'http://95.111.243.233/assets/tahfifa/welcome1.jpg'},
                     title:'Réservez à tout moment',
                     text: 'Service disponible 24/7 grâce à notre système de réservation très pratique.',
                     button:  <Button theme={{colors: {primary:'transparent'}}} title="Se connecter" onPress={() => this.props.navigation.navigate('Login')} titleStyle={styles.labelButton2} buttonStyle={styles.buttonStyle2}/>
                 },
                 {
-                    img: {uri:'http://173.212.234.137/assets/tahfifa/welcome2.jpg'},
+                    img: {uri:'http://95.111.243.233/assets/tahfifa/welcome2.jpg'},
                     title:'Coiffeurs certifiés',
                     text: 'Trouvez les meilleurs services de coiffeurs talentueux.',
                     button:  <Button theme={{colors: {primary:'transparent'}}} title="Se connecter" onPress={() => this.props.navigation.navigate('Login')} titleStyle={styles.labelButton2} buttonStyle={styles.buttonStyle2}/>
                 },
                 {
-                    img: {uri:'http://173.212.234.137/assets/tahfifa/welcome3.jpg'},
+                    img: {uri:'http://95.111.243.233/assets/tahfifa/welcome3.jpg'},
                     title:'Zone de confort',
                     text: "Choisissez votre zone de confort pour profiter de l'expérience.",
                     button:  <Button theme={{colors: {primary:'transparent'}}} title="Se connecter" onPress={() => this.props.navigation.navigate('Login')} titleStyle={styles.labelButton2} buttonStyle={styles.buttonStyle2}/>
                 },
                 {
-                    img: {uri:'http://173.212.234.137/assets/tahfifa/welcome4.jpg'},
+                    img: {uri:'http://95.111.243.233/assets/tahfifa/welcome4.jpg'},
                     title:'Feedback',
                     text: 'Notez vos coiffeurs afin de construire une communauté de confiance de coiffeurs approuvés.',
                 },

@@ -19,7 +19,7 @@ const NumConfirmed = props =>{
             try {
             
              
-              const arr = await fetch(`http://173.212.234.137:3000/client/confirmedbookings/${myClient[0].id}`);
+              const arr = await fetch(`http://95.111.243.233:3000/client/confirmedbookings/${myClient[0].id}`);
                const resData = await arr.json ();
       
                setConfirmedBookings( resData[0].Num);
