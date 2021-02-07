@@ -7,7 +7,7 @@ export const setBarber= id => {
     return async dispatch=>{
         try{
 
-            const response= await fetch(`http://173.212.234.137:3000/barber/${id}`);
+            const response= await fetch(`http://95.111.243.233:3000/barber/${id}`);
 
             if(!response.ok){
              throw new Error('Oups! Une erreur est survenue.');

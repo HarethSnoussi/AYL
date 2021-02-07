@@ -33,7 +33,7 @@ const BarberServiceScreen = props =>{
           <View style={styles.infoContainer}>
              <View style={styles.imageContainer}>
              {barber[0] && barber[0].image!==null?<Image source={{uri:`http://95.111.243.233/profileImages/barber/${barber.image}`}} style={styles.icon} />:
-                <Image source={{uri:'http://95.111.243.233/assets/tahfifa/unknown.jpeg'}} style={styles.icon} />}
+                <Image source={{uri:'http://95.111.243.233/assets/tahfifa/unknown.jpg'}} style={styles.icon} />}
              </View>
            
              <Text style={styles.bname}>{barber[0] && barber[0].b_name!==null?barber[0].b_name:client[0] && client[0].lang?polylanfr.BusinessName:polylanar.BusinessName}</Text>
@@ -79,7 +79,7 @@ const BarberServiceScreen = props =>{
            <View style={styles.infoContainer}>
               <View style={styles.imageContainer}>
               {barber[0] && barber[0].image!==null?<Image source={{uri:`http://95.111.243.233/profileImages/barber/${barber[0].image}`}} style={styles.icon} />:
-                <Image source={{uri:'http://95.111.243.233/assets/tahfifa/unknown.jpeg'}} style={styles.icon} />}
+                <Image source={{uri:'http://95.111.243.233/assets/tahfifa/unknown.jpg'}} style={styles.icon} />}
               </View>
             
               <Text style={styles.bname}>{barber[0] && barber[0].b_name!==null?barber[0].b_name:client[0] && client[0].lang?polylanfr.BusinessName:polylanar.BusinessName}</Text>

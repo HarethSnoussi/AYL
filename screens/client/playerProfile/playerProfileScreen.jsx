@@ -287,8 +287,8 @@ const takeImageHandler = async ()=>{
      <View style={styles.secondCard}>
           <View style={styles.secondCardContent}>
               <View style={styles.imageContainer}>
-              {client[0] && pickedImage!==null?<Image source={{uri:`http://95.111.243.233/profileImages/client/${pickedImage}`}} style={styles.image} />:
-                <Image source={{uri:'http://95.111.243.233/assets/tahfifa/unknown.jpeg'}} style={styles.image} />}
+              {client[0] && pickedImage?<Image source={{uri:`http://95.111.243.233/profileImages/client/${pickedImage}`}} style={styles.image} />:
+                <Image source={{uri:'http://95.111.243.233/assets/tahfifa/unknown.jpg'}} style={styles.image} />}
               </View>
               <View style={styles.detailsContainer}>
                 <View style={{width:'30%'}}>

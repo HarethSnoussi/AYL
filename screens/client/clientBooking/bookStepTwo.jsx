@@ -410,7 +410,7 @@ return (
                   wilaya = {props.navigation.getParam("wilaya")}
                   region = {props.navigation.getParam("region")}
                   mark = {props.navigation.getParam("mark")}
-                  image={props.navigation.getParam("image")!==null?props.navigation.getParam("image"):'unknown.jpeg'}
+                  image={props.navigation.getParam("image")!==null?props.navigation.getParam("image"):'unknown.jpg'}
                />
                 
 

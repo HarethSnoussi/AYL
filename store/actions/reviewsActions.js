@@ -10,7 +10,7 @@ export const getReviews = (clientId)=>{
     return async (dispatch) =>{
         try {
 
-            const arr = await fetch(`http://173.212.234.137:3000/client/barbersfeedbacks/${clientId}`);
+            const arr = await fetch(`http://95.111.243.233:3000/client/barbersfeedbacks/${clientId}`);
             const resData = await arr.json ();
 
 
@@ -37,7 +37,7 @@ export const getReviews = (clientId)=>{
             return async (dispatch) =>{
                 try {
         
-                    const response = await fetch(`http://173.212.234.137:3000/client/updatefeedback`,
+                    const response = await fetch(`http://95.111.243.233:3000/client/updatefeedback`,
                     {
                         method: 'PATCH',
                         headers: {
@@ -76,7 +76,7 @@ export const getReviews = (clientId)=>{
                 try {
                    
 
-                    const response = await fetch(`http://173.212.234.137:3000/client/addreview`,
+                    const response = await fetch(`http://95.111.243.233:3000/client/addreview`,
                      {
                         method : "POST",
                         headers: {
@@ -114,7 +114,7 @@ export const getReviews = (clientId)=>{
                     return async dispatch=>{
                         try{
                 
-                            const response= await fetch(`http://173.212.234.137:3000/feedback/${barber_id}`);
+                            const response= await fetch(`http://95.111.243.233:3000/feedback/${barber_id}`);
                 
                             if(!response.ok){
                              throw new Error('Oups! Une erreur est survenue.');
