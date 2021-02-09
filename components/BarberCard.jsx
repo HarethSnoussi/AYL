@@ -23,7 +23,7 @@ const BarberCard = props =>{
        
         <TouchableOpacity  onPress={props.navigateToBarberProfil} style = {styles.cardContainer}>
         <View style = {styles.cardImage}>
-       <Image source={{uri:`http://173.212.234.137/profileImages/barber/${props.image}`}} style={styles.image} />
+       <Image source={{uri:`http://95.111.243.233/profileImages/barber/${props.image}`}} style={styles.image} />
               
 
         </View>

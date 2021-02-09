@@ -15,7 +15,7 @@ export const createClient=(id,phone,password,sex,name,surname,wilaya,region)=>{
         const clientData={id,phone,password,sex,name,surname,wilaya,region};
 
         try{
-            const response= await fetch('http://173.212.234.137:3000/client/addClient',{
+            const response= await fetch('http://95.111.243.233:3000/client/addClient',{
                 method : "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -43,7 +43,7 @@ export const setClients= ()=>{
     return async dispatch =>{
 
       try{
-           const response= await fetch('http://173.212.234.137:3000/client');
+           const response= await fetch('http://95.111.243.233:3000/client');
            if(!response.ok){
             throw new Error('Oups! Une erreur est survenue.');
             }
@@ -64,7 +64,7 @@ export const setClients= ()=>{
 export const setClient= id => {
     return async dispatch=>{
         try{
-            const response= await fetch(`http://173.212.234.137:3000/client/${id}`);
+            const response= await fetch(`http://95.111.243.233:3000/client/${id}`);
             if(!response.ok){
              throw new Error('Oups! Une erreur est survenue.');
              }
@@ -87,7 +87,7 @@ export const updateClientPassword= (id,password) => {
     return async dispatch => {
 
          try{
-           const response = await fetch(`http://173.212.234.137:3000/client/updatePassword/${id}`,{
+           const response = await fetch(`http://95.111.243.233:3000/client/updatePassword/${id}`,{
               method:'PATCH',
               headers: {
                 'Content-Type': 'application/json'
@@ -116,7 +116,7 @@ export const updateClientImage= (id,imgsource,image) => {
       
          try{
 
-           const response = await fetch(`http://173.212.234.137:3000/client/profileimage/${id}`,{
+           const response = await fetch(`http://95.111.243.233:3000/client/profileimage/${id}`,{
 
               method:'PATCH',
               headers: {
@@ -145,7 +145,7 @@ export const updateClientPhone= (id,phone,clientid) => {
     return async dispatch => {
 
          try{
-           const response = await fetch(`http://173.212.234.137:3000/client/updatePhone/${clientid}`,{
+           const response = await fetch(`http://95.111.243.233:3000/client/updatePhone/${clientid}`,{
               method:'PATCH',
               headers: {
                 'Content-Type': 'application/json'
@@ -173,7 +173,7 @@ export const updateClientLang= (id,lang) => {
           
          try{
 
-           const response = await fetch(`http://173.212.234.137:3000/client/updateLang/${id}`,{
+           const response = await fetch(`http://95.111.243.233:3000/client/updateLang/${id}`,{
 
               method:'PATCH',
               headers: {
@@ -202,7 +202,7 @@ export const updateClient= (id,name,surname,email,address,wilaya,region) => {
     return async dispatch => {
 
          try{
-           const response = await fetch(`http://173.212.234.137:3000/client/updateClient/${id}`,{
+           const response = await fetch(`http://95.111.243.233:3000/client/updateClient/${id}`,{
               method:'PATCH',
               headers: {
                 'Content-Type': 'application/json'
@@ -228,7 +228,7 @@ export const deleteClient = id => {
     return async dispatch => {
     
         try{
-            const response = await fetch(`http://173.212.234.137:3000/client/deleteClient/${id}`,{
+            const response = await fetch(`http://95.111.243.233:3000/client/deleteClient/${id}`,{
                method:'DELETE'});
 
             if(!response.ok){

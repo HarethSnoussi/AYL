@@ -61,7 +61,7 @@ const getHistory = useCallback(async ()=>{
     setIsRefreshing(true);
     setLoading(true);
     
-    const arr = await fetch(`http://173.212.234.137:3000/client/barbers/${clientID}`);
+    const arr = await fetch(`http://95.111.243.233:3000/client/barbers/${clientID}`);
     const resData = await arr.json ();
    
     setBarbersIds([...resData]);
@@ -137,7 +137,7 @@ if (error) {
 if (isLoading) {
     
   return (
-    <ImageBackground style= {styles.centered} source={{uri:'http://173.212.234.137/assets/tahfifa/support.png'}}>
+    <ImageBackground style= {styles.centered} source={{uri:'http://95.111.243.233/assets/tahfifa/support.png'}}>
       <ActivityIndicator size="large" color= {Colors.primary} />
     </ImageBackground>
   );
@@ -195,7 +195,7 @@ if (isLoading) {
               allReviews = {allReviews}
               clientId = {clientID}
                profile = {()=>props.navigation.navigate("Barber",{barberID : barber.id})}
-               image={barber.image!==null?barber.image:'unknown.jpeg'}
+               image={barber.image!==null?barber.image:'unknown.jpg'}
               />
               
               )

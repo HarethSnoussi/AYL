@@ -9,7 +9,7 @@ export const getBarbers = (sex)=>{
     return async (dispatch) =>{
         try {
 
-            const arr = await fetch(`http://173.212.234.137:3000/barbers/allbarbers/${sex}`);
+            const arr = await fetch(`http://95.111.243.233:3000/barbers/allbarbers/${sex}`);
             const resData = await arr.json ();
          
             dispatch({type : GET_BARBERS , barbers : resData});

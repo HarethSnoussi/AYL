@@ -262,7 +262,7 @@ const takeImageHandler = async ()=>{
   },[dispatch,clientID,formState,wilaya]);
 
   if(isLoadingImage){
-    return <ImageBackground source={{uri:'http://173.212.234.137/assets/tahfifa/support.png'}} style={styles.activityIndicatorContainer} >
+    return <ImageBackground source={{uri:'http://95.111.243.233/assets/tahfifa/support.png'}} style={styles.activityIndicatorContainer} >
             <StatusBar hidden />
             <ActivityIndicator size='large' color={Colors.primary} />
            </ImageBackground>
@@ -274,7 +274,7 @@ const takeImageHandler = async ()=>{
       <View style={styles.container}>
       <StatusBar hidden />
       <View style={styles.firstCard}>
-        <ImageBackground source={client[0] && client[0].sex==='Femme'?{uri:'http://173.212.234.137/assets/tahfifa/woman5.jpg'}:{uri:'http://173.212.234.137/assets/tahfifa/man1-1.jpg'}} style={styles.backgroundFirstCard} resizeMode='cover'>
+        <ImageBackground source={client[0] && client[0].sex==='Femme'?{uri:'http://95.111.243.233/assets/tahfifa/woman5.jpg'}:{uri:'http://95.111.243.233/assets/tahfifa/man1-1.jpg'}} style={styles.backgroundFirstCard} resizeMode='cover'>
           <View style={{width:'100%',height:'20%',alignItems:'flex-end',justifyContent:'center'}}>
            
         {!isLoading? <Button theme={{colors: {primary:'transparent'}}} icon={<Ionicons title = "check" name ='md-checkmark' color='#fff' size={screen.width/11.25} />} onPress={saveHandler}  buttonStyle={styles.buttonStyle2}/>:
@@ -287,8 +287,8 @@ const takeImageHandler = async ()=>{
      <View style={styles.secondCard}>
           <View style={styles.secondCardContent}>
               <View style={styles.imageContainer}>
-              {client[0] && pickedImage!==null?<Image source={{uri:`http://173.212.234.137/profileImages/client/${pickedImage}`}} style={styles.image} />:
-                <Image source={{uri:'http://173.212.234.137/assets/tahfifa/unknown.jpeg'}} style={styles.image} />}
+              {client[0] && pickedImage?<Image source={{uri:`http://95.111.243.233/profileImages/client/${pickedImage}`}} style={styles.image} />:
+                <Image source={{uri:'http://95.111.243.233/assets/tahfifa/unknown.jpg'}} style={styles.image} />}
               </View>
               <View style={styles.detailsContainer}>
                 <View style={{width:'30%'}}>
@@ -380,7 +380,7 @@ const takeImageHandler = async ()=>{
                 minLength={6}
                 backgroundColor='#fff'
                 textColor={Colors.blue}
-                autoCapitalize='sentences'
+                autoCapitalize='none'
                 shadowColorView='black'
                 shadowOpacityView={0.5}
                 shadowOffsetView={{width: 0, height:1}}

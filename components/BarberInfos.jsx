@@ -13,7 +13,7 @@ const BarberInfos = props =>{
                 <View style = {{width : "85%",height :"70%",borderRadius :screen.width/72,flexDirection : "row",padding :"5%",justifyContent:'space-between',alignItems :"center"}}>
                 <View style = {{width: "30%"}}>
 
-               <Avatar source = {{uri:`http://173.212.234.137/profileImages/barber/${props.image}`}}
+               <Avatar source = {{uri:`http://95.111.243.233/profileImages/barber/${props.image}`}}
                       containerStyle = {{borderWidth:1,borderRadius : screen.width/72,overflow:"hidden"}}
                       size= {screen.width/4}
                 />

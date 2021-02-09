@@ -194,7 +194,7 @@ const getData = async ()=>{
         setIsRefreshing(true);
         setLoading(true);
        
-        const arr = await fetch(`http://173.212.234.137:3000/bookings/barberBookings/${props.navigation.getParam("barber")}`);
+        const arr = await fetch(`http://95.111.243.233:3000/bookings/barberBookings/${props.navigation.getParam("barber")}`);
          const resData = await arr.json ();
      
         setBookings([...resData]);
@@ -377,7 +377,7 @@ if (error) {
  if (isLoading) {
     
     return (
-      <ImageBackground style= {styles.centered} source={{uri:'http://173.212.234.137/assets/tahfifa/support.png'}}>
+      <ImageBackground style= {styles.centered} source={{uri:'http://95.111.243.233/assets/tahfifa/support.png'}}>
         <ActivityIndicator size="large" color= {Colors.primary} />
       
       </ImageBackground>
@@ -410,7 +410,7 @@ return (
                   wilaya = {props.navigation.getParam("wilaya")}
                   region = {props.navigation.getParam("region")}
                   mark = {props.navigation.getParam("mark")}
-                  image={props.navigation.getParam("image")!==null?props.navigation.getParam("image"):'unknown.jpeg'}
+                  image={props.navigation.getParam("image")!==null?props.navigation.getParam("image"):'unknown.jpg'}
                />
                 
 
@@ -418,7 +418,7 @@ return (
 
                 <View style = {styles.bookingInfoContainer}>
                     <View style = {styles.selectDate}>
-                       <Text style = {{fontSize : screen.width/26,fontFamily : "poppins-bold"}}>Selectionner une date</Text>
+                       <Text style = {{fontSize : screen.width/26,fontFamily : "poppins-bold"}}>Sélectionner une date</Text>
                        <TouchableOpacity style = {styles.datePicker}
                        onPress = {()=>setDatePickerVisibility(true)}
                        >
@@ -449,7 +449,7 @@ return (
                     availableSlots.length > 0 ?
 
                 <View style = {styles.selectSlot}>
-                <Text style = {{fontSize : screen.width/26,fontFamily : "poppins-bold"}}>Selectionner un créneau</Text>
+                <Text style = {{fontSize : screen.width/26,fontFamily : "poppins-bold"}}>Sélectionner un créneau</Text>
                      
                      <FlatList
                     data={availableSlots}
@@ -473,7 +473,7 @@ return (
                    :
                    <View style ={{alignSelf : "center", height : "50%",justifyContent : "center"}}>
                    <Text style ={{fontFamily : "poppins-bold",fontSize : screen.width/26,color : Colors.primary}}>
-                   Aucun creneau disponible ce jour la !
+                   Aucun créneau disponible ce jour là!
                    </Text>
                    </View>
                    

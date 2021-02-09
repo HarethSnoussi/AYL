@@ -158,7 +158,7 @@ if(formState.formIsValid && wilaya!==wilayas[0] &&  sex!==sexTypes[0] && wilaya!
   try {
 
     setVerifyInProgress(true);
-    const result = await fetch(`http://173.212.234.137:3000/phone/${prefix+formState.inputValues.phone}`);
+    const result = await fetch(`http://95.111.243.233:3000/phone/${prefix+formState.inputValues.phone}`);
     const resData= await result.json();
 
     setVerifyInProgress(false);
@@ -292,7 +292,7 @@ try {
                  <CustomInput 
                      id='phone'
                      rightIcon={<MaterialIcons title = "phone" name ='phone' color={Colors.lightGrey} size={screen.width/15.7} />}
-                     leftIcon={<View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around',borderRightWidth:1,borderRightColor:Colors.lightGrey,paddingRight:screen.width/72,marginRight:screen.width/72}}><Image source={{uri:'http://173.212.234.137/assets/tahfifa/algeriaFlag.png'}} style={{width:screen.width/15,height:screen.width/12.7,marginRight:screen.width/72,marginLeft:-(screen.width/24)}}/><Text style={styles.phoneNumber}>+213</Text></View>}
+                     leftIcon={<View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around',borderRightWidth:1,borderRightColor:Colors.lightGrey,paddingRight:screen.width/72,marginRight:screen.width/72}}><Image source={{uri:'http://95.111.243.233/assets/tahfifa/algeriaFlag.png'}} style={{width:screen.width/15,height:screen.width/12.7,marginRight:screen.width/72,marginLeft:-(screen.width/24)}}/><Text style={styles.phoneNumber}>+213</Text></View>}
                      placeholder='555555555'
                      keyboardType="phone-pad"
                      returnKeyType="next"

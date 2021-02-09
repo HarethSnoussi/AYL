@@ -18,7 +18,7 @@ const BarberServiceScreen = props =>{
   const feedbacks=useSelector(state=>state.reviews.feedbacks);
   const client= useSelector(state=>state.clients.client);
   
-  const isImage= {beard:{uri:'http://173.212.234.137/assets/tahfifa/barbe.jpg'},hair:{uri:'http://173.212.234.137/assets/tahfifa/hair.jpg'},supp:{uri:'http://173.212.234.137/assets/tahfifa/supplements.jpg'},womanHair:{uri:'http://173.212.234.137/assets/tahfifa/womanhair.jpg'},wedding:{uri:'http://173.212.234.137/assets/tahfifa/mariage.jpg'},care:{uri:'http://173.212.234.137/assets/tahfifa/soins.jpg'}};
+  const isImage= {beard:{uri:'http://95.111.243.233/assets/tahfifa/barbe.jpg'},hair:{uri:'http://95.111.243.233/assets/tahfifa/hair.jpg'},supp:{uri:'http://95.111.243.233/assets/tahfifa/supplements.jpg'},womanHair:{uri:'http://95.111.243.233/assets/tahfifa/womanhair.jpg'},wedding:{uri:'http://95.111.243.233/assets/tahfifa/mariage.jpg'},care:{uri:'http://95.111.243.233/assets/tahfifa/soins.jpg'}};
     
      
     if(barber[0].services.length === 0){
@@ -27,13 +27,13 @@ const BarberServiceScreen = props =>{
         <StatusBar hidden />
         <View style={styles.firstContainer}>
           <View style={styles.coverContainer}>
-              <ImageBackground source={{uri:'http://173.212.234.137/assets/tahfifa/barberScreen.png'}} style={styles.cover} />
+              <ImageBackground source={{uri:'http://95.111.243.233/assets/tahfifa/barberScreen.png'}} style={styles.cover} />
           </View>
           
           <View style={styles.infoContainer}>
              <View style={styles.imageContainer}>
-             {barber[0] && barber[0].image!==null?<Image source={{uri:`http://173.212.234.137/profileImages/barber/${barber.image}`}} style={styles.icon} />:
-                <Image source={{uri:'http://173.212.234.137/assets/tahfifa/unknown.jpeg'}} style={styles.icon} />}
+             {barber[0] && barber[0].image!==null?<Image source={{uri:`http://95.111.243.233/profileImages/barber/${barber.image}`}} style={styles.icon} />:
+                <Image source={{uri:'http://95.111.243.233/assets/tahfifa/unknown.jpg'}} style={styles.icon} />}
              </View>
            
              <Text style={styles.bname}>{barber[0] && barber[0].b_name!==null?barber[0].b_name:client[0] && client[0].lang?polylanfr.BusinessName:polylanar.BusinessName}</Text>
@@ -73,13 +73,13 @@ const BarberServiceScreen = props =>{
         <StatusBar hidden />
          <View style={styles.firstContainer}>
            <View style={styles.coverContainer}>
-               <ImageBackground source={{uri:'http://173.212.234.137/assets/tahfifa/barberScreen.png'}} style={styles.cover} />
+               <ImageBackground source={{uri:'http://95.111.243.233/assets/tahfifa/barberScreen.png'}} style={styles.cover} />
            </View>
            
            <View style={styles.infoContainer}>
               <View style={styles.imageContainer}>
-              {barber[0] && barber[0].image!==null?<Image source={{uri:`http://173.212.234.137/profileImages/barber/${barber[0].image}`}} style={styles.icon} />:
-                <Image source={{uri:'http://173.212.234.137/assets/tahfifa/unknown.jpeg'}} style={styles.icon} />}
+              {barber[0] && barber[0].image!==null?<Image source={{uri:`http://95.111.243.233/profileImages/barber/${barber[0].image}`}} style={styles.icon} />:
+                <Image source={{uri:'http://95.111.243.233/assets/tahfifa/unknown.jpg'}} style={styles.icon} />}
               </View>
             
               <Text style={styles.bname}>{barber[0] && barber[0].b_name!==null?barber[0].b_name:client[0] && client[0].lang?polylanfr.BusinessName:polylanar.BusinessName}</Text>

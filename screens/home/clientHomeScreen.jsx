@@ -324,7 +324,7 @@ if (error  ) {
      <View style = {{height : "50%",justifyContent:"center",alignItems:"center",width:"50%"}}>
                      <Image
                         style={{height:"100%",width:"100%",resizeMode:"contain"}}
-                        source={{uri:'http://173.212.234.137/assets/tahfifa/asset.png'}}
+                        source={{uri:'http://95.111.243.233/assets/tahfifa/asset.png'}}
                     />
                 
             </View> 
@@ -345,7 +345,7 @@ if (isLoading || allBarbers.length === 0 || client.length === 0 ) {
 
   return (
 
-    <ImageBackground style= {styles.centered} source={{uri:'http://173.212.234.137/assets/tahfifa/support.png'}}>
+    <ImageBackground style= {styles.centered} source={{uri:'http://95.111.243.233/assets/tahfifa/support.png'}}>
       <StatusBar hidden />
 
       <ActivityIndicator size="large" color= {Colors.primary} />
@@ -366,7 +366,7 @@ if (isLoading || allBarbers.length === 0 || client.length === 0 ) {
    
       <ScrollView refreshing={isRefreshing} >
 
-            <ImageBackground source = {client[0].sex ==="Femme"? {uri:'http://173.212.234.137/assets/tahfifa/woman3.png'} :{uri:'http://173.212.234.137/assets/tahfifa/barber4.png'} } style = {styles.firstImage}  resizeMode ="stretch" imageStyle ={styles.image} >
+            <ImageBackground source = {client[0].sex ==="Femme"? {uri:'http://95.111.243.233/assets/tahfifa/woman3.png'} :{uri:'http://95.111.243.233/assets/tahfifa/barber4.png'} } style = {styles.firstImage}  resizeMode ="stretch" imageStyle ={styles.image} >
 
         
             <View style = {styles.firstTitle}>  
@@ -407,7 +407,7 @@ if (isLoading || allBarbers.length === 0 || client.length === 0 ) {
 <SentOverlay   
           isVisible = {sentVisible} 
           sentOverlayHandler = {sentOverlayHandler}
-          url ={{uri:'http://173.212.234.137/assets/tahfifa/sentGreen.png'}}
+          url ={{uri:'http://95.111.243.233/assets/tahfifa/sentGreen.png'}}
           title = "Merci !"
           body = "Votre réservation a été envoyée avec succès"
           buttonTitle = "Fermer"
@@ -447,7 +447,7 @@ if (isLoading || allBarbers.length === 0 || client.length === 0 ) {
              region = {barber.region}
              wilaya = {barber.wilaya}
              mark = {barber.mark}
-             image={barber.image!==null?barber.image:'unknown.jpeg'}
+             image={barber.image!==null?barber.image:'unknown.jpg'}
              navigateToBarberProfil={()=>props.navigation.navigate("Barber",{barberId : barber.id,clientID:clientID,overCpt:allBookings.length})}
              navigate = {()=>props.navigation.navigate("BookStepOne",{barberId : barber.id,clientID,name:barber.name,surname:barber.surname,mark:barber.mark,region:barber.region,wilaya:barber.wilaya,image:barber.image,overCpt : allBookings.length})}
             />

@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         width:'80%',
         borderRadius:screen.width/18,
         height:screen.width/7.2,
-        alignSelf:'center',
+        alignSelf:'center'
         },
     labelButton2:{
         color:'#FFF',

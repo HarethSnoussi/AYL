@@ -16,8 +16,8 @@ const TopBarbersCard = (props)=> {
         <TouchableOpacity onPress={props.navigateToBarberProfil} style = {styles.barberContainer}>
         <View  style = {styles.barberPictureContainer}>
 
-         <ImageBackground resizeMode = "stretch" style = {{width : "100%" ,height : "100%" ,alignItems : "center" , justifyContent : "center"}} source = {{uri:'http://173.212.234.137/assets/tahfifa/test4.png'}}>  
-           <Avatar source = {{uri:`http://173.212.234.137/profileImages/barber/${props.image}`}}
+         <ImageBackground resizeMode = "stretch" style = {{width : "100%" ,height : "100%" ,alignItems : "center" , justifyContent : "center"}} source = {{uri:'http://95.111.243.233/assets/tahfifa/test4.png'}}>  
+           <Avatar source = {{uri:`http://95.111.243.233/profileImages/barber/${props.image}`}}
               containerStyle = {styles.barberPicture}
               rounded
               size= "large"
@@ -115,7 +115,7 @@ const styles= StyleSheet.create({
    alignSelf : "center",
    marginBottom:screen.width/72,
    paddingHorizontal:screen.width/14.4,
-   borderRadius:screen.width/18
+   borderRadius:screen.width/24
 }
   
   });
