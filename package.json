@@ -45,7 +45,7 @@
     "react-native-screens": "~2.10.1",
     "react-native-snap-carousel": "^3.8.4",
     "react-native-web": "~0.13.7",
-    "react-native-webview": "10.7.0",
+    "react-native-webview": "11.0.0",
     "react-navigation": "^4.2.2",
     "react-navigation-drawer": "^2.4.2",
     "react-navigation-header-buttons": "^3.0.5",
