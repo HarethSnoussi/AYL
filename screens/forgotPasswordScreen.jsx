@@ -172,7 +172,7 @@ const verifyNumber = async ()=>{
           </View>
           <View style={styles.secondContainer}>
              <View style={styles.logoContainer}>
-                 <Image source={{uri:'http://95.111.243.233/assets/tahfifa/logo.png'}} style={styles.logo}/>
+                 <Image source={require('../assets/titleReBorn.png')} style={styles.logo}/>
                  <Text style={styles.callToAction}>Contactez un coiffeur en quelques clics</Text>
              </View>
              {!verificationId ? (<View style={styles.inputsContainer}>

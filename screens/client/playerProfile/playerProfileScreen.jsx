@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useCallback,useReducer} from 'react';
-import {StyleSheet,View,AsyncStorage,Linking,ScrollView,ImageBackground,TouchableOpacity,Text,Image,Alert,KeyboardAvoidingView,Dimensions,ActionSheetIOS,Picker,ActivityIndicator,TouchableWithoutFeedback,Keyboard,Platform, ViewBase,StatusBar} from 'react-native';
+import {StyleSheet,View,AsyncStorage,Linking,ScrollView,ImageBackground,TouchableOpacity,Text,Image,Alert,KeyboardAvoidingView,Dimensions,ActionSheetIOS,ActivityIndicator,TouchableWithoutFeedback,Keyboard,Platform, ViewBase,StatusBar} from 'react-native';
 import CustomInput from '../../../components/Input';
 import {Button } from 'react-native-elements';
 import Colors from '../../../constants/Colors';
@@ -12,6 +12,8 @@ import polylanfr from "../../../lang/fr";
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { currentToken, deleteToken } from '../../../store/actions/tokenActions';
+import RNPickerSelect from 'react-native-picker-select';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const screen = Dimensions.get("window");
 
@@ -49,29 +51,65 @@ const PlayerProfileScreen = props =>{
   const clientUID= props.navigation.dangerouslyGetParent().getParam('clientUID');
   const clientID= props.navigation.dangerouslyGetParent().getParam('clientID');
   const myToken = useSelector(state=>state.tokens.currentToken);
-  
+  const [isLoading,setIsLoading]=useState(false);
+  const [isLoadingImage,setIsLoadingImage]=useState(false);
+  const dispatch = useDispatch();
+
   //get the client's data
 
-
-
   const client= useSelector(state=>state.clients.client);
+  const [error, setError] = useState();
 
   const [isInfo,setIsInfo]= useState(true);
   const [isLocalisation,setIsLocalisation]= useState(false);
+
+  /*
+   *******Fetch One barber DATA
+  */
+ const getClient=useCallback(async()=>{
+  try{
+    setError(false);
+    setIsLoading(true);
+    await dispatch(clientActions.setClient(clientID));
+    setIsLoading(false);
+
+    }catch(err){
+      setError(true);
+      console.log(err);
+    }
+},[dispatch]);
+
+  useEffect(()=>{
+  getClient();
+  },[getClient]);
+
+  useEffect(()=>{
+
+    const willFocusSub= props.navigation.addListener(
+      'willFocus',
+      () => {
+        getClient();
+      }
+    );
+    return ()=>{
+      willFocusSub.remove();
+    };
+    },[getClient]);
+
 
   const URL = "https://tahfifaapp.com";
   const URLAbout = "https://tahfifaapp.com/qui-sommes-nous/";
   const url= ()=>{
     Linking.openURL(URL).catch((err) => {
       if(err){
-        Alert.alert(client && client[0].lang?polylanfr.Oups:polylanar.Oups,client && client[0].lang?polylanfr.WeakInternet:polylanar.WeakInternet,[{text:client && client[0].lang?polylanfr.OK:polylanar.OK}]);
+        Alert.alert(client[0] && client[0].lang?polylanfr.Oups:polylanar.Oups,client[0] && client[0].lang?polylanfr.WeakInternet:polylanar.WeakInternet,[{text:client[0] && client[0].lang?polylanfr.OK:polylanar.OK}]);
     } 
     });
    };
    const url2= ()=>{
     Linking.openURL(URLAbout).catch((err) => {
       if(err){
-        Alert.alert(client && client[0].lang?polylanfr.Oups:polylanar.Oups,client && client[0].lang?polylanfr.WeakInternet:polylanar.WeakInternet,[{text:client && client[0].lang?polylanfr.OK:polylanar.OK}]);
+        Alert.alert(client[0] && client[0].lang?polylanfr.Oups:polylanar.Oups,client[0] && client[0].lang?polylanfr.WeakInternet:polylanar.WeakInternet,[{text:client[0] && client[0].lang?polylanfr.OK:polylanar.OK}]);
     } 
     });
    };
@@ -86,23 +124,22 @@ const PlayerProfileScreen = props =>{
   };
 
   //States for complex information textInputs
- const [wilaya,setWilaya] = useState(client[0]?client[0].wilaya:undefined);
- const wilayas = [client && client[0].lang?polylanfr.City:polylanar.City,'Alger','Blida'];
- const [isLoading,setIsLoading]=useState(false);
- const [isLoadingImage,setIsLoadingImage]=useState(false);
- const dispatch = useDispatch();
+ const [wilaya,setWilaya] = useState(client[0]!==null && client[0].wilaya?client[0].wilaya:null);
+ console.log(client[0])
+ const wilayas = ['Wilaya','Alger','Blida'];
+ 
  
  
  //picker only iOS function 
  const onPress = () =>{
-   const wilayasIOS = [client && client[0].lang?polylanfr.City:polylanar.City,'Alger','Blida'];    
+   const wilayasIOS = ['Annuler','Alger','Blida'];    
    ActionSheetIOS.showActionSheetWithOptions(
      {
        options: wilayasIOS,
-       cancelButtonIndex: -1
+       cancelButtonIndex: 0
      },
      buttonIndex => {
-       if (buttonIndex === -1) {
+       if (buttonIndex === 0) {
          // cancel action
        } else {
         setWilaya(wilayasIOS[buttonIndex]);
@@ -123,7 +160,7 @@ const verifyPermissions= async ()=>{
   if(result.status !== 'granted'){
       Alert.alert('Permissions insuffisantes!',
       'Vous devez accorder les autorisations de la caméra pour utiliser cette application.',
-      [{text:client && client[0].lang?polylanfr.Agree:polylanar.Agree}]);
+      [{text:client[0] && client[0].lang?polylanfr.Agree:polylanar.Agree}]);
       return false;
   }
   return true;
@@ -157,7 +194,7 @@ const takeImageHandler = async ()=>{
     }
   }catch(err){
     console.log(err);
-  Alert.alert(client && client[0].lang?polylanfr.Oups:polylanar.Oups,client && client[0].lang?polylanfr.WeakInternet:polylanar.WeakInternet,[{text:client && client[0].lang?polylanfr.OK:polylanar.OK}]);
+  Alert.alert(client[0] && client[0].lang?polylanfr.Oups:polylanar.Oups,client[0] && client[0].lang?polylanfr.WeakInternet:polylanar.WeakInternet,[{text:client[0] && client[0].lang?polylanfr.OK:polylanar.OK}]);
   }
 };
 
@@ -189,7 +226,7 @@ const takeImageHandler = async ()=>{
     }
   }catch(err){
     console.log(err);
-    Alert.alert(client && client[0].lang?polylanfr.Oups:polylanar.Oups,client && client[0].lang?polylanfr.WeakInternet:polylanar.WeakInternet,[{text:client && client[0].lang?polylanfr.OK:polylanar.OK}]);
+    Alert.alert(client[0] && client[0].lang?polylanfr.Oups:polylanar.Oups,client[0] && client[0].lang?polylanfr.WeakInternet:polylanar.WeakInternet,[{text:client[0] && client[0].lang?polylanfr.OK:polylanar.OK}]);
     }
   
   };
@@ -205,10 +242,10 @@ const takeImageHandler = async ()=>{
     };
     const alertLogout = ()=>{
       Alert.alert(
-        client && client[0].lang?polylanfr.Warning:polylanar.Warning,
-        client && client[0].lang?polylanfr.DoYouWantToDisconnect:polylanar.DoYouWantToDisconnect,
-       [{text:client && client[0].lang?polylanfr.Yes:polylanar.Yes, style:'destructive', onPress:logout},
-        {text:client && client[0].lang?polylanfr.No:polylanar.No, style:'cancel'}]);
+        client[0] && client[0].lang?polylanfr.Warning:polylanar.Warning,
+        client[0] && client[0].lang?polylanfr.DoYouWantToDisconnect:polylanar.DoYouWantToDisconnect,
+       [{text:client[0] && client[0].lang?polylanfr.Yes:polylanar.Yes, style:'destructive', onPress:logout},
+        {text:client[0] && client[0].lang?polylanfr.No:polylanar.No, style:'cancel'}]);
         return;
    };
 
@@ -241,25 +278,59 @@ const takeImageHandler = async ()=>{
  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //Update client's data Management after pressing in Check icon
   const saveHandler = useCallback(async()=>{
-    if(formState.formIsValid && wilaya!=='Wilaya'){
+    if(formState.formIsValid && (wilaya!==null || wilaya!==wilayas[0])){
       
     try{
         setIsLoading(true);
          await dispatch(clientActions.updateClient(clientID,formState.inputValues.name,formState.inputValues.surname,
                                           formState.inputValues.email,formState.inputValues.address,wilaya,formState.inputValues.region));
         setIsLoading(false);                        
-        Alert.alert(client && client[0].lang?polylanfr.Congratulations:polylanar.Congratulations,client && client[0].lang?polylanfr.SuccessfulDataSent:polylanar.SuccessfulDataSent,[{text:client && client[0].lang?polylanfr.OK:polylanar.OK}]);
+        Alert.alert(client[0] && client[0].lang?polylanfr.Congratulations:polylanar.Congratulations,client[0] && client[0].lang?polylanfr.SuccessfulDataSent:polylanar.SuccessfulDataSent,[{text:client[0] && client[0].lang?polylanfr.OK:polylanar.OK}]);
   
     }catch(err){
       console.log(err);
-      Alert.alert(client && client[0].lang?polylanfr.Oups:polylanar.Oups,client && client[0].lang?polylanfr.WeakInternet:polylanar.WeakInternet,[{text:client && client[0].lang?polylanfr.OK:polylanar.OK}]);
+      Alert.alert(client[0] && client[0].lang?polylanfr.Oups:polylanar.Oups,client[0] && client[0].lang?polylanfr.WeakInternet:polylanar.WeakInternet,[{text:client[0] && client[0].lang?polylanfr.OK:polylanar.OK}]);
     }
     
     }else{
-      Alert.alert(client && client[0].lang?polylanfr.Error:polylanar.Error,client && client[0].lang?polylanfr.EmptyFields:polylanar.EmptyFields,[{text:client && client[0].lang?polylanfr.OK:polylanar.OK}]);
+      Alert.alert(client[0] && client[0].lang?polylanfr.Error:polylanar.Error,client[0] && client[0].lang?polylanfr.EmptyFields:polylanar.EmptyFields,[{text:client[0] && client[0].lang?polylanfr.OK:polylanar.OK}]);
     }
   
   },[dispatch,clientID,formState,wilaya]);
+
+  if(error){
+      
+    return ( <ImageBackground source={{uri:'http://95.111.243.233/assets/tahfifa/support.png'}} style={styles.activityIndicatorContainer}>
+              <StatusBar hidden />
+                <View style={{marginBottom:screen.width/36,alignSelf:'center'}}>
+                  <Text style={styles.noServicesText}>{polylanfr.WeakInternet}</Text>
+                </View>
+                <Button
+                  theme={{colors: {primary:'#fd6c57'}}} 
+                  title={polylanfr.Repeat}
+                  titleStyle={styles.labelButton}
+                  buttonStyle={styles.buttonStyle}
+                  ViewComponent={LinearGradient}
+                  onPress={getClient}
+                  linearGradientProps={{
+                      colors: ['#fd6d57', '#fd9054'],
+                      start: {x: 0, y: 0} ,
+                      end:{x: 1, y: 0}
+                    }}/>
+            </ImageBackground>);
+  };
+
+  if (isLoading) {
+
+    return (
+  
+      <ImageBackground style= {styles.centered} source={{uri:'http://95.111.243.233/assets/tahfifa/support.png'}}>
+        <StatusBar hidden />
+        <ActivityIndicator size="large" color= {Colors.primary} />
+      </ImageBackground>
+  
+    );
+  }
 
   if(isLoadingImage){
     return <ImageBackground source={{uri:'http://95.111.243.233/assets/tahfifa/support.png'}} style={styles.activityIndicatorContainer} >
@@ -268,6 +339,9 @@ const takeImageHandler = async ()=>{
            </ImageBackground>
   };
 
+  
+
+  
 
     return(
       <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
@@ -287,8 +361,8 @@ const takeImageHandler = async ()=>{
      <View style={styles.secondCard}>
           <View style={styles.secondCardContent}>
               <View style={styles.imageContainer}>
-              {client[0] && pickedImage?<Image source={{uri:`http://95.111.243.233/profileImages/client/${pickedImage}`}} style={styles.image} />:
-                <Image source={{uri:'http://95.111.243.233/assets/tahfifa/unknown.jpg'}} style={styles.image} />}
+              {client[0] && pickedImage?<Image source={{uri:`http://95.111.243.233/profileImages/client/${pickedImage}`}} style={styles.image} />:client[0] && client[0].sex==='Homme'?
+               <Image source={{uri:'http://95.111.243.233/assets/tahfifabarber/unknown.jpg'}} style={styles.image} />:<Image source={{uri:'http://95.111.243.233/assets/tahfifabarber/unknownfemale.jpg'}} style={styles.image} />}
               </View>
               <View style={styles.detailsContainer}>
                 <View style={{width:'30%'}}>
@@ -300,18 +374,18 @@ const takeImageHandler = async ()=>{
                   </TouchableOpacity>
                 </View>  
                 <View style={{width:'70%'}}>
-                  <Text style={styles.bnameText}>{client[0].surname!==null?client[0].surname: client && client[0].lang?polylanfr.YourSurname:polylanar.Surname}</Text>
-                  <Text style={styles.age}>{client[0].wilaya!==null?client[0].wilaya: client && client[0].lang?polylanfr.City:polylanar.City}</Text>
+                  <Text style={styles.bnameText}>{client[0] && client[0].surname?client[0].surname: client[0] && client[0].lang?polylanfr.YourSurname:polylanar.Surname}</Text>
+                  <Text style={styles.age}>{client[0] && client[0].wilaya?client[0].wilaya: client[0] && client[0].lang?polylanfr.City:polylanar.City}</Text>
                 </View>
               </View>
           </View>
         </View>
         <View style={styles.menuContainer}>
              <TouchableOpacity onPress={info} style={{padding:screen.width/72,width:'50%',backgroundColor:isInfo?'#fd6c57':'#fff',alignItems:'center',justifyContent:'center'}}>
-                <Text style={{color:isInfo?'#fff':'#fd6c57',fontFamily:'poppins'}}>{client && client[0].lang?polylanfr.profileInfo:polylanar.profileInfo}</Text>
+                <Text style={{color:isInfo?'#fff':'#fd6c57',fontFamily:'poppins'}}>{client[0] && client[0].lang?polylanfr.profileInfo:polylanar.profileInfo}</Text>
              </TouchableOpacity>
              <TouchableOpacity onPress={localisation} style={{padding:screen.width/72,width:'50%',backgroundColor:isLocalisation?'#fd6c57':'#fff',alignItems:'center',justifyContent:'center'}}>
-                 <Text style={{color:isLocalisation?'#fff':'#fd6c57',fontFamily:'poppins'}}>{client && client[0].lang?polylanfr.MyAccount:polylanar.MyAccount}</Text>
+                 <Text style={{color:isLocalisation?'#fff':'#fd6c57',fontFamily:'poppins'}}>{client[0] && client[0].lang?polylanfr.MyAccount:polylanar.MyAccount}</Text>
              </TouchableOpacity>
         </View>
      {isInfo?(<ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
@@ -320,7 +394,7 @@ const takeImageHandler = async ()=>{
             <CustomInput
                 id='name'
                 rightIcon={<MaterialIcons title = "firstName" name ='person' color='#323446' size={screen.width/15.7} />}
-                placeholder={client && client[0].lang?polylanfr.Name:polylanar.Name}
+                placeholder={client[0] && client[0].lang?polylanfr.Name:polylanar.Name}
                 keyboardType="default"
                 returnKeyType="next"
                 onInputChange={inputChangeHandler}
@@ -328,7 +402,6 @@ const takeImageHandler = async ()=>{
                 initiallyValid={true}
                 required
                 placeholderTextColor='rgba(50,52,70,0.4)'
-                inputStyle={{fontSize:screen.width/24}}
                 minLength={3}
                 autoCapitalize='sentences'
                 backgroundColor='#fff'
@@ -344,7 +417,7 @@ const takeImageHandler = async ()=>{
             <CustomInput
               id='surname'
               rightIcon={<MaterialIcons title = "firstName" name ='person' color='#323446' size={screen.width/15.7} />}
-              placeholder={client && client[0].lang?polylanfr.Surname:polylanar.Surname}
+              placeholder={client[0] && client[0].lang?polylanfr.Surname:polylanar.Surname}
               keyboardType="default"
               returnKeyType="next"
               onInputChange={inputChangeHandler}
@@ -352,7 +425,6 @@ const takeImageHandler = async ()=>{
               initiallyValid={true}
               required
               placeholderTextColor='rgba(50,52,70,0.4)'
-              inputStyle={{fontSize:screen.width/24}}
               minLength={3}
               autoCapitalize='sentences'
               backgroundColor='#fff'
@@ -367,7 +439,7 @@ const takeImageHandler = async ()=>{
             <CustomInput
                 id='email'
                 rightIcon={<MaterialIcons title = "email" name ='email' color='#323446' size={screen.width/15.7} />}
-                placeholder={client && client[0].lang?polylanfr.Email:polylanar.Email}
+                placeholder={client[0] && client[0].lang?polylanfr.Email:polylanar.Email}
                 keyboardType="default"
                 returnKeyType="next"
                 onInputChange={inputChangeHandler}
@@ -376,7 +448,6 @@ const takeImageHandler = async ()=>{
                 email
                 required
                 placeholderTextColor='rgba(50,52,70,0.4)'
-                inputStyle={{fontSize:screen.width/24}}
                 minLength={6}
                 backgroundColor='#fff'
                 textColor={Colors.blue}
@@ -390,7 +461,7 @@ const takeImageHandler = async ()=>{
             <CustomInput
               id='address'
               rightIcon={<MaterialIcons title = "address" name ='map' color='#323446' size={screen.width/15.7} />}
-              placeholder={client && client[0].lang?polylanfr.Address:polylanar.Address}
+              placeholder={client[0] && client[0].lang?polylanfr.Address:polylanar.Address}
               keyboardType="default"
               returnKeyType="next"
               onInputChange={inputChangeHandler}
@@ -398,7 +469,6 @@ const takeImageHandler = async ()=>{
               initiallyValid={true}
               required
               placeholderTextColor='rgba(50,52,70,0.4)'
-              inputStyle={{fontSize:screen.width/24}}
               minLength={12}
               autoCapitalize='sentences'
               shadowColorView='black'
@@ -409,27 +479,36 @@ const takeImageHandler = async ()=>{
               backgroundColor='#fff'
               textColor={Colors.blue}
             />
-          <View style={{ width:'90%',borderWidth:1,paddingHorizontal:screen.width/30,borderRadius:screen.width/14.4,backgroundColor:'#fff',borderColor:wilaya!=='wilaya'?'#fff':Colors.primary,marginVertical:screen.width/72,height:screen.width/8,justifyContent:'center',shadowColor: 'black',shadowOpacity: 0.5,
+          <View style={{ width:'90%',borderWidth:1,paddingLeft:screen.width/18,paddingRight:screen.width/32,borderRadius:screen.width/14.4,backgroundColor:'#fff',borderColor:wilaya!=='wilaya'?'#fff':Colors.primary,marginVertical:screen.width/72,height:screen.width/8,justifyContent:'center',shadowColor: 'black',shadowOpacity: 0.5,
                           shadowOffset: {width: 0, height:1},elevation: 3,overflow:Platform.OS==='ios'?'visible':'hidden',alignSelf:'center'}}>
             {Platform.OS === 'android' ? 
-                      <Picker
-                      selectedValue={wilaya}
-                      onValueChange={itemValue => setWilaya(itemValue)}
-                      style={{fontFamily:'poppins',fontSize:screen.width/30,color:'#323446'}}
-                      >
-                      {wilayas.map(el=> <Picker.Item label={el} value={el} key={el} />)}
-                      </Picker> :
-                      <TouchableOpacity onPress={onPress} style={{ width:'100%',flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:screen.width/45,paddingRight:screen.width/30}}>
-                      <Text  style={{fontFamily:'poppins',fontSize:screen.width/24,color:'#323446',fontWeight:'500'}}>
-                        {wilaya}
+                      (<RNPickerSelect
+                          value={wilaya}
+                          useNativeAndroidPickerStyle={false}
+                          style={{ inputIOS:{fontFamily:'poppins',fontSize:screen.width/30,color:'#fff'},inputAndroid: {
+                            fontFamily:'poppins',
+                            color:'#323446',
+                            fontSize:screen.width/30
+                          }}}
+                          placeholder={{label:client[0] && client[0].lang?polylanfr.City:polylanar.City,value:null}}
+                          onValueChange={itemValue => setWilaya(itemValue)}
+                          doneText={client[0] && client[0].lang?polylanfr.Cancel:polylanar.Cancel}
+                          items={[
+                            { label: 'Alger', value: 'Alger'},
+                            { label: 'Blida', value: 'Blida' }
+                           ]}
+                      />) :
+                      (<TouchableOpacity onPress={onPress} style={{ width:'100%',flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:screen.width/45,paddingRight:screen.width/30}}>
+                      <Text  style={{fontFamily:'poppins',fontSize:screen.width/30,color:'#323446',fontWeight:'500'}}>
+                        {wilaya?wilaya:wilayas[0]}
                       </Text>
                       <Ionicons name="ios-arrow-down" size={screen.width/15} color="#323446" onPress={onPress} />
-                      </TouchableOpacity>} 
+                      </TouchableOpacity>)} 
           </View>
           <CustomInput
             id='region'
             rightIcon={<MaterialIcons title="region" name ='home' color='#323446' size={screen.width/15.7} />}
-            placeholder={client && client[0].lang?polylanfr.Region:polylanar.Region}
+            placeholder={client[0] && client[0].lang?polylanfr.Region:polylanar.Region}
             keyboardType="default"
             returnKeyType="next"
             minLength={3}
@@ -439,7 +518,6 @@ const takeImageHandler = async ()=>{
             initiallyValid={true}
             required
             placeholderTextColor='rgba(50,52,70,0.4)'
-            inputStyle={{fontSize:screen.width/24}}
             shadowColorView='black'
             shadowOpacityView={0.5}
             shadowOffsetView={{width: 0, height:1}}
@@ -453,9 +531,9 @@ const takeImageHandler = async ()=>{
      </ScrollView>):
      (<ScrollView style={{width:'100%'}} showsVerticalScrollIndicator={false}>
          <View style={styles.noticeContainer}>
-             <Text style={styles.noticeTitle}>{client && client[0].lang?polylanfr.DoYouKnow:polylanar.DoYouKnow}</Text>
-             <Text style={styles.noticeContent}>{client && client[0].lang?polylanfr.DoYouKnowNotice:polylanar.DoYouKnowNotice} <Text onPress={url} style={{color:Colors.primary}}>tahfifaapp.com</Text></Text>
-             <Text style={styles.tahfifaSignature} onPress={url2}>{client && client[0].lang?polylanfr.TeamTahfifa:polylanar.TeamTahfifa}</Text>
+             <Text style={styles.noticeTitle}>{client[0] && client[0].lang?polylanfr.DoYouKnow:polylanar.DoYouKnow}</Text>
+             <Text style={styles.noticeContent}>{client[0] && client[0].lang?polylanfr.DoYouKnowNotice:polylanar.DoYouKnowNotice} <Text onPress={url} style={{color:Colors.primary}}>tahfifaapp.com</Text></Text>
+             <Text style={styles.tahfifaSignature} onPress={url2}>{client[0] && client[0].lang?polylanfr.TeamTahfifa:polylanar.TeamTahfifa}</Text>
          </View>
          <View style={styles.buttonContainer}>
               <View style={styles.cartContainer}>
@@ -464,7 +542,7 @@ const takeImageHandler = async ()=>{
                       <MaterialCommunityIcons title = "logout" name ='logout' color='#FD6C57' size={screen.width/15.7} />
                     </View>
                     <View>
-                      <Text style={styles.optionTitle}>{client && client[0].lang?polylanfr.Disconnect:polylanar.Disconnect}</Text>
+                      <Text style={styles.optionTitle}>{client[0] && client[0].lang?polylanfr.Disconnect:polylanar.Disconnect}</Text>
                     </View>
                 </TouchableOpacity>
               </View>
@@ -474,7 +552,7 @@ const takeImageHandler = async ()=>{
                        <Ionicons title = "options" name ='ios-options' color='#56A7FF' size={screen.width/15.7} />
                      </View>
                      <View>
-                       <Text style={styles.optionTitle}>{client && client[0].lang?polylanfr.Parameters:polylanar.Parameters}</Text>
+                       <Text style={styles.optionTitle}>{client[0] && client[0].lang?polylanfr.Parameters:polylanar.Parameters}</Text>
                      </View>
                 </TouchableOpacity>
               </View>
@@ -663,7 +741,29 @@ const styles= StyleSheet.create({
       width:'100%',
       height:'100%',
       justifyContent:'center',
-      alignItems:'center' 
+     
+    },
+    labelButton:{
+      color:'#FFF',
+      fontFamily:'poppins',
+      fontSize:screen.width/22.5,
+      textTransform:null,
+     },
+     buttonStyle:{
+      borderColor:'#fd6c57',
+      width:'40%',
+      borderRadius:screen.width/18,
+      height:screen.width/8,
+      alignSelf:'center',
+      marginTop:screen.width/36
+     },
+     centered: {
+      flex:1,
+     alignItems:'center',
+     justifyContent:'center',
+     width:'100%',
+     height:'100%',
+     resizeMode:'cover'
     }
 
 });

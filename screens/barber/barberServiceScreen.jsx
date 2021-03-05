@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet,View,Image, ScrollView,ImageBackground,Text,TouchableOpacity,Dimensions,StatusBar} from 'react-native';
+import { StyleSheet,View,Image, ScrollView,ImageBackground,Text,TouchableOpacity,Dimensions,StatusBar,Linking} from 'react-native';
 import Colors from '../../constants/Colors';
 import ServiceCart from '../../components/ServiceCart';
-import {Entypo} from "@expo/vector-icons";
+import {Entypo,MaterialCommunityIcons} from "@expo/vector-icons";
 import {useSelector } from 'react-redux';
 import {  Rating  } from 'react-native-elements';
 import polylanar from "../../lang/ar";
@@ -18,8 +18,19 @@ const BarberServiceScreen = props =>{
   const feedbacks=useSelector(state=>state.reviews.feedbacks);
   const client= useSelector(state=>state.clients.client);
   
-  const isImage= {beard:{uri:'http://95.111.243.233/assets/tahfifa/barbe.jpg'},hair:{uri:'http://95.111.243.233/assets/tahfifa/hair.jpg'},supp:{uri:'http://95.111.243.233/assets/tahfifa/supplements.jpg'},womanHair:{uri:'http://95.111.243.233/assets/tahfifa/womanhair.jpg'},wedding:{uri:'http://95.111.243.233/assets/tahfifa/mariage.jpg'},care:{uri:'http://95.111.243.233/assets/tahfifa/soins.jpg'}};
+  const isImage= {beard:{uri:'http://95.111.243.233/assets/tahfifabarber/barbe.jpg'},hair:{uri:'http://95.111.243.233/assets/tahfifabarber/hair.jpg'},supp:{uri:'http://95.111.243.233/assets/tahfifabarber/supplements.jpg'},womanHair:{uri:'http://95.111.243.233/assets/tahfifabarber/womanhair.jpg'},wedding:{uri:'http://95.111.243.233/assets/tahfifabarber/mariage.jpg'},care:{uri:'http://95.111.243.233/assets/tahfifabarber/soins.jpg'},manCare:{uri:'http://95.111.243.233/assets/tahfifabarber/soinshomme.jpg'},makeup:{uri:'http://95.111.243.233/assets/tahfifabarber/makeup.jpg'},manucure:{uri:'http://95.111.243.233/assets/tahfifabarber/manucure.jpg'},pedicure:{uri:'http://95.111.243.233/assets/tahfifabarber/pedicure.jpg'},epilation:{uri:'http://95.111.243.233/assets/tahfifabarber/epilation.jpg'}};
     
+  const instagramURL=barber[0] && barber[0].b_name?`https://www.instagram.com/${barber[0].b_name}/`:'https://www.instagram.com/';
+  const instagramUrl= ()=>{
+   Linking.openURL(instagramURL).catch((err) => {
+     if(barber[0].b_name===null){
+       Alert.alert(client[0] && client[0].lang?polylanfr.Oups:polylanar.Oups,client[0] && client[0].lang?polylanfr.NoInstagram:polylanar.NoInstagram,[{text:client[0] && client[0].lang?polylanfr.OK:polylanar.OK}]);
+     }
+     if(err){
+       Alert.alert(client[0] && client[0].lang?polylanfr.Oups:polylanar.Oups,client[0] && client[0].lang?polylanfr.WeakInternet:polylanar.WeakInternet,[{text:client[0] && client[0].lang?polylanfr.OK:polylanar.OK}]);
+   } 
+   });
+  };
      
     if(barber[0].services.length === 0){
       return (
@@ -32,8 +43,8 @@ const BarberServiceScreen = props =>{
           
           <View style={styles.infoContainer}>
              <View style={styles.imageContainer}>
-             {barber[0] && barber[0].image!==null?<Image source={{uri:`http://95.111.243.233/profileImages/barber/${barber.image}`}} style={styles.icon} />:
-                <Image source={{uri:'http://95.111.243.233/assets/tahfifa/unknown.jpg'}} style={styles.icon} />}
+             {barber[0] && barber[0].image!==null?<Image source={{uri:`http://95.111.243.233/profileImages/barber/${barber.image}`}} style={styles.icon} />:barber[0] && barber[0].sex==='Homme'?
+               <Image source={{uri:'http://95.111.243.233/assets/tahfifabarber/unknown.jpg'}} style={styles.icon} />:<Image source={{uri:'http://95.111.243.233/assets/tahfifabarber/unknownfemale.jpg'}} style={styles.icon} />}
              </View>
            
              <Text style={styles.bname}>{barber[0] && barber[0].b_name!==null?barber[0].b_name:client[0] && client[0].lang?polylanfr.BusinessName:polylanar.BusinessName}</Text>
@@ -47,12 +58,18 @@ const BarberServiceScreen = props =>{
                    tintColor='#f9f9f9'
                  />
              <View style={styles.iconsMenuContainer}>
-               <TouchableOpacity style={styles.iconContainer} onPress={()=>props.navigation.navigate('EditService')}>
-                 <View style={styles.iconFormCircle}>
-                 <Entypo title = "scissors" name ='scissors' color='#fff' size={screen.width/15.7} />
-                 </View>
-                 <Text style={styles.iconText}>{client[0] && client[0].lang?polylanfr.Services:polylanar.Services}</Text>
-               </TouchableOpacity>
+              <TouchableOpacity style={styles.iconContainer} onPress={()=>props.navigation.navigate('Accueil')}>
+                  <View style={styles.iconFormCircle3}>
+                  <MaterialCommunityIcons title = "accueil" name ='home' color='#fff' size={screen.width/15.7}/>
+                  </View>
+                  <Text style={styles.iconText}>{client[0] && client[0].lang?polylanfr.Home:polylanar.Home}</Text>
+              </TouchableOpacity> 
+               <TouchableOpacity style={styles.iconContainer} onPress={instagramUrl}>
+                  <View style={styles.iconFormCircle2}>
+                  <MaterialCommunityIcons title = "instagram" name ='instagram' color='#fff' size={screen.width/15.7}/>
+                  </View>
+                  <Text style={styles.iconText}>{client[0] && client[0].lang?polylanfr.Instagram:polylanar.Instagram}</Text>
+                </TouchableOpacity> 
              </View>
           </View>
         </View>
@@ -93,12 +110,20 @@ const BarberServiceScreen = props =>{
                       tintColor='#f9f9f9'
                     />
               <View style={styles.iconsMenuContainer}>
-              <TouchableOpacity style={styles.iconContainer} onPress={()=>props.navigation.navigate('EditService')}>
-                 <View style={styles.iconFormCircle}>
-                 <Entypo title = "scissors" name ='scissors' color='#fff' size={screen.width/15.7} />
-                 </View>
-                 <Text style={styles.iconText}>{client[0] && client[0].lang?polylanfr.Services:polylanar.Services}</Text>
-               </TouchableOpacity>
+              <TouchableOpacity style={styles.iconContainer} onPress={()=>props.navigation.navigate('Accueil')}>
+                    <View style={styles.iconFormCircle3}>
+                    <MaterialCommunityIcons title = "accueil" name ='home' color='#fff' size={screen.width/15.7}/>
+                    </View>
+                    <Text style={styles.iconText}>{client[0] && client[0].lang?polylanfr.Home:polylanar.Home}</Text>
+                  </TouchableOpacity> 
+                  
+               <TouchableOpacity style={styles.iconContainer} onPress={instagramUrl}>
+                    <View style={styles.iconFormCircle2}>
+                    <MaterialCommunityIcons title = "instagram" name ='instagram' color='#fff' size={screen.width/15.7}/>
+                    </View>
+                    <Text style={styles.iconText}>{client[0] && client[0].lang?polylanfr.Instagram:polylanar.Instagram}</Text>
+                </TouchableOpacity> 
+
               </View>
            </View>
          
@@ -108,7 +133,7 @@ const BarberServiceScreen = props =>{
           <ServiceCart
             key={service.serviceId}
             number={index+1}
-            source={service.typeOfService==='Cheveux'?isImage.hair: service.typeOfService==='Barbe'?isImage.beard: service.typeOfService==='Soins'?isImage.care:service.typeOfService==='Mariage'?isImage.wedding:service.typeOfService==='Suppléments'?isImage.supp:service.typeOfService==='Cheveux femme'?isImage.womanHair:undefined}
+            source={service.typeOfService==='Tahfifa'?isImage.hair: service.typeOfService==='Barbe'?isImage.beard: service.typeOfService==='Soins homme'?isImage.manCare:service.typeOfService==='Suppléments'?isImage.supp:service.typeOfService==='Mariage'?isImage.wedding:service.typeOfService==='Soins'?isImage.care:service.typeOfService==='Coiffure'?isImage.womanHair:service.typeOfService==='Maquillage'?isImage.makeup:service.typeOfService==='Manucure'?isImage.manucure:service.typeOfService==='Pédicure'?isImage.pedicure:service.typeOfService==='Epilation'?isImage.epilation:undefined}
             name={service.name}
             type={service.typeOfService}
             minute={service.duration}
@@ -206,7 +231,22 @@ const styles= StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
   },
-  
+  iconFormCircle2:{
+    backgroundColor:'#FE457C',
+    width:screen.width/9,
+    height:screen.width/9,
+    borderRadius:screen.width/18,
+    justifyContent:'center',
+    alignItems:'center'
+  },
+  iconFormCircle3:{
+    width:screen.width/9,
+    height:screen.width/9,
+    borderRadius:screen.width/18,
+    backgroundColor:'#56A7FF',
+    justifyContent:'center',
+    alignItems:'center'
+  },
   iconContainer:{
     marginHorizontal:screen.width/27.7,
     alignItems:'center'
@@ -219,7 +259,8 @@ const styles= StyleSheet.create({
   },
   iconsMenuContainer:{
    alignItems:'center',
-   marginTop:screen.width/36  
+   marginTop:screen.width/36  ,
+   flexDirection:'row'
   },
   activityIndicatorContainer:{
    flex:1,

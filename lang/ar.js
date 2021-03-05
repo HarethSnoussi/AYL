@@ -56,7 +56,9 @@ export default{
     Thursday:"الخميس",
     Friday:"الجمعة",
     Location:"المقاطعة ، الولاية",
-    WelcomeTotahfifa:"مرحبا بكم في التطبيق تحفيفة",
+    WelcomeTotahfifa:"مرحبا بكم في التطبيق ريبورن",
+    NoInstagram:"لم أفتح حساب الانستغرام بعد!",
+    Instagram:"إنستغرام",
     //profile screen********************************************************************
     profileInfo:"معلوماتك",
     MyAccount:"حسابي",
@@ -66,7 +68,7 @@ export default{
     Email:"بريدك الإلكتروني",
     Notice:"ملاحظة هامة",
     NoticeMessage:"كن حذرا! بمجرد حذف حسابك، لن تتمكن أبدًا من الوصول إلى معلومات حسابك الحالي.",
-    TeamTahfifa:"فريق تحفيفة",
+    TeamTahfifa:"فريق ريبورن",
     DeleteMyAccount:"حذف حسابي",
     DoYouKnow:'هل تعلم؟',
     DoYouKnowNotice:"قم بزيارتنا على الرابط التالي لمزيد من المعلومات: ",
@@ -85,6 +87,7 @@ export default{
     NoServices:'لا توجد خدمة.',
     Start:'البداية',
     End:'النهاية',
+    Home:"الصفحة الرئيسية",
     //AllBookings screen********************************************************************
     MyBookings:"حجوزاتي",
     January:"جانفي",
@@ -141,7 +144,7 @@ export default{
     Edit:"غير الآن",
     EditService:"تغيير الخدمة",
      //Alerts********************************************************************
-    Oups:"عفوا!",
+    Oups:"هام جدا",
     WeakInternet:'اتصالك بالإنترنت ضعيف جدا!',
     LangMessage:'لقد نجحت في تغيير لغة حسابك!',
     Error:"خطأ تقني!",

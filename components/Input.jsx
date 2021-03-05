@@ -84,7 +84,7 @@ const CustomInput = props =>{
                 placeholder={props.placeholder}
                 inputContainerStyle={styles.input}
                 placeholderTextColor={props.placeholderTextColor}
-                inputStyle={{fontSize:screen.width/24,color:props.textColor}}
+                inputStyle={{fontSize:screen.width/30,color:props.textColor}}
                 errorMessage={props.errorMessage}
             />
         </View>

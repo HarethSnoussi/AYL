@@ -57,7 +57,9 @@ export default{
     Thursday:"Jeudi",
     Friday:"Vendredi",
     Location:"Région, Ville",
-    WelcomeTotahfifa:"Bienvenue à Tahfifa",
+    WelcomeTotahfifa:"Bienvenue à ReBorn",
+    NoInstagram:"Je n'ai pas encore ouvert un compte Instagram!",
+    Instagram:"Profil",
     //profile screen********************************************************************
     profileInfo:"Informations",
     MyAccount:"Mon Compte",
@@ -72,7 +74,7 @@ export default{
     DeleteMyAccount:"Supprimer Mon Compte",
     DoYouKnow:'Saviez-vous?',
     DoYouKnowNotice:"Visitez-nous sur le lien suivant pour plus d'informations: ",
-    TeamTahfifa:"Equipe Tahfifa",
+    TeamTahfifa:"Equipe ReBorn",
     Disconnect:"Se déconnecter",
     YourAge:"Votre âge",
     //Services screen********************************************************************
@@ -85,6 +87,7 @@ export default{
     SuccessfulMessage:"Vos données ont été changées avec succès!",
     AreYouSure:"Etes-vous sûr?",
     DeleteServiceMessage:"Voulez-vous vraiment supprimer ce service?",
+    Home:"Accueil",
     //AllBookings screen********************************************************************
     MyBookings:"Mes Réservations",
     January:"Janvier",

@@ -11,6 +11,7 @@ import * as clientActions from '../../store/actions/clientActions';
 import {useDispatch} from 'react-redux';
 import * as Crypto from 'expo-crypto'; 
 import CustomInput from '../../components/Input';
+import RNPickerSelect from 'react-native-picker-select';
 
 
 const screen = Dimensions.get("window");
@@ -76,14 +77,14 @@ const SignupScreen = props =>{
    
    //picker only iOS function 
    const onPress = () =>{
-     const wilayasIOS = ['Alger','Blida'];    
+     const wilayasIOS = ['Annuler','Alger','Blida'];    
      ActionSheetIOS.showActionSheetWithOptions(
        {
          options: wilayasIOS,
-         cancelButtonIndex: -1
+         cancelButtonIndex: 0
        },
        buttonIndex => {
-         if (buttonIndex === -1) {
+         if (buttonIndex === 0) {
            // cancel action
          } else {
           setWilaya(wilayasIOS[buttonIndex]);
@@ -95,14 +96,14 @@ const SignupScreen = props =>{
 
  //picker only iOS function 
  const onPressSex = () =>{
-  const sexIOS = ['Homme','Femme'];    
+  const sexIOS = ['Annuler','Homme','Femme'];    
   ActionSheetIOS.showActionSheetWithOptions(
     {
       options: sexIOS,
-      cancelButtonIndex: -1
+      cancelButtonIndex: 0
     },
     buttonIndex => {
-      if (buttonIndex === -1) {
+      if (buttonIndex === 0) {
         // cancel action
       } else {
        setSex(sexIOS[buttonIndex]);
@@ -154,7 +155,7 @@ const signupHandler = async () => {
 
 const phoneProvider = new firebase.auth.PhoneAuthProvider();
 
-if(formState.formIsValid && wilaya!==wilayas[0] &&  sex!==sexTypes[0] && wilaya!==undefined && sex!==undefined){
+if(formState.formIsValid && (wilaya!==null || wilaya!==wilayas[0]) &&  (sex!==null || sex!==sexTypes[0])  && wilaya!==undefined && sex!==undefined){
   try {
 
     setVerifyInProgress(true);
@@ -220,7 +221,7 @@ try {
       hashedPassword,sex,formState.inputValues.name,formState.inputValues.surname,wilaya,formState.inputValues.region));
       
     props.navigation.navigate('Client',{clientID:formState.inputValues.phone,clientUID:user.uid}); 
-    Alert.alert(`${formState.inputValues.name} ${formState.inputValues.surname}`,'Bienvenue à Tahfifa :-)',[{text:"Merci"}]);
+    Alert.alert(`${formState.inputValues.name} ${formState.inputValues.surname}`,'Bienvenue à ReBorn :-)',[{text:"Merci"}]);
     saveDataToStorage(tokenResult.token,user.uid,expirationDate,formState.inputValues.phone);                                  
 
 
@@ -329,37 +330,55 @@ try {
                   />
                  
               
-               <View style={{ width:'100%',borderWidth:1,borderRadius:screen.width/14.4,backgroundColor:Colors.blue,borderColor:sex!==sexTypes[0]?Colors.blue:Colors.primary,marginVertical:screen.width/120,height:screen.width/8,justifyContent:'center'}}>
+               <View style={{ width:'100%',borderWidth:1,borderRadius:screen.width/14.4,paddingLeft:screen.width/20,paddingRight:screen.width/34,backgroundColor:Colors.blue,borderColor:sex!==sexTypes[0]?Colors.blue:Colors.primary,marginVertical:screen.width/120,height:screen.width/8,justifyContent:'center'}}>
                  {Platform.OS === 'android' ? 
-                     <Picker
-                     selectedValue={sex}
-                     onValueChange={itemValue => setSex(itemValue)}
-                     style={{fontFamily:'poppins',fontSize:screen.width/30,color:'#d3d3d3',marginHorizontal:screen.width/25.7}}
-                     >
-                     {sexTypes.map(el=> <Picker.Item label={el} value={el} key={el} />)}
-                     </Picker> :
-                     <TouchableOpacity onPress={onPressSex} style={{ width:'100%',flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:screen.width/18.95,paddingRight:screen.width/14.4}}>
+                    (<RNPickerSelect
+                      value={sex}
+                      useNativeAndroidPickerStyle={false}
+                      style={{ color:'red',inputIOS:{fontFamily:'poppins',fontSize:screen.width/35,color:Colors.lightGrey},inputAndroid: {
+                        fontFamily:'poppins',
+                        color:Colors.lightGrey,
+                        fontSize:screen.width/30
+                      }}}
+                      placeholder={{label:'Sexe',value:null}}
+                      onValueChange={itemValue => setSex(itemValue)}
+                      doneText='Annuler'
+                      items={[
+                        { label: 'Homme', value: 'Homme'},
+                        { label: 'Femme', value: 'Femme' }
+                    ]}
+                    />) :
+                     (<TouchableOpacity onPress={onPressSex} style={{ width:'100%',flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:screen.width/18.95,paddingRight:screen.width/14.4}}>
                      <Text  style={{fontFamily:'poppins',color:Colors.lightGrey,fontSize:screen.width/24,fontWeight:'500'}}>
                        {sex?sex:sexTypes[0]}
                      </Text>
                      <Ionicons name="ios-arrow-down" size={screen.width/15} color={Colors.lightGrey} onPress={onPressSex} />
-                     </TouchableOpacity>}
+                     </TouchableOpacity>)}
                  </View>
-                 <View style={{ width:'100%',borderWidth:1,borderRadius:screen.width/14.4,backgroundColor:Colors.blue,borderColor:wilaya!==wilayas[0]?Colors.blue:Colors.primary,marginVertical:screen.width/120,height:screen.width/8,justifyContent:'center'}}>
+                 <View style={{ width:'100%',borderWidth:1,paddingLeft:screen.width/20,paddingRight:screen.width/34,borderRadius:screen.width/14.4,backgroundColor:Colors.blue,borderColor:wilaya!==wilayas[0]?Colors.blue:Colors.primary,marginVertical:screen.width/120,height:screen.width/8,justifyContent:'center'}}>
                  {Platform.OS === 'android' ? 
-                             <Picker
-                             selectedValue={wilaya}
-                             onValueChange={itemValue => setWilaya(itemValue)}
-                             style={{fontFamily:'poppins',fontSize:screen.width/30,color:'#d3d3d3',marginHorizontal:screen.width/25.7}}
-                             >
-                             {wilayas.map(el=> <Picker.Item label={el} value={el} key={el} />)}
-                             </Picker> :
-                              <TouchableOpacity onPress={onPress}  style={{ width:'100%',flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:screen.width/18.95,paddingRight:screen.width/14.4}}>
+                             (<RNPickerSelect
+                              value={wilaya}
+                              useNativeAndroidPickerStyle={false}
+                              style={{ inputIOS:{fontFamily:'poppins',fontSize:screen.width/35,color:Colors.lightGrey},inputAndroid: {
+                                fontFamily:'poppins',
+                                color:Colors.lightGrey,
+                                fontSize:screen.width/30
+                              }}}
+                              placeholder={{label:'Wilaya',value:null}}
+                              onValueChange={itemValue => setWilaya(itemValue)}
+                              doneText='Annuler'
+                              items={[
+                                { label: 'Alger', value: 'Alger'},
+                                { label: 'Blida', value: 'Blida' }
+                            ]}
+                            />) :
+                              (<TouchableOpacity onPress={onPress}  style={{ width:'100%',flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:screen.width/18.95,paddingRight:screen.width/14.4}}>
                              <Text style={{fontFamily:'poppins',color:Colors.lightGrey,fontSize:screen.width/24,fontWeight:'500'}}>
                                {wilaya?wilaya:wilayas[0]}
                              </Text>
                              <Ionicons name="ios-arrow-down" size={screen.width/15} color={Colors.lightGrey} onPress={onPress} />
-                             </TouchableOpacity>}
+                             </TouchableOpacity>)}
                </View>
                <CustomInput 
                     id='region'
@@ -536,7 +555,7 @@ const styles= StyleSheet.create({
      color:'#fd6c57'
    },
    phoneNumber:{
-    fontSize:screen.width/24,
+    fontSize:screen.width/30,
     color:Colors.lightGrey,
   },
   loader: {
