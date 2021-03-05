@@ -80,7 +80,7 @@ const responseListener = useRef();
 
 
    /*
-   *******Fetch One barber DATA
+   *******Fetch One client DATA
   */
  const getClient=useCallback(async()=>{
   try{

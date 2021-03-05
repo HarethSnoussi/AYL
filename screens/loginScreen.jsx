@@ -134,7 +134,7 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
       <KeyboardAvoidingView keyboardVerticalOffset={10} behavior={Platform.OS === "ios" ? "padding" : null}>
       <StatusBar hidden />
           <View style={styles.firstContainer}>
-             <Image source={{uri:'http://95.111.243.233/assets/tahfifa/icon.png'}} style={styles.icon}/>
+             <Image source={require('../assets/icon.png')} style={styles.icon}/>
              <Text style={styles.slogan}>Réservez votre coiffure à l'heure et à l'endroit qui vous arrangent</Text>
           </View>
           <View style={styles.secondContainer}>
@@ -142,7 +142,7 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
                  <CustomInput
                     id='phone'
                     rightIcon={<MaterialIcons title = "phone" name ='phone' color='#323446' size={screen.width/15.7} />}
-                    leftIcon={<View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around',borderRightWidth:1,borderRightColor:Colors.blue,paddingRight:screen.width/72,marginRight:screen.width/72}}><Image source={{uri:'http://95.111.243.233/assets/tahfifa/algeriaFlag.png'}} style={{width:screen.width/15,height:screen.width/12.85,marginRight:screen.width/72}}/><Text style={styles.phoneNumber}>+213</Text></View>}
+                    leftIcon={<View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around',borderRightWidth:1,borderRightColor:Colors.blue,paddingRight:screen.width/72,marginRight:screen.width/72,marginLeft:-(screen.width/22.5)}}><Image source={{uri:'http://95.111.243.233/assets/tahfifa/algeriaFlag.png'}} style={{width:screen.width/15,height:screen.width/12.85,marginRight:screen.width/72}}/><Text style={styles.phoneNumber}>+213</Text></View>}
                     placeholder='555555555'
                     keyboardType="phone-pad"
                     returnKeyType="next"
@@ -152,7 +152,6 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
                     phone
                     required
                     placeholderTextColor='rgba(50,52,70,0.4)'
-                    inputStyle={{fontSize:screen.width/24}}
                     backgroundColor='#d3d3d3'
                     textColor={Colors.blue}
                     widthView='100%'
@@ -171,7 +170,6 @@ const saveDataToStorage = (token,userID,expirationDate,id) => {
                     initiallyValid={true}
                     required
                     placeholderTextColor='rgba(50,52,70,0.4)'
-                    inputStyle={{fontSize:screen.width/24}}
                     backgroundColor='#d3d3d3'
                     textColor={Colors.blue}
                     widthView='100%'
@@ -245,8 +243,8 @@ const styles= StyleSheet.create({
     justifyContent:'flex-end'
   },
   icon:{
-    width:screen.width/4.5,
-    height:screen.width/4.5
+    width:screen.width/3,
+    height:screen.width/3
   },
   slogan:{
     fontSize:screen.width/24,
@@ -297,7 +295,7 @@ const styles= StyleSheet.create({
     paddingTop:screen.width/36
   },
   phoneNumber:{
-    fontSize:screen.width/24,
+    fontSize:screen.width/30,
     color:Colors.blue,
   }
   

@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "TAHFIFA",
-    "slug": "th",
+    "name": "ReBorn",
+    "slug": "reborn",
+    "description":"ReBorn est une application leader des services à DOMICILE (coiffure, épilation, manucure, pédicure, soins). La première application mobile en Algérie de coiffure et soins esthétiques pour hommes et femmes. ReBorn est le moyen le plus simple d'obtenir les services d'un coiffeur professionnel, au moment qui vous arrange, chez vous, dans votre bureau ou au salon de coiffure. Le client peut enfin prendre rendez-vous avec son coiffeur personnel ou le plus proche de son domicile. Le feedback fourni par notre application permet aussi aux clients de choisir le coiffeur ou la coiffeuse qu'ils désirent.",
     "privacy": "public",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
     "version": "1.0.0",
     "orientation": "portrait",

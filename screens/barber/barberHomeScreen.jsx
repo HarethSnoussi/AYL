@@ -1,6 +1,6 @@
 import React,{useState,useEffect,useCallback} from 'react';
-import { StyleSheet, Text, View, ImageBackground , Image,Dimensions,TouchableOpacity,ScrollView,StatusBar,Alert,ActivityIndicator} from 'react-native';
-import {MaterialCommunityIcons,Entypo,FontAwesome5} from "@expo/vector-icons";
+import { StyleSheet, Text, View, ImageBackground , Image,Dimensions,TouchableOpacity,ScrollView,StatusBar,Alert,ActivityIndicator,Linking} from 'react-native';
+import {MaterialCommunityIcons,Entypo,MaterialIcons} from "@expo/vector-icons";
 import {  Rating  } from 'react-native-elements';
 import Colors from "../../constants/Colors";
 import { useDispatch,useSelector } from 'react-redux';
@@ -57,11 +57,21 @@ const BarberHomeScreen = props =>{
   },[getBarber]);
 
    const barber=useSelector(state=>state.barber.barber[0]);
-
    const barberPortfolio=useSelector(state=>state.portfolio.portfolio);
    const client= useSelector(state=>state.clients.client[0]);
-   
    const feedbacks=useSelector(state=>state.reviews.feedbacks);
+
+   const instagramURL=barber && barber.b_name?`https://www.instagram.com/${barber.b_name}/`:'https://www.instagram.com/';
+   const instagramUrl= ()=>{
+    Linking.openURL(instagramURL).catch((err) => {
+      if(barber.b_name===null){
+        Alert.alert(client && client.lang?polylanfr.Oups:polylanar.Oups,client && client.lang?polylanfr.NoInstagram:polylanar.NoInstagram,[{text:client && client.lang?polylanfr.OK:polylanar.OK}]);
+      }
+      if(err){
+        Alert.alert(client && client.lang?polylanfr.Oups:polylanar.Oups,client && client.lang?polylanfr.WeakInternet:polylanar.WeakInternet,[{text:client && client.lang?polylanfr.OK:polylanar.OK}]);
+    } 
+    });
+   };
   
   
   const [isAbout,setIsAbout]= useState(true);
@@ -117,8 +127,8 @@ const BarberHomeScreen = props =>{
            </View>
            <View style={styles.infoContainer}>
                <View style={styles.imageContainer}>
-               {barber && barber.image!==null?<Image source={{uri:`http://95.111.243.233/profileImages/barber/${barber.image}`}} style={styles.modelImage} />:
-                <Image source={{uri:'http://95.111.243.233/assets/tahfifa/unknown.jpg'}} style={styles.modelImage} />}
+               {barber && barber.image!==null?<Image source={{uri:`http://95.111.243.233/profileImages/barber/${barber.image}`}} style={styles.modelImage} />:barber && barber.sex==='Homme'?
+               <Image source={{uri:'http://95.111.243.233/assets/tahfifabarber/unknown.jpg'}} style={styles.modelImage} />:<Image source={{uri:'http://95.111.243.233/assets/tahfifabarber/unknownfemale.jpg'}} style={styles.modelImage} />}
                </View>
                <Text style={styles.bname}>{barber && barber.b_name!==null?barber.b_name:client && client.lang?polylanfr.BusinessName:polylanar.BusinessName}</Text>
                <Text style={styles.jobAge}>{barber && (barber.name!==null || barber.surname!==null || barber.age!==null)?`${barber.name} ${barber.surname}, ${barber.age} ${client && client.lang?polylanfr.Yo:polylanar.Yo}`:client && client.lang?polylanfr.personalInforamtion:polylanar.personalInforamtion}</Text>
@@ -135,6 +145,12 @@ const BarberHomeScreen = props =>{
                  <Text style={styles.commentsNumber}>{feedbacks.length!==0 ? ` (${feedbacks.length} ${client && client.lang?polylanfr.Comments:polylanar.Comments})`:client && client.lang?polylanfr.NoComments:polylanar.NoComments}</Text>   
                 </View>
                 <View style={styles.iconsContainer}>
+                 <TouchableOpacity style={styles.iconContainer} onPress={()=>props.navigation.navigate('Accueil')}>
+                    <View style={styles.iconFormCircle}>
+                    <MaterialCommunityIcons title = "accueil" name ='home' color='#fff' size={screen.width/15.7}/>
+                    </View>
+                    <Text style={styles.iconText}>{client && client.lang?polylanfr.Home:polylanar.Home}</Text>
+                  </TouchableOpacity> 
                   <TouchableOpacity style={styles.iconContainer}  onPress={()=>props.navigation.navigate('BarberService',{barberID:barberID})}>
                     <View style={styles.iconFormCircle1}>
                        <Entypo title = "scissors" name ='scissors' color='#fff' size={screen.width/15.7} />
@@ -146,8 +162,15 @@ const BarberHomeScreen = props =>{
                       <MaterialCommunityIcons title = "calendar-account" name ='calendar-account' color='#fff' size={screen.width/15.7} />
                     </View>
                     <Text style={styles.iconText}>{client && client.lang?polylanfr.Book:polylanar.Book}</Text>
+                  </TouchableOpacity>   
+                  <TouchableOpacity style={styles.iconContainer} onPress={instagramUrl}>
+                    <View style={styles.iconFormCircle2}>
+                    <MaterialCommunityIcons title = "instagram" name ='instagram' color='#fff' size={screen.width/15.7}/>
+                    </View>
+                    <Text style={styles.iconText}>{client && client.lang?polylanfr.Instagram:polylanar.Instagram}</Text>
                   </TouchableOpacity>    
                 </View>
+                
            </View>
            <View style={styles.menu}>
               <TouchableOpacity style={{borderBottomWidth:2,borderBottomColor:isAbout ?'#fd6c57':'#f9f9f9',paddingBottom:screen.width/120}} onPress={about}>
