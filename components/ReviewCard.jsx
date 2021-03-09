@@ -140,7 +140,10 @@ try {
       onFinishRating={mark =>ratingMark(mark)}
       style={{marginRight : "5%"}}
       fractions = {1}
-      ratingColor = '#fd6c57'         
+      style = {styles.rating}
+      ratingColor = "#FE9654"          
+      ratingBackgroundColor={'#323446'}
+      tintColor='#fff' 
       type='custom'
       imageSize = {screen.width * 0.08}
       startingValue = {mark}
@@ -148,7 +151,7 @@ try {
       />
       </View>
     <View style = {{paddingTop : screen.width/72}}>
-     <Text style = {{fontFamily : "poppins-bold",fontSize : screen.width/24,color : '#fd6c57'}}>{mark}/5</Text>
+     <Text style = {{fontFamily : "poppins-bold",fontSize : screen.width/24,color : Colors.secondary}}>{mark}/5</Text>
      </View>
 
      </View>
