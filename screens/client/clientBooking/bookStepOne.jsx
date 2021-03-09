@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { StyleSheet, Text, View , Dimensions , Platform, ActivityIndicator ,ScrollView, ImageBackground} from 'react-native';
+import { Animated ,StyleSheet, Text, View , Dimensions , Platform, ActivityIndicator ,ScrollView, ImageBackground,Image,TouchableOpacity ,UIManager,LayoutAnimation,StatusBar} from 'react-native';
 import { Button ,Divider} from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import polylanar from "../../../lang/ar";
+import polylanfr from "../../../lang/fr";
 
 import Colors from "../../../constants/Colors";
 import 'moment/locale/fr';
@@ -13,14 +14,29 @@ import { getServices } from '../../../store/actions/servicesActions';
 
 import MyCheckBox from '../../../components/MyCheckBox';
 import BarberInfos from '../../../components/BarberInfos';
+import ServiceTypeMenu from '../../../components/ServiceTypeMenu';
+// import Animated, { Easing ,useSharedValue, useAnimatedStyle, withSpring, withTiming ,} from 'react-native-reanimated';
 
+// 
 
-// const barberServices = [{name : "coupe classique" , price : 350 , duration : 25},{name : "Barbe" , price : 150 , duration : 10},{name : "Keartine" , price : 1500 , duration : 55}];
 
 const screen = Dimensions.get("window");
  
 const BookStepOne = (props)=> {
+
+// Animated Layout
+
+
+const [expanded, setExpanded] = useState(false);
+
+
+// Animated LAyout END
+
+
+
+
 const clientID =   props.navigation.getParam("clientID");
+
 
 
 const barberServices =  useSelector(state => state.services.services);
@@ -28,6 +44,7 @@ const barberServices =  useSelector(state => state.services.services);
 const dispatch = useDispatch();
 
 
+const [isOpen , setOpen] = useState(false);
 
 const [isRefreshing, setIsRefreshing] = useState(false);
   //Error Handler
@@ -55,7 +72,6 @@ const [bookings,setBookings] = useState([]);
 
 
 const checkHandler = ()=>{
-
   setCheck(previous=>!previous)
 }
 
@@ -161,10 +177,7 @@ const servicesHandler = (service,bool)=>{
      setServices(previous => {
         return [...previous,  {...service }];
       });
-     
-      
-      // setAmount(addedPrices.reduce(sumArray));
-      // setTime(addedTimes.reduce(sumArray));
+
       setAmount(previous=>previous+service.price);
       setTime(previous=>previous+service.duration);
     
@@ -179,19 +192,30 @@ const servicesHandler = (service,bool)=>{
     }
 }
 
-if (error) {
-    
-    return (
-      <View style={styles.centered}>
-        <Text>Une erreur est survenue !</Text>
-        <Button
-          title="Rafraîchir"
-           onPress = {loadServices}
-           buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : screen.width/14.4,paddingHorizontal : "5%",marginVertical : "5%"}}
-        />
-      </View>
-    );
-  }
+
+if(error){
+      
+  return ( <ImageBackground  source={{uri:'http://95.111.243.233/assets/tahfifa/support.png'}} style={{resizeMode:'cover',
+  width:'100%', height:'100%',flex :1,justifyContent :"center"}}>
+            <StatusBar hidden />
+              <View style={{marginBottom:screen.width/36,alignSelf:'center'}}>
+                <Text style={styles.noServicesText}>{polylanfr.WeakInternet}</Text>
+              </View>
+              <Button
+                theme={{colors: {primary:'#fd6c57'}}} 
+                title={polylanfr.Repeat}
+                titleStyle={styles.labelButton}
+                buttonStyle={styles.buttonStyle}
+                ViewComponent={LinearGradient}
+                onPress={loadServices}
+                linearGradientProps={{
+                    colors: ['#fd6d57', '#fd9054'],
+                    start: {x: 0, y: 0} ,
+                    end:{x: 1, y: 0}
+                  }}/>
+          </ImageBackground>);
+};
+
 
 if (isLoading) {
     
@@ -224,30 +248,33 @@ return (
                 <View style = {styles.addService}>
                     <View style= {{maxHeight : "100%"}}>
                     <Text style = {styles.myServices} >Mes Services</Text>
-               <ScrollView  refreshing={isRefreshing} >
-               
+               <ScrollView  refreshing={isRefreshing} showsVerticalScrollIndicator = {false} >
+              
+
+
+   
                { 
                 
-                      barberServices.map((service,index)=>{
+                      barberServices.map((type,index)=>{
 
                           return(  
                           
-                            <MyCheckBox
+                            <ServiceTypeMenu
                               key = {index}
-                              name = {service.name}
-                              price = {service.price}
-                              duration = {service.duration}
-                              setCheck = {checkHandler}
+                              type = {type.name}
                               servicesHandler = {servicesHandler}
-                              value = {service}
-                              
+                              value = {type.services[0]}
+                              services = {type.services}
+                               
                       />    
                       
                       )
 
                       })
-
         }
+       
+
+       
 
                 </ScrollView>
              
@@ -326,6 +353,7 @@ const styles= StyleSheet.create({
    
    container : {
             flex : 1 ,
+           
    },
    firstImage : {
         height :"30%",
@@ -337,7 +365,7 @@ const styles= StyleSheet.create({
    bookingInfoContainer : {
        width : "100%",
        height : "75%",
-       backgroundColor : "white",
+       backgroundColor : "#efefef",
        borderTopLeftRadius : screen.width/14.4,
        borderTopRightRadius : screen.width/14.4,
         position : "absolute",
@@ -366,12 +394,13 @@ const styles= StyleSheet.create({
         width : "90%",
         alignSelf : "center",
         // marginBottom : "20%"
-     
+        color : Colors.blue
         
     },
     totalText : {
     fontFamily : "poppins-bold",
     fontSize : screen.width/26,
+    color : Colors.blue
   
     },
     totalNumber : {
@@ -381,9 +410,10 @@ const styles= StyleSheet.create({
     },
     myServices : {
       fontFamily : "poppins-bold",
-      fontSize : screen.width/26,
+      fontSize : screen.width/24,
       alignSelf : "center",
-      marginVertical : screen.width/72
+      marginVertical : screen.width/72,
+      color : Colors.blue
       },
     ////////////////////////////////////////////////////////////////////////////////
     addService : {
@@ -419,12 +449,29 @@ barberAdress : {
 },
     //////////////////////////////////////////////////////
     centered: {
-        flex:1,
-        justifyContent:'center',
-        width:'100%',
-        height:'100%',
-        resizeMode:'cover'
-      }
+      flex:1,
+     alignItems:'center',
+     justifyContent:'center',
+     width:'100%',
+     height:'100%',
+     resizeMode:'cover'
+    },
+    buttonStyle:{
+      borderColor:'#fd6c57',
+      width:'40%',
+      borderRadius:screen.width/18,
+      height:screen.width/8,
+      marginTop:screen.width/36,
+      alignSelf :"center"
+      
+     },
+     labelButton:{
+      color:'#FFF',
+      fontFamily:'poppins',
+      fontSize:screen.width/22.5,
+      textTransform:null,
+
+     },
     });
   ///////////////////////////////////////////////////////////////////////////
 

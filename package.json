@@ -39,13 +39,13 @@
     "react-native-paper": "^3.6.0",
     "react-native-picker-select": "^6.6.0",
     "react-native-progress-steps": "^1.2.8",
-    "react-native-reanimated": "~1.13.0",
+    "react-native-reanimated": "^2.0.0-alpha.6.1",
     "react-native-safe-area-context": "3.1.4",
     "react-native-safe-area-view": "^1.1.1",
     "react-native-screens": "~2.10.1",
     "react-native-snap-carousel": "^3.8.4",
     "react-native-web": "~0.13.7",
-    "react-native-webview": "10.7.0",
+    "react-native-webview": "11.0.0",
     "react-navigation": "^4.2.2",
     "react-navigation-drawer": "^2.4.2",
     "react-navigation-header-buttons": "^3.0.5",
@@ -54,7 +54,8 @@
     "react-navigation-tabs": "^2.8.4",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "lottie-react-native": "~2.6.1"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

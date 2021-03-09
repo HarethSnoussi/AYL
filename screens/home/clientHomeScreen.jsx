@@ -4,6 +4,9 @@ import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import {Badge} from 'react-native-elements'
+import polylanar from "../../lang/ar";
+import polylanfr from "../../lang/fr";
+import { LinearGradient } from 'expo-linear-gradient';
 
 import {Ionicons,  MaterialIcons,Foundation} from "@expo/vector-icons";
 import {Button ,Overlay} from 'react-native-elements';
@@ -317,26 +320,28 @@ const toggleOverlay = () => {
 
 /************************************************************************************************** */
 /********************************************************************** */
-if (error  ) {
-  return (
-    <View style={styles.centered}>
-      <StatusBar hidden />
-     <View style = {{height : "50%",justifyContent:"center",alignItems:"center",width:"50%"}}>
-                     <Image
-                        style={{height:"100%",width:"100%",resizeMode:"contain"}}
-                        source={{uri:'http://95.111.243.233/assets/tahfifa/asset.png'}}
-                    />
-                
-            </View> 
-      <Text>Une erreur est survenue !</Text>
-      <Button
-        title="Rafraîchir"
-         onPress = {getClient}
-         buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : screen.width/14.4,paddingHorizontal : "5%",marginVertical : "5%"}}
-      />
-    </View>
-  );
-}
+if(error){
+      
+  return ( <ImageBackground  source={{uri:'http://95.111.243.233/assets/tahfifa/support.png'}} style={{resizeMode:'cover',
+  width:'100%', height:'100%',flex :1,justifyContent :"center"}}>
+            <StatusBar hidden />
+              <View style={{marginBottom:screen.width/36,alignSelf:'center'}}>
+                <Text style={styles.noServicesText}>{polylanfr.WeakInternet}</Text>
+              </View>
+              <Button
+                theme={{colors: {primary:'#fd6c57'}}} 
+                title={polylanfr.Repeat}
+                titleStyle={styles.labelButton}
+                buttonStyle={styles.buttonStyle}
+                ViewComponent={LinearGradient}
+                onPress={getClient}
+                linearGradientProps={{
+                    colors: ['#fd6d57', '#fd9054'],
+                    start: {x: 0, y: 0} ,
+                    end:{x: 1, y: 0}
+                  }}/>
+          </ImageBackground>);
+};
 
 
 if (isLoading || allBarbers.length === 0 || client.length === 0 ) {
@@ -345,12 +350,10 @@ if (isLoading || allBarbers.length === 0 || client.length === 0 ) {
 
   return (
 
-    <ImageBackground style= {styles.centered} source={{uri:'http://95.111.243.233/assets/tahfifa/support.png'}}>
-      <StatusBar hidden />
-
-      <ActivityIndicator size="large" color= {Colors.primary} />
-
-    </ImageBackground>
+    <ImageBackground source={{uri:'http://95.111.243.233/assets/tahfifa/support.png'}} style={styles.centered}>
+                  <StatusBar hidden/>
+                  <ActivityIndicator size='large' color={Colors.primary} />
+              </ImageBackground>
 
   );
 }
@@ -597,8 +600,25 @@ titleText : {
    width:'100%',
    height:'100%',
    resizeMode:'cover'
-  }
-
+  },
+  buttonStyle:{
+    borderColor:'#fd6c57',
+    width:'40%',
+    borderRadius:screen.width/18,
+    height:screen.width/8,
+    marginTop:screen.width/36,
+    alignSelf :"center"
+    
+   },
+   labelButton:{
+    color:'#FFF',
+    fontFamily:'poppins',
+    fontSize:screen.width/22.5,
+    textTransform:null,
+    
+  
+    
+   },
    
 
 });

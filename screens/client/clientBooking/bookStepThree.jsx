@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { StyleSheet, Text, View , Picker,Image, Dimensions , ActivityIndicator,TextInput, KeyboardAvoidingView,TouchableWithoutFeedback,Keyboard} from 'react-native';
-import { Button ,Avatar,Rating} from 'react-native-elements';
+import { StyleSheet, Text, View , Picker,Image, Dimensions , ActivityIndicator,TextInput, KeyboardAvoidingView,TouchableWithoutFeedback,Keyboard,UIManager,LayoutAnimation} from 'react-native';
+import { Button ,Avatar,Rating, CheckBox} from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import moment from 'moment';
@@ -18,6 +18,11 @@ import SentOverlay from '../../../components/SentOverlay';
  
 const screen = Dimensions.get("window");
 moment.locale("fr");   
+if (Platform.OS === 'android') {
+  if (UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
+}
 
 /////////////////////////////////////////////////////////////////////////
 const BookStepThree = (props)=> {
@@ -31,6 +36,21 @@ const [pickedAddress,setAddress] = useState("");
 const [overlayState , setOverlayState]=useState(false);
 const [stepThreeCpt,setStepThree] = useState(props.navigation.getParam("overCpt"));
 const [keyboardState,setKeyboardState]= useState (false);
+// Radio Buttons State
+
+const [firstRadio , setFirstRadio] = useState(true);
+const [secondRadio , setSecondRadio] = useState(false);
+
+//Radio Buttons Handler
+
+const radioButtonsHandler = ()=>{
+  LayoutAnimation.configureNext(LayoutAnimation.Presets.linear );
+
+  setFirstRadio(previous =>!previous);
+  setSecondRadio(previous =>!previous);
+
+}
+
 const pickedWilayaHandler =  (itemValue)=>{
 
 setPickedWilaya(itemValue);
@@ -40,7 +60,7 @@ setPickedWilaya(itemValue);
 
   //Overlay Handelr
   const overlayHandler = ()=>{
-     
+     if((pickedWilaya!== null && pickedRegion !== "" && pickedAddress !== "") || (secondRadio))
     setOverlayState((previous) => !previous);
 
   }
@@ -77,10 +97,13 @@ useEffect(() => {
 }, []);
 
 const keyboardDidShow = () => {
+  LayoutAnimation.configureNext(LayoutAnimation.Presets.linear );
   setKeyboardState(true);
 };
 
 const keyboardDidHide = () => {
+  LayoutAnimation.configureNext(LayoutAnimation.Presets.linear );
+
   setKeyboardState(false);
 };
 
@@ -122,13 +145,7 @@ return (
     }
 
                 <View style = {styles.firstImage}>
-                {/* <SentOverlay 
-          isVisible = {sentVisible} 
-          sentOverlayHandler = {sentOverlayHandler}
-          
-          /> */}
-              
-                {/* <Image source = {require("../../../assets/pictures/barber2.jpg")} style = {{height : "100%",width : "100%"}}   /> */}
+            
                 <BarberInfos 
                   name = {props.navigation.getParam("name")}
                   surname = {props.navigation.getParam("surname")}
@@ -145,17 +162,48 @@ return (
                     borderTopLeftRadius : keyboardState ? 0 :screen.width/14.4,
                     borderTopRightRadius : keyboardState ? 0 : screen.width/14.4,
                     position : "absolute",
-                    top : keyboardState ? 0:"25%",
+                    top : keyboardState ? 0 :"25%",
                     overflow : "hidden",}}>
                 <KeyboardAvoidingView  keyboardVerticalOffset={10}>
                
                     <View style = {styles.title}>
-                        <Text style = {{fontFamily : "poppins-bold",fontSize : screen.width/26,color:Colors.blue}}>
+                        <Text style = {{fontFamily : "poppins-bold",fontSize : screen.width/24,color:Colors.blue}}>
                         Adresse de la réservation
                         </Text>
 
                     </View>
 
+                    <View style = {{flexDirection :"row",justifyContent :"center"}}>
+                    <CheckBox
+                        center
+                        title='A Domicile'
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
+                        containerStyle = {{backgroundColor :"#fff",borderWidth : 0}}
+                        checked = {firstRadio}
+                        fontFamily = "poppins"
+                        size = {screen.width /20}
+                        textStyle = {{fontFamily : "poppins", fontSize : screen.width /30 }}
+                        onPress = {radioButtonsHandler}
+                        checkedColor = {Colors.primary}
+                      />
+                        <CheckBox
+                        center
+                        title='Chez le partenaire'
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
+                        containerStyle = {{backgroundColor :"#fff",borderWidth : 0}}
+                        checked = {secondRadio}
+                        onPress = {radioButtonsHandler}
+                        textStyle = {{fontFamily : "poppins", fontSize : screen.width /30 }}
+                        size = {screen.width /20}
+                        checkedColor = {Colors.primary}
+                      />
+
+                    </View>
+
+             {  
+               firstRadio && 
                 <View style = {styles.inputsContainer}>
                 
 
@@ -169,8 +217,8 @@ return (
                         onValueChange={(itemValue) => pickedWilayaHandler(itemValue)}
                         items={[
                             { label: 'Alger', value: 'Alger'},
-                            { label: 'Blida', value: 'Blida' },
-                            { label: 'Oran', value: 'Oran' },
+                            
+                           
                         ]}
                         value = {pickedWilaya}
                         placeholder={{
@@ -227,19 +275,21 @@ return (
                    
                     
                     </View>
+                    
+                    }
 
                     <Button 
                    containerStyle = {{ height : "15%",width : "80%",alignSelf:"center" ,justifyContent : "center" }} 
                    title = "Réserver" 
                    titleStyle = {{fontFamily : "poppins-bold",fontSize : screen.width/26}}
-                   buttonStyle = {{borderRadius : Platform.OS === "android" ? screen.width/6.5 : screen.width/18}} 
+                   buttonStyle = {{borderRadius : Platform.OS === "android" ? screen.width/6.5 : screen.width/18 , marginTop : secondRadio ? "10%" : 0}} 
                    ViewComponent={LinearGradient} 
                    linearGradientProps={{
                         colors: ['#fd6d57', '#fd9054'],
                         start: {x: 0, y: 0} ,
                         end:{x: 1, y: 0}
                     }}
-                onPress = {()=> pickedWilaya!== null && pickedRegion !== "" && pickedAddress !== ""&& overlayHandler()}
+                onPress = {()=> overlayHandler()}
                 
                    />
         </KeyboardAvoidingView>
@@ -288,7 +338,7 @@ const styles= StyleSheet.create({
   /********************************************************************** */ 
    title : {
     alignSelf : "center",
-    marginTop : "3%"
+    marginTop : "4%"
    },
    inputsContainer:{
    height : "60%",
@@ -296,7 +346,7 @@ const styles= StyleSheet.create({
    alignSelf : 'center',
    justifyContent :"space-around",
    alignItems : "center",
-   marginTop : "15%"
+   marginTop : "5%"
 },
   /********************************************************************** */ 
     wilaya : {  
@@ -379,11 +429,38 @@ barberAdress : {
 },
 
 /**************************************************** */
-  centered: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
+centered: {
+  flex:1,
+  alignItems:'center',
+  justifyContent:'center',
+  width:'100%',
+  height:'100%',
+  resizeMode:'cover'
+},
+
+    buttonStyles:{
+      borderColor:'#fd6c57',
+      width:'40%',
+      borderRadius:screen.width/18,
+      height:screen.width/8,
+      alignSelf:'center',
+      marginTop:screen.width/36,
+     },
+     activityIndicatorContainer:{
+      flex:1,
+      resizeMode:'cover',
+      width:'100%',
+      height:'100%',
+      justifyContent:'center',
+     
+    },
+    labelButton:{
+      color:'#FFF',
+      fontFamily:'poppins',
+      fontSize:screen.width/22.5,
+      textTransform:null,
+      
+     },
  
     });
     /********************************************************************** */ 
