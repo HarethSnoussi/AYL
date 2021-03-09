@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View,Image, ImageBackground, Dimensions,ActivityIndicator,ScrollView} from 'react-native';
+import { StyleSheet, Text, View,Image, ImageBackground, Dimensions,ActivityIndicator,ScrollView,StatusBar} from 'react-native';
 import BarberCard from '../../../components/BarberCard';
 import { SearchBar } from 'react-native-elements';
 import { Ionicons,Feather } from '@expo/vector-icons';
+import polylanar from "../../../lang/ar";
+import polylanfr from "../../../lang/fr";
+import { LinearGradient } from 'expo-linear-gradient';
 
 import Colors from "../../../constants/Colors";
 
@@ -82,14 +85,24 @@ const searchedResult = searchState === "" ? allBarbers :  foundBarbers ;
 
 if (error) {
   return (
-    <View style={styles.centered}>
-      <Text>Une erreur est survenue !</Text>
+    <ImageBackground source={{uri:'http://95.111.243.233/assets/tahfifa/support.png'}} style={styles.centered}>
+    <StatusBar hidden />
+      <View style={{marginBottom:screen.width/36,alignSelf:'center'}}>
+        <Text style={styles.noServicesText}>{polylanfr.WeakInternet}</Text>
+      </View>
       <Button
-        title="Rafraîchir"
-         onPress = {getAllBarbers}
-        color={Colors.primary}
-      />
-    </View>
+        theme={{colors: {primary:'#fd6c57'}}} 
+        title={polylanfr.Repeat}
+        titleStyle={styles.labelButton}
+        buttonStyle={styles.buttonStyle}
+        ViewComponent={LinearGradient}
+        onPress={getAllBarbers}
+        linearGradientProps={{
+            colors: ['#fd6d57', '#fd9054'],
+            start: {x: 0, y: 0} ,
+            end:{x: 1, y: 0}
+          }}/>
+  </ImageBackground>
   );
 }
 
@@ -328,7 +341,15 @@ centered: {
    width:'100%',
    height:'100%',
    resizeMode:'cover'
-}
+},
+buttonStyle:{
+  borderColor:'#fd6c57',
+  width:'40%',
+  borderRadius:screen.width/18,
+  height:screen.width/8,
+  alignSelf:'center',
+  marginTop:screen.width/36
+ },
 
     
    

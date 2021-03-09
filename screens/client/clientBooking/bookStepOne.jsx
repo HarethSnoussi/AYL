@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Animated ,StyleSheet, Text, View , Dimensions , Platform, ActivityIndicator ,ScrollView, ImageBackground,Image,TouchableOpacity ,UIManager,LayoutAnimation} from 'react-native';
+import { Animated ,StyleSheet, Text, View , Dimensions , Platform, ActivityIndicator ,ScrollView, ImageBackground,Image,TouchableOpacity ,UIManager,LayoutAnimation,StatusBar} from 'react-native';
 import { Button ,Divider} from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
+import polylanar from "../../../lang/ar";
+import polylanfr from "../../../lang/fr";
 
 import Colors from "../../../constants/Colors";
 import 'moment/locale/fr';
@@ -191,22 +193,29 @@ const servicesHandler = (service,bool)=>{
 }
 
 
+if(error){
+      
+  return ( <ImageBackground  source={{uri:'http://95.111.243.233/assets/tahfifa/support.png'}} style={{resizeMode:'cover',
+  width:'100%', height:'100%',flex :1,justifyContent :"center"}}>
+            <StatusBar hidden />
+              <View style={{marginBottom:screen.width/36,alignSelf:'center'}}>
+                <Text style={styles.noServicesText}>{polylanfr.WeakInternet}</Text>
+              </View>
+              <Button
+                theme={{colors: {primary:'#fd6c57'}}} 
+                title={polylanfr.Repeat}
+                titleStyle={styles.labelButton}
+                buttonStyle={styles.buttonStyle}
+                ViewComponent={LinearGradient}
+                onPress={loadServices}
+                linearGradientProps={{
+                    colors: ['#fd6d57', '#fd9054'],
+                    start: {x: 0, y: 0} ,
+                    end:{x: 1, y: 0}
+                  }}/>
+          </ImageBackground>);
+};
 
-
-
-if (error) {
-    
-    return (
-      <View style={styles.centered}>
-        <Text>Une erreur est survenue !</Text>
-        <Button
-          title="Rafraîchir"
-           onPress = {loadServices}
-           buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : screen.width/14.4,paddingHorizontal : "5%",marginVertical : "5%"}}
-        />
-      </View>
-    );
-  }
 
 if (isLoading) {
     
@@ -440,12 +449,29 @@ barberAdress : {
 },
     //////////////////////////////////////////////////////
     centered: {
-        flex:1,
-        justifyContent:'center',
-        width:'100%',
-        height:'100%',
-        resizeMode:'cover'
-      }
+      flex:1,
+     alignItems:'center',
+     justifyContent:'center',
+     width:'100%',
+     height:'100%',
+     resizeMode:'cover'
+    },
+    buttonStyle:{
+      borderColor:'#fd6c57',
+      width:'40%',
+      borderRadius:screen.width/18,
+      height:screen.width/8,
+      marginTop:screen.width/36,
+      alignSelf :"center"
+      
+     },
+     labelButton:{
+      color:'#FFF',
+      fontFamily:'poppins',
+      fontSize:screen.width/22.5,
+      textTransform:null,
+
+     },
     });
   ///////////////////////////////////////////////////////////////////////////
 

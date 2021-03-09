@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { StyleSheet, Text, View , ImageBackground,Image, Dimensions , StatusBar, Platform,ActionSheetIOS, ActivityIndicator , FlatList, TouchableOpacity} from 'react-native';
 import { Button ,Avatar,Rating} from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import polylanar from "../../../lang/ar";
+import polylanfr from "../../../lang/fr";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from 'moment';
 import Colors from "../../../constants/Colors";
@@ -288,7 +289,7 @@ let slots = todaysSlots ;
 //Map throught all the existing Bookings and remove them
 if(filteredBookings.length > 0)
 {
-  console.log(filteredBookings);
+
 filteredBookings.map(booking=>{
     let bookingDuration = Math.ceil(booking.bookingDuration/15)  ; 
     // if(bookingDuration === 1 ) {
@@ -361,17 +362,28 @@ manager();
 
 if (error) {
     
-    return (
-      <View style={styles.centered}>
-        <Text>Une erreur est survenue !</Text>
-        <Button
-          title="Rafraîchir"
-           onPress = {loadServices}
-           buttonStyle = {{backgroundColor : "#fd6c57",borderRadius : screen.width/14.4,paddingHorizontal : "5%",marginVertical : "5%"}}
-        />
-      </View>
-    );
-  }
+  return (
+    <ImageBackground  source={{uri:'http://95.111.243.233/assets/tahfifa/support.png'}} style={{resizeMode:'cover',
+    width:'100%', height:'100%',flex :1,justifyContent :"center"}}>
+              <StatusBar hidden />
+                <View style={{marginBottom:screen.width/36,alignSelf:'center'}}>
+                  <Text style={styles.noServicesText}>{polylanfr.WeakInternet}</Text>
+                </View>
+                <Button
+                  theme={{colors: {primary:'#fd6c57'}}} 
+                  title={polylanfr.Repeat}
+                  titleStyle={styles.labelButton}
+                  buttonStyle={styles.buttonStyle}
+                  ViewComponent={LinearGradient}
+                  onPress={getData}
+                  linearGradientProps={{
+                      colors: ['#fd6d57', '#fd9054'],
+                      start: {x: 0, y: 0} ,
+                      end:{x: 1, y: 0}
+                    }}/>
+            </ImageBackground>
+  );
+}
 
 
  if (isLoading) {
@@ -619,7 +631,31 @@ centered: {
     width:'100%',
     height:'100%',
     resizeMode:'cover'
-  }
+  },
+  
+      buttonStyle:{
+        borderColor:'#fd6c57',
+        width:'40%',
+        borderRadius:screen.width/18,
+        height:screen.width/8,
+        alignSelf:'center',
+        marginTop:screen.width/36,
+       },
+       activityIndicatorContainer:{
+        flex:1,
+        resizeMode:'cover',
+        width:'100%',
+        height:'100%',
+        justifyContent:'center',
+       
+      },
+      labelButton:{
+        color:'#FFF',
+        fontFamily:'poppins',
+        fontSize:screen.width/22.5,
+        textTransform:null,
+        
+       },
  
     });
   ///////////////////////////////////////////////////////////////////////////
