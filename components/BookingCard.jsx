@@ -40,17 +40,17 @@ const BookingCard = props =>{
           </LinearGradient>
           <View style = {styles.infos}>
 
-             <Text style = {styles.status}>Status :
+             <Text style = {styles.status}>{props.statusText} :
               <Text style = {{...styles.statusType,...{color : gradient2}}}> {props.status}</Text>
                </Text>
-              <Text style = {styles.slotText} >Horraires : {props.start} - {props.end} </Text>
+              <Text style = {styles.slotText} >{props.horairesText} : {props.start} - {props.end} </Text>
          
            
 
               <Text style = {{...styles.priceText ,...{color : gradient2,  textDecorationLine: props.status ==="expirée" ? 'line-through' : "none" ,
               }
               }}>
-              Prix :{props.amount} DA
+              {props.priceText} : {props.amount} {props.dzdText}
               </Text>
               {/* <Text style = {styles.slotText}>Fin : </Text> */}
               

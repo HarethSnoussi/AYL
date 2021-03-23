@@ -41,6 +41,7 @@ const allReviews = useSelector(state=>state.reviews.reviews);
   
 const dispatch = useDispatch();
   
+const client= useSelector(state=>state.clients.client);
 
 useEffect(()=>{
   
@@ -165,7 +166,7 @@ if (isLoading) {
  
   {/* <Ionicons name="md-arrow-back" size={24} color="black" onPress = {()=>{props.navigation.goBack()}} style={{alignSelf : "center"}} /> */}
         <SearchBar
-                placeholder="Nom du coiffeur"
+                placeholder={client[0] && client[0].lang?polylanfr.SearchByName:polylanar.SearchByName}
                 containerStyle = {styles.searchBar}
                 onChangeText = {(text)=>setSearchState(text)}
                 inputContainerStyle = {{
@@ -181,10 +182,10 @@ if (isLoading) {
       
          <View>
           <Text style = {{fontFamily : "poppins-bold",fontSize : screen.width/24}}>
-          Historique des coiffeurs
+          {client[0] && client[0].lang?polylanfr.HistoryOfBookings:polylanar.HistoryOfBookings}
           </Text>
           <Text style = {{fontFamily : "poppins",color:"#9d9da1",fontSize : screen.width/30}}>
-          {searchedResult.length} Résultats 
+          {searchedResult.length} {client[0] && client[0].lang?polylanfr.Results:polylanar.Results} 
           </Text>
           </View>
         
@@ -210,6 +211,16 @@ if (isLoading) {
               clientId = {clientID}
                profile = {()=>props.navigation.navigate("Barber",{barberID : barber.id})}
                image={barber.image!==null?barber.image:'unknown.jpg'}
+               buttonTitle={client[0] && client[0].lang?polylanfr.Book:polylanar.Book}
+               feedbackTitle={client[0] && client[0].lang?polylanfr.FeedbackTitle:polylanar.FeedbackTitle}
+               writeAcomment={client[0] && client[0].lang?polylanfr.WriteAcomment:polylanar.WriteAcomment}
+               OK={client[0] && client[0].lang?polylanfr.OK:polylanar.OK}
+               feedbackSent={client[0] && client[0].lang?polylanfr.FeedbackSent:polylanar.FeedbackSent}
+               feedbackSentWithSuccess={client[0] && client[0].lang?polylanfr.FeedbackSentWithSuccess:polylanar.FeedbackSentWithSuccess}
+               feedbackNoSent={client[0] && client[0].lang?polylanfr.FeedbackNoSent:polylanar.FeedbackNoSent}
+               failedToSend={client[0] && client[0].lang?polylanfr.FailedToSend:polylanar.FailedToSend}
+               placeholderTextInput={client[0] && client[0].lang?polylanfr.YourComment:polylanar.YourComment}
+               sendText={client[0] && client[0].lang?polylanfr.Send:polylanar.Send}
               />
               
               )

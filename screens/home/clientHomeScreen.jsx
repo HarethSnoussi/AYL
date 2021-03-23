@@ -14,7 +14,6 @@ import { useDispatch,useSelector } from 'react-redux';
 import * as clientActions from '../../store/actions/clientActions';
 import Colors from "../../constants/Colors.js";
 
-
 import TopBarbersCard from '../../components/TopBarbersCard.jsx';
 
 
@@ -373,7 +372,7 @@ if (isLoading || allBarbers.length === 0 || client.length === 0 ) {
 
         
             <View style = {styles.firstTitle}>  
-         { <Text style = {styles.titleText}>Votre bien-être commence ici
+         { <Text style = {styles.titleText}>{client[0] && client[0].lang?polylanfr.YourWellBeingStartFromHere:polylanar.YourWellBeingStartFromHere}
 </Text> }
     
 
@@ -425,11 +424,11 @@ if (isLoading || allBarbers.length === 0 || client.length === 0 ) {
 
 
           <View style = {styles.textTopBarbers}>
-                { client[0].sex ==="Homme" ? <Text style = {styles.bestText}> Meilleurs Coiffeurs</Text> : <Text style = {styles.bestText}> Meilleures Coiffeuses</Text> }
+                { client[0].sex ==="Homme" ? <Text style = {styles.bestText}>{client[0] && client[0].lang?polylanfr.BestBarbers:polylanar.BestBarbers}</Text> : <Text style = {styles.bestText}>{client[0] && client[0].lang?polylanfr.BestFemaleBarbers:polylanar.BestFemaleBarbers}</Text> }
                 <TouchableOpacity  
                 onPress={() =>props.navigation.navigate("AllBarbers",{type : client[0].sex ==="Homme" ? "coiffeurs" : "coiffeuses",clientID,overCpt : allBookings.length})} >
                 <Text style = {styles.showAll}>
-                Tout Afficher
+                {client[0] && client[0].lang?polylanfr.DisplayAll:polylanar.DisplayAllOfThem}
                 </Text>
                 </TouchableOpacity>
               </View>
@@ -450,6 +449,7 @@ if (isLoading || allBarbers.length === 0 || client.length === 0 ) {
              region = {barber.region}
              wilaya = {barber.wilaya}
              mark = {barber.mark}
+             buttonTitle={client[0] && client[0].lang?polylanfr.Book:polylanar.Book}
              image={barber.image!==null?barber.image:'unknown.jpg'}
              navigateToBarberProfil={()=>props.navigation.navigate("Barber",{barberId : barber.id,clientID:clientID,overCpt:allBookings.length})}
              navigate = {()=>props.navigation.navigate("BookStepOne",{barberId : barber.id,clientID,name:barber.name,surname:barber.surname,mark:barber.mark,region:barber.region,wilaya:barber.wilaya,image:barber.image,overCpt : allBookings.length})}

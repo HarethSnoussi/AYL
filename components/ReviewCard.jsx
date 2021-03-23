@@ -68,20 +68,20 @@ if(barberReview.length === 0){
     await dispatch (addreview({clientId : props.clientId,barberId : props.barberId , comment :comment,mark : mark }))
     setVisible (previous => !previous);
     Alert.alert(
-      "Avis envoyé",
-      "Avis envoyé avec succés",
+      props.feedbackSent,
+      props.feedbackSentWithSuccess,
       [
-        { text: "OK", onPress: () =>{} }
+        { text: props.OK, onPress: () =>{} }
       ],
       { cancelable: false }
     );
     
   } catch (error) {
     Alert.alert(
-      "Avis non envoyé",
-      "Echec d'envoie",
+      props.feedbackNoSent,
+      props.failedToSend,
       [
-        { text: "OK", onPress: () =>{} }
+        { text: props.OK, onPress: () =>{} }
       ],
       { cancelable: false }
     );
@@ -94,19 +94,19 @@ try {
   await dispatch (updateReview({clientId : props.clientId,barberId : props.barberId , comment :comment,mark : mark }))
   setVisible (previous => !previous);
   Alert.alert(
-    "Avis envoyé",
-    "Avis envoyé avec succés",
+    props.feedbackSent,
+    props.feedbackSentWithSuccess,
     [
-      { text: "OK", onPress: () =>{} }
+      { text: props.OK, onPress: () =>{} }
     ],
     { cancelable: false }
   );
 } catch (error) {
   Alert.alert(
-    "Avis non envoyé",
-    "Echec d'envoie",
+    props.feedbackNoSent,
+    props.failedToSend,
     [
-      { text: "OK", onPress: () =>{} }
+      { text: props.OK, onPress: () =>{} }
     ],
     { cancelable: false }
   );
@@ -130,7 +130,7 @@ try {
       <View style = {{flex : 1}}>
    
      <View style = {styles.overlayText}>
-            <Text style ={{fontFamily : "poppins-bold",fontSize : screen.width/26,color : "#525252"}}> Ecrire un commentaire</Text>
+            <Text style ={{fontFamily : "poppins-bold",fontSize : screen.width/26,color : "#525252"}}>{props.writeAcomment}</Text>
 
      </View>
      <KeyboardAvoidingView behavior = "padding" style = {{height : "65%"}}   keyboardVerticalOffset={5}>
@@ -160,7 +160,7 @@ try {
      <View style = {styles.commentContainer}>
       
      <TextInput
-        placeholder='Votre Commentaire ...'
+        placeholder={props.placeholderTextInput}
         autoCorrect = {false}
         multiline = {true}
         numberOfLines = {5}
@@ -176,7 +176,7 @@ try {
      </KeyboardAvoidingView>
      <Button 
                    containerStyle = {{ height : "15%",width : "80%",alignSelf:"center" ,justifyContent : "center" }} 
-                   title = "Envoyer" 
+                   title = {props.sendText}
                    titleStyle = {{fontFamily : "poppins-bold",fontSize : screen.width/26}}
                    buttonStyle = {{borderRadius : screen.width/24}} 
                    ViewComponent={LinearGradient} 
@@ -207,7 +207,7 @@ try {
                 <TouchableOpacity style = {{flexDirection : "row"}} onPress = {toggleOverlay}>
              
                 <EvilIcons name="pencil" size={24} color="#9d9da1"  />
-                <Text style = {{fontFamily : "poppins", color : "#9d9da1",fontSize : screen.width/30}}>Avis</Text>
+                <Text style = {{fontFamily : "poppins", color : "#9d9da1",fontSize : screen.width/30}}>{props.feedbackTitle}</Text>
                 </TouchableOpacity>
               </View>
               <Text  onPress = {props.profile}  style = {{fontFamily : "poppins", color : "#9d9da1",fontSize : screen.width/30}} >
@@ -239,7 +239,7 @@ try {
                 </View>
                
                 <Button  
-                title ="Réserver" 
+                title ={props.buttonTitle} 
                 buttonStyle = {{borderRadius : screen.width/65,paddingHorizontal : "5%"}}
                 titleStyle = {{color :"#fff",fontSize : screen.width/30}}
                 onPress = {props.navigate}

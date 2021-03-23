@@ -43,7 +43,7 @@ const TopBarbersCard = (props)=> {
                     
             <Button 
               buttonStyle ={styles.button}
-              title = "Réserver" 
+              title = {props.buttonTitle}
               titleStyle = {{color :"#fff",fontSize : screen.width/30}}
               onPress = {props.navigate}
               linearGradientProps={{

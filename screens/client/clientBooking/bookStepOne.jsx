@@ -36,7 +36,7 @@ const [expanded, setExpanded] = useState(false);
 
 
 const clientID =   props.navigation.getParam("clientID");
-
+const client= useSelector(state=>state.clients.client);
 
 
 const barberServices =  useSelector(state => state.services.services);
@@ -247,7 +247,7 @@ return (
 
                 <View style = {styles.addService}>
                     <View style= {{maxHeight : "100%"}}>
-                    <Text style = {styles.myServices} >Mes Services</Text>
+                    <Text style = {styles.myServices} >{client[0] && client[0].lang?polylanfr.MyServices:polylanar.MyServices}</Text>
                <ScrollView  refreshing={isRefreshing} showsVerticalScrollIndicator = {false} >
               
 
@@ -265,7 +265,8 @@ return (
                               servicesHandler = {servicesHandler}
                               value = {type.services[0]}
                               services = {type.services}
-                               
+                              dzdText={client[0] && client[0].lang?polylanfr.DZ:polylanar.DZ}
+                              minText={client[0] && client[0].lang?polylanfr.Minute:polylanar.Minute} 
                       />    
                       
                       )
@@ -282,12 +283,12 @@ return (
                     </View>
                     <Divider style={{ backgroundColor: 'black' ,width : "80%",alignSelf : "center",marginBottom : "5%"}} />
                     <View style = {styles.totalPrice}>
-                        <Text style = {styles.totalText}>Prix Total : </Text>
-                        <Text style = {styles.totalNumber} >{totalAmount} DZD</Text>
+                        <Text style = {styles.totalText}>{client[0] && client[0].lang?polylanfr.TotalPrice:polylanar.TotalPrice}</Text>
+                        <Text style = {styles.totalNumber} >{totalAmount} {client[0] && client[0].lang?polylanfr.DZ:polylanar.DZ}</Text>
                     </View>
                     <View style = {styles.totalTime}>
-                        <Text style = {styles.totalText}>Temps Total : </Text>
-                        <Text style = {styles.totalNumber} >{totalTime} MIN </Text>
+                        <Text style = {styles.totalText}>{client[0] && client[0].lang?polylanfr.TotalTime:polylanar.TotalTime}</Text>
+                        <Text style = {styles.totalNumber} >{totalTime} {client[0] && client[0].lang?polylanfr.Minute:polylanar.Minute} </Text>
                     </View>
                
                     </View>
@@ -295,7 +296,7 @@ return (
                
                       <Button 
                    containerStyle = {{ height : "15%",width : "80%",alignSelf:"center" ,justifyContent : "center"  }} 
-                   title = "Continuer" 
+                   title = {client[0] && client[0].lang?polylanfr.Continue:polylanar.Continue} 
                    titleStyle = {{fontFamily : "poppins-bold",fontSize : screen.width/28}}
                    buttonStyle = {{borderRadius : Platform.OS === "android" ? screen.width/6.5 : screen.width/18}} 
                    ViewComponent={LinearGradient} 
@@ -410,7 +411,7 @@ const styles= StyleSheet.create({
     },
     myServices : {
       fontFamily : "poppins-bold",
-      fontSize : screen.width/24,
+      fontSize : screen.width/20,
       alignSelf : "center",
       marginVertical : screen.width/72,
       color : Colors.blue

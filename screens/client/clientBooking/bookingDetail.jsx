@@ -10,6 +10,8 @@ import { Rating, AirbnbRating ,Avatar,Button} from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ConfirmOverlay from '../../../components/ConfirmOverlay';
 import { LinearGradient } from 'expo-linear-gradient';
+import polylanar from "../../../lang/ar";
+import polylanfr from "../../../lang/fr";
 
 const screen = Dimensions.get("window");
 
@@ -215,6 +217,10 @@ if (isLoading) {
                             date = {props.navigation.getParam("date")}
                             status = {props.navigation.getParam("status")}
                             detail = {false}
+                            statusText={client[0] && client[0].lang?polylanfr.Status:polylanar.Status}
+                            horairesText={client[0] && client[0].lang?polylanfr.Times:polylanar.Times}
+                            priceText={client[0] && client[0].lang?polylanfr.Price:polylanar.Price}
+                            dzdText={client[0] && client[0].lang?polylanfr.DZ:polylanar.DZ}
     
      />
 
@@ -272,7 +278,7 @@ buttonStyle = {{backgroundColor : "white"}}
 <View style = {styles.barber}>
 
 <View style={styles.title}>
-    <Text style={{fontFamily : "poppins-bold",color :Colors.blue,fontSize : screen.width /28,paddingBottom:screen.width/72}}>Détail de la réservation
+    <Text style={{fontFamily : "poppins-bold",color :Colors.blue,fontSize : screen.width /28,paddingBottom:screen.width/72}}>{client[0] && client[0].lang?polylanfr.BookingDetails:polylanar.BookingDetails}
     </Text>
     </View>
 
@@ -292,7 +298,7 @@ buttonStyle = {{backgroundColor : "white"}}
               </Text>
             
               <Text  style={styles.serviceText}>
-              {service.price + " DA " }
+              {service.price} {client[0] && client[0].lang?polylanfr.DZ:polylanar.DZ}
               </Text>
               
               </View>
@@ -312,11 +318,11 @@ buttonStyle = {{backgroundColor : "white"}}
 <LinearGradient colors = { [gradient1, gradient2]} style ={{height:"20%",justifyContent:"center"}}> 
 <View style ={{flexDirection :"row",width:"90%",justifyContent :"space-between",alignSelf:"center"}}>
 <View>
-<Text  style = {styles.priceText}  >Prix Total:</Text>
-<Text style = {styles.timeText} >{props.navigation.getParam("duration")+" Min"}</Text>
+<Text  style = {styles.priceText}  >: {client[0] && client[0].lang?polylanfr.TotalPrice:polylanar.TotalPrice}</Text>
+<Text style = {styles.timeText} >{props.navigation.getParam("duration")} {client[0] && client[0].lang?polylanfr.Minute:polylanar.Minute}</Text>
 
 </View>
-<Text style = {styles.priceText} >{props.navigation.getParam("amount")+" DA"}</Text>
+<Text style = {styles.priceText} >{props.navigation.getParam("amount")} {client[0] && client[0].lang?polylanfr.DZ:polylanar.DZ}</Text>
 
 
 </View>
@@ -338,7 +344,7 @@ buttonStyle = {{backgroundColor : "white"}}
 
                 <View style = {{height : "30%",alignItems:"center",paddingTop : "2%"}}>
                 <View style = {{width : "90%",marginBottom : "5%",}}>
-                <Text style = {{color : Colors.textGrey,fontFamily : "poppins-bold",fontSize : screen.width /26}}>Coiffeur</Text>
+                <Text style = {{color : Colors.textGrey,fontFamily : "poppins-bold",fontSize : screen.width /26,alignSelf:"flex-start"}}>{client[0] && client[0].lang?polylanfr.ServiceProvider:polylanar.ServiceProvider}</Text>
                 </View>
                 <View style = {{alignSelf :"center" , flexDirection :"row",width:"90%",alignItems:"center"}}>
               

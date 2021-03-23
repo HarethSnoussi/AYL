@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { View, Picker, StyleSheet,Dimensions } from "react-native";
+import React, { useState } from 'react';
+import { View,  StyleSheet,Dimensions } from "react-native";
 import { Button } from "react-native-elements";
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { Ionicons } from '@expo/vector-icons';
 import RNPickerSelect from 'react-native-picker-select';
 
@@ -75,26 +74,7 @@ return(
         />
 }
 
-    {/* <Picker
-    selectedValue = {pickedValue}
-    onValueChange={(itemValue) => pickedValueHandler(itemValue)}
-     >
-     <Picker.Item 
-                    label={"choissisez un service ..."}
-                    value = {{type : " " , price : 0 , time : 0}}
-                        />
-     {
-         barberServices.map((service,num)=>{
-                return(
-                <Picker.Item 
-                    key = {num}
-                    label={service.type }
-                    value = {service}
-                        /> 
-         )
-         })
-     }
-</Picker> */}
+   
 </View>
 </View>
 
