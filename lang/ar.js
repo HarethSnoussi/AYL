@@ -166,5 +166,32 @@ export default{
     EnterYourNewPassword:'الرجاء إدخال كلمة المرور الجديدة الخاصة بك!',
     Booking:'الحجز',
     SuccessLanguageMessage:'لقد نجحت في تغيير لغة حسابك!',
-    DoYouWantToChangeYourLanguage:'هل أنت متأكد أنك تريد تغيير لغة حسابك؟'
+    DoYouWantToChangeYourLanguage:'هل أنت متأكد أنك تريد تغيير لغة حسابك؟',
+    //ClientHomeScreen********************************************************************
+    YourWellBeingStartFromHere:"عنايتك تبدأ من هنا",
+    BestBarbers:"حلاقون متميزون",
+    BestFemaleBarbers:"حلاقات متميزات",
+    DisplayAllOfThem:"اعرضهم جميعا",
+     //barberhistory screen********************************************************************
+     SearchByName:"البحث عن طريق الإسم",
+     HistoryOfBookings:"تاريخ الحجوزات الخاصة بك",
+     Results:"نتائج البحث",
+     FeedbackTitle:"تعليقات",
+     WriteAcomment:"اكتب تعليقا",
+     FeedbackSent:"تم إرسال التعليق",
+     FeedbackSentWithSuccess:"أرسل التعليق بنجاح",
+     FeedbackNoSent:"لم يتم إرسال التعليق",
+     FailedToSend:"فشل في الإرسال" ,
+     YourComment:"تعليقك ...",
+     DZ:"دج",
+     TotalPrice:"المبلغ الكلي",
+     ServiceProvider:"مقدم الخدمة",
+     //bookingstepone screen**********************************
+    TotalTime:"المدة الإجمالية",
+    Continue:"موافق",
+    //bookingstepTwo screen**********************************
+    SelectADate:"إختر يوم موعدك",
+    NoSlot:"لا توجد خدمة متاحة لهذا اليوم.",
+    SelectASlot:"إختر توقيت موعدك",
+    Send:"إرسل"
 };

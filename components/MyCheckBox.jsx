@@ -1,10 +1,7 @@
-import React, { useState , useEffect,useRef } from 'react';
-import { Animated ,StyleSheet, Text, View , Dimensions , Platform, ActivityIndicator ,ScrollView, ImageBackground,Image,TouchableOpacity ,UIManager,LayoutAnimation} from 'react-native';
+import React, { useState } from 'react';
+import {Platform, UIManager} from 'react-native';
 import Colors from "../constants/Colors";
 import {CheckBox   } from 'react-native-elements';
-
-import { AntDesign } from '@expo/vector-icons'; 
-
 
 
 if (Platform.OS === 'android') {
@@ -32,7 +29,7 @@ const checkHandler = ()=>{
           value={props.value}
           checked = {isChecked}
           checkedColor= {Colors.primary}
-          title = {props.name +" "+props.price+" DA "+props.duration+" Min"}
+          title = {props.name +" "+props.price+" "+props.dzdText+" "+props.duration+" "+props.minText}
           onPress = {checkHandler}
           containerStyle = {{backgroundColor : "#fff",borderWidth :0}}
   />
@@ -46,8 +43,5 @@ const checkHandler = ()=>{
 };
 
 
-const styles= StyleSheet.create({
-
-});
 
 export default MyCheckBox;

@@ -7,6 +7,7 @@ import {Button } from 'react-native-elements';
 import {Calendar, CalendarList, Agenda,LocaleConfig} from 'react-native-calendars';
 import BookingCard from '../../../components/BookingCard';
 import moment from 'moment';
+import 'moment/locale/ar-dz';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClientBookings, expiredbookings } from '../../../store/actions/bookingsActions';
 
@@ -15,18 +16,35 @@ import polylanfr from "../../../lang/fr";
 import { LinearGradient } from 'expo-linear-gradient';
 
 const screen = Dimensions.get("window");
-moment.locale("fr");  
-LocaleConfig.locales['fr'] = {
-    monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
-    monthNamesShort: ['Janv.','Févr.','Mars','Avril','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.'],
-    dayNames: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
-    dayNamesShort: ['Dim.','Lun.','Mar.','Mer.','Jeu.','Ven.','Sam.'],
-    today: 'Aujourd\'hui'
-  };
-  LocaleConfig.defaultLocale = 'fr';
+
+
 
   ///////////////////////////////////////////////////////////////////////
 const AllBookingsScreen = (props) => {
+
+  const client= useSelector(state=>state.clients.client);
+  if(client[0] && client[0].lang){
+    moment.locale("fr");
+    LocaleConfig.locales['fr'] = {
+      monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+      monthNamesShort: ['Janv.','Févr.','Mars','Avril','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.'],
+      dayNames: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+      dayNamesShort: ['Dim.','Lun.','Mar.','Mer.','Jeu.','Ven.','Sam.'],
+      today: 'Aujourd\'hui'
+    };
+    LocaleConfig.defaultLocale = 'fr';
+  }else{
+    moment.locale("ar-dz");
+    LocaleConfig.locales['ar'] = {
+      monthNames: ['جانفي','فيفري','مارس','أفريل','ماي','جوان','جويلية','أوت','سبتمبر','أكتوبر','نوفمبر','ديسمبر'],
+      monthNamesShort: ['جانفي','فيفري','مارس','أفريل','ماي','جوان','جويلية','أوت','سبتمبر','أكتوبر','نوفمبر','ديسمبر'],
+      dayNames: ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'],
+      dayNamesShort: ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'],
+      today: 'اليوم'
+    };
+    LocaleConfig.defaultLocale = 'ar';
+  }
+  
 const allBookings = useSelector(state => state.bookings.bookings);
 //get Client ID
 const clientID= props.navigation.dangerouslyGetParent().getParam('clientID');  
@@ -314,6 +332,10 @@ if (isLoading) {
                             type = "all"
                             address = {booking.address}
                             duration = {booking.bookingDuration}
+                            statusText={client[0] && client[0].lang?polylanfr.Status:polylanar.Status}
+                            horairesText={client[0] && client[0].lang?polylanfr.Times:polylanar.Times}
+                            priceText={client[0] && client[0].lang?polylanfr.Price:polylanar.Price}
+                            dzdText={client[0] && client[0].lang?polylanfr.DZ:polylanar.DZ}
                          /> 
 
                     )})
