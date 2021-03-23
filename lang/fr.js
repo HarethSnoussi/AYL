@@ -172,5 +172,32 @@ export default{
     Booking:'Réservation',
     ABarberDid:'Un Coiffeur a ',
     YourBooking:' votre réservation!', 
-    SuccessfulDataSent:'Vos données ont été changées avec succès!'
+    SuccessfulDataSent:'Vos données ont été changées avec succès!',
+    //clienthomescreen********************************************************************
+    YourWellBeingStartFromHere:"Votre bien-être commence ici",
+    BestBarbers:"Coiffeurs vedettes",
+    BestFemaleBarbers:"Coiffeuses vedettes",
+    //barberhistory screen and review card********************************************************************
+    SearchByName:"Recherchez par nom",
+    HistoryOfBookings:"Historique de vos réservations",
+    Results:"Résultats",
+    FeedbackTitle:"Avis",
+    WriteAcomment:"Ecrire un commentaire",
+    FeedbackSent:"Avis envoyé",
+    FeedbackSentWithSuccess:"Avis envoyé avec succès",
+    FeedbackNoSent:"Avis non envoyé",
+    FailedToSend:"Echec d'envoie",
+    YourComment:"Votre commentaire...",
+    DZ:"DZD",
+    //BookingDetail screen**********************************
+    TotalPrice:"Prix Total",
+    ServiceProvider:"Préstataire de service",
+    //bookingstepone screen**********************************
+    TotalTime:"Durée Totale",
+    Continue:"Suivant",
+    //bookingstepTwo screen**********************************
+    SelectADate:"Sélectionner une date",
+    NoSlot:"Aucun créneau n'est disponible ce jour là.",
+    SelectASlot:"Sélectionner un créneau",
+    Send:"Envoyer"
 };

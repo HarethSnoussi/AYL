@@ -12,11 +12,6 @@ const BarberCard = props =>{
   let titleStyle = styles.title;
   let adressStyle = styles.adress;
 
-  // if(screen.width > 500 ) {
-  //   cardContainerStyle = styles.cardContainerBig;
-  //   titleStyle = styles.titleBig;
-  //   adressStyle = styles.adressBig;
-  // }
 
 
     return(
@@ -33,13 +28,7 @@ const BarberCard = props =>{
         <View>
               <View style= {styles.name}>
                 <Text style = {{fontFamily : "poppins-bold",fontSize : screen.width/26,color:Colors.blue}} >{props.name + " " + props.surname}</Text>
-                {/* <View style = {{flexDirection : "row"}}>
-             
-                <EvilIcons name="location" size={24} color="#9d9da1" />
-                <Text style = {{fontFamily : "poppins", color : "#9d9da1"}}>3.5 km</Text>
-                </View> */}
-
-                <View style = {{flexDirection : "row"}}>
+             <View style = {{flexDirection : "row"}}>
              <Text style={{fontFamily : "poppins",fontSize : screen.width/30}}>{props.mark === null ? 2.5 : props.mark}</Text>
             <Rating
               type='star'

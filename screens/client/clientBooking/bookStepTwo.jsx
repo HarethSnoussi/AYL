@@ -9,7 +9,7 @@ import moment from 'moment';
 import Colors from "../../../constants/Colors";
 import { FontAwesome } from '@expo/vector-icons'; 
 import 'moment/locale/fr';
-
+import { useSelector } from 'react-redux';
 
 import ConfirmBookingOverlay from "../../../components/ConfirmBookingOverlay";
 import BarberInfos from '../../../components/BarberInfos';
@@ -104,7 +104,7 @@ moment.locale("fr");
 /////////////////////////////////////////////////////////////////////////
 const BookStepTwo = (props)=> {
 const clientID =   props.navigation.getParam("clientID");
-
+const client= useSelector(state=>state.clients.client);
 const services = props.navigation.getParam("services").filter(service => service.id !== 0);
 const totalTime = props.navigation.getParam("duration");
 const workingTime = props.navigation.getParam("workingTime");
@@ -430,7 +430,7 @@ return (
 
                 <View style = {styles.bookingInfoContainer}>
                     <View style = {styles.selectDate}>
-                       <Text style = {{fontSize : screen.width/26,fontFamily : "poppins-bold"}}>Sélectionner une date</Text>
+                       <Text style = {{fontSize : screen.width/26,fontFamily : "poppins-bold"}}>{client[0] && client[0].lang?polylanfr.SelectADate:polylanar.SelectADate}</Text>
                        <TouchableOpacity style = {styles.datePicker}
                        onPress = {()=>setDatePickerVisibility(true)}
                        >
@@ -461,7 +461,7 @@ return (
                     availableSlots.length > 0 ?
 
                 <View style = {styles.selectSlot}>
-                <Text style = {{fontSize : screen.width/26,fontFamily : "poppins-bold"}}>Sélectionner un créneau</Text>
+                <Text style = {{fontSize : screen.width/26,fontFamily : "poppins-bold"}}>{client[0] && client[0].lang?polylanfr.SelectASlot:polylanar.SelectASlot}</Text>
                      
                      <FlatList
                     data={availableSlots}
@@ -485,7 +485,7 @@ return (
                    :
                    <View style ={{alignSelf : "center", height : "50%",justifyContent : "center"}}>
                    <Text style ={{fontFamily : "poppins-bold",fontSize : screen.width/26,color : Colors.primary}}>
-                   Aucun créneau disponible ce jour là!
+                   {client[0] && client[0].lang?polylanfr.NoSlot:polylanar.NoSlot}
                    </Text>
                    </View>
                    
@@ -495,7 +495,7 @@ return (
                     availableSlots.length > 0 ?
                      <Button 
                    containerStyle = {{ height : "15%",width : "80%",alignSelf:"center" ,justifyContent : "center"  }} 
-                   title = "Réserver" 
+                   title = {client[0] && client[0].lang?polylanfr.Continue:polylanar.Continue}
                    titleStyle = {{fontFamily : "poppins-bold"}}
                    buttonStyle = {{borderRadius : Platform.OS === "android" ? screen.width/6.5 : screen.width/18}} 
                    ViewComponent={LinearGradient} 

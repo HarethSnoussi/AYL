@@ -6,7 +6,7 @@ import Colors from '../constants/Colors';
 import {createMaterialBottomTabNavigator} from "react-navigation-material-bottom-tabs"
 
 
-import {Ionicons,  MaterialIcons,Foundation} from "@expo/vector-icons";
+import {Ionicons,  MaterialIcons} from "@expo/vector-icons";
 import ClientHomeScreen from '../screens/home/clientHomeScreen';
 
 
@@ -32,9 +32,6 @@ import BarberHistory from '../screens/client/history/barbersHistory';
 import BarberServiceScreen from '../screens/barber/barberServiceScreen';
 
 import BookingDetail from '../screens/client/clientBooking/bookingDetail';
-import { GET_BARBERS } from '../store/actions/listActions';
-import { useSelector } from 'react-redux';
-import { getClientBookings } from '../store/actions/bookingsActions';
 import NumConfirmed from '../components/NumConfirmed';
 ///////////////////////////////////////////////////////////////////
 

@@ -111,6 +111,8 @@ useEffect(()=>{
           name = {service.name}
           duration = {service.duration}
           price = {service.price}
+          dzdText={props.dzdText}
+          minText={props.minText}
   />
   </Animated.View>
   )
