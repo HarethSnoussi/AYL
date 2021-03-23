@@ -101,13 +101,13 @@ useEffect(()=>{
 
       {  
         props.services.map((service,index)=>{
-
+          
            return(
                <Animated.View key = {index} style = {{opacity : fadeAnim ,display :!isOpen ? "none" : "flex",backgroundColor : "#fff"}}>
         <MyCheckBox
           
           servicesHandler = {props.servicesHandler}
-          value = {props.value}
+          value = {service}
           name = {service.name}
           duration = {service.duration}
           price = {service.price}

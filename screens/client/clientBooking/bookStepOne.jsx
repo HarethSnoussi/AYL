@@ -256,7 +256,7 @@ return (
                { 
                 
                       barberServices.map((type,index)=>{
-
+                         
                           return(  
                           
                             <ServiceTypeMenu

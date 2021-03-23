@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer,createSwitchNavigator} from 'react-navigation';
-import {Platform} from 'react-native';
+import {Platform,Dimensions} from 'react-native';
 import Colors from '../constants/Colors';
 import {createMaterialBottomTabNavigator} from "react-navigation-material-bottom-tabs"
 
@@ -36,10 +36,12 @@ import { GET_BARBERS } from '../store/actions/listActions';
 import { useSelector } from 'react-redux';
 import { getClientBookings } from '../store/actions/bookingsActions';
 import NumConfirmed from '../components/NumConfirmed';
+
 ///////////////////////////////////////////////////////////////////
 
+const screen = Dimensions.get("window");
 
-
+console.log(screen) ;
 
 //Tab Navigator For Client Home
 const homeConfig = {
@@ -50,7 +52,7 @@ const homeConfig = {
             tabBarColor : "#fff",
             tabBarIcon : ({tintColor}) => {
               return( <Ionicons name = "ios-home" 
-              size = {22} color ={tintColor}/>);
+              size = {screen.width/17.85} color ={tintColor}/>);
                 },  
         },
        
@@ -65,7 +67,7 @@ const homeConfig = {
             tabBarColor : Colors.secondary ,
             tabBarIcon : ({tintColor}) => {
               return( <MaterialIcons name = "face" 
-              size = {22} color ={tintColor}/>);
+              size = {screen.width/17.85} color ={tintColor}/>);
                 }
               }} ,
 
@@ -77,7 +79,7 @@ const homeConfig = {
             tabBarIcon : ({tintColor}) => {
           
               return( <MaterialIcons name = "history" 
-              size = {22} color={tintColor}/>);
+              size = {screen.width/17.85} color={tintColor}/>);
                 }
         } ,
 
@@ -93,7 +95,7 @@ const homeConfig = {
       
       tabBarIcon :  ({tintColor}) =>  {
       
-        return( <NumConfirmed color = {tintColor} />);
+        return( <NumConfirmed  color = {tintColor} />);
           },
           headerStyle:{
             backgroundColor: "red",

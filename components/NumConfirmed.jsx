@@ -1,10 +1,13 @@
 import React ,{useEffect, useState,useCallback,useRef}  from 'react';
-import {View } from 'react-native';
+import {View , Dimensions} from 'react-native';
 
 import {Badge} from 'react-native-elements'
 
 import {Foundation} from "@expo/vector-icons";
 import { useSelector } from 'react-redux';
+
+const screen = Dimensions.get("window");
+
 
 const NumConfirmed = props =>{
 
@@ -39,12 +42,11 @@ const NumConfirmed = props =>{
          { count();}
   
 
-
       return (
         <View >
     
             <Foundation name = "calendar" 
-            size = {22} color= {props.color} />
+           size = {screen.width/17.85} color= {props.color} />
     
           {  
             confirmedBookings > 0 &&
