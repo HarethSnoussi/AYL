@@ -137,6 +137,8 @@ useEffect(()=>{
 
 },[props.navigation.getParam("barberId")]);
 
+
+
 /************************************************************************* */
 
 const loadServices = useCallback(async ()=>{

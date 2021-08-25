@@ -8,8 +8,8 @@ import {createMaterialBottomTabNavigator} from "react-navigation-material-bottom
 
 import {Ionicons,  MaterialIcons} from "@expo/vector-icons";
 import ClientHomeScreen from '../screens/home/clientHomeScreen';
-
-
+import polylanar from "../lang/ar";
+import polylanfr from "../lang/fr";
 
 // import PlayerProfileScreen from "../screens/player/playerProfile/playerProfileScreen";
 // import ForgotPasswordScreen from "../screens/forgotPasswordScreen";
@@ -37,8 +37,6 @@ import NumConfirmed from '../components/NumConfirmed';
 ///////////////////////////////////////////////////////////////////
 
 const screen = Dimensions.get("window");
-
-console.log(screen) ;
 
 //Tab Navigator For Client Home
 const homeConfig = {

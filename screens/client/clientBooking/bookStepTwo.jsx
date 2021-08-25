@@ -15,6 +15,7 @@ import ConfirmBookingOverlay from "../../../components/ConfirmBookingOverlay";
 import BarberInfos from '../../../components/BarberInfos';
 
  const now  = new Date();
+
 const hours = [
     {id : "1",time : "05:00"},
     {id : "2",time : "05:15"},
@@ -261,9 +262,9 @@ const nowHour = (new Date().getHours()+2).toString()+":00" ;
 
 if(days.length >0)
 {
+
     if(days.indexOf(day) >= 0)
 {
-
     todaysSlots = hours.slice(hoursTime.indexOf(workingDays[days.indexOf(day)].start) , hoursTime.indexOf(workingDays[days.indexOf(day)].end) );
     // setAvailableSlots([...todaysSlots]);
   
@@ -273,6 +274,7 @@ if(days.length >0)
     // }
 
 
+  
 
 }  
 
@@ -348,10 +350,11 @@ else{
 
 }}
 }
-
+ 
 manager();
 
  },[pickedDate,bookings]);
+
 
 //  console.log((new Date().getHours()+1).toString()+":00");
 // console.log(moment(new Date()).format('ll'));

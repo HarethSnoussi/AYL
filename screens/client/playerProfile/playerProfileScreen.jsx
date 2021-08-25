@@ -125,7 +125,7 @@ const PlayerProfileScreen = props =>{
 
   //States for complex information textInputs
  const [wilaya,setWilaya] = useState(client[0]!==null && client[0].wilaya?client[0].wilaya:null);
- console.log(client[0])
+
  const wilayas = ['Wilaya','Alger','Blida'];
  
  
