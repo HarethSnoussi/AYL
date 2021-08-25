@@ -23,9 +23,18 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "buildNumber":"1.0.0"
     },
-    "android": {"useNextNotificationsApi": true},
+    "android": {"useNextNotificationsApi": true,
+      "package": "com.ayl.tahfifa",
+      "versionCode":1,
+      "permissions":  [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "READ_INTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]},
     "experiments": {
       "turboModules": true
     }
